@@ -11,7 +11,7 @@ overrides:
   body-parser: 2.4.0
   fast-uri: 3.1.9
   glob: 14.0.3
-  hono: 4.13.13
+  hono: 4.13.18
   ip-address: 10.7.4
   minimatch: 11.0.4
   qs: 6.17.0
@@ -824,8 +824,8 @@ packages:
   highlight.js@10.7.3:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
 
-  hono@4.13.13:
-    resolution: {integrity: sha512-CQ46U0ZkAGmbT/4UxdzzGJpacP2IeKgY4a5/tOI9AABbpOMfK739wfDXmv1usCk+3RkKj1hQy4/fjhiwa2xlrA==}
+  hono@4.13.18:
+    resolution: {integrity: sha512-H9q/E1XizaWstJxUW881dmLxEj+t/TrGGnyxINkm4+sK0qUwsMtFdo2BWI9Vs3cIS19MU6b6iCijoUoEf4f3DA==}
     engines: {node: '>=16.9.0'}
 
   hosted-git-info@9.0.3:
@@ -1692,7 +1692,7 @@ snapshots:
 
   '@hono/node-server@2.1.6(hono@4.13.13)':
     dependencies:
-      hono: 4.13.13
+      hono: 4.13.18
 
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
@@ -1768,7 +1768,7 @@ snapshots:
       eventsource-parser: 3.1.1
       express: 5.2.1
       express-rate-limit: 8.7.0(express@5.2.1)
-      hono: 4.13.13
+      hono: 4.13.18
       jose: 6.2.12
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
@@ -2289,7 +2289,7 @@ snapshots:
 
   highlight.js@10.7.3: {}
 
-  hono@4.13.13: {}
+  hono@4.13.18: {}
 
   hosted-git-info@9.0.3:
     dependencies:
