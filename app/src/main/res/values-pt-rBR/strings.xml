@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="back_description">Voltar</string>
+    <string name="help_on">Ajuda ativada</string>
+    <string name="help_off">Ajuda desativada</string>
+    <string name="listen">Ouvir</string>
+    <string name="random_time">Hora aleatória</string>
+    <string name="next">Próximo</string>
+    <string name="done">Concluir</string>
+    <string name="question_read">Que horas são?</string>
+    <string name="digital_24">%1$s</string>
+    <string name="speak_time">%1$s</string>
+    <string name="speak_time_24">%1$s. No formato de 24 horas: %2$s</string>
+    <string name="speak_midnight_24">É meia-noite. No formato de 24 horas: %1$s.</string>
+    <string name="speak_noon_24">É meio-dia. No formato de 24 horas: %1$s.</string>
+    <string-array name="praise">
+        <item>Isso mesmo!</item><item>Muito bem!</item><item>Ótimo trabalho!</item>
+        <item>Você acertou!</item><item>Boa!</item><item>Incrível!</item><item>Maravilha!</item>
+    </string-array>
+    <!-- MissingQuantity: these call sites use stars 0..3, totals/unlocks 0..15 and minutes/steps 1..60.
+         ICU many requires nonzero multiples of 1,000,000 for ordinary integer counts.
+         ExpandedLocaleContentTest checks the production ranges and Android selection on API 26/33/37. -->
+    <plurals name="stars_count" tools:ignore="MissingQuantity"><item quantity="one">%1$d\u00A0estrela</item><item quantity="other">%1$d\u00A0estrelas</item></plurals>
+    <plurals name="minutes_count" tools:ignore="MissingQuantity"><item quantity="one">%1$d\u00A0minuto</item><item quantity="other">%1$d\u00A0minutos</item></plurals>
+    <string name="clock_description">Mostrador do relógio: %1$s</string>
+    <string name="clock_question_description">Pergunta sobre o relógio. Peça à outra pessoa para descrever os ponteiros ou revelem a hora juntos.</string>
+    <plurals name="clock_add" tools:ignore="MissingQuantity"><item quantity="one">Avançar %1$d\u00A0minuto</item><item quantity="other">Avançar %1$d\u00A0minutos</item></plurals>
+    <plurals name="clock_subtract" tools:ignore="MissingQuantity"><item quantity="one">Voltar %1$d\u00A0minuto</item><item quantity="other">Voltar %1$d\u00A0minutos</item></plurals>
+    <string name="clock_zone_yli">e</string>
+    <string name="clock_zone_vaille">para</string>
+    <string name="intro_greeting_morning">Bom dia!</string>
+    <string name="intro_greeting_day">Olá!</string>
+    <string name="intro_greeting_evening">Boa noite!</string>
+    <string name="intro_greeting_night">Olá, corujinha!</string>
+    <string name="intro_description">%1$s. %2$s</string>
+    <string name="intro_skip">Pular abertura</string>
+    <string name="home_star_total">%1$d / %2$d</string>
+    <string name="menu_koulu">Aprender</string>
+    <string name="menu_koulu_sub">Descubra como os ponteiros mostram as horas</string>
+    <string name="menu_vapaa">Explorar</string>
+    <string name="menu_vapaa_sub">Mova os ponteiros e explore as horas</string>
+    <string name="menu_pelaa">Jogar</string>
+    <string name="menu_pelaa_sub">Pratique a leitura e o ajuste do relógio</string>
+    <string name="menu_kysy">Jogar em dupla</string>
+    <string name="menu_kysy_sub">Escolham uma hora, tentem acertar e troquem de vez</string>
+    <string name="menu_nukke">Meu companheiro</string>
+    <string name="mode_12">12 h</string>
+    <string name="mode_24">24 h</string>
+    <string name="free_title">Explorar</string>
+    <string name="legend_hour">O ponteiro pequeno e rosa mostra as horas.</string>
+    <string name="legend_minute">O ponteiro grande e azul mostra os minutos.</string>
+    <string name="legend_drag">Arraste um dos ponteiros para mudar a hora.</string>
+    <string name="level_example">Por exemplo: %1$s</string>
+    <string name="watch_lesson">Ver a lição</string>
+    <string name="level_tasatunnit">Horas exatas</string>
+    <string name="level_puolet">Meia hora</string>
+    <string name="level_vartit">Quartos de hora</string>
+    <string name="level_viisi">De cinco em cinco</string>
+    <string name="level_minuutit">Minutos exatos</string>
+    <string name="challenge_title">Desafio de um minuto</string>
+    <string name="challenge_time_remaining">Tempo restante</string>
+    <string name="challenge_desc">Quantas respostas você acerta em um minuto?</string>
+    <string name="record">Recorde: %1$d</string>
+    <string name="question_set">Ajuste o relógio para</string>
+    <string name="praise_with_time">%1$s %2$s.</string>
+    <string name="reveal_read">A resposta é %1$s. Veja para onde cada ponteiro aponta.</string>
+    <string name="reveal_set">É assim que os ponteiros mostram %1$s.</string>
+    <string name="hint_hands_right">Os ponteiros estão certos! Observe o símbolo de %1$s e o texto no centro: %2$s.</string>
+    <string name="hint_sun">sol</string>
+    <string name="hint_moon">lua</string>
+    <string name="hint_read_hour">Observe o ponteiro pequeno e rosa. Ele %1$s.</string>
+    <string name="hint_read_hour_half">Perto da meia hora, ele fica perto do meio do caminho entre uma hora e a seguinte.</string>
+    <string name="hint_read_minute">Observe o ponteiro grande e azul. Ele aponta %1$s.</string>
+    <string name="hint_read_minute_also_hour">Depois confira o ponteiro pequeno e rosa.</string>
+    <string name="hint_set_minute">O ponteiro grande e azul precisa apontar %1$s.</string>
+    <string name="hint_set_hour">O ponteiro grande está certo! Mova o pequeno e rosa para que ele fique nesta posição: %1$s.</string>
+    <string name="hint_set_hour_turn">Dê uma volta completa com o ponteiro grande para avançar o pequeno em uma hora.</string>
+    <string name="hour_pos_exact">aponta direto para o %1$d</string>
+    <string name="hour_pos_passed">acabou de passar do %1$d</string>
+    <string name="hour_pos_between" tools:ignore="PluralsCandidate">está entre o %1$d e o %2$d</string>
+    <string name="hour_pos_almost">está quase no %1$d</string>
+    <string name="minute_pos_top">para cima, no 12. É uma hora exata</string>
+    <string name="minute_pos_bottom">para baixo, no 6. Passou meia hora</string>
+    <string name="minute_pos_quarter_past">para o 3. Passaram quinze minutos</string>
+    <string name="minute_pos_quarter_to">para o 9. Faltam quinze minutos para a próxima hora</string>
+    <string name="minute_pos_number" tools:ignore="PluralsCandidate">para o %1$d. Já passaram %2$d\u00A0minutos desta hora</string>
+    <string name="minute_pos_ticks" tools:ignore="PluralsCandidate">para a marca de minuto %1$d. Conte as marcas pequenas a partir do 12</string>
+    <string name="result_title_3">Maravilha!</string>
+    <string name="result_title_2">Muito bem!</string>
+    <string name="result_title_1">Continue explorando!</string>
+    <plurals name="result_text" tools:ignore="MissingQuantity">
+        <item quantity="one">%1$s: concluído! Você ganhou %2$d\u00A0estrela.</item>
+        <item quantity="other">%1$s: concluído! Você ganhou %2$d\u00A0estrelas.</item>
+    </plurals>
+    <plurals name="result_previous_best" tools:ignore="MissingQuantity">
+        <item quantity="one">Seu recorde neste nível é %1$d\u00A0estrela.</item>
+        <item quantity="other">Seu recorde neste nível é %1$d\u00A0estrelas.</item>
+    </plurals>
+    <string name="result_new_item">Você liberou um acessório:</string>
+    <string name="result_new_items">Você liberou acessórios:</string>
+    <string name="result_play_more">Você pode jogar de novo quando quiser.</string>
+    <string name="play_again">Jogar de novo</string>
+    <string name="next_level">Próximo nível</string>
+    <string name="dress_doll">Escolher roupa</string>
+    <plurals name="result_stars_description" tools:ignore="MissingQuantity"><item quantity="one">%1$d\u00A0estrela de três</item><item quantity="other">%1$d\u00A0estrelas de três</item></plurals>
+    <string name="challenge_score" tools:ignore="PluralsCandidate">Acertos: %1$d</string>
+    <string name="challenge_intro">Você tem um minuto. Acerte o máximo que puder. Depois de um erro, o relógio mostra a hora e o jogo continua.</string>
+    <string name="challenge_best" tools:ignore="PluralsCandidate">Recorde de acertos: %1$d</string>
+    <string name="challenge_no_best">Ainda sem recorde</string>
+    <string name="challenge_go">Começar!</string>
+    <string name="challenge_over">O tempo acabou!</string>
+    <string name="challenge_new_best">Novo recorde!</string>
+    <string name="challenge_new_record" tools:ignore="PluralsCandidate">Novo recorde! Você acertou %1$d.</string>
+    <string name="challenge_result" tools:ignore="PluralsCandidate">Você acertou %1$d. Seu recorde é %2$d.</string>
+    <string name="ask_title">Jogar em dupla</string>
+    <string name="ask_big_eyebrow" tools:ignore="PluralsCandidate">Pessoa %1$d: escolha a hora</string>
+    <string name="ask_big_question">Escolha uma hora</string>
+    <string name="ask_big_text">Mova os ponteiros enquanto a outra pessoa olha para o lado. Depois toque em Passar a vez e entregue o relógio.</string>
+    <string name="ask_go">Passar a vez</string>
+    <string name="ask_small_eyebrow" tools:ignore="PluralsCandidate">Pessoa %1$d: responda</string>
+    <string name="ask_small_text">Diga a hora, aponte ou conversem sobre ela. Revelem a resposta quando quiserem.</string>
+    <string name="ask_reveal">Mostrar resposta</string>
+    <string name="ask_new">Trocar de vez</string>
+    <string name="doll_title">Roupas</string>
+    <string name="doll_name_label">Nome do companheiro</string>
+    <string name="doll_name_placeholder">Escolha um nome</string>
+    <plurals name="doll_info" tools:ignore="MissingQuantity">
+        <item quantity="one">Você tem %1$d\u00A0estrela. Cada nova estrela libera um acessório. Toque nele para usar.</item>
+        <item quantity="other">Você tem %1$d\u00A0estrelas. Cada nova estrela libera um acessório. Toque nele para usar.</item>
+    </plurals>
+    <string name="doll_all_open">Todos os acessórios estão disponíveis. Experimente qualquer combinação!</string>
+    <string name="doll_optional_hint">Toque em um acessório para colocar. Toque de novo para tirar.</string>
+    <string name="doll_optional_hint_partial">Toque em um acessório para colocar. Chapéus e extras saem quando você toca de novo.</string>
+    <plurals name="doll_item_locked" tools:ignore="MissingQuantity">
+        <item quantity="one">Bloqueado. Libera com %1$d\u00A0estrela. Você tem %2$d.</item>
+        <item quantity="other">Bloqueado. Libera com %1$d\u00A0estrelas. Você tem %2$d.</item>
+    </plurals>
+    <string name="slot_hair">Cabelo</string>
+    <string name="slot_dress">Vestidos</string>
+    <string name="slot_shoes">Calçados</string>
+    <string name="slot_head">Na cabeça</string>
+    <string name="slot_neck">No pescoço</string>
+    <string name="slot_extra">Extras</string>
+    <string name="slot_roof">No teto</string>
+    <string name="slot_front">Na frente</string>
+    <string name="slot_wheels">Rodas</string>
+    <string name="slot_model">Transformações</string>
+    <string name="item_hair_letit">Tranças castanhas</string>
+    <string name="item_dress_perus">Vestido amarelo</string>
+    <string name="item_shoes_tossut">Pantufas brancas</string>
+    <string name="item_dress_pilkku">Vestido de bolinhas</string>
+    <string name="item_head_rusetti">Laço</string>
+    <string name="item_shoes_punaiset">Sapatos vermelhos</string>
+    <string name="item_hair_pitkat">Cabelo dourado</string>
+    <string name="item_dress_tahti">Vestido de estrelas</string>
+    <string name="item_head_kukat">Coroa de flores</string>
+    <string name="item_extra_strawberry_bag">Bolsa de morango</string>
+    <string name="item_shoes_saappaat">Botas roxas</string>
+    <string name="item_hair_kiharat">Cachos cor-de-rosa</string>
+    <string name="item_dress_overalls">Jardineira</string>
+    <string name="item_head_kruunu">Coroa</string>
+    <string name="item_extra_siivet">Asas de borboleta</string>
+    <string name="item_shoes_roller_skates">Patins</string>
+    <string name="item_hair_sateenkaari">Cabelo de arco-íris</string>
+    <string name="item_dress_sateenkaari">Vestido de arco-íris</string>
+    <string name="koulu_title">Aprender</string>
+    <string name="lesson_done">Concluído</string>
+    <string name="path_current">A seguir</string>
+    <string name="lesson_skip">Pular e jogar</string>
+    <string name="lesson_replay">Ver de novo</string>
+    <string name="lesson_prev">Anterior</string>
+    <string name="lesson_try">Experimentar</string>
+    <string name="lesson_next_lesson">Próxima lição</string>
+    <string name="lesson_start_game">Vamos jogar!</string>
+    <string name="lesson_practise">Praticar</string>
+    <string name="lesson_learned">%1$s Você concluiu %2$s.</string>
+    <string name="say_quarter">Quarto %1$d</string>
+    <string name="say_number_minutes" tools:ignore="PluralsCandidate">O número %1$d marca %2$d\u00A0minutos.</string>
+    <string name="l_viisarit_title">Dois ponteiros</string>
+    <string name="l_viisarit_desc">O que cada ponteiro mostra?</string>
+    <string name="l_viisarit_p1a">Este relógio tem dois ponteiros.</string>
+    <string name="l_viisarit_p1b">O pequeno e rosa é o ponteiro das horas. Ele mostra em qual hora estamos.</string>
+    <string name="l_viisarit_p2a">O grande e azul é o ponteiro dos minutos. Ele mostra os minutos.</string>
+    <string name="l_viisarit_p3a">Conforme o tempo passa, os ponteiros vão do 1 para o 2, depois para o 3, e continuam dando a volta.</string>
+    <string name="l_viisarit_p3b">Chamamos essa direção de sentido horário.</string>
+    <string name="l_viisarit_q">Qual ponteiro mostra as horas?</string>
+    <string name="l_viisarit_c1">O ponteiro pequeno e rosa</string>
+    <string name="l_viisarit_c2">O ponteiro grande e azul</string>
+    <string name="l_viisarit_hint">O ponteiro das horas é o pequeno e rosa.</string>
+    <string name="l_kierros_title">Uma volta completa</string>
+    <string name="l_kierros_desc">O que acontece em uma hora?</string>
+    <string name="l_kierros_p1a">O ponteiro grande continua dando a volta no relógio.</string>
+    <string name="l_kierros_p1b">Uma volta completa leva uma hora.</string>
+    <string name="l_kierros_say_start">São três horas.</string>
+    <string name="l_kierros_say_go">O ponteiro grande começa sua volta.</string>
+    <string name="l_kierros_say_end">Agora são quatro horas. Passou uma hora!</string>
+    <string name="l_kierros_p2a">Agora observe o ponteiro pequeno!</string>
+    <string name="l_kierros_p2b">Enquanto o grande dá uma volta completa, o pequeno avança só um número.</string>
+    <string name="l_kierros_say_moved">O ponteiro pequeno foi do 3 para o 4.</string>
+    <string name="l_kierros_p3a">Uma hora tem 60\u00A0minutos.</string>
+    <string name="l_kierros_p3b">Há 60\u00A0marcas de minuto na borda. O ponteiro grande passa de uma marca à seguinte a cada minuto.</string>
+    <string name="l_kierros_say_hour">60\u00A0minutos formam uma hora.</string>
+    <string name="l_kierros_q">Quanto tempo passa quando o ponteiro grande dá uma volta completa?</string>
+    <string name="l_kierros_c1">Uma hora</string>
+    <string name="l_kierros_c2">Um minuto</string>
+    <string name="l_kierros_c3">Um dia</string>
+    <string name="l_kierros_hint">O ponteiro pequeno avançou um número. Isso leva uma hora.</string>
+    <string name="l_tasan_title">Horas exatas</string>
+    <string name="l_tasan_desc">O ponteiro grande aponta para cima</string>
+    <string name="l_tasan_p1a">Quando o ponteiro grande aponta para o 12, lá em cima, é uma hora exata.</string>
+    <string name="l_tasan_p2a">Olhe para o ponteiro pequeno para descobrir a hora.</string>
+    <string name="l_tasan_p2b">Aqui ele aponta para o 3. São três horas.</string>
+    <string name="l_tasan_p3a">Vamos explorar outras horas exatas.</string>
+    <string name="l_tasan_p3b">O ponteiro grande fica lá em cima. O pequeno mostra a hora.</string>
+    <string name="l_tasan_q">Que horas são?</string>
+    <string name="l_tasan_c1">Nove horas</string>
+    <string name="l_tasan_c2">Doze horas</string>
+    <string name="l_tasan_c3">Três horas</string>
+    <string name="l_tasan_hint">O ponteiro grande está lá em cima. Olhe para o pequeno e rosa para descobrir a hora.</string>
+    <string name="l_puoli_title">Meia hora</string>
+    <string name="l_puoli_desc">O ponteiro grande aponta para baixo</string>
+    <string name="l_puoli_p1a">Depois de meia volta, o ponteiro grande aponta para o 6, lá embaixo.</string>
+    <string name="l_puoli_p1b">Passou meia hora. São 30\u00A0minutos.</string>
+    <string name="l_puoli_say_half">Passou meia hora.</string>
+    <string name="l_puoli_p2a">O ponteiro pequeno saiu do 3, mas ainda não chegou ao 4.</string>
+    <string name="l_puoli_p2b">Ele está no meio do caminho.</string>
+    <string name="l_puoli_p3a">Dizemos três e meia: passou meia hora desde as três.</string>
+    <string name="l_puoli_p3b">Em números: 3:30.</string>
+    <string name="l_puoli_say_digits">Três e meia é 3:30.</string>
+    <string name="l_puoli_p4a">Antes de dizer e meia, diga a hora da qual o ponteiro pequeno já passou.</string>
+    <string name="l_puoli_p4b">Entre o 7 e o 8, são sete e meia.</string>
+    <string name="l_puoli_q">Que horas são?</string>
+    <string name="l_puoli_c1">Cinco e meia</string>
+    <string name="l_puoli_c2">Quatro e meia</string>
+    <string name="l_puoli_c3">Seis horas</string>
+    <string name="l_puoli_hint">O ponteiro pequeno passou do 5 e está a meio caminho do 6. Diga a hora da qual ele já passou.</string>
+    <string name="l_vartti_title">Quartos de hora</string>
+    <string name="l_vartti_desc">Um quarto de hora</string>
+    <string name="l_vartti_p1a">Divida uma hora em quatro partes iguais. Cada parte é um quarto de hora.</string>
+    <string name="l_vartti_p1b">Um quarto de hora tem 15\u00A0minutos.</string>
+    <string name="l_vartti_say_four">Quatro quartos formam uma hora.</string>
+    <string name="l_vartti_p2a">Quando o ponteiro grande chega ao 3, passou um quarto de hora.</string>
+    <string name="l_vartti_p2b">Aqui dizemos três e quinze.</string>
+    <string name="l_vartti_p3a">Quando o ponteiro grande chega ao 9, falta um quarto de hora para a próxima hora exata.</string>
+    <string name="l_vartti_p3b">Aqui dizemos quinze para as quatro.</string>
+    <string name="l_vartti_q">Que horas são?</string>
+    <string name="l_vartti_c1">Quinze para as sete</string>
+    <string name="l_vartti_c2">Seis e quinze</string>
+    <string name="l_vartti_c3">Quinze para as seis</string>
+    <string name="l_vartti_hint">O ponteiro grande está no 9. Falta um quarto de hora. Qual hora vem a seguir?</string>
+    <string name="l_ylivaille_title">E ou para</string>
+    <string name="l_ylivaille_desc">Os dois lados do relógio</string>
+    <string name="l_ylivaille_p1a">No lado direito, podemos dizer a hora e os minutos que já passaram.</string>
+    <string name="l_ylivaille_p1b">Contamos quantos minutos passaram desde a hora exata.</string>
+    <string name="l_ylivaille_p2a">No lado esquerdo, podemos usar para.</string>
+    <string name="l_ylivaille_p2b">Contamos quantos minutos faltam para a próxima hora exata.</string>
+    <string name="l_ylivaille_p3a">Ao usar e, diga a hora da qual o ponteiro pequeno já passou.</string>
+    <string name="l_ylivaille_p3b">Ao usar para, diga a hora que vem a seguir.</string>
+    <string name="l_ylivaille_q">Que horas são?</string>
+    <string name="l_ylivaille_c1">Quatro e dez</string>
+    <string name="l_ylivaille_c2">Dez para as quatro</string>
+    <string name="l_ylivaille_c3">Dez para as cinco</string>
+    <string name="l_ylivaille_hint">O ponteiro grande está à direita. Conte os minutos depois da hora da qual o pequeno já passou.</string>
+    <string name="l_viisi_title">De cinco em cinco</string>
+    <string name="l_viisi_desc">Números e minutos</string>
+    <string name="l_viisi_p1a">O ponteiro grande leva cinco minutos para ir de um número ao seguinte.</string>
+    <string name="l_viisi_p1b">O número 1 marca 5\u00A0minutos, o 2 marca 10, e assim por diante.</string>
+    <string name="l_viisi_p2a">Conte de cinco em cinco: 5, 10, 15, 20.</string>
+    <string name="l_viisi_p2b">No número 4, passaram 20\u00A0minutos. Aqui dizemos três e vinte.</string>
+    <string name="l_viisi_p3a">Continue contando de cinco em cinco antes e depois da meia hora.</string>
+    <string name="l_viisi_p3b">No 5, diga três e vinte e cinco. No 7, diga vinte e cinco para as quatro.</string>
+    <string name="l_viisi_q">Que horas são?</string>
+    <string name="l_viisi_c1">Vinte para as nove</string>
+    <string name="l_viisi_c2">Oito e vinte</string>
+    <string name="l_viisi_c3">Dez para as nove</string>
+    <string name="l_viisi_hint">No número 8, passaram 40\u00A0minutos. Faltam 20\u00A0minutos para a próxima hora.</string>
+    <string name="l_minuutit_title">Minutos exatos</string>
+    <string name="l_minuutit_desc">As marcas pequenas</string>
+    <string name="l_minuutit_p1a">Cada marca pequena representa um minuto. Para ler os minutos exatos, diga a hora e quantos minutos passaram.</string>
+    <string name="l_minuutit_p1b">Há 5\u00A0minutos entre um número e o seguinte.</string>
+    <string name="l_minuutit_p2a">Comece no número logo antes do ponteiro grande. Conte as marcas pequenas a mais.</string>
+    <string name="l_minuutit_p2b">O número 2 marca 10\u00A0minutos. Mais duas marcas: 10 + 2 = 12\u00A0minutos.</string>
+    <string name="l_minuutit_q">Que horas são?</string>
+    <string name="l_minuutit_c1">Três horas e sete minutos</string>
+    <string name="l_minuutit_c2">Três e cinco</string>
+    <string name="l_minuutit_c3">Três horas e oito minutos</string>
+    <string name="l_minuutit_hint">O número 1 marca 5\u00A0minutos. Conte mais duas marcas pequenas.</string>
+    <string name="l_vrk_title">24\u00A0horas em um dia</string>
+    <string name="l_vrk_desc">Manhã, tarde e noite</string>
+    <string name="l_vrk_p1a">Um dia completo tem 24\u00A0horas.</string>
+    <string name="l_vrk_p1b">O ponteiro pequeno dá duas voltas no relógio a cada dia.</string>
+    <string name="l_vrk_say_first">Primeira volta: da meia-noite ao meio-dia</string>
+    <string name="l_vrk_say_second">Segunda volta: do meio-dia à meia-noite</string>
+    <string name="l_vrk_say_day">Passou um dia completo.</string>
+    <string name="l_vrk_p2a">Entre o meio-dia e a meia-noite, some 12 às horas de 1 a 11 para escrevê-las no formato de 24 horas.</string>
+    <string name="l_vrk_p2b">Três da tarde: 3 + 12 = 15. Escrevemos 15:00.</string>
+    <string name="l_vrk_say_night">Três da madrugada: 03:00</string>
+    <string name="l_vrk_say_sum">3 + 12 = 15: são 15:00.</string>
+    <string name="l_vrk_p3a">Os ponteiros ficam na mesma posição às três da madrugada e às três da tarde.</string>
+    <string name="l_vrk_p3b">Leia o texto no centro para saber a parte do dia. Os ponteiros sozinhos não mostram isso.</string>
+    <string name="l_vrk_say_afternoon">Três da tarde: 15:00</string>
+    <string name="l_vrk_q">Que horas são?</string>
+    <string name="l_vrk_c1">Sete da noite: 19:00</string>
+    <string name="l_vrk_c2">Sete da manhã: 07:00</string>
+    <string name="l_vrk_c3">Cinco da tarde: 17:00</string>
+    <string name="l_vrk_hint">O texto no centro diz noite. Some 12 à hora: 7 + 12 = 19.</string>
+    <string name="doll_stars_explained">As estrelas nunca são gastas. Novas roupas ficam disponíveis quando você tem estrelas suficientes.</string>
+    <string name="answer_correct">Correto</string>
+    <string name="answer_incorrect">Incorreto</string>
+    <string name="app_launcher_name">Clocklings Blender</string>
+</resources>

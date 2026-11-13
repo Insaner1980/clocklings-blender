@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parent_title">Für Eltern</string>
+    <string name="parent_gate_instruction">Für Erwachsene: Gib diese vier Ziffern in umgekehrter Reihenfolge ein: %1$s</string>
+    <string name="parent_gate_answer">Code rückwärts</string>
+    <string name="parent_gate_error">Prüfe die Reihenfolge und versuche es erneut.</string>
+    <string name="parent_continue">Weiter</string>
+    <string name="parent_cancel">Abbrechen</string>
+    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_description">Ein einmaliger Kauf schaltet alle fünf Lernstufen, ihre Lektionen sowie alle Übungen und Herausforderungen dauerhaft frei.</string>
+    <string name="full_unlock_rewards">Mit der Vollversion können alle Belohnungen verdient werden. Sterne, abgeschlossene Lektionen und Belohnungen werden weiterhin durch Lernen verdient.</string>
+    <string name="purchase_ready">Kein Abo. Keine Werbung.</string>
+    <string name="purchase_buy">Einmal kaufen — %1$s</string>
+    <string name="purchase_unavailable">Käufe sind derzeit nicht verfügbar. Bitte versuche es später erneut.</string>
+    <string name="purchase_pending">Die Zahlung steht noch aus. Der volle Zugriff beginnt, sobald die Zahlung abgeschlossen und geprüft wurde.</string>
+    <string name="purchase_cancelled">Kauf abgebrochen. Du kannst die kostenlosen Aktivitäten weiter nutzen.</string>
+    <string name="purchase_verifying">Dein Kauf wird geprüft…</string>
+    <string name="purchase_owned">Vollversion freigeschaltet.</string>
+    <string name="purchase_restored">Vollversion wiederhergestellt.</string>
+    <string name="purchase_not_owned">Für das aktuelle Google Play-Konto wurde kein Kauf der Vollversion gefunden.</string>
+    <string name="purchase_failed">Der Kauf konnte nicht geprüft werden. Bitte versuche es erneut.</string>
+    <string name="purchase_acknowledgement_pending">Der volle Zugriff ist verfügbar. Die Bestätigung an Google Play muss erneut versucht werden.</string>
+    <string name="purchase_retry">Erneut versuchen</string>
+    <string name="purchase_restore">Käufe wiederherstellen</string>
+    <string name="purchase_restore_explanation">Verwende das Google Play-Konto, mit dem die Vollversion gekauft wurde. Die Wiederherstellung eines Kaufs stellt keine Lernfortschritte wieder her, die nur auf einem anderen Gerät gespeichert sind.</string>
+    <string name="full_version_label">Vollversion</string>
+    <string name="companion_access_requirement">Erfordert die Vollversion und 3 verdiente Sterne.</string>
+    <string name="wardrobe_full_requirement">Die Vollversion enthält weitere Outfits. Die Anforderungen an verdiente Sterne gelten weiterhin.</string>
+</resources>

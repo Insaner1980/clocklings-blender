@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="back_description">Tillbaka</string>
+    <string name="help_on">Hjälp på</string>
+    <string name="help_off">Hjälp av</string>
+    <string name="listen">Lyssna</string>
+    <string name="random_time">Slumpa tid</string>
+    <string name="next">Nästa</string>
+    <string name="done">Klar</string>
+    <string name="question_read">Vad är klockan?</string>
+    <string name="digital_24">%1$s</string>
+    <string name="speak_time">Klockan är %1$s</string>
+    <string name="speak_time_24">Klockan är %1$s. Med siffror %2$s</string>
+    <string name="speak_midnight_24">Det är midnatt. Med siffror %1$s.</string>
+    <string name="speak_noon_24">Klockan är tolv på dagen. Med siffror %1$s.</string>
+    <string-array name="praise">
+        <item>Rätt!</item>
+        <item>Bra gjort!</item>
+        <item>Fint jobbat!</item>
+        <item>Du klarade det!</item>
+        <item>Snyggt jobbat!</item>
+        <item>Strålande!</item>
+        <item>Underbart!</item>
+    </string-array>
+    <plurals name="stars_count">
+        <item quantity="one">%1$d\u00A0stjärna</item>
+        <item quantity="other">%1$d\u00A0stjärnor</item>
+    </plurals>
+    <plurals name="minutes_count">
+        <item quantity="one">%1$d\u00A0minut</item>
+        <item quantity="other">%1$d\u00A0minuter</item>
+    </plurals>
+    <string name="clock_description">Urtavla: %1$s</string>
+    <string name="clock_question_description">Klockfråga. Be din spelkompis beskriva visarna eller visa tiden tillsammans.</string>
+    <plurals name="clock_add">
+        <item quantity="one">Lägg till %1$d\u00A0minut</item>
+        <item quantity="other">Lägg till %1$d\u00A0minuter</item>
+    </plurals>
+    <plurals name="clock_subtract">
+        <item quantity="one">Dra bort %1$d\u00A0minut</item>
+        <item quantity="other">Dra bort %1$d\u00A0minuter</item>
+    </plurals>
+    <string name="clock_zone_yli">över</string>
+    <string name="clock_zone_vaille">i</string>
+    <string name="intro_greeting_morning">God morgon!</string>
+    <string name="intro_greeting_day">Hej!</string>
+    <string name="intro_greeting_evening">God kväll!</string>
+    <string name="intro_greeting_night">Hej, nattuggla!</string>
+    <string name="intro_description">%1$s. %2$s</string>
+    <string name="intro_skip">Hoppa över inledningen</string>
+    <string name="home_star_total">%1$d / %2$d</string>
+    <string name="menu_koulu">Lär dig</string>
+    <string name="menu_koulu_sub">Upptäck hur visarna visar tiden</string>
+    <string name="menu_vapaa">Utforska</string>
+    <string name="menu_vapaa_sub">Flytta visarna och utforska tiden</string>
+    <string name="menu_pelaa">Spela</string>
+    <string name="menu_pelaa_sub">Öva på att läsa av och ställa klockan</string>
+    <string name="menu_kysy">Spela tillsammans</string>
+    <string name="menu_kysy_sub">Ställ en tid, gissa och byt tur</string>
+    <string name="menu_nukke">Min kompis</string>
+    <string name="mode_12">12 h</string>
+    <string name="mode_24">24 h</string>
+    <string name="free_title">Utforska</string>
+    <string name="legend_hour">Den korta rosa visaren visar timmarna.</string>
+    <string name="legend_minute">Den långa blå visaren visar minuterna.</string>
+    <string name="legend_drag">Dra i någon av visarna för att ändra tiden.</string>
+    <string name="level_example">Till exempel %1$s</string>
+    <string name="watch_lesson">Se lektionen</string>
+    <string name="level_tasatunnit">Hela timmar</string>
+    <string name="level_puolet">Halva timmar</string>
+    <string name="level_vartit">Kvartar</string>
+    <string name="level_viisi">Fem minuter i taget</string>
+    <string name="level_minuutit">Exakta minuter</string>
+    <string name="challenge_title">Minututmaningen</string>
+    <string name="challenge_time_remaining">Tid kvar</string>
+    <string name="challenge_desc">Hur många frågor hinner du besvara på en minut?</string>
+    <string name="record">Bästa resultat: %1$d</string>
+    <string name="question_set">Ställ klockan på</string>
+    <string name="praise_with_time">%1$s %2$s.</string>
+    <string name="reveal_read">Rätt svar är %1$s. Titta på vart visarna pekar.</string>
+    <string name="reveal_set">Så här visar visarna tiden: %1$s.</string>
+    <string name="hint_hands_right">Visarna stämmer! I mitten syns %1$s och texten: %2$s.</string>
+    <string name="hint_sun">solen</string>
+    <string name="hint_moon">månen</string>
+    <string name="hint_read_hour">Titta på den korta rosa visaren. Den %1$s.</string>
+    <string name="hint_read_hour_half">Nära halv är visaren nära mitten mellan den här timmen och nästa.</string>
+    <string name="hint_read_minute">Titta på den långa blå visaren. Den pekar %1$s.</string>
+    <string name="hint_read_minute_also_hour">Titta sedan på den korta rosa visaren.</string>
+    <string name="hint_set_minute">Den långa blå visaren ska peka %1$s.</string>
+    <string name="hint_set_hour">Den långa visaren är rätt! Flytta den korta rosa visaren så att den %1$s.</string>
+    <string name="hint_set_hour_turn">Flytta den långa visaren ett helt varv för att flytta den korta visaren en timme framåt.</string>
+    <string name="hour_pos_exact">pekar rakt på %1$d</string>
+    <string name="hour_pos_passed">har just passerat %1$d</string>
+    <string name="hour_pos_between" tools:ignore="PluralsCandidate">är mellan %1$d och %2$d</string>
+    <string name="hour_pos_almost">är nästan framme vid %1$d</string>
+    <string name="minute_pos_top">uppåt på 12. Det är hel timme</string>
+    <string name="minute_pos_bottom">nedåt på 6. Det har gått en halvtimme sedan hel timme</string>
+    <string name="minute_pos_quarter_past">på 3. Det är kvart över</string>
+    <string name="minute_pos_quarter_to">på 9. Det är kvart i</string>
+    <string name="minute_pos_number" tools:ignore="PluralsCandidate">på %1$d. Det har gått %2$d\u00A0minuter sedan hel timme</string>
+    <string name="minute_pos_ticks" tools:ignore="PluralsCandidate">på minutstreck %1$d. Räkna de små strecken från 12</string>
+    <string name="result_title_3">Underbart!</string>
+    <string name="result_title_2">Bra gjort!</string>
+    <string name="result_title_1">Fortsätt utforska!</string>
+    <plurals name="result_text">
+        <item quantity="one">Klart: %1$s! Du fick %2$d\u00A0stjärna.</item>
+        <item quantity="other">Klart: %1$s! Du fick %2$d\u00A0stjärnor.</item>
+    </plurals>
+    <plurals name="result_previous_best">
+        <item quantity="one">Ditt bästa resultat på den här nivån är %1$d\u00A0stjärna.</item>
+        <item quantity="other">Ditt bästa resultat på den här nivån är %1$d\u00A0stjärnor.</item>
+    </plurals>
+    <string name="result_new_item">Du låste upp en kläddel:</string>
+    <string name="result_new_items">Du låste upp kläddelar:</string>
+    <string name="result_play_more">Du kan spela igen när du vill.</string>
+    <string name="play_again">Spela igen</string>
+    <string name="next_level">Nästa nivå</string>
+    <string name="dress_doll">Välj kläder</string>
+    <plurals name="result_stars_description">
+        <item quantity="one">%1$d\u00A0stjärna av tre</item>
+        <item quantity="other">%1$d\u00A0stjärnor av tre</item>
+    </plurals>
+    <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d rätt</string>
+    <string name="challenge_intro">Du har en minut. Svara på så många du hinner. Efter ett felaktigt svar visar klockan rätt tid och spelet fortsätter.</string>
+    <string name="challenge_best" tools:ignore="PluralsCandidate">Bästa resultat: %1$d rätt</string>
+    <string name="challenge_no_best">Inget resultat ännu</string>
+    <string name="challenge_go">Starta!</string>
+    <string name="challenge_over">Tiden är ute!</string>
+    <string name="challenge_new_best">Nytt rekord!</string>
+    <string name="challenge_new_record" tools:ignore="PluralsCandidate">Nytt rekord! Rätta svar: %1$d.</string>
+    <string name="challenge_result" tools:ignore="PluralsCandidate">Rätta svar: %1$d. Ditt bästa resultat är %2$d.</string>
+    <string name="ask_title">Spela tillsammans</string>
+    <string name="ask_big_eyebrow" tools:ignore="PluralsCandidate">Spelare %1$d ställer tiden</string>
+    <string name="ask_big_question">Välj en tid</string>
+    <string name="ask_big_text">Flytta visarna medan din spelkompis tittar bort. Tryck sedan på Ge till din kompis och lämna över klockan.</string>
+    <string name="ask_go">Ge till din kompis</string>
+    <string name="ask_small_eyebrow" tools:ignore="PluralsCandidate">Spelare %1$d svarar</string>
+    <string name="ask_small_text">Säg tiden, peka eller prata om den tillsammans. Visa svaret när ni är redo.</string>
+    <string name="ask_reveal">Visa svaret</string>
+    <string name="ask_new">Byt tur</string>
+    <string name="doll_title">Kläder</string>
+    <string name="doll_name_label">Kompisens namn</string>
+    <string name="doll_name_placeholder">Välj ett namn</string>
+    <plurals name="doll_info">
+        <item quantity="one">Du har %1$d\u00A0stjärna. Varje ny stjärna låser upp en kläddel. Tryck på en del för att ta på den.</item>
+        <item quantity="other">Du har %1$d\u00A0stjärnor. Varje ny stjärna låser upp en kläddel. Tryck på en del för att ta på den.</item>
+    </plurals>
+    <string name="doll_all_open">Alla kläddelar går att använda. Prova olika kombinationer!</string>
+    <string name="doll_optional_hint">Tryck på en sak för att ta på den. Tryck igen för att ta av den.</string>
+    <string name="doll_optional_hint_partial">Tryck på en sak för att ta på den. Huvudbonader och tillbehör tas av om du trycker igen.</string>
+    <plurals name="doll_item_locked">
+        <item quantity="one">Låst. Låses upp vid %1$d\u00A0stjärna. Du har %2$d.</item>
+        <item quantity="other">Låst. Låses upp vid %1$d\u00A0stjärnor. Du har %2$d.</item>
+    </plurals>
+    <string name="slot_hair">Hår</string>
+    <string name="slot_dress">Klänningar</string>
+    <string name="slot_shoes">Skor</string>
+    <string name="slot_head">Huvudbonader</string>
+    <string name="slot_neck">Runt halsen</string>
+    <string name="slot_extra">Tillbehör</string>
+    <string name="slot_roof">På taket</string>
+    <string name="slot_front">Fram</string>
+    <string name="slot_wheels">Hjul</string>
+    <string name="slot_model">Förvandlingar</string>
+    <string name="item_hair_letit">Bruna flätor</string>
+    <string name="item_dress_perus">Gul klänning</string>
+    <string name="item_shoes_tossut">Vita tofflor</string>
+    <string name="item_dress_pilkku">Prickig klänning</string>
+    <string name="item_head_rusetti">Rosett</string>
+    <string name="item_shoes_punaiset">Röda skor</string>
+    <string name="item_hair_pitkat">Gyllene hår</string>
+    <string name="item_dress_tahti">Stjärnklänning</string>
+    <string name="item_head_kukat">Blomsterkrans</string>
+    <string name="item_extra_strawberry_bag">Jordgubbsväska</string>
+    <string name="item_shoes_saappaat">Lila stövlar</string>
+    <string name="item_hair_kiharat">Rosa lockar</string>
+    <string name="item_dress_overalls">Hängselbyxor</string>
+    <string name="item_head_kruunu">Krona</string>
+    <string name="item_extra_siivet">Fjärilsvingar</string>
+    <string name="item_shoes_roller_skates">Rullskridskor</string>
+    <string name="item_hair_sateenkaari">Regnbågshår</string>
+    <string name="item_dress_sateenkaari">Regnbågsklänning</string>
+    <string name="koulu_title">Lär dig</string>
+    <string name="lesson_done">Klar</string>
+    <string name="path_current">På tur</string>
+    <string name="lesson_skip">Hoppa över och spela</string>
+    <string name="lesson_replay">Visa igen</string>
+    <string name="lesson_prev">Föregående</string>
+    <string name="lesson_try">Prova</string>
+    <string name="lesson_next_lesson">Nästa lektion</string>
+    <string name="lesson_start_game">Börja spela!</string>
+    <string name="lesson_practise">Öva</string>
+    <string name="lesson_learned">%1$s Du har klarat lektionen %2$s.</string>
+    <!-- Full sentences end with punctuation; bare labels do not. Measurements use digits.
+         Counting phrases may spell out counts. Keep numbers and units together. -->
+    <string name="say_quarter">Kvart %1$d</string>
+    <string name="say_number_minutes" tools:ignore="PluralsCandidate">Siffran %1$d markerar %2$d\u00A0minuter.</string>
+    <string name="l_viisarit_title">Två visare</string>
+    <string name="l_viisarit_desc">Vad visar de olika visarna?</string>
+    <string name="l_viisarit_p1a">Den här klockan har två visare.</string>
+    <string name="l_viisarit_p1b">Den korta rosa visaren är timvisaren. Den visar vilken timme vi är inne på.</string>
+    <string name="l_viisarit_p2a">Den långa blå visaren är minutvisaren. Den visar minuterna.</string>
+    <string name="l_viisarit_p3a">När tiden går rör sig visarna från 1 mot 2, sedan 3 och vidare runt klockan.</string>
+    <string name="l_viisarit_p3b">Den här riktningen kallas medurs.</string>
+    <string name="l_viisarit_q">Vilken visare visar timmarna?</string>
+    <string name="l_viisarit_c1">Den korta rosa visaren</string>
+    <string name="l_viisarit_c2">Den långa blå visaren</string>
+    <string name="l_viisarit_hint">Timvisaren är den kortare, rosa visaren.</string>
+    <string name="l_kierros_title">Ett varv</string>
+    <string name="l_kierros_desc">Vad händer på en timme?</string>
+    <string name="l_kierros_p1a">Den långa visaren rör sig runt klockan.</string>
+    <string name="l_kierros_p1b">Ett helt varv tar en timme.</string>
+    <string name="l_kierros_say_start">Klockan är tre.</string>
+    <string name="l_kierros_say_go">Den långa visaren börjar sitt varv.</string>
+    <string name="l_kierros_say_end">Nu är klockan fyra. En timme har gått!</string>
+    <string name="l_kierros_p2a">Titta nu på den korta visaren!</string>
+    <string name="l_kierros_p2b">När den långa visaren går ett helt varv flyttar den korta visaren sig bara ett tal framåt.</string>
+    <string name="l_kierros_say_moved">Den korta visaren flyttade sig från 3 till 4.</string>
+    <string name="l_kierros_p3a">En timme har 60\u00A0minuter.</string>
+    <string name="l_kierros_p3b">Runt kanten finns 60\u00A0minutstreck. Den långa visaren flyttar sig från ett streck till nästa på en minut.</string>
+    <string name="l_kierros_say_hour">60\u00A0minuter är en timme.</string>
+    <string name="l_kierros_q">Hur lång tid går det när den långa visaren går ett helt varv?</string>
+    <string name="l_kierros_c1">En timme</string>
+    <string name="l_kierros_c2">En minut</string>
+    <string name="l_kierros_c3">Ett dygn</string>
+    <string name="l_kierros_hint">Den korta visaren flyttade sig ett tal framåt. Det är en timme.</string>
+    <string name="l_tasan_title">Hela timmar</string>
+    <string name="l_tasan_desc">Den långa visaren pekar rakt upp</string>
+    <string name="l_tasan_p1a">När den långa visaren pekar rakt upp på 12 är det hel timme.</string>
+    <string name="l_tasan_p2a">Titta på den korta visaren för att se timmen.</string>
+    <string name="l_tasan_p2b">Här pekar den på 3, så klockan är tre.</string>
+    <string name="l_tasan_p3a">Vi utforskar några andra hela timmar.</string>
+    <string name="l_tasan_p3b">Den långa visaren stannar högst upp. Den korta visaren visar timmen.</string>
+    <string name="l_tasan_q">Vad är klockan?</string>
+    <string name="l_tasan_c1">Nio</string>
+    <string name="l_tasan_c2">Tolv</string>
+    <string name="l_tasan_c3">Tre</string>
+    <string name="l_tasan_hint">Den långa visaren är högst upp. Titta på den korta rosa visaren för att se timmen.</string>
+    <string name="l_puoli_title">Halva timmar</string>
+    <string name="l_puoli_desc">Den långa visaren pekar nedåt</string>
+    <string name="l_puoli_p1a">Efter ett halvt varv pekar den långa visaren nedåt på 6.</string>
+    <string name="l_puoli_p1b">En halvtimme har gått. Det är 30\u00A0minuter.</string>
+    <string name="l_puoli_say_half">En halvtimme har gått.</string>
+    <string name="l_puoli_p2a">Den korta visaren har passerat 3 men har inte kommit fram till 4 ännu.</string>
+    <string name="l_puoli_p2b">Den är mitt emellan dem.</string>
+    <string name="l_puoli_p3a">Vi säger halv fyra: klockan är halvvägs från tre till fyra.</string>
+    <string name="l_puoli_p3b">Med siffror är tiden 3.30.</string>
+    <string name="l_puoli_say_digits">Halv fyra är 3.30 med siffror.</string>
+    <string name="l_puoli_p4a">När du säger halv nämner du nästa timme, som den korta visaren är på väg mot.</string>
+    <string name="l_puoli_p4b">Mellan 7 och 8 är klockan halv åtta.</string>
+    <string name="l_puoli_q">Vad är klockan?</string>
+    <string name="l_puoli_c1">Halv sex</string>
+    <string name="l_puoli_c2">Halv fem</string>
+    <string name="l_puoli_c3">Sex</string>
+    <string name="l_puoli_hint">Den korta visaren har passerat 5 och är halvvägs till 6. Nämn nästa timme.</string>
+    <string name="l_vartti_title">Kvartar</string>
+    <string name="l_vartti_desc">En fjärdedels timme</string>
+    <string name="l_vartti_p1a">Dela en timme i fyra lika stora delar. Varje del är en kvart.</string>
+    <string name="l_vartti_p1b">En kvart är 15\u00A0minuter.</string>
+    <string name="l_vartti_say_four">Fyra kvartar är en timme.</string>
+    <string name="l_vartti_p2a">När den långa visaren når 3 har det gått en kvart av timmen.</string>
+    <string name="l_vartti_p2b">Här säger vi kvart över tre.</string>
+    <string name="l_vartti_p3a">När den långa visaren når 9 är det en kvart kvar till nästa hela timme.</string>
+    <string name="l_vartti_p3b">Här säger vi kvart i fyra.</string>
+    <string name="l_vartti_q">Vad är klockan?</string>
+    <string name="l_vartti_c1">Kvart i sju</string>
+    <string name="l_vartti_c2">Kvart över sex</string>
+    <string name="l_vartti_c3">Kvart i sex</string>
+    <string name="l_vartti_hint">Den långa visaren är på 9. Det är en kvart kvar. Vilken timme kommer härnäst?</string>
+    <string name="l_ylivaille_title">Över och i</string>
+    <string name="l_ylivaille_desc">Klockans två sidor</string>
+    <string name="l_ylivaille_p1a">På klockans högra sida kan vi till exempel säga tjugo över.</string>
+    <string name="l_ylivaille_p1b">Vi räknar hur många minuter som har gått sedan hel timme.</string>
+    <string name="l_ylivaille_p2a">På vänstra sidan kan vi till exempel säga tjugo i.</string>
+    <string name="l_ylivaille_p2b">Vi räknar hur många minuter som är kvar till nästa hela timme.</string>
+    <string name="l_ylivaille_p3a">När du till exempel säger tio över nämner du timmen som den korta visaren har passerat.</string>
+    <string name="l_ylivaille_p3b">När du säger tio i nämner du nästa timme. Nära halv kan du räkna minuterna i förhållande till halv.</string>
+    <string name="l_ylivaille_q">Vad är klockan?</string>
+    <string name="l_ylivaille_c1">Tio över fyra</string>
+    <string name="l_ylivaille_c2">Tio i fyra</string>
+    <string name="l_ylivaille_c3">Tio i fem</string>
+    <string name="l_ylivaille_hint">Den långa visaren är på högra sidan. Räkna minuterna efter timmen som den korta visaren har passerat.</string>
+    <string name="l_viisi_title">Fem minuter i taget</string>
+    <string name="l_viisi_desc">Siffror och minuter</string>
+    <string name="l_viisi_p1a">Den långa visaren går från ett tal till nästa på fem minuter.</string>
+    <string name="l_viisi_p1b">Siffran 1 markerar 5\u00A0minuter, siffran 2 markerar 10 och så vidare.</string>
+    <string name="l_viisi_p2a">Räkna fem i taget: 5, 10, 15, 20.</string>
+    <string name="l_viisi_p2b">Vid 4 har det gått 20\u00A0minuter. Vi säger tjugo över.</string>
+    <string name="l_viisi_p3a">Fortsätt räkna fem i taget på båda sidor om halv.</string>
+    <string name="l_viisi_p3b">Vid 5 säger vi fem i halv. Vid 7 säger vi fem över halv. Nämn nästa timme.</string>
+    <string name="l_viisi_q">Vad är klockan?</string>
+    <string name="l_viisi_c1">Tjugo i nio</string>
+    <string name="l_viisi_c2">Tjugo över åtta</string>
+    <string name="l_viisi_c3">Tio i nio</string>
+    <string name="l_viisi_hint">Vid 8 har det gått 40\u00A0minuter. Det är 20\u00A0minuter kvar till nästa hela timme.</string>
+    <string name="l_minuutit_title">Exakta minuter</string>
+    <string name="l_minuutit_desc">De små strecken</string>
+    <string name="l_minuutit_p1a">Varje litet streck runt klockan står för en minut.</string>
+    <string name="l_minuutit_p1b">Det är 5\u00A0minuter mellan två tal bredvid varandra.</string>
+    <string name="l_minuutit_p2a">Börja vid det numrerade strecket strax före den långa visaren. Räkna de extra små strecken framåt.</string>
+    <string name="l_minuutit_p2b">Siffran 2 markerar 10\u00A0minuter. Två streck till blir 10 + 2 = 12\u00A0minuter.</string>
+    <string name="l_minuutit_q">Vad är klockan?</string>
+    <string name="l_minuutit_c1">Sju minuter över tre</string>
+    <string name="l_minuutit_c2">Fem över tre</string>
+    <string name="l_minuutit_c3">Åtta minuter över tre</string>
+    <string name="l_minuutit_hint">Siffran 1 markerar 5\u00A0minuter. Räkna två små streck till framåt.</string>
+    <string name="l_vrk_title">24\u00A0timmar på ett dygn</string>
+    <string name="l_vrk_desc">Morgon, eftermiddag och natt</string>
+    <string name="l_vrk_p1a">Ett helt dygn har 24\u00A0timmar.</string>
+    <string name="l_vrk_p1b">Den korta visaren går runt klockan två gånger per dygn.</string>
+    <string name="l_vrk_say_first">Första varvet: från midnatt till klockan tolv på dagen</string>
+    <string name="l_vrk_say_second">Andra varvet: från klockan tolv på dagen till midnatt</string>
+    <string name="l_vrk_say_day">Ett helt dygn har gått.</string>
+    <string name="l_vrk_p2a">För eftermiddags- och kvällstimmarna 1–11 lägger du till 12 för att få talet på en 24-timmarsklocka.</string>
+    <string name="l_vrk_p2b">Tre på eftermiddagen är 3 + 12 = 15. Vi skriver 15.00.</string>
+    <string name="l_vrk_say_night">Tre på natten: 03.00</string>
+    <string name="l_vrk_say_sum">3 + 12 = 15: klockan är 15.00.</string>
+    <string name="l_vrk_p3a">Visarna ser likadana ut klockan tre på natten och tre på eftermiddagen.</string>
+    <string name="l_vrk_p3b">Läs texten i mitten för att se vilken del av dygnet det är. Visarna ensamma kan inte visa det.</string>
+    <string name="l_vrk_say_afternoon">Tre på eftermiddagen: 15.00</string>
+    <string name="l_vrk_q">Vad är klockan?</string>
+    <string name="l_vrk_c1">Sju på kvällen: 19.00</string>
+    <string name="l_vrk_c2">Sju på morgonen: 07.00</string>
+    <string name="l_vrk_c3">Fem på eftermiddagen: 17.00</string>
+    <string name="l_vrk_hint">Texten i mitten säger kväll. Lägg till 12 till timmen: 7 + 12 = 19.</string>
+    <string name="doll_stars_explained">Stjärnorna tar aldrig slut. Nya kläder låses upp när du har tillräckligt med stjärnor.</string>
+    <string name="answer_correct">Rätt</string>
+    <string name="answer_incorrect">Fel</string>
+    <string name="app_launcher_name">Clocklings Blender</string>
+</resources>

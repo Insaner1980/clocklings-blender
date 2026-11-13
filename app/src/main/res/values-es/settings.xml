@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Ajustes</string>
+    <string name="language_title">Idioma</string>
+    <string name="language_device">Idioma del dispositivo</string>
+    <string name="language_english">English</string>
+    <string name="language_finnish">Suomi</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_french">Français</string>
+    <string name="language_spanish">Español (España)</string>
+    <string name="language_portuguese_brazil">Português (Brasil)</string>
+    <string name="settings_clock_display">Formato de hora</string>
+    <string name="settings_guides_title">Guías del reloj</string>
+    <string name="settings_guides_description">Muestra los números de los minutos y colorea las dos mitades del reloj. En el modo de 24 horas, también muestra los números del 13 al 23 y el 0.</string>
+    <string name="settings_sound_group">Sonido</string>
+    <string name="settings_sound_title">Efectos de sonido</string>
+    <string name="settings_sound_description">Sonidos al tocar, responder y celebrar.</string>
+    <string name="settings_progress_title">Progreso de aprendizaje</string>
+    <string name="settings_reset_title">¿Borrar el progreso de aprendizaje?</string>
+    <string name="settings_reset_body">Se borrarán las estrellas, los mejores resultados, las lecciones completadas, los nombres de los acompañantes y sus conjuntos. Se conservarán el idioma, el formato de hora, los efectos de sonido, las guías del reloj y los ajustes de aspecto.</string>
+    <string name="settings_reset_action">Borrar progreso</string>
+    <string name="settings_cancel">Cancelar</string>
+    <string name="settings_save_error">No se ha podido guardar el cambio. Inténtalo de nuevo.</string>
+    <string name="language_save_error">No se ha podido cambiar el idioma. Inténtalo de nuevo.</string>
+    <string name="settings_retry">Volver a intentar</string>
+    <string name="settings_speech_info_available">La lectura en voz alta está disponible en este idioma. Solo empieza al tocar el altavoz.</string>
+    <string name="settings_speech_info_unavailable">La lectura en voz alta no está disponible en este idioma.</string>
+</resources>

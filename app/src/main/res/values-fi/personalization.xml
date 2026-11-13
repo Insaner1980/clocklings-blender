@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appearance_title">Tee omannäköinen</string>
+    <string name="companions_title">Kaverit</string>
+    <string name="clock_styles_title">Kellotyylit</string>
+    <string name="companion_human">Nukke</string>
+    <string name="companion_cat">Kissa</string>
+    <string name="companion_dog">Koira</string>
+    <string name="companion_robot">Robotti</string>
+    <string name="companion_dragon">Lohikäärme</string>
+    <string name="companion_dinosaur">Dinosaurus</string>
+    <string name="companion_bunny">Pupu</string>
+    <string name="companion_unicorn">Yksisarvinen</string>
+    <string name="companion_car">Auto</string>
+    <string name="companion_none">Pelkkä kello</string>
+    <string name="no_companion_hint">Harjoittele kellonaikoja ilman kaveria.</string>
+    <string name="companion_color">Väri</string>
+    <string name="color_original">Alkuperäinen</string>
+    <string name="color_blue">Sininen</string>
+    <string name="color_green">Vihreä</string>
+    <string name="color_purple">Violetti</string>
+    <string name="color_orange">Oranssi</string>
+    <string name="color_coral">Koralli</string>
+    <string name="theme_classic">Klassinen</string>
+    <string name="theme_rainbow">Sateenkaari</string>
+    <string name="theme_space">Avaruus</string>
+    <string name="theme_forest">Metsä</string>
+    <string name="theme_ocean">Meri</string>
+    <string name="theme_garden">Puutarha</string>
+    <string name="theme_workshop">Työpaja</string>
+    <string name="theme_custom">Oma kello</string>
+    <string name="custom_clock_hint">Yhdistä lempivärejäsi ja -muotojasi. Lyhyt pinkki viisari näyttää tunnit ja pitkä sininen minuutit.</string>
+    <string name="clock_color">Kehyksen väri</string>
+    <string name="clock_frame">Kehyksen kuvio</string>
+    <string name="frame_round">Sileä</string>
+    <string name="frame_scalloped">Helmet</string>
+    <string name="frame_blocks">Palikat</string>
+    <string name="clock_numerals">Numerot</string>
+    <string name="numerals_rounded">Pyöreät</string>
+    <string name="numerals_plain">Selkeät</string>
+    <string name="clock_hands">Viisarit</string>
+    <string name="hands_round">Pyöreät kärjet</string>
+    <string name="hands_pointer">Terävät kärjet</string>
+    <string name="home_companion_choices">Valitse kaveri ja tee siitä omannäköinen</string>
+</resources>

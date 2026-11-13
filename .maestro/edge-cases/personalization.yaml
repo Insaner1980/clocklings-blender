@@ -1,0 +1,51 @@
+# PS-01/03/05/ST-10. Fresh English synthetic fixture. Clears ONLY the dedicated test app data.
+# Saves Cat/Blue/name Luna; use settings-persistence.yaml afterwards.
+# Observed descriptors: Cat, Dog, Choose an outfit, Companion name, Blue.
+appId: fi.clocklings
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- tapOn: "My Companion. Choose a companion and make it yours"
+- tapOn: "Cat"
+- tapOn: "Choose an outfit"
+- tapOn: "Companion name"
+- assertVisible: "Choose a name"
+- inputText: "Luna"
+- assertVisible: "Luna"
+- pressKey: Enter
+- assertVisible: "Outfits"
+- assertVisible: "Luna"
+- scrollUntilVisible:
+    element: "Blue"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Blue"
+- assertVisible:
+    text: "Blue"
+    checked: true
+- back
+- tapOn: "Dog"
+- tapOn: "Cat"
+- tapOn: "Choose an outfit"
+- assertVisible: "Luna"
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- tapOn: "My Companion. Choose a companion and make it yours"
+- tapOn: "Choose an outfit"
+- assertVisible: "Luna"
+- scrollUntilVisible:
+    element: "Blue"
+    direction: DOWN
+    timeout: 10000
+- assertVisible:
+    text: "Blue"
+    checked: true
+- back
+- back
+- assertVisible: "Clocklings"

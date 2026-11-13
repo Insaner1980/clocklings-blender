@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="back_description">Zurück</string>
+    <string name="help_on">Hilfe an</string>
+    <string name="help_off">Hilfe aus</string>
+    <string name="listen">Anhören</string>
+    <string name="random_time">Zufällige Uhrzeit</string>
+    <string name="next">Weiter</string>
+    <string name="done">Fertig</string>
+    <string name="question_read">Wie spät ist es?</string>
+    <string name="digital_24">%1$s</string>
+    <string name="speak_time">Es ist %1$s</string>
+    <string name="speak_time_24">Es ist %1$s. Im 24-Stunden-Format: %2$s</string>
+    <string name="speak_midnight_24">Es ist Mitternacht. Im 24-Stunden-Format: %1$s.</string>
+    <string name="speak_noon_24">Es ist Mittag. Im 24-Stunden-Format: %1$s.</string>
+    <string-array name="praise">
+        <item>Richtig!</item><item>Gut gemacht!</item><item>Toll gemacht!</item>
+        <item>Du hast es geschafft!</item><item>Prima!</item><item>Klasse!</item><item>Wunderbar!</item>
+    </string-array>
+    <plurals name="stars_count"><item quantity="one">%1$d\u00A0Stern</item><item quantity="other">%1$d\u00A0Sterne</item></plurals>
+    <plurals name="minutes_count"><item quantity="one">%1$d\u00A0Minute</item><item quantity="other">%1$d\u00A0Minuten</item></plurals>
+
+    <string name="clock_description">Zifferblatt: %1$s</string>
+    <string name="clock_question_description">Uhrenfrage. Bitte dein Gegenüber, die Zeiger zu beschreiben, oder deckt die Uhrzeit gemeinsam auf.</string>
+    <plurals name="clock_add"><item quantity="one">%1$d\u00A0Minute weiter</item><item quantity="other">%1$d\u00A0Minuten weiter</item></plurals>
+    <plurals name="clock_subtract"><item quantity="one">%1$d\u00A0Minute zurück</item><item quantity="other">%1$d\u00A0Minuten zurück</item></plurals>
+    <string name="clock_zone_yli">nach</string>
+    <string name="clock_zone_vaille">vor</string>
+    <string name="intro_greeting_morning">Guten Morgen!</string>
+    <string name="intro_greeting_day">Hallo!</string>
+    <string name="intro_greeting_evening">Guten Abend!</string>
+    <string name="intro_greeting_night">Hallo, Nachteule!</string>
+    <string name="intro_description">%1$s. %2$s</string>
+    <string name="intro_skip">Begrüßung überspringen</string>
+
+    <string name="home_star_total">%1$d / %2$d</string>
+    <string name="menu_koulu">Lernen</string>
+    <string name="menu_koulu_sub">Entdecke, wie die Zeiger die Zeit zeigen</string>
+    <string name="menu_vapaa">Entdecken</string>
+    <string name="menu_vapaa_sub">Bewege die Zeiger und entdecke die Uhrzeit</string>
+    <string name="menu_pelaa">Spielen</string>
+    <string name="menu_pelaa_sub">Übe, die Uhr zu lesen und zu stellen</string>
+    <string name="menu_kysy">Zusammen spielen</string>
+    <string name="menu_kysy_sub">Stellt die Uhr, ratet und wechselt euch ab</string>
+    <string name="menu_nukke">Meine Figur</string>
+    <string name="mode_12">12 h</string>
+    <string name="mode_24">24 h</string>
+
+    <string name="free_title">Entdecken</string>
+    <string name="legend_hour">Der kurze rosa Zeiger zeigt die Stunde.</string>
+    <string name="legend_minute">Der lange blaue Zeiger zeigt die Minuten.</string>
+    <string name="legend_drag">Ziehe an einem Zeiger, um die Uhrzeit zu ändern.</string>
+    <string name="level_example">Zum Beispiel %1$s</string>
+    <string name="watch_lesson">Lektion ansehen</string>
+    <string name="level_tasatunnit">Volle Stunden</string>
+    <string name="level_puolet">Halbe Stunden</string>
+    <string name="level_vartit">Viertelstunden</string>
+    <string name="level_viisi">Fünf-Minuten-Schritte</string>
+    <string name="level_minuutit">Genaue Minuten</string>
+    <string name="challenge_title">Minuten-Challenge</string>
+    <string name="challenge_time_remaining">Verbleibende Zeit</string>
+    <string name="challenge_desc">Wie viele Antworten schaffst du in einer Minute?</string>
+    <string name="record">Bestes Ergebnis: %1$d</string>
+    <string name="question_set">Stelle die Uhr auf</string>
+    <string name="praise_with_time">%1$s %2$s.</string>
+    <string name="reveal_read">Die Antwort ist %1$s. Schau, wohin die Zeiger zeigen.</string>
+    <string name="reveal_set">So zeigen die Zeiger %1$s an.</string>
+
+    <string name="hint_hands_right">Die Zeiger stimmen! Schau auf das Symbol (%1$s) und die Beschriftung in der Mitte: %2$s.</string>
+    <string name="hint_sun">Sonne</string>
+    <string name="hint_moon">Mond</string>
+    <string name="hint_read_hour">Schau auf den kurzen rosa Zeiger. Er %1$s.</string>
+    <string name="hint_read_hour_half">Zur halben Stunde steht er etwa in der Mitte zwischen dieser und der nächsten Stunde.</string>
+    <string name="hint_read_minute">Schau auf den langen blauen Zeiger. Er zeigt %1$s.</string>
+    <string name="hint_read_minute_also_hour">Schau dann auf den kurzen rosa Zeiger.</string>
+    <string name="hint_set_minute">Der lange blaue Zeiger soll so stehen: Er zeigt %1$s.</string>
+    <string name="hint_set_hour">Der lange Zeiger stimmt! Bewege den kurzen rosa Zeiger. Er %1$s.</string>
+    <string name="hint_set_hour_turn">Drehe den langen Zeiger einmal ganz herum, damit der kurze Zeiger eine Stunde weiterwandert.</string>
+    <string name="hour_pos_exact">zeigt genau auf die %1$d</string>
+    <string name="hour_pos_passed">ist gerade an der %1$d vorbeigewandert</string>
+    <string name="hour_pos_between" tools:ignore="PluralsCandidate">steht zwischen %1$d und %2$d</string>
+    <string name="hour_pos_almost">steht kurz vor der %1$d</string>
+    <string name="minute_pos_top">nach oben auf die 12. Es ist eine volle Stunde</string>
+    <string name="minute_pos_bottom">nach unten auf die 6. Es ist eine halbe Stunde vergangen</string>
+    <string name="minute_pos_quarter_past">auf die 3. Es ist Viertel nach</string>
+    <string name="minute_pos_quarter_to">auf die 9. Es ist Viertel vor</string>
+    <string name="minute_pos_number" tools:ignore="PluralsCandidate">auf die %1$d. Seit der vollen Stunde sind %2$d\u00A0Minuten vergangen</string>
+    <string name="minute_pos_ticks" tools:ignore="PluralsCandidate">auf den Minutenstrich %1$d. Zähle die kleinen Striche ab der 12</string>
+
+    <string name="result_title_3">Wunderbar!</string>
+    <string name="result_title_2">Gut gemacht!</string>
+    <string name="result_title_1">Entdecke weiter!</string>
+    <plurals name="result_text">
+        <item quantity="one">%1$s geschafft! Du hast %2$d\u00A0Stern verdient.</item>
+        <item quantity="other">%1$s geschafft! Du hast %2$d\u00A0Sterne verdient.</item>
+    </plurals>
+    <plurals name="result_previous_best">
+        <item quantity="one">Dein bestes Ergebnis auf dieser Stufe ist %1$d\u00A0Stern.</item>
+        <item quantity="other">Dein bestes Ergebnis auf dieser Stufe sind %1$d\u00A0Sterne.</item>
+    </plurals>
+    <string name="result_new_item">Du hast ein neues Teil freigeschaltet:</string>
+    <string name="result_new_items">Du hast neue Teile freigeschaltet:</string>
+    <string name="result_play_more">Du kannst jederzeit noch einmal spielen.</string>
+    <string name="play_again">Noch einmal spielen</string>
+    <string name="next_level">Nächste Stufe</string>
+    <string name="dress_doll">Outfit wählen</string>
+    <plurals name="result_stars_description"><item quantity="one">%1$d\u00A0Stern von drei</item><item quantity="other">%1$d\u00A0Sterne von drei</item></plurals>
+    <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d richtig</string>
+    <string name="challenge_intro">Du hast eine Minute. Beantworte so viele Fragen wie möglich. Nach einer falschen Antwort zeigt die Uhr die Lösung und es geht weiter.</string>
+    <string name="challenge_best" tools:ignore="PluralsCandidate">Bestes Ergebnis: %1$d richtig</string>
+    <string name="challenge_no_best">Noch kein Ergebnis</string>
+    <string name="challenge_go">Los!</string>
+    <string name="challenge_over">Die Zeit ist um!</string>
+    <string name="challenge_new_best">Neuer Rekord!</string>
+    <string name="challenge_new_record" tools:ignore="PluralsCandidate">Neuer Rekord! Du hast %1$d richtig beantwortet.</string>
+    <string name="challenge_result" tools:ignore="PluralsCandidate">Du hast %1$d richtig beantwortet. Dein bestes Ergebnis ist %2$d.</string>
+
+    <string name="ask_title">Zusammen spielen</string>
+    <string name="ask_big_eyebrow" tools:ignore="PluralsCandidate">Person %1$d stellt die Uhr</string>
+    <string name="ask_big_question">Wähle eine Uhrzeit</string>
+    <string name="ask_big_text">Bewege die Zeiger, während dein Gegenüber wegschaut. Tippe dann auf Weitergeben und gib die Uhr weiter.</string>
+    <string name="ask_go">Weitergeben</string>
+    <string name="ask_small_eyebrow" tools:ignore="PluralsCandidate">Person %1$d antwortet</string>
+    <string name="ask_small_text">Sage die Uhrzeit, zeige darauf oder besprecht sie gemeinsam. Deckt die Antwort auf, wenn ihr bereit seid.</string>
+    <string name="ask_reveal">Antwort zeigen</string>
+    <string name="ask_new">Abwechseln</string>
+
+    <string name="doll_title">Outfits</string>
+    <string name="doll_name_label">Name deiner Figur</string>
+    <string name="doll_name_placeholder">Wähle einen Namen</string>
+    <plurals name="doll_info">
+        <item quantity="one">Du hast %1$d\u00A0Stern. Jeder neue Stern schaltet ein Teil frei. Tippe auf ein Teil, um es anzuziehen.</item>
+        <item quantity="other">Du hast %1$d\u00A0Sterne. Jeder neue Stern schaltet ein Teil frei. Tippe auf ein Teil, um es anzuziehen.</item>
+    </plurals>
+    <string name="doll_all_open">Alle Teile sind verfügbar. Probiere jede Kombination aus!</string>
+    <string name="doll_optional_hint">Tippe auf ein Teil, um es anzuziehen. Tippe erneut darauf, um es auszuziehen.</string>
+    <string name="doll_optional_hint_partial">Tippe auf ein Teil, um es anzuziehen. Kopfbedeckungen und Extras kannst du mit erneutem Tippen ablegen.</string>
+    <plurals name="doll_item_locked">
+        <item quantity="one">Gesperrt. Wird bei %1$d\u00A0Stern freigeschaltet. Du hast %2$d.</item>
+        <item quantity="other">Gesperrt. Wird bei %1$d\u00A0Sternen freigeschaltet. Du hast %2$d.</item>
+    </plurals>
+    <string name="slot_hair">Haare</string>
+    <string name="slot_dress">Kleider</string>
+    <string name="slot_shoes">Schuhe</string>
+    <string name="slot_head">Kopfbedeckungen</string>
+    <string name="slot_neck">Halsschmuck</string>
+    <string name="slot_extra">Extras</string>
+    <string name="slot_roof">Auf dem Dach</string>
+    <string name="slot_front">Vorne</string>
+    <string name="slot_wheels">Räder</string>
+    <string name="slot_model">Verwandlungen</string>
+    <string name="item_hair_letit">Braune Zöpfe</string>
+    <string name="item_dress_perus">Gelbes Kleid</string>
+    <string name="item_shoes_tossut">Weiße Hausschuhe</string>
+    <string name="item_dress_pilkku">Punktekleid</string>
+    <string name="item_head_rusetti">Schleife</string>
+    <string name="item_shoes_punaiset">Rote Schuhe</string>
+    <string name="item_hair_pitkat">Goldene Haare</string>
+    <string name="item_dress_tahti">Sternenkleid</string>
+    <string name="item_head_kukat">Blumenkranz</string>
+    <string name="item_extra_strawberry_bag">Erdbeertasche</string>
+    <string name="item_shoes_saappaat">Lila Stiefel</string>
+    <string name="item_hair_kiharat">Rosa Locken</string>
+    <string name="item_dress_overalls">Latzhose</string>
+    <string name="item_head_kruunu">Krone</string>
+    <string name="item_extra_siivet">Schmetterlingsflügel</string>
+    <string name="item_shoes_roller_skates">Rollschuhe</string>
+    <string name="item_hair_sateenkaari">Regenbogenhaare</string>
+    <string name="item_dress_sateenkaari">Regenbogenkleid</string>
+
+    <string name="koulu_title">Lernen</string>
+    <string name="lesson_done">Abgeschlossen</string>
+    <string name="path_current">Als Nächstes</string>
+    <string name="lesson_skip">Überspringen und spielen</string>
+    <string name="lesson_replay">Noch einmal zeigen</string>
+    <string name="lesson_prev">Zurück</string>
+    <string name="lesson_try">Probiere es aus</string>
+    <string name="lesson_next_lesson">Nächste Lektion</string>
+    <string name="lesson_start_game">Jetzt spielen!</string>
+    <string name="lesson_practise">Üben</string>
+    <string name="lesson_learned">%1$s Du hast %2$s abgeschlossen.</string>
+    <string name="say_quarter">Viertel %1$d</string>
+    <string name="say_number_minutes" tools:ignore="PluralsCandidate">Die Zahl %1$d steht für %2$d\u00A0Minuten.</string>
+
+    <string name="l_viisarit_title">Zwei Zeiger</string>
+    <string name="l_viisarit_desc">Was zeigt welcher Zeiger?</string>
+    <string name="l_viisarit_p1a">Diese Uhr hat zwei Zeiger.</string>
+    <string name="l_viisarit_p1b">Der kurze rosa Zeiger ist der Stundenzeiger. Er zeigt, in welcher Stunde wir sind.</string>
+    <string name="l_viisarit_p2a">Der lange blaue Zeiger ist der Minutenzeiger. Er zeigt die Minuten.</string>
+    <string name="l_viisarit_p3a">Die Zeiger bewegen sich mit der Zeit von der 1 zur 2, dann zur 3 und immer weiter im Kreis.</string>
+    <string name="l_viisarit_p3b">Die Zeiger bewegen sich im Uhrzeigersinn.</string>
+    <string name="l_viisarit_q">Welcher Zeiger zeigt die Stunde?</string>
+    <string name="l_viisarit_c1">Der kurze rosa Zeiger</string>
+    <string name="l_viisarit_c2">Der lange blaue Zeiger</string>
+    <string name="l_viisarit_hint">Der Stundenzeiger ist der kürzere, rosa Zeiger.</string>
+
+    <string name="l_kierros_title">Einmal herum</string>
+    <string name="l_kierros_desc">Was passiert in einer Stunde?</string>
+    <string name="l_kierros_p1a">Der lange Zeiger wandert immer weiter um die Uhr.</string>
+    <string name="l_kierros_p1b">Eine ganze Runde dauert eine Stunde.</string>
+    <string name="l_kierros_say_start">Es ist drei Uhr.</string>
+    <string name="l_kierros_say_go">Der lange Zeiger beginnt seine Runde.</string>
+    <string name="l_kierros_say_end">Jetzt ist es vier Uhr. Eine Stunde ist vergangen!</string>
+    <string name="l_kierros_p2a">Schau jetzt auf den kurzen Zeiger!</string>
+    <string name="l_kierros_p2b">Während der lange Zeiger einmal ganz herumwandert, rückt der kurze Zeiger nur eine Zahl weiter.</string>
+    <string name="l_kierros_say_moved">Der kurze Zeiger ist von der 3 zur 4 gewandert.</string>
+    <string name="l_kierros_p3a">Eine Stunde hat 60\u00A0Minuten.</string>
+    <string name="l_kierros_p3b">Am Rand sind 60\u00A0Minutenstriche. Jede Minute wandert der lange Zeiger einen Strich weiter.</string>
+    <string name="l_kierros_say_hour">60\u00A0Minuten ergeben eine Stunde.</string>
+    <string name="l_kierros_q">Wie viel Zeit vergeht, wenn der lange Zeiger einmal ganz herumwandert?</string>
+    <string name="l_kierros_c1">Eine Stunde</string>
+    <string name="l_kierros_c2">Eine Minute</string>
+    <string name="l_kierros_c3">Ein Tag</string>
+    <string name="l_kierros_hint">Der kurze Zeiger ist eine Zahl weitergewandert. Das ist eine Stunde.</string>
+
+    <string name="l_tasan_title">Volle Stunden</string>
+    <string name="l_tasan_desc">Der lange Zeiger zeigt nach oben</string>
+    <string name="l_tasan_p1a">Wenn der lange Zeiger genau nach oben auf die 12 zeigt, ist es eine volle Stunde.</string>
+    <string name="l_tasan_p2a">Schau auf den kurzen Zeiger, um die Stunde abzulesen.</string>
+    <string name="l_tasan_p2b">Hier zeigt er auf die 3. Es ist also drei Uhr.</string>
+    <string name="l_tasan_p3a">Entdecken wir noch andere volle Stunden.</string>
+    <string name="l_tasan_p3b">Der lange Zeiger bleibt oben. Der kurze Zeiger verrät uns die Stunde.</string>
+    <string name="l_tasan_q">Wie spät ist es?</string>
+    <string name="l_tasan_c1">Neun Uhr</string>
+    <string name="l_tasan_c2">Zwölf Uhr</string>
+    <string name="l_tasan_c3">Drei Uhr</string>
+    <string name="l_tasan_hint">Der lange Zeiger steht oben. Lies die Stunde am kurzen rosa Zeiger ab.</string>
+
+    <string name="l_puoli_title">Halbe Stunden</string>
+    <string name="l_puoli_desc">Der lange Zeiger zeigt nach unten</string>
+    <string name="l_puoli_p1a">Nach einer halben Runde zeigt der lange Zeiger nach unten auf die 6.</string>
+    <string name="l_puoli_p1b">Eine halbe Stunde ist vergangen. Das sind 30\u00A0Minuten.</string>
+    <string name="l_puoli_say_half">Eine halbe Stunde ist vergangen.</string>
+    <string name="l_puoli_p2a">Der kurze Zeiger ist schon an der 3 vorbei, aber noch nicht bei der 4.</string>
+    <string name="l_puoli_p2b">Er steht genau in der Mitte dazwischen.</string>
+    <string name="l_puoli_p3a">Wir sagen halb vier: Die Hälfte der Stunde bis vier Uhr ist vergangen.</string>
+    <string name="l_puoli_p3b">In Zahlen ist das 3:30.</string>
+    <string name="l_puoli_say_digits">Halb vier ist 3:30.</string>
+    <string name="l_puoli_p4a">Nach halb nennen wir die nächste Stunde, auf die der kurze Zeiger zuwandert.</string>
+    <string name="l_puoli_p4b">Zwischen 7 und 8 ist es halb acht.</string>
+    <string name="l_puoli_q">Wie spät ist es?</string>
+    <string name="l_puoli_c1">Halb sechs</string>
+    <string name="l_puoli_c2">Halb fünf</string>
+    <string name="l_puoli_c3">Sechs Uhr</string>
+    <string name="l_puoli_hint">Der kurze Zeiger steht zwischen 5 und 6. Nenne die nächste Stunde: sechs.</string>
+
+    <string name="l_vartti_title">Viertelstunden</string>
+    <string name="l_vartti_desc">Ein Viertel einer Stunde</string>
+    <string name="l_vartti_p1a">Teile eine Stunde in vier gleich große Teile. Jeder Teil ist eine Viertelstunde.</string>
+    <string name="l_vartti_p1b">Eine Viertelstunde sind 15\u00A0Minuten.</string>
+    <string name="l_vartti_say_four">Vier Viertel ergeben eine Stunde.</string>
+    <string name="l_vartti_p2a">Wenn der lange Zeiger die 3 erreicht, ist eine Viertelstunde vergangen.</string>
+    <string name="l_vartti_p2b">Hier sagen wir Viertel nach drei.</string>
+    <string name="l_vartti_p3a">Wenn der lange Zeiger die 9 erreicht, fehlt noch eine Viertelstunde bis zur nächsten vollen Stunde.</string>
+    <string name="l_vartti_p3b">Hier sagen wir Viertel vor vier.</string>
+    <string name="l_vartti_q">Wie spät ist es?</string>
+    <string name="l_vartti_c1">Viertel vor sieben</string>
+    <string name="l_vartti_c2">Viertel nach sechs</string>
+    <string name="l_vartti_c3">Viertel vor sechs</string>
+    <string name="l_vartti_hint">Der lange Zeiger steht auf der 9. Es fehlt noch eine Viertelstunde. Welche Stunde kommt als Nächstes?</string>
+
+    <string name="l_ylivaille_title">Nach und vor</string>
+    <string name="l_ylivaille_desc">Zwei Seiten der Uhr</string>
+    <string name="l_ylivaille_p1a">Auf der rechten Seite sagen wir zum Beispiel zwanzig nach.</string>
+    <string name="l_ylivaille_p1b">Wir zählen die Minuten seit der vollen Stunde.</string>
+    <string name="l_ylivaille_p2a">Auf der linken Seite sagen wir zum Beispiel zwanzig vor.</string>
+    <string name="l_ylivaille_p2b">Wir zählen die Minuten bis zur nächsten vollen Stunde.</string>
+    <!-- Correct grammar: "an der" refers to "die Stunde"; the next "der" belongs to "der kurze Zeiger". -->
+    <string name="l_ylivaille_p3a" tools:ignore="Typos">Bei zehn nach nennen wir die Stunde, an der der kurze Zeiger schon vorbei ist.</string>
+    <string name="l_ylivaille_p3b">Bei zehn vor nennen wir die nächste Stunde. Nahe der halben Stunde können wir auch die Minuten vor oder nach halb zählen.</string>
+    <string name="l_ylivaille_q">Wie spät ist es?</string>
+    <string name="l_ylivaille_c1">Zehn nach vier</string>
+    <string name="l_ylivaille_c2">Zehn vor vier</string>
+    <string name="l_ylivaille_c3">Zehn vor fünf</string>
+    <!-- Correct grammar: "an der" refers to "die Stunde"; the next "der" belongs to "der kurze Zeiger". -->
+    <string name="l_ylivaille_hint" tools:ignore="Typos">Der lange Zeiger steht rechts. Zähle die Minuten nach der Stunde, an der der kurze Zeiger schon vorbei ist.</string>
+
+    <string name="l_viisi_title">Fünf-Minuten-Schritte</string>
+    <string name="l_viisi_desc">Zahlen und Minuten</string>
+    <string name="l_viisi_p1a">Der lange Zeiger braucht von einer Zahl zur nächsten immer fünf Minuten.</string>
+    <string name="l_viisi_p1b">Die 1 steht für 5\u00A0Minuten, die 2 für 10 und so weiter.</string>
+    <string name="l_viisi_p2a">Zähle in Fünferschritten: 5, 10, 15, 20.</string>
+    <string name="l_viisi_p2b">Bei der 4 sind 20\u00A0Minuten vergangen. Wir sagen zwanzig nach.</string>
+    <string name="l_viisi_p3a">Zähle vor und nach der halben Stunde in Fünferschritten weiter.</string>
+    <string name="l_viisi_p3b">Bei der 5 sagen wir fünf vor halb, bei der 7 fünf nach halb. Nach halb nennen wir die nächste Stunde.</string>
+    <string name="l_viisi_q">Wie spät ist es?</string>
+    <string name="l_viisi_c1">Zwanzig vor neun</string>
+    <string name="l_viisi_c2">Zwanzig nach acht</string>
+    <string name="l_viisi_c3">Zehn vor neun</string>
+    <string name="l_viisi_hint">Bei der 8 sind 40\u00A0Minuten vergangen. Bis zur nächsten Stunde fehlen noch 20\u00A0Minuten.</string>
+
+    <string name="l_minuutit_title">Genaue Minuten</string>
+    <string name="l_minuutit_desc">Die kleinen Striche</string>
+    <string name="l_minuutit_p1a">Jeder kleine Strich am Rand der Uhr steht für eine Minute.</string>
+    <string name="l_minuutit_p1b">Zwischen benachbarten Zahlen liegen 5\u00A0Minuten.</string>
+    <string name="l_minuutit_p2a">Beginne bei der Zahl direkt vor dem langen Zeiger. Zähle die kleinen Striche weiter. Lies zuerst die Stunde und dann die Minuten: drei Uhr zwölf.</string>
+    <string name="l_minuutit_p2b">Die 2 steht für 10\u00A0Minuten. Zwei Striche weiter sind es 10 + 2 = 12\u00A0Minuten.</string>
+    <string name="l_minuutit_q">Wie spät ist es?</string>
+    <string name="l_minuutit_c1">Drei Uhr sieben</string>
+    <string name="l_minuutit_c2">Fünf nach drei</string>
+    <string name="l_minuutit_c3">Drei Uhr acht</string>
+    <string name="l_minuutit_hint">Die 1 steht für 5\u00A0Minuten. Zähle zwei kleine Striche weiter.</string>
+
+    <string name="l_vrk_title">24\u00A0Stunden am Tag</string>
+    <string name="l_vrk_desc">Morgen, Nachmittag und Nacht</string>
+    <string name="l_vrk_p1a">Ein ganzer Tag hat 24\u00A0Stunden.</string>
+    <string name="l_vrk_p1b">Der kurze Zeiger wandert jeden Tag zweimal um die Uhr.</string>
+    <string name="l_vrk_say_first">Erste Runde: von Mitternacht bis Mittag</string>
+    <string name="l_vrk_say_second">Zweite Runde: von Mittag bis Mitternacht</string>
+    <string name="l_vrk_say_day">Ein ganzer Tag ist vergangen.</string>
+    <string name="l_vrk_p2a">Für die Stunden von 1 bis 11 am Nachmittag und Abend rechnest du 12 dazu. So erhältst du die 24-Stunden-Zahl.</string>
+    <string name="l_vrk_p2b">Drei Uhr nachmittags ist 3 + 12 = 15. Wir schreiben 15:00.</string>
+    <string name="l_vrk_say_night">Drei Uhr nachts: 03:00</string>
+    <string name="l_vrk_say_sum">3 + 12 = 15: Es ist 15:00 Uhr.</string>
+    <string name="l_vrk_p3a">Die Zeiger stehen um drei Uhr nachts und um drei Uhr nachmittags gleich.</string>
+    <string name="l_vrk_p3b">Die Beschriftung in der Mitte verrät dir die Tageszeit. Die Zeiger allein können das nicht zeigen.</string>
+    <string name="l_vrk_say_afternoon">Drei Uhr nachmittags: 15:00</string>
+    <string name="l_vrk_q">Wie spät ist es?</string>
+    <string name="l_vrk_c1">Sieben Uhr abends: 19:00</string>
+    <string name="l_vrk_c2">Sieben Uhr morgens: 07:00</string>
+    <string name="l_vrk_c3">Fünf Uhr nachmittags: 17:00</string>
+    <string name="l_vrk_hint">In der Mitte steht Abend. Rechne 12 zur Stunde dazu: 7 + 12 = 19.</string>
+    <string name="doll_stars_explained">Sterne werden nie verbraucht. Mit genügend Sternen schaltest du neue Kleidung frei.</string>
+    <string name="answer_correct">Richtig</string>
+    <string name="answer_incorrect">Falsch</string>
+    <string name="app_launcher_name">Clocklings Blender</string>
+</resources>

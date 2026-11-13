@@ -1,0 +1,268 @@
+{
+  "dinosaur-extra-backpack": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        25,
+        138,
+        70,
+        101
+      ],
+      "source": [
+        0,
+        0
+      ]
+    }
+  },
+  "dinosaur-head-flower": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        56,
+        27,
+        62,
+        68
+      ],
+      "source": [
+        216,
+        0
+      ]
+    }
+  },
+  "dinosaur-extra-bucket": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        185,
+        198,
+        52,
+        86
+      ],
+      "source": [
+        408,
+        0
+      ]
+    }
+  },
+  "dinosaur-neck-scarf": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        97,
+        145,
+        84,
+        85
+      ],
+      "source": [
+        570,
+        0
+      ]
+    }
+  },
+  "dinosaur-head-cap": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        63,
+        -4,
+        155,
+        76
+      ],
+      "source": [
+        828,
+        0
+      ]
+    }
+  },
+  "dinosaur-extra-balloon": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        172,
+        9,
+        76,
+        198
+      ],
+      "source": [
+        1299,
+        0
+      ]
+    }
+  },
+  "dinosaur-neck-bow-tie": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        110,
+        148,
+        63,
+        30
+      ],
+      "source": [
+        0,
+        600
+      ]
+    }
+  },
+  "dinosaur-head-party-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        110,
+        -37,
+        62,
+        91
+      ],
+      "source": [
+        195,
+        600
+      ]
+    }
+  },
+  "dinosaur-extra-umbrella": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        120,
+        -16,
+        40,
+        190
+      ],
+      "source": [
+        387,
+        600
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        25,
+        -54,
+        202,
+        243
+      ],
+      "source": [
+        513,
+        600
+      ]
+    }
+  },
+  "dinosaur-extra-swim-ring": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        62,
+        185,
+        150,
+        55
+      ],
+      "source": [
+        0,
+        1335
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        62,
+        161,
+        173,
+        94
+      ],
+      "source": [
+        456,
+        1335
+      ]
+    }
+  },
+  "dinosaur-head-hard-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        60,
+        -13,
+        150,
+        78
+      ],
+      "source": [
+        981,
+        1335
+      ]
+    }
+  },
+  "dinosaur-extra-kite": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        22,
+        -22,
+        153,
+        217
+      ],
+      "source": [
+        0,
+        1623
+      ]
+    }
+  },
+  "dinosaur-neck-binoculars": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        93,
+        144,
+        82,
+        77
+      ],
+      "source": [
+        465,
+        1623
+      ]
+    }
+  },
+  "dinosaur-neck-medal": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        89,
+        147,
+        82,
+        92
+      ],
+      "source": [
+        717,
+        1623
+      ]
+    }
+  },
+  "dinosaur-extra-ice-cream": {
+    "front": {
+      "part": "HAND",
+      "destination": [
+        167,
+        120,
+        58,
+        102
+      ],
+      "source": [
+        969,
+        1623
+      ]
+    }
+  },
+  "dinosaur-extra-skateboard": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        25,
+        261,
+        198,
+        47
+      ],
+      "source": [
+        0,
+        2280
+      ]
+    }
+  }
+}

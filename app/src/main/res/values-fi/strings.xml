@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="back_description">Takaisin</string>
+    <string name="help_on">Apu päällä</string>
+    <string name="help_off">Apu pois</string>
+    <string name="listen">Kuuntele</string>
+    <string name="random_time">Satunnainen aika</string>
+    <string name="next">Seuraava</string>
+    <string name="done">Valmis</string>
+    <string name="question_read">Mitä kello on?</string>
+    <string name="digital_24">%1$s</string>
+    <string name="speak_time">Kello on %1$s</string>
+    <string name="speak_time_24">Kello on %1$s. Numeroina %2$s</string>
+    <string name="speak_midnight_24">On keskiyö. Numeroina %1$s.</string>
+    <string name="speak_noon_24">On keskipäivä. Numeroina %1$s.</string>
+    <string-array name="praise">
+        <item>Oikein!</item>
+        <item>Hyvin tehty!</item>
+        <item>Hienoa työtä!</item>
+        <item>Sinä osasit!</item>
+        <item>Mainiosti!</item>
+        <item>Loistavaa!</item>
+        <item>Upeaa!</item>
+    </string-array>
+    <plurals name="stars_count">
+        <item quantity="one">%1$d\u00A0tähti</item>
+        <item quantity="other">%1$d\u00A0tähteä</item>
+    </plurals>
+    <plurals name="minutes_count">
+        <item quantity="one">%1$d\u00A0minuutti</item>
+        <item quantity="other">%1$d\u00A0minuuttia</item>
+    </plurals>
+    <string name="clock_description">Kellotaulu: %1$s</string>
+    <string name="clock_question_description">Kellokysymys. Pyydä pariasi kuvailemaan viisareita tai paljastakaa aika yhdessä.</string>
+    <plurals name="clock_add">
+        <item quantity="one">Lisää %1$d\u00A0minuutti</item>
+        <item quantity="other">Lisää %1$d\u00A0minuuttia</item>
+    </plurals>
+    <plurals name="clock_subtract">
+        <item quantity="one">Vähennä %1$d\u00A0minuutti</item>
+        <item quantity="other">Vähennä %1$d\u00A0minuuttia</item>
+    </plurals>
+    <string name="clock_zone_yli">yli</string>
+    <string name="clock_zone_vaille">vaille</string>
+    <string name="intro_greeting_morning">Hyvää huomenta!</string>
+    <string name="intro_greeting_day">Hei!</string>
+    <string name="intro_greeting_evening">Hyvää iltaa!</string>
+    <string name="intro_greeting_night">Hei, yökukkuja!</string>
+    <string name="intro_description">%1$s. %2$s</string>
+    <string name="intro_skip">Ohita aloitus</string>
+    <string name="home_star_total">%1$d / %2$d</string>
+    <string name="menu_koulu">Opi</string>
+    <string name="menu_koulu_sub">Opi, miten viisarit näyttävät ajan</string>
+    <string name="menu_vapaa">Tutki</string>
+    <string name="menu_vapaa_sub">Liikuta viisareita ja tutki kellonaikoja</string>
+    <string name="menu_pelaa">Pelaa</string>
+    <string name="menu_pelaa_sub">Harjoittele kellon lukemista ja asettamista</string>
+    <string name="menu_kysy">Pelaa yhdessä</string>
+    <string name="menu_kysy_sub">Aseta aika, arvaa ja vaihda vuoroa</string>
+    <string name="menu_nukke">Kaverini</string>
+    <string name="mode_12">12 h</string>
+    <string name="mode_24">24 h</string>
+    <string name="free_title">Tutki</string>
+    <string name="legend_hour">Lyhyt pinkki viisari näyttää tunnit.</string>
+    <string name="legend_minute">Pitkä sininen viisari näyttää minuutit.</string>
+    <string name="legend_drag">Muuta aikaa vetämällä kumpaa tahansa viisaria.</string>
+    <string name="level_example">Esimerkiksi %1$s</string>
+    <string name="watch_lesson">Katso oppitunti</string>
+    <string name="level_tasatunnit">Tasatunnit</string>
+    <string name="level_puolet">Puoli tuntia</string>
+    <string name="level_vartit">Vartit</string>
+    <string name="level_viisi">Viiden minuutin välein</string>
+    <string name="level_minuutit">Tarkat minuutit</string>
+    <string name="challenge_title">Minuuttihaaste</string>
+    <string name="challenge_time_remaining">Aikaa jäljellä</string>
+    <string name="challenge_desc">Kuinka moneen kysymykseen ehdit vastata minuutissa?</string>
+    <string name="record">Paras tulos: %1$d</string>
+    <string name="question_set">Aseta kelloon aika</string>
+    <string name="praise_with_time">%1$s %2$s.</string>
+    <string name="reveal_read">Oikea vastaus on %1$s. Katso, mihin kumpikin viisari osoittaa.</string>
+    <string name="reveal_set">Näin viisarit näyttävät ajan: %1$s.</string>
+    <string name="hint_hands_right">Viisarit näyttävät samaa aikaa! Keskellä näkyy %1$s ja teksti: %2$s.</string>
+    <string name="hint_sun">aurinko</string>
+    <string name="hint_moon">kuu</string>
+    <string name="hint_read_hour">Katso lyhyttä pinkkiä viisaria. Se %1$s.</string>
+    <string name="hint_read_hour_half">Puolen tunnin lähellä viisari on lähellä tämän tunnin ja seuraavan tunnin puoliväliä.</string>
+    <string name="hint_read_minute">Katso pitkää sinistä viisaria. Se osoittaa %1$s.</string>
+    <string name="hint_read_minute_also_hour">Tarkista sitten lyhyt pinkki viisari.</string>
+    <string name="hint_set_minute">Pitkän sinisen viisarin pitää osoittaa %1$s.</string>
+    <string name="hint_set_hour">Pitkä viisari on oikein! Liikuta lyhyttä pinkkiä viisaria niin, että se %1$s.</string>
+    <string name="hint_set_hour_turn">Siirrä lyhyttä viisaria tunti eteenpäin liikuttamalla pitkää viisaria koko kierroksen ympäri.</string>
+    <string name="hour_pos_exact">osoittaa suoraan numeroon %1$d</string>
+    <string name="hour_pos_passed">on juuri ohittanut numeron %1$d</string>
+    <string name="hour_pos_between" tools:ignore="PluralsCandidate">on numeroiden %1$d ja %2$d välissä</string>
+    <string name="hour_pos_almost">on melkein numeron %1$d kohdalla</string>
+    <string name="minute_pos_top">ylös numeroon 12. On tasatunti</string>
+    <string name="minute_pos_bottom">alas numeroon 6. Tasatunnista on kulunut puoli tuntia</string>
+    <string name="minute_pos_quarter_past">numeroon 3. On varttia yli tasatunnin</string>
+    <string name="minute_pos_quarter_to">numeroon 9. Seuraavaan tasatuntiin on vartti</string>
+    <string name="minute_pos_number" tools:ignore="PluralsCandidate">numeroon %1$d. Tasatunnista on kulunut %2$d\u00A0minuuttia</string>
+    <string name="minute_pos_ticks" tools:ignore="PluralsCandidate">minuuttimerkkiin %1$d. Laske pienet merkit numerosta 12 alkaen</string>
+    <string name="result_title_3">Upeaa!</string>
+    <string name="result_title_2">Hyvin tehty!</string>
+    <string name="result_title_1">Jatka tutkimista!</string>
+    <plurals name="result_text">
+        <item quantity="one">Valmista: %1$s! Ansaitsit %2$d\u00A0tähden.</item>
+        <item quantity="other">Valmista: %1$s! Ansaitsit %2$d\u00A0tähteä.</item>
+    </plurals>
+    <plurals name="result_previous_best">
+        <item quantity="one">Tämän tason paras tuloksesi on %1$d\u00A0tähti.</item>
+        <item quantity="other">Tämän tason paras tuloksesi on %1$d\u00A0tähteä.</item>
+    </plurals>
+    <string name="result_new_item">Avasit uuden asusteen:</string>
+    <string name="result_new_items">Avasit uusia asusteita:</string>
+    <string name="result_play_more">Voit pelata uudelleen milloin haluat.</string>
+    <string name="play_again">Pelaa uudelleen</string>
+    <string name="next_level">Seuraava taso</string>
+    <string name="dress_doll">Valitse asu</string>
+    <plurals name="result_stars_description">
+        <item quantity="one">%1$d\u00A0tähti kolmesta</item>
+        <item quantity="other">%1$d\u00A0tähteä kolmesta</item>
+    </plurals>
+    <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d oikein</string>
+    <string name="challenge_intro">Sinulla on minuutti aikaa. Vastaa niin moneen kuin ehdit. Väärän vastauksen jälkeen kello näyttää oikean ajan ja peli jatkuu.</string>
+    <string name="challenge_best" tools:ignore="PluralsCandidate">Paras tulos: %1$d oikein</string>
+    <string name="challenge_no_best">Ei vielä tulosta</string>
+    <string name="challenge_go">Aloita!</string>
+    <string name="challenge_over">Aika loppui!</string>
+    <string name="challenge_new_best">Uusi ennätys!</string>
+    <string name="challenge_new_record" tools:ignore="PluralsCandidate">Uusi ennätys! Oikeita vastauksia: %1$d.</string>
+    <string name="challenge_result" tools:ignore="PluralsCandidate">Oikeita vastauksia: %1$d. Paras tuloksesi on %2$d.</string>
+    <string name="ask_title">Pelaa yhdessä</string>
+    <string name="ask_big_eyebrow" tools:ignore="PluralsCandidate">Pelaaja %1$d asettaa ajan</string>
+    <string name="ask_big_question">Valitse aika</string>
+    <string name="ask_big_text">Liikuta viisareita, kun parisi katsoo muualle. Napauta sitten Anna parille ja ojenna kello parillesi.</string>
+    <string name="ask_go">Anna parille</string>
+    <string name="ask_small_eyebrow" tools:ignore="PluralsCandidate">Pelaaja %1$d vastaa</string>
+    <string name="ask_small_text">Sano aika, osoita tai pohtikaa yhdessä. Paljastakaa vastaus, kun olette valmiita.</string>
+    <string name="ask_reveal">Näytä vastaus</string>
+    <string name="ask_new">Vaihda vuoroa</string>
+    <string name="doll_title">Asut</string>
+    <string name="doll_name_label">Kaverin nimi</string>
+    <string name="doll_name_placeholder">Valitse nimi</string>
+    <plurals name="doll_info">
+        <item quantity="one">Sinulla on %1$d\u00A0tähti. Jokainen uusi tähti avaa asusteen. Napauta asustetta pukeaksesi sen.</item>
+        <item quantity="other">Sinulla on %1$d\u00A0tähteä. Jokainen uusi tähti avaa asusteen. Napauta asustetta pukeaksesi sen.</item>
+    </plurals>
+    <string name="doll_all_open">Kaikki asusteet ovat käytettävissä. Kokeile erilaisia yhdistelmiä!</string>
+    <string name="doll_optional_hint">Pue asuste napauttamalla. Riisu napauttamalla uudelleen.</string>
+    <string name="doll_optional_hint_partial">Pue asuste napauttamalla. Päähineen ja lisävarusteen voi riisua napauttamalla uudelleen.</string>
+    <plurals name="doll_item_locked">
+        <item quantity="one">Lukittu. Avautuu, kun tähtiä on %1$d. Sinulla on %2$d.</item>
+        <item quantity="other">Lukittu. Avautuu, kun tähtiä on %1$d. Sinulla on %2$d.</item>
+    </plurals>
+    <string name="slot_hair">Hiukset</string>
+    <string name="slot_dress">Mekot</string>
+    <string name="slot_shoes">Kengät</string>
+    <string name="slot_head">Päähineet</string>
+    <string name="slot_neck">Kaulaan</string>
+    <string name="slot_extra">Lisävarusteet</string>
+    <string name="slot_roof">Katolle</string>
+    <string name="slot_front">Keulaan</string>
+    <string name="slot_wheels">Pyörät</string>
+    <string name="slot_model">Muodonmuutokset</string>
+    <string name="item_hair_letit">Ruskeat letit</string>
+    <string name="item_dress_perus">Keltainen mekko</string>
+    <string name="item_shoes_tossut">Valkoiset tossut</string>
+    <string name="item_dress_pilkku">Pilkkumekko</string>
+    <string name="item_head_rusetti">Rusetti</string>
+    <string name="item_shoes_punaiset">Punaiset kengät</string>
+    <string name="item_hair_pitkat">Kultaiset hiukset</string>
+    <string name="item_dress_tahti">Tähtimekko</string>
+    <string name="item_head_kukat">Kukkaseppele</string>
+    <string name="item_extra_strawberry_bag">Mansikkalaukku</string>
+    <string name="item_shoes_saappaat">Violetit saappaat</string>
+    <string name="item_hair_kiharat">Vaaleanpunaiset kiharat</string>
+    <string name="item_dress_overalls">Haalarit</string>
+    <string name="item_head_kruunu">Kruunu</string>
+    <string name="item_extra_siivet">Perhosen siivet</string>
+    <string name="item_shoes_roller_skates">Rullaluistimet</string>
+    <string name="item_hair_sateenkaari">Sateenkaarihiukset</string>
+    <string name="item_dress_sateenkaari">Sateenkaarimekko</string>
+    <string name="koulu_title">Opi</string>
+    <string name="lesson_done">Suoritettu</string>
+    <string name="path_current">Vuorossa</string>
+    <string name="lesson_skip">Ohita ja pelaa</string>
+    <string name="lesson_replay">Näytä uudelleen</string>
+    <string name="lesson_prev">Edellinen</string>
+    <string name="lesson_try">Kokeile</string>
+    <string name="lesson_next_lesson">Seuraava oppitunti</string>
+    <string name="lesson_start_game">Aloita pelaaminen!</string>
+    <string name="lesson_practise">Harjoittele</string>
+    <string name="lesson_learned">%1$s Oppitunti %2$s on suoritettu.</string>
+    <!-- Full sentences end with punctuation; bare labels do not. Measurements use digits.
+         Counting phrases may spell out counts. Keep numbers and units together. -->
+    <string name="say_quarter">Vartti %1$d</string>
+    <string name="say_number_minutes" tools:ignore="PluralsCandidate">Numero %1$d tarkoittaa %2$d\u00A0minuuttia.</string>
+    <string name="l_viisarit_title">Kaksi viisaria</string>
+    <string name="l_viisarit_desc">Mitä kumpikin viisari näyttää?</string>
+    <string name="l_viisarit_p1a">Tässä kellossa on kaksi viisaria.</string>
+    <string name="l_viisarit_p1b">Lyhyt pinkki viisari on tuntiviisari. Se näyttää, mikä tunti on meneillään.</string>
+    <string name="l_viisarit_p2a">Pitkä sininen viisari on minuuttiviisari. Se näyttää minuutit.</string>
+    <string name="l_viisarit_p3a">Ajan kuluessa viisarit liikkuvat numerosta 1 kohti numeroa 2, sitten numeroa 3 ja edelleen kellon ympäri.</string>
+    <string name="l_viisarit_p3b">Viisarit liikkuvat myötäpäivään.</string>
+    <string name="l_viisarit_q">Kumpi viisari näyttää tunnit?</string>
+    <string name="l_viisarit_c1">Lyhyt pinkki viisari</string>
+    <string name="l_viisarit_c2">Pitkä sininen viisari</string>
+    <string name="l_viisarit_hint">Tuntiviisari on lyhyempi, pinkki viisari.</string>
+    <string name="l_kierros_title">Yksi kierros</string>
+    <string name="l_kierros_desc">Mitä tunnissa tapahtuu?</string>
+    <string name="l_kierros_p1a">Pitkä viisari kiertää kellon ympäri.</string>
+    <string name="l_kierros_p1b">Yhteen kokonaiseen kierrokseen kuluu tunti.</string>
+    <string name="l_kierros_say_start">Kello on tasan kolme.</string>
+    <string name="l_kierros_say_go">Pitkä viisari lähtee kierrokselle.</string>
+    <string name="l_kierros_say_end">Nyt kello on tasan neljä. Yksi tunti on kulunut!</string>
+    <string name="l_kierros_p2a">Katso nyt lyhyttä viisaria!</string>
+    <string name="l_kierros_p2b">Kun pitkä viisari kiertää koko kierroksen, lyhyt viisari siirtyy vain yhden numeron eteenpäin.</string>
+    <string name="l_kierros_say_moved">Lyhyt viisari siirtyi numerosta 3 numeroon 4.</string>
+    <string name="l_kierros_p3a">Yhdessä tunnissa on 60\u00A0minuuttia.</string>
+    <string name="l_kierros_p3b">Kellon reunalla on 60\u00A0minuuttimerkkiä. Pitkä viisari siirtyy minuutissa merkistä seuraavaan.</string>
+    <string name="l_kierros_say_hour">60\u00A0minuuttia on yksi tunti.</string>
+    <string name="l_kierros_q">Kuinka paljon aikaa kuluu, kun pitkä viisari kiertää koko kierroksen?</string>
+    <string name="l_kierros_c1">Yksi tunti</string>
+    <string name="l_kierros_c2">Yksi minuutti</string>
+    <string name="l_kierros_c3">Yksi vuorokausi</string>
+    <string name="l_kierros_hint">Lyhyt viisari siirtyi yhden numeron eteenpäin. Se tarkoittaa yhtä tuntia.</string>
+    <string name="l_tasan_title">Tasatunnit</string>
+    <string name="l_tasan_desc">Pitkä viisari osoittaa suoraan ylös</string>
+    <string name="l_tasan_p1a">Kun pitkä viisari osoittaa suoraan ylös numeroon 12, on tasatunti.</string>
+    <string name="l_tasan_p2a">Katso lyhyttä viisaria selvittääksesi tunnin.</string>
+    <string name="l_tasan_p2b">Tässä se osoittaa numeroon 3, joten kello on tasan kolme.</string>
+    <string name="l_tasan_p3a">Tutkitaan muitakin tasatunteja.</string>
+    <string name="l_tasan_p3b">Pitkä viisari pysyy ylhäällä. Lyhyt viisari kertoo tunnin.</string>
+    <string name="l_tasan_q">Mitä kello on?</string>
+    <string name="l_tasan_c1">Tasan yhdeksän</string>
+    <string name="l_tasan_c2">Tasan kaksitoista</string>
+    <string name="l_tasan_c3">Tasan kolme</string>
+    <string name="l_tasan_hint">Pitkä viisari on ylhäällä. Katso lyhyestä pinkistä viisarista, mikä tunti on.</string>
+    <string name="l_puoli_title">Puoli tuntia</string>
+    <string name="l_puoli_desc">Pitkä viisari osoittaa alas</string>
+    <string name="l_puoli_p1a">Puolen kierroksen jälkeen pitkä viisari osoittaa alas numeroon 6.</string>
+    <string name="l_puoli_p1b">Puoli tuntia on kulunut. Se on 30\u00A0minuuttia.</string>
+    <string name="l_puoli_say_half">Puoli tuntia on kulunut.</string>
+    <string name="l_puoli_p2a">Lyhyt viisari on ohittanut numeron 3 mutta ei ole vielä numeron 4 kohdalla.</string>
+    <string name="l_puoli_p2b">Se on niiden puolivälissä.</string>
+    <string name="l_puoli_p3a">Sanomme puoli neljä: kello on puolimatkassa kolmesta neljään.</string>
+    <string name="l_puoli_p3b">Numeroina aika on 3.30.</string>
+    <string name="l_puoli_say_digits">Puoli neljä on numeroina 3.30.</string>
+    <string name="l_puoli_p4a">Kun sanot puoli, nimeä seuraava tunti, jota lyhyt viisari lähestyy.</string>
+    <string name="l_puoli_p4b">Numeroiden 7 ja 8 välissä kello on puoli kahdeksan.</string>
+    <string name="l_puoli_q">Mitä kello on?</string>
+    <string name="l_puoli_c1">Puoli kuusi</string>
+    <string name="l_puoli_c2">Puoli viisi</string>
+    <string name="l_puoli_c3">Tasan kuusi</string>
+    <string name="l_puoli_hint">Lyhyt viisari on ohittanut numeron 5 ja on puolimatkassa numeroon 6. Nimeä seuraava tunti.</string>
+    <string name="l_vartti_title">Vartit</string>
+    <string name="l_vartti_desc">Neljäsosa tunnista</string>
+    <string name="l_vartti_p1a">Jaa tunti neljään yhtä suureen osaan. Jokainen osa on vartti.</string>
+    <string name="l_vartti_p1b">Vartti on 15\u00A0minuuttia.</string>
+    <string name="l_vartti_say_four">Neljä varttia on yksi tunti.</string>
+    <string name="l_vartti_p2a">Kun pitkä viisari saavuttaa numeron 3, tuntia on kulunut vartti.</string>
+    <string name="l_vartti_p2b">Tässä sanomme varttia yli kolme.</string>
+    <string name="l_vartti_p3a">Kun pitkä viisari saavuttaa numeron 9, seuraavaan tasatuntiin on vartti aikaa.</string>
+    <string name="l_vartti_p3b">Tässä sanomme varttia vaille neljä.</string>
+    <string name="l_vartti_q">Mitä kello on?</string>
+    <string name="l_vartti_c1">Varttia vaille seitsemän</string>
+    <string name="l_vartti_c2">Varttia yli kuusi</string>
+    <string name="l_vartti_c3">Varttia vaille kuusi</string>
+    <string name="l_vartti_hint">Pitkä viisari on numeron 9 kohdalla. Aikaa on vartti jäljellä. Mikä tunti tulee seuraavaksi?</string>
+    <string name="l_ylivaille_title">Yli ja vaille</string>
+    <string name="l_ylivaille_desc">Kellotaulun kaksi puolta</string>
+    <string name="l_ylivaille_p1a">Kellotaulun oikealla puolella voimme sanoa esimerkiksi kahtakymmentä yli.</string>
+    <string name="l_ylivaille_p1b">Laskemme, kuinka monta minuuttia tasatunnista on kulunut.</string>
+    <string name="l_ylivaille_p2a">Vasemmalla puolella voimme sanoa esimerkiksi kahtakymmentä vaille.</string>
+    <string name="l_ylivaille_p2b">Laskemme, kuinka monta minuuttia seuraavaan tasatuntiin on jäljellä.</string>
+    <string name="l_ylivaille_p3a">Kun sanot esimerkiksi kymmentä yli, nimeä tunti, jonka lyhyt viisari on ohittanut.</string>
+    <string name="l_ylivaille_p3b">Kun sanot kymmentä vaille, nimeä seuraava tunti. Puolen tunnin lähellä voit laskea minuutit suhteessa puoleen.</string>
+    <string name="l_ylivaille_q">Mitä kello on?</string>
+    <string name="l_ylivaille_c1">Kymmentä yli neljä</string>
+    <string name="l_ylivaille_c2">Kymmentä vaille neljä</string>
+    <string name="l_ylivaille_c3">Kymmentä vaille viisi</string>
+    <string name="l_ylivaille_hint">Pitkä viisari on oikealla. Laske minuutit sen tasatunnin jälkeen, jonka lyhyt viisari on ohittanut.</string>
+    <string name="l_viisi_title">Viiden minuutin välein</string>
+    <string name="l_viisi_desc">Numerot ja minuutit</string>
+    <string name="l_viisi_p1a">Pitkä viisari siirtyy numerosta seuraavaan viidessä minuutissa.</string>
+    <string name="l_viisi_p1b">Numero 1 tarkoittaa 5\u00A0minuuttia, numero 2 tarkoittaa 10\u00A0minuuttia ja niin edelleen.</string>
+    <string name="l_viisi_p2a">Laske viiden välein: 5, 10, 15, 20.</string>
+    <string name="l_viisi_p2b">Numeron 4 kohdalla on kulunut 20\u00A0minuuttia. Sanomme kahtakymmentä yli.</string>
+    <string name="l_viisi_p3a">Laske viiden välein myös puolen tunnin molemmin puolin.</string>
+    <string name="l_viisi_p3b">Numeron 5 kohdalla sanomme viittä vaille puoli. Numeron 7 kohdalla sanomme viittä yli puoli. Nimeä seuraava tunti.</string>
+    <string name="l_viisi_q">Mitä kello on?</string>
+    <string name="l_viisi_c1">Kahtakymmentä vaille yhdeksän</string>
+    <string name="l_viisi_c2">Kahtakymmentä yli kahdeksan</string>
+    <string name="l_viisi_c3">Kymmentä vaille yhdeksän</string>
+    <string name="l_viisi_hint">Numeron 8 kohdalla on kulunut 40\u00A0minuuttia. Seuraavaan tasatuntiin on 20\u00A0minuuttia.</string>
+    <string name="l_minuutit_title">Tarkat minuutit</string>
+    <string name="l_minuutit_desc">Pienet merkit</string>
+    <string name="l_minuutit_p1a">Jokainen pieni merkki kellon reunalla tarkoittaa yhtä minuuttia.</string>
+    <string name="l_minuutit_p1b">Vierekkäisten numeroiden välillä on 5\u00A0minuuttia.</string>
+    <string name="l_minuutit_p2a">Aloita numeroidusta merkistä juuri ennen pitkää viisaria. Laske ylimääräiset pienet merkit eteenpäin.</string>
+    <string name="l_minuutit_p2b">Numero 2 tarkoittaa 10\u00A0minuuttia. Kaksi merkkiä lisää on 10 + 2 = 12\u00A0minuuttia.</string>
+    <string name="l_minuutit_q">Mitä kello on?</string>
+    <string name="l_minuutit_c1">Seitsemän minuuttia yli kolme</string>
+    <string name="l_minuutit_c2">Viittä yli kolme</string>
+    <string name="l_minuutit_c3">Kahdeksan minuuttia yli kolme</string>
+    <string name="l_minuutit_hint">Numero 1 tarkoittaa 5\u00A0minuuttia. Laske vielä kaksi pientä merkkiä eteenpäin.</string>
+    <string name="l_vrk_title">24\u00A0tuntia vuorokaudessa</string>
+    <string name="l_vrk_desc">Aamu, iltapäivä ja yö</string>
+    <string name="l_vrk_p1a">Yhdessä vuorokaudessa on 24\u00A0tuntia.</string>
+    <string name="l_vrk_p1b">Lyhyt viisari kiertää kellon ympäri kaksi kertaa vuorokaudessa.</string>
+    <string name="l_vrk_say_first">Ensimmäinen kierros: keskiyöstä keskipäivään</string>
+    <string name="l_vrk_say_second">Toinen kierros: keskipäivästä keskiyöhön</string>
+    <string name="l_vrk_say_day">Yksi vuorokausi on kulunut.</string>
+    <string name="l_vrk_p2a">Iltapäivän ja illan tunneilla 1–11 saat 24\u00A0tunnin kellon numeron lisäämällä 12.</string>
+    <string name="l_vrk_p2b">Kolme iltapäivällä on 3 + 12 = 15. Kirjoitamme 15.00.</string>
+    <string name="l_vrk_say_night">Kolme yöllä: 3.00</string>
+    <string name="l_vrk_say_sum">3 + 12 = 15: kello on 15.00.</string>
+    <string name="l_vrk_p3a">Viisarit näyttävät samalta kolmelta yöllä ja kolmelta iltapäivällä.</string>
+    <string name="l_vrk_p3b">Katso keskellä olevasta tekstistä, mikä vuorokaudenaika on. Pelkät viisarit eivät kerro sitä.</string>
+    <string name="l_vrk_say_afternoon">Kolme iltapäivällä: 15.00</string>
+    <string name="l_vrk_q">Mitä kello on?</string>
+    <string name="l_vrk_c1">Seitsemän illalla: 19.00</string>
+    <string name="l_vrk_c2">Seitsemän aamulla: 7.00</string>
+    <string name="l_vrk_c3">Viisi iltapäivällä: 17.00</string>
+    <string name="l_vrk_hint">Keskellä lukee ilta. Lisää tuntiin 12: 7 + 12 = 19.</string>
+    <string name="doll_stars_explained">Tähdet eivät kulu. Uusia asuja avautuu, kun tähtiä on tarpeeksi.</string>
+    <string name="answer_correct">Oikein</string>
+    <string name="answer_incorrect">Väärin</string>
+    <string name="app_launcher_name">Clocklings Blender</string>
+</resources>

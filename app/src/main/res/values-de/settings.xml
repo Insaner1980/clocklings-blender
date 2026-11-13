@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Einstellungen</string>
+    <string name="language_title">Sprache</string>
+    <string name="language_device">Gerätesprache</string>
+    <string name="language_english">English</string>
+    <string name="language_finnish">Suomi</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_french">Français</string>
+    <string name="language_spanish">Español (España)</string>
+    <string name="language_portuguese_brazil">Português (Brasil)</string>
+    <string name="settings_clock_display">Zeitanzeige</string>
+    <string name="settings_guides_title">Uhrenhilfen</string>
+    <string name="settings_guides_description">Zeigt die Minutenzahlen und färbt die beiden Hälften der Uhr. Im 24-Stunden-Modus auch die Zahlen 13–23 und 0.</string>
+    <string name="settings_sound_group">Ton</string>
+    <string name="settings_sound_title">Toneffekte</string>
+    <string name="settings_sound_description">Töne beim Tippen, Antworten und Feiern.</string>
+    <string name="settings_progress_title">Lernfortschritt</string>
+    <string name="settings_reset_title">Lernfortschritt zurücksetzen?</string>
+    <string name="settings_reset_body">Sterne, beste Ergebnisse, abgeschlossene Lektionen, Namen der Figuren und Outfits werden gelöscht. Sprache, Zeitanzeige, Toneffekte, Uhrenhilfen und Aussehen bleiben unverändert.</string>
+    <string name="settings_reset_action">Fortschritt zurücksetzen</string>
+    <string name="settings_cancel">Abbrechen</string>
+    <string name="settings_save_error">Die Änderung konnte nicht gespeichert werden. Versuche es erneut.</string>
+    <string name="language_save_error">Die Sprache konnte nicht geändert werden. Versuche es erneut.</string>
+    <string name="settings_retry">Erneut versuchen</string>
+    <string name="settings_speech_info_available">Vorlesen ist für diese Sprache verfügbar. Die Stimme beginnt erst, wenn du auf den Lautsprecher tippst.</string>
+    <string name="settings_speech_info_unavailable">Vorlesen ist für diese Sprache nicht verfügbar.</string>
+</resources>

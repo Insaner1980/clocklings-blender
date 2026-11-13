@@ -1,0 +1,281 @@
+{
+  "robot-head-antenna": {
+    "back": {
+      "part": "ANTENNA",
+      "destination": [
+        99,
+        0,
+        42,
+        54
+      ],
+      "source": [
+        0,
+        0
+      ]
+    }
+  },
+  "robot-head-propeller": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        47,
+        -5,
+        146,
+        69
+      ],
+      "source": [
+        132,
+        0
+      ]
+    }
+  },
+  "robot-head-headphones": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        2,
+        3,
+        236,
+        130
+      ],
+      "source": [
+        576,
+        0
+      ]
+    }
+  },
+  "robot-head-chef-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        54,
+        -22,
+        132,
+        83
+      ],
+      "source": [
+        0,
+        396
+      ]
+    }
+  },
+  "robot-head-star-antennas": {
+    "back": {
+      "part": "ANTENNA",
+      "destination": [
+        61,
+        -12,
+        118,
+        65
+      ],
+      "source": [
+        402,
+        396
+      ]
+    }
+  },
+  "robot-head-astronaut": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        10,
+        -24,
+        220,
+        200
+      ],
+      "source": [
+        762,
+        396
+      ]
+    }
+  },
+  "robot-neck-bow-tie": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        81,
+        138,
+        78,
+        38
+      ],
+      "source": [
+        0,
+        1002
+      ]
+    }
+  },
+  "robot-neck-cape": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        28,
+        143,
+        184,
+        129
+      ],
+      "source": [
+        240,
+        1002
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        78,
+        140,
+        84,
+        29
+      ],
+      "source": [
+        798,
+        1002
+      ]
+    }
+  },
+  "robot-neck-medal": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        82,
+        140,
+        76,
+        97
+      ],
+      "source": [
+        1056,
+        1002
+      ]
+    }
+  },
+  "robot-extra-heart-eyes": {
+    "screen": {
+      "part": "HEAD",
+      "destination": [
+        79,
+        78,
+        82,
+        30
+      ],
+      "source": [
+        1290,
+        1002
+      ]
+    }
+  },
+  "robot-extra-star-eyes": {
+    "screen": {
+      "part": "HEAD",
+      "destination": [
+        79,
+        74,
+        82,
+        31
+      ],
+      "source": [
+        0,
+        1395
+      ]
+    }
+  },
+  "robot-extra-wrench": {
+    "front": {
+      "part": "HAND",
+      "destination": [
+        172,
+        126,
+        61,
+        96
+      ],
+      "source": [
+        252,
+        1395
+      ]
+    }
+  },
+  "robot-extra-bubble-pack": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        31,
+        145,
+        60,
+        78
+      ],
+      "source": [
+        441,
+        1395
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        -3,
+        26,
+        68,
+        177
+      ],
+      "source": [
+        627,
+        1395
+      ]
+    }
+  },
+  "robot-extra-wind-up-key": {
+    "front": {
+      "part": "HAND",
+      "destination": [
+        156,
+        153,
+        62,
+        74
+      ],
+      "source": [
+        837,
+        1395
+      ]
+    }
+  },
+  "robot-extra-pet": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        178,
+        213,
+        52,
+        74
+      ],
+      "source": [
+        1029,
+        1395
+      ]
+    }
+  },
+  "robot-extra-jetpack": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        17,
+        143,
+        206,
+        137
+      ],
+      "source": [
+        0,
+        1932
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        68,
+        141,
+        104,
+        82
+      ],
+      "source": [
+        624,
+        1932
+      ]
+    }
+  }
+}

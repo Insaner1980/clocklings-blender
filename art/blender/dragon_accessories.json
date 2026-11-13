@@ -1,0 +1,255 @@
+{
+  "dragon-neck-pendant": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        72,
+        150,
+        96,
+        73
+      ],
+      "source": [
+        0,
+        0
+      ]
+    }
+  },
+  "dragon-head-flower-crown": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        45,
+        28,
+        150,
+        45
+      ],
+      "source": [
+        294,
+        0
+      ]
+    }
+  },
+  "dragon-extra-coins": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        63,
+        214,
+        113,
+        74
+      ],
+      "source": [
+        750,
+        0
+      ]
+    }
+  },
+  "dragon-neck-bow": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        81,
+        158,
+        78,
+        60
+      ],
+      "source": [
+        1095,
+        0
+      ]
+    }
+  },
+  "dragon-head-wizard-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        39,
+        -48,
+        162,
+        114
+      ],
+      "source": [
+        0,
+        228
+      ]
+    }
+  },
+  "dragon-extra-book": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        63,
+        232,
+        116,
+        60
+      ],
+      "source": [
+        492,
+        228
+      ]
+    }
+  },
+  "dragon-neck-scarf": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        76,
+        150,
+        88,
+        89
+      ],
+      "source": [
+        846,
+        228
+      ]
+    }
+  },
+  "dragon-head-tiara": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        70,
+        -1,
+        100,
+        59
+      ],
+      "source": [
+        1116,
+        228
+      ]
+    }
+  },
+  "dragon-extra-shield": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        23,
+        178,
+        75,
+        86
+      ],
+      "source": [
+        0,
+        576
+      ]
+    }
+  },
+  "dragon-neck-chain": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        71,
+        149,
+        98,
+        72
+      ],
+      "source": [
+        231,
+        576
+      ]
+    }
+  },
+  "dragon-head-knight-helmet": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        55,
+        -42,
+        129,
+        120
+      ],
+      "source": [
+        531,
+        576
+      ]
+    }
+  },
+  "dragon-extra-star-cloud": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        21,
+        237,
+        193,
+        57
+      ],
+      "source": [
+        924,
+        576
+      ]
+    }
+  },
+  "dragon-neck-sparkles": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        71,
+        151,
+        98,
+        46
+      ],
+      "source": [
+        0,
+        942
+      ]
+    }
+  },
+  "dragon-neck-cape": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        34,
+        148,
+        172,
+        136
+      ],
+      "source": [
+        300,
+        942
+      ]
+    },
+    "back": {
+      "part": "BODY",
+      "destination": [
+        33,
+        152,
+        174,
+        132
+      ],
+      "source": [
+        822,
+        942
+      ]
+    }
+  },
+  "dragon-head-crown": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        69,
+        -5,
+        102,
+        68
+      ],
+      "source": [
+        0,
+        1356
+      ]
+    }
+  },
+  "dragon-extra-wings": {
+    "back": {
+      "part": "WINGS",
+      "destination": [
+        -2,
+        132,
+        244,
+        77
+      ],
+      "source": [
+        312,
+        1356
+      ]
+    }
+  }
+}

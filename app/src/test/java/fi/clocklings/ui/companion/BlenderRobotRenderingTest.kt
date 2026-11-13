@@ -1,0 +1,111 @@
+package fi.clocklings.ui.companion
+
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.unit.dp
+import fi.clocklings.domain.CompanionColor
+import fi.clocklings.domain.CompanionKind
+import fi.clocklings.domain.Outfit
+import fi.clocklings.domain.Wardrobe
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+
+/** Pixel checks exercise the new raster joints, not only the shared motion calculations. */
+@RunWith(RobolectricTestRunner::class)
+class BlenderRobotRenderingTest {
+    @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun everyReferenceAccessoryHasVisibleExportedGeometry() {
+        val outfit = mutableStateOf(Outfit())
+        compose.setContent {
+            val rig = rememberBlenderRobotRig(CompanionColor.ORIGINAL)
+            Canvas(Modifier.size(280.dp, 346.dp).testTag("robot")) {
+                scale(size.width / 280f, size.height / 346f, Offset.Zero) {
+                    with(rig) { draw(CompanionColor.ORIGINAL, outfit.value, CompanionPose()) }
+                }
+            }
+        }
+        val baseline = pixels()
+        val items = Wardrobe.itemsFor(CompanionKind.ROBOT)
+        assertEquals(items.map { it.id }.toSet(), RobotAccessoryRegions.keys)
+        for (item in items) {
+            compose.runOnIdle { outfit.value = Outfit().with(item.slot, item.id) }
+            val rendered = pixels()
+            assertTrue(
+                "Missing rendered accessory ${item.id}",
+                baseline.values.indices.count { baseline.values[it] != rendered.values[it] } > 50,
+            )
+        }
+    }
+
+    @Test
+    fun headArmAndBlinkAnimateIndependentlyOfTheChest() {
+        val pose = mutableStateOf(CompanionPose())
+        compose.setContent {
+            val rig = rememberBlenderRobotRig(CompanionColor.ORIGINAL)
+            Canvas(Modifier.size(240.dp, 300.dp).testTag("robot")) {
+                scale(size.width / 240f, size.height / 300f, Offset.Zero) {
+                    with(rig) { draw(CompanionColor.ORIGINAL, Outfit.default(CompanionKind.ROBOT), pose.value) }
+                }
+            }
+        }
+        val baseline = pixels()
+        for (frame in listOf(
+            CompanionPose(headTiltDeg = 12f),
+            CompanionPose(armDeg = 95f),
+            CompanionPose(blink = 1f),
+        )) {
+            compose.runOnIdle { pose.value = frame }
+            val changed = pixels()
+            assertTrue(
+                "Static part at $frame",
+                baseline.values.indices.count { baseline.values[it] != changed.values[it] } > 100,
+            )
+            for (y in 175 until 200) {
+                for (x in 95 until 145) {
+                    val index = (y * baseline.height / 300) * baseline.width + x * baseline.width / 240
+                    assertTrue(
+                        "Chest moved at $x/$y with $frame",
+                        baseline.values[index] == changed.values[index],
+                    )
+                }
+            }
+        }
+        compose.runOnIdle { pose.value = CompanionPose() }
+        assertTrue("Rest pose did not return", baseline.values.contentEquals(pixels().values))
+    }
+
+    private fun pixels(): RobotPixels {
+        val image = compose.captureRenderedImage("robot")
+        val map = image.toPixelMap()
+        return RobotPixels(
+            image.width,
+            image.height,
+            IntArray(image.width * image.height) {
+                map[
+                    it % image.width, it /
+                        image.width,
+                ].toArgb()
+            },
+        )
+    }
+}
+
+private data class RobotPixels(
+    val width: Int,
+    val height: Int,
+    val values: IntArray,
+)

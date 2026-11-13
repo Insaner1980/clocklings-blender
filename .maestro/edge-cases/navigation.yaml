@@ -1,0 +1,36 @@
+# NV-01/NV-02. English, synthetic data, any display cell. No data reset.
+# Launch is explicitly a force-stop/relaunch, not process-death restoration.
+appId: fi.clocklings
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- tapOn: "Settings"
+- tapOn: "Language: .*"
+- assertVisible: "English"
+- assertVisible: "Suomi"
+- assertVisible: "Svenska"
+- back
+- assertVisible: "Clock display"
+- back
+- assertVisible: "Clocklings"
+- tapOn: "Explore. Move the hands and explore the time"
+- assertVisible: "Random time"
+- back
+- assertVisible: "Clocklings"
+- tapOn: "Learn. Discover how the hands tell time"
+- assertVisible: "Two hands"
+- back
+- tapOn: "Play. Practise reading and setting the clock"
+- assertVisible: "Whole hours.*"
+- back
+- tapOn: "Play Together. Set a time, take a guess, and swap turns"
+- assertVisible: "Pass to partner"
+- back
+- assertVisible: "Clocklings"
+- tapOn: "My Companion. Choose a companion and make it yours"
+- assertVisible: "Companions"
+- back
+- assertVisible: "Clocklings"

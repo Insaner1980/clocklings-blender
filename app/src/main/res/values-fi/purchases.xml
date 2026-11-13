@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parent_title">Vanhemmille</string>
+    <string name="parent_gate_instruction">Aikuiselle: kirjoita nämä neljä numeroa käänteisessä järjestyksessä: %1$s</string>
+    <string name="parent_gate_answer">Koodi käänteisesti</string>
+    <string name="parent_gate_error">Tarkista järjestys ja yritä uudelleen.</string>
+    <string name="parent_continue">Jatka</string>
+    <string name="parent_cancel">Peruuta</string>
+    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_description">Kertaostos avaa pysyvästi kaikki viisi oppimistasoa, niiden oppitunnit sekä kaikki harjoitukset ja haasteet.</string>
+    <string name="full_unlock_rewards">Täysversiossa voi ansaita koko palkintovalikoiman. Tähdet, oppituntien suoritukset ja palkinnot ansaitaan edelleen oppimalla.</string>
+    <string name="purchase_ready">Ei tilausta eikä mainoksia.</string>
+    <string name="purchase_buy">Osta kerran — %1$s</string>
+    <string name="purchase_unavailable">Ostaminen ei ole nyt saatavilla. Yritä myöhemmin uudelleen.</string>
+    <string name="purchase_pending">Osto odottaa maksua. Täysversio avautuu, kun maksu on valmis ja varmennettu.</string>
+    <string name="purchase_cancelled">Osto peruutettu. Voit jatkaa ilmaisten toimintojen käyttöä.</string>
+    <string name="purchase_verifying">Tarkistetaan ostoa…</string>
+    <string name="purchase_owned">Täysversio on avattu.</string>
+    <string name="purchase_restored">Täysversio on palautettu.</string>
+    <string name="purchase_not_owned">Nykyiseltä Google Play -tililtä ei löytynyt täysversion ostoa.</string>
+    <string name="purchase_failed">Ostoa ei voitu tarkistaa. Yritä uudelleen.</string>
+    <string name="purchase_acknowledgement_pending">Täysversio on käytössä. Vahvistus Google Playlle vaatii uuden yrityksen.</string>
+    <string name="purchase_retry">Yritä uudelleen</string>
+    <string name="purchase_restore">Palauta ostot</string>
+    <string name="purchase_restore_explanation">Käytä Google Play -tiliä, jolla täysversio ostettiin. Oston palauttaminen ei palauta vain toiselle laitteelle tallennettua oppimisen edistymistä.</string>
+    <string name="full_version_label">Täysversio</string>
+    <string name="companion_access_requirement">Edellyttää täysversiota ja 3 ansaittua tähteä.</string>
+    <string name="wardrobe_full_requirement">Täysversiossa on lisää asusteita. Ne ansaitaan edelleen tähdillä.</string>
+</resources>

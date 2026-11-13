@@ -1,0 +1,255 @@
+{
+  "cat-neck-scarf": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        75,
+        160,
+        90,
+        91
+      ],
+      "source": [
+        0,
+        0
+      ]
+    }
+  },
+  "cat-head-bow": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        108,
+        27,
+        72,
+        37
+      ],
+      "source": [
+        276,
+        0
+      ]
+    }
+  },
+  "cat-extra-yarn": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        69,
+        220,
+        125,
+        71
+      ],
+      "source": [
+        498,
+        0
+      ]
+    }
+  },
+  "cat-neck-bell-collar": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        70,
+        157,
+        100,
+        54
+      ],
+      "source": [
+        879,
+        0
+      ]
+    }
+  },
+  "cat-head-bobble-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        42,
+        -14,
+        155,
+        104
+      ],
+      "source": [
+        0,
+        279
+      ]
+    }
+  },
+  "cat-extra-glasses": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        37,
+        75,
+        166,
+        72
+      ],
+      "source": [
+        471,
+        279
+      ]
+    }
+  },
+  "cat-neck-bow-tie": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        91,
+        166,
+        58,
+        26
+      ],
+      "source": [
+        975,
+        279
+      ]
+    }
+  },
+  "cat-head-sailor-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        41,
+        12,
+        158,
+        72
+      ],
+      "source": [
+        0,
+        597
+      ]
+    }
+  },
+  "cat-extra-fish-backpack": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        7,
+        176,
+        72,
+        113
+      ],
+      "source": [
+        480,
+        597
+      ]
+    }
+  },
+  "cat-neck-ruffle": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        53,
+        148,
+        134,
+        62
+      ],
+      "source": [
+        702,
+        597
+      ]
+    }
+  },
+  "cat-head-flower-crown": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        39,
+        28,
+        161,
+        46
+      ],
+      "source": [
+        0,
+        942
+      ]
+    }
+  },
+  "cat-neck-pearls": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        65,
+        158,
+        110,
+        47
+      ],
+      "source": [
+        489,
+        942
+      ]
+    }
+  },
+  "cat-extra-wand": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        0,
+        162,
+        71,
+        112
+      ],
+      "source": [
+        825,
+        942
+      ]
+    }
+  },
+  "cat-neck-cape": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        34,
+        159,
+        172,
+        135
+      ],
+      "source": [
+        0,
+        1284
+      ]
+    },
+    "back": {
+      "part": "BODY",
+      "destination": [
+        33,
+        163,
+        174,
+        132
+      ],
+      "source": [
+        522,
+        1284
+      ]
+    }
+  },
+  "cat-head-crown": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        67,
+        -6,
+        106,
+        68
+      ],
+      "source": [
+        1050,
+        1284
+      ]
+    }
+  },
+  "cat-extra-wings": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        -1,
+        147,
+        241,
+        110
+      ],
+      "source": [
+        0,
+        1695
+      ]
+    }
+  }
+}

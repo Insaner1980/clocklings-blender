@@ -1,0 +1,31 @@
+# RP-01. English D0 synthetic fixture. Exactly 20 Home destination/Back cycles.
+appId: fi.clocklings
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- repeat:
+    times: 6
+    commands:
+      - tapOn: "Explore. Move the hands and explore the time"
+      - assertVisible: "Random time"
+      - back
+      - assertVisible: "Clocklings"
+      - tapOn: "Settings"
+      - assertVisible: "Clock display"
+      - back
+      - assertVisible: "Clocklings"
+      - tapOn: "My Companion. Choose a companion and make it yours"
+      - assertVisible: "Companions"
+      - back
+      - assertVisible: "Clocklings"
+- tapOn: "Explore. Move the hands and explore the time"
+- assertVisible: "Random time"
+- back
+- assertVisible: "Clocklings"
+- tapOn: "Settings"
+- assertVisible: "Clock display"
+- back
+- assertVisible: "Clocklings"

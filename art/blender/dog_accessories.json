@@ -1,0 +1,268 @@
+{
+  "dog-neck-bandana": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        69,
+        159,
+        102,
+        64
+      ],
+      "source": [
+        0,
+        0
+      ]
+    }
+  },
+  "dog-head-cap": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        58,
+        -5,
+        134,
+        76
+      ],
+      "source": [
+        312,
+        0
+      ]
+    }
+  },
+  "dog-extra-ball": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        84,
+        222,
+        72,
+        70
+      ],
+      "source": [
+        720,
+        0
+      ]
+    }
+  },
+  "dog-neck-bone-collar": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        73,
+        160,
+        94,
+        52
+      ],
+      "source": [
+        942,
+        0
+      ]
+    }
+  },
+  "dog-head-sun-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        29,
+        -8,
+        182,
+        74
+      ],
+      "source": [
+        0,
+        234
+      ]
+    }
+  },
+  "dog-extra-frisbee": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        74,
+        139,
+        92,
+        43
+      ],
+      "source": [
+        552,
+        234
+      ]
+    }
+  },
+  "dog-neck-bow-tie": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        90,
+        172,
+        60,
+        27
+      ],
+      "source": [
+        834,
+        234
+      ]
+    }
+  },
+  "dog-head-party-hat": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        96,
+        -31,
+        61,
+        91
+      ],
+      "source": [
+        1020,
+        234
+      ]
+    }
+  },
+  "dog-extra-boots": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        75,
+        229,
+        96,
+        60
+      ],
+      "source": [
+        1209,
+        234
+      ]
+    }
+  },
+  "dog-neck-lei": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        57,
+        162,
+        126,
+        50
+      ],
+      "source": [
+        0,
+        513
+      ]
+    }
+  },
+  "dog-head-aviator": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        32,
+        -1,
+        176,
+        76
+      ],
+      "source": [
+        384,
+        513
+      ]
+    }
+  },
+  "dog-extra-backpack": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        20,
+        164,
+        74,
+        116
+      ],
+      "source": [
+        918,
+        513
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        63,
+        165,
+        114,
+        77
+      ],
+      "source": [
+        1146,
+        513
+      ]
+    }
+  },
+  "dog-neck-medal": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        84,
+        146,
+        71,
+        81
+      ],
+      "source": [
+        0,
+        867
+      ]
+    }
+  },
+  "dog-head-helmet": {
+    "front": {
+      "part": "HEAD",
+      "destination": [
+        27,
+        -14,
+        186,
+        87
+      ],
+      "source": [
+        219,
+        867
+      ]
+    }
+  },
+  "dog-extra-raincoat": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        51,
+        160,
+        138,
+        111
+      ],
+      "source": [
+        783,
+        867
+      ]
+    }
+  },
+  "dog-neck-cape": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        34,
+        164,
+        172,
+        135
+      ],
+      "source": [
+        0,
+        1206
+      ]
+    },
+    "back": {
+      "part": "BODY",
+      "destination": [
+        33,
+        168,
+        174,
+        132
+      ],
+      "source": [
+        522,
+        1206
+      ]
+    }
+  }
+}

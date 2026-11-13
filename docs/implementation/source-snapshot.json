@@ -1,0 +1,638 @@
+{
+  "source": "C:\\Dev\\Sateenkaarikello-Android",
+  "branch": "feature/splash-intro",
+  "commit": "cfed3a417047255d3930cc005f1785616f6233d8",
+  "status": [
+    "?? PROJECT.md",
+    "?? docs/play-store-app-plan-claude.md",
+    "?? docs/superpowers/plans/2026-10-20-public-clock-learning-app.md"
+  ],
+  "files": [
+    {
+      "path": ".deepsec/.gitignore",
+      "sha256": "A680693B51CDCA51413612A669244AFE23252FFA2AA9F5E6AAAA18B6BDDD8587"
+    },
+    {
+      "path": ".deepsec/deepsec.config.ts",
+      "sha256": "87F951303AAFC4346F156E80721892545A3EA4B2EB2D363A9F7DBABA12FB211F"
+    },
+    {
+      "path": ".deepsec/package.json",
+      "sha256": "F5BCB4171921942C67E8657ACFF1264C2C6F01B074175BCF4584DCABD2CB94DC"
+    },
+    {
+      "path": ".deepsec/patches/deepsec@2.3.9.patch",
+      "sha256": "D5A9EF3FA527C44E27CED86F7A223C0A431E14B7CCEA4EDB5904AB808270ED0D"
+    },
+    {
+      "path": ".deepsec/pnpm-lock.yaml",
+      "sha256": "C39B58E4249FFDC7D2B17C0FE09829419436DED22EBB2B2461A1B572D62CFEFE"
+    },
+    {
+      "path": ".deepsec/pnpm-workspace.yaml",
+      "sha256": "3454983B5B8CA2F2D0324965D08BEA22CD5F88CB071E8F2AC16BED0CFBC35A2C"
+    },
+    {
+      "path": ".editorconfig",
+      "sha256": "390E242142DE71712221E552F2800034CBBAAAFFF5223A8653B0FCCC0FC5C278"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "CF21B16E64FB2501458B9194EA986F2ACB2A5BF91DE7D252980CC7A906C2653A"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "259268CE1CEDAE4076FA197CAEE963EE28720AE879153F065038FED9939F63D9"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "sha256": "5945A45E5E347CB6C85A4EC35970B365CFA01A7745A9302263963CA5AA36EB0F"
+    },
+    {
+      "path": "app/proguard-rules.pro",
+      "sha256": "E5490C292F90B10F96F9A86BB6DD34E82D753468C00DDBA12184B598E2944F8B"
+    },
+    {
+      "path": "app/src/androidTest/java/fi/sateenkaarikello/AppFlowTest.kt",
+      "sha256": "FDE203BAC91BB57DB25E4C414CC016D41B2DD67B5EC63E67E89E640B2BCADA16"
+    },
+    {
+      "path": "app/src/androidTest/java/fi/sateenkaarikello/ChallengeScreenTest.kt",
+      "sha256": "41B861D9CE2A14BBC54ED91DCFA1D72F60673C9E284ED856D69C65BB4C7BEE26"
+    },
+    {
+      "path": "app/src/androidTest/java/fi/sateenkaarikello/ComposeStabilityRegressionTest.kt",
+      "sha256": "F2D1EE245804AD267B122CCB54C28EE096E08FEDB1ED27BED033C09D6912371F"
+    },
+    {
+      "path": "app/src/androidTest/java/fi/sateenkaarikello/GalleryTest.kt",
+      "sha256": "758EF5F9E20E0486AD5A8993FB41D4CAB0681B834F8F661017A65AC550C2E43B"
+    },
+    {
+      "path": "app/src/androidTest/java/fi/sateenkaarikello/IntroOverlayTest.kt",
+      "sha256": "145CD6AE70FB17C710A5C2BF01FA5EC3F1E6EDEE601A8750942F023D94D41092"
+    },
+    {
+      "path": "app/src/androidTest/java/fi/sateenkaarikello/LintRegressionTest.kt",
+      "sha256": "466A793F215F942C0CCCB839520B817575C11D8F266634A381DF9EC8AC1E76EE"
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "sha256": "2434EE323E7841E59AA012DCDFFED64CA59E1F8FDBE12B945254343ABA7AC4E3"
+    },
+    {
+      "path": "app/src/main/assets/licenses/OFL-Fredoka.txt",
+      "sha256": "5C9E7EEE5C6B25F4B05B8D53B2E470EA4962F9CED742D044A98F7D95D1375BAB"
+    },
+    {
+      "path": "app/src/main/assets/licenses/OFL-Nunito.txt",
+      "sha256": "580DF76C95A1EC5AB878CEB25BB3D85C6A076804E9C970C8C6972AEA775FDF65"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/audio/Sfx.kt",
+      "sha256": "8DA5490C313C3FC1540F1EB7A83BFD3B4BFA9CCDCAD7C559938E7B6ABFB7F4E6"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/audio/Speech.kt",
+      "sha256": "B45E186780F48B63737D5F8655F69D30D77E39D9B712171F3E200843422DA9D4"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/audio/ToneSynth.kt",
+      "sha256": "6BCE528AEB546E19604FB7D719F6958C36BC86591C9744740A21632338C8B0DF"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/data/ProgressRepository.kt",
+      "sha256": "8481449238C3A7143A7E8335665F18E0EE85DC9364DCBDAF807257644F7B845F"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/ClockTime.kt",
+      "sha256": "1F4649B8EEB0C275EF9087290FFF0A6A83ABFA96B0D588F77AAF93850BF8A4C6"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/FinnishTime.kt",
+      "sha256": "DBDD6434ACA94F82CDB72DA09DC21E64E947DBF68A5F380CE68AC4ABBEAA8D86"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/Hints.kt",
+      "sha256": "1666377C819B971CDB16487E31316A66B22C89752F74E9B697DA020063DE1468"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/Lessons.kt",
+      "sha256": "72923B1290052B8737443A95E4DCCDA289CFC18A2B3C928C925FD2826B1EA1E9"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/Levels.kt",
+      "sha256": "DC61571F95C33180A956234E6D1CEF280E53527F85088BCFC0B72C2013310483"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/Progress.kt",
+      "sha256": "574F23662F3AA687CB557006C89995836ADE939AC4514576F393562E99B91486"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/domain/Wardrobe.kt",
+      "sha256": "67374FF53FCFDFBD7023754EE117E8D6B272FF9BDFCF07C7697F3B57C2499D65"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/MainActivity.kt",
+      "sha256": "61ED0F491347AAD14ADB78102961F401BDE39708FDED623C4E940124DBC6D9A4"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/Navigator.kt",
+      "sha256": "5C82D138243837385EE81AF2807DCE578A4B1FE3A790A2CBB07F68CD8C52A9C8"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/SateenkaariApp.kt",
+      "sha256": "19A6B21D4836DAB03D55F207464F5136509D9F921E29D87132ECFF3DC2B2541C"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/SateenkaariApplication.kt",
+      "sha256": "C79A0DF97D5165C34B078DFA6A9392112E0F670BE202A732217C5B8EAF1135B7"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/Screen.kt",
+      "sha256": "C8C3FD70AEEA706583D8BFE67497EA2B20586A959C4D06E35D292ADCC01A26B8"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/AppViewModel.kt",
+      "sha256": "955EEED7100C0FCFAD636A4D8225EFC3C1FBC524DA6C34DF7D32DBB7995CEFD2"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/ask/AskScreen.kt",
+      "sha256": "04196E90298AB9670ACFF00B21203D2C40E4B5981DB8E2767223C499A0584FBB"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/challenge/ChallengeScreen.kt",
+      "sha256": "DC2F2BB05B5C8577ED23AF0E44697FE8833F4C19EB577EF3518046B963F944C3"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/challenge/ChallengeViewModel.kt",
+      "sha256": "D65FBA3B48CDBAA37229FBD9AEBEFB5D491C271BC3F479B03BD72C779AA9C778"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/clock/ClockFace.kt",
+      "sha256": "B968750B263AC7B24F1DBC8F8C62D626112D18ED3750624BC82B5D6F1BD2E42A"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/clock/ClockSpec.kt",
+      "sha256": "E571B8D108C5D6E2937A33E42B766807F633885B99E0ECB198DA75FB77D51312"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/clock/ClockState.kt",
+      "sha256": "B276C44848B105CD8D7EAD97BD6BD54CD65E8F7D4D8310F9018EC12508AAA594"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Buttons.kt",
+      "sha256": "34228662CB1F60711C979553A30305C813B04F2872218074E4F1A0223BA28F97"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Confetti.kt",
+      "sha256": "8E76D7FDB4F9DB46D5A4AD139C9233081DD46D2C3A0F6AB423A1576503F5F1CE"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/ConfettiMath.kt",
+      "sha256": "78943728DB318978AE8ED6D293C424E257F1205169A1A44774A6E550C87BE92C"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Display.kt",
+      "sha256": "FBFAC35AE91EB94D1A6F332B878A28B25167A294334DEE0D26D92E3A92946674"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Icons.kt",
+      "sha256": "353FB6EF1E50B5197E59378F6D3061D7FCDFDAF715E5C6D3FD77804433C9C39C"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Layout.kt",
+      "sha256": "237DF5DF68FB0AEBE451FD286713B8971AC711597D7BE014BACBA0BE0B595278"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Panels.kt",
+      "sha256": "C59D992AD9500095845D6AF866E4EF1B0B9CBCCFE6DBC50BAD6B53A155A69021"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/components/Shapes.kt",
+      "sha256": "3DAEDDF11F3BB176C74D289AF626E9EF16A01C6E10A1F30F74818286440BCB8D"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/doll/Doll.kt",
+      "sha256": "590CE5879D5D57064AC90F99209FF03C179E64586DF830F06988EF6704D70459"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/doll/DollMotion.kt",
+      "sha256": "86FA3765F8C2CDC579691C867590F220E01816A4A622A4C71D34A27D73802B67"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/doll/DollParts.kt",
+      "sha256": "721F6F13F2F772952EF359C9F559618E5BBABB672EA57287D5D227DA9384214A"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/doll/DollScreen.kt",
+      "sha256": "DAB3D4FF1B63D4CC4C9CD4544CBCEBFD632D384045CB0868A8846AD5C1753841"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/doll/LivelyDoll.kt",
+      "sha256": "2088D915F4E7FE503468522EDF2BE2BF1C917DA44515D6B44812B8A328FD22BC"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/freeclock/FreeClockScreen.kt",
+      "sha256": "00646FF83F2A8A5DE79AAF9B3E6502A914DDF59596F1CF6EC05177092611EBC8"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/game/GameScreen.kt",
+      "sha256": "3C39C4DB3349C035275937FEF17F32425EDAF3623BC9C328A75C962448E40870"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/game/GameViewModel.kt",
+      "sha256": "0ECF613EFE93792554BEEC892800E994BDE6B6CE37BB5E42D28566E79C903621"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/game/ResultScreen.kt",
+      "sha256": "FECEFAD4995996A06ACE82AA87F919FD555121FCF3893864084F605283101DCB"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/home/HomeDestination.kt",
+      "sha256": "D8D144A04714800760C13BC7120DBD77ED94A520EF4C9B03E62BD08E91511AC9"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/home/HomeScreen.kt",
+      "sha256": "BF65F863BD95718EAD10FE4332A09A9227165F0DBECB0B9FE048E37BB69A04E7"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/intro/IntroScreen.kt",
+      "sha256": "3C871B09B6AFA34451B7327ABB9FE6E3986C78191EA0ACA5899EDF71FF5A847B"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/intro/IntroTimeline.kt",
+      "sha256": "9784F94863F0504FD3DF6F7F34B91724D6BFF191F67EBA029A99C74B99630D3C"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/lesson/LessonCatalog.kt",
+      "sha256": "0A798C33C600AA884C8DAF1EE755B2606BF9349AE8EC27064232F664DF6117D6"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/lesson/LessonScreens.kt",
+      "sha256": "BD77B002B4FF43A6D84B5A89FA987D69A90EDAEC69BD8962AB6A9C4AB82A933B"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/lesson/LessonViewModel.kt",
+      "sha256": "BAB3C3CAC1EC04778B0C8F0E7FA7004E1F7334D413CAE34DF0801B071D459011"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/levels/LevelsScreen.kt",
+      "sha256": "66F7DFBB83232C100F1AE76B2AC50181E8A607681620A85E0E6724C4AED8E37F"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/Motion.kt",
+      "sha256": "E2FAA32269A98A8C8B9E56803E66B2DEE4FF4417406005BFF29670319CB43E6A"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/Texts.kt",
+      "sha256": "49E87A2A3C031B812B26E5BD29DD631AF0E5C1BB6184256A817DE6BE497B637F"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/theme/SkColors.kt",
+      "sha256": "60D3A6B9B994D9DCB0FE04DC60AB22E982FADF6435EEE8B4C2E378618597C286"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/theme/SkDimens.kt",
+      "sha256": "1018EC614FB325CD42800B1BB4971C869C22853534DAA4455C9F3369AA89DDDC"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/theme/SkDollColors.kt",
+      "sha256": "120DFBCB25DF660F45C16E08C2EB4CED5080EC11199C5375327974AF9BD3B7EF"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/theme/SkShapes.kt",
+      "sha256": "4D99237035CA5705FC36EDD7BFF3153F9935C2CFA36D29AFB1956F6E5077C246"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/theme/Theme.kt",
+      "sha256": "8654042A17137528575B1F8490677B1117C42580D9A8589A5902D237D4B8FB7F"
+    },
+    {
+      "path": "app/src/main/java/fi/sateenkaarikello/ui/theme/Type.kt",
+      "sha256": "83B41106BCFFE3DD820AF7977CF82AA1F08534E4646307BB0F4C0BAD6C0BC012"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "sha256": "EDADCECF3BD59DCD476BC2BBA7B19C9724D82F172A1C4927EE0D0EB2876E2F04"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_launcher_monochrome.xml",
+      "sha256": "C8A5493449AD2DBD645095EBFC1B2FC447FA995E3808374CC46D05B2B86DADD2"
+    },
+    {
+      "path": "app/src/main/res/font/fredoka_bold.ttf",
+      "sha256": "037F5301C863AC06AD09DB557DCCDF778B83F0C1AE3130834BE7E700E9A28FF5"
+    },
+    {
+      "path": "app/src/main/res/font/fredoka_medium.ttf",
+      "sha256": "894203210673F4B4128C563B0479966BC5C9BE27F5768C43B7D6A10E0DAA4EA8"
+    },
+    {
+      "path": "app/src/main/res/font/fredoka_semibold.ttf",
+      "sha256": "CE3D7A3B4FA3F4214AF5A7AB352A5C16C590475A44DAE519A097EEB8D118AE2B"
+    },
+    {
+      "path": "app/src/main/res/font/nunito_bold.ttf",
+      "sha256": "520DBCA883E57AF4C78506A76727C7A4CD1C62FD1AA9241B4B35891CDDF21DF9"
+    },
+    {
+      "path": "app/src/main/res/font/nunito_extrabold.ttf",
+      "sha256": "D5594EAC9988D6909F7C3F0EF7C47E700ECE5FCDE5D593A6A4AA74AD34DC252D"
+    },
+    {
+      "path": "app/src/main/res/font/nunito_semibold.ttf",
+      "sha256": "A9FB94186E29E9B56C99682D5D2E87A2A94934979E0DFFA207A4CDD778E29C31"
+    },
+    {
+      "path": "app/src/main/res/mipmap-anydpi/ic_launcher.xml",
+      "sha256": "322CE1181720705845E81B3399E87B815EDD457D404A5C3B0604429E2CFF82C8"
+    },
+    {
+      "path": "app/src/main/res/values-v31/themes.xml",
+      "sha256": "95273E61181BD8F87AE96A736522EFFE2E52A6DEB537C9591FB46EBDDFA6FF4D"
+    },
+    {
+      "path": "app/src/main/res/values/colors.xml",
+      "sha256": "EBD271628B0587DD2198CFFF853FFAAB246222425ECBC2E03D74E9170687ABFF"
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml",
+      "sha256": "C2686D909DBAEA6B5EBBDFE1FA242FEBC1E16026725451F1FBBC5E86BABA0B3B"
+    },
+    {
+      "path": "app/src/main/res/values/themes.xml",
+      "sha256": "C5821443006E10F03264F9081D5E618C429B323884EF4D7E8CD480800DB8E7C8"
+    },
+    {
+      "path": "app/src/main/res/xml/data_extraction_rules.xml",
+      "sha256": "ACD447818F72116FBEE2E2C6A752FE06C99D72E02DF271105591616FAFB2E1BC"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/audio/ToneSynthTest.kt",
+      "sha256": "FB95927250ECA78E9E37FFC7D1D7E36B855CD422E2B3FF6028EAEA03520E82BD"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/data/InMemoryPreferencesStore.kt",
+      "sha256": "85A75D1B913BBE0D866607C149BC0E2A9DF43F918656BB7A6067116BB8ADE8F9"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/data/ProgressRepositoryTest.kt",
+      "sha256": "94B1049915A2A6D5049A8040339B4499A2D497FE40B78BD1E66E3B8F908125F7"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/ClockTimeTest.kt",
+      "sha256": "DBAA18F3166C057E78B8A1057BB09D5CEE852F6456EE2B84A3EDA1A0B94BE05A"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/FinnishTimeTest.kt",
+      "sha256": "12FDB88CB5777EFE05C682AF19884F026D7935C4D4C598AD8F454AF36C99BAAA"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/HintsTest.kt",
+      "sha256": "971C815B40D40FB29E7B9EF5B44C3FDC4930FD2F3B3D6D85183513C10597E988"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/LessonsTest.kt",
+      "sha256": "A5D0C6109D837D3D8E57D97E2CE172E93457799DE21CE0C0B2AFF70A4CCD7C02"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/LevelsTest.kt",
+      "sha256": "44EE2D6AFEC1FB0FA17410300E0C4158CBC9292B08E6C0802818DBC452FF2F2D"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/ProgressTest.kt",
+      "sha256": "857D8000266181A7DEE477EF85152D466779DF6AF98961CD06E9EEEC6D0A19E2"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/domain/WardrobeTest.kt",
+      "sha256": "6F80AACC15824CE8349F2A4526B3A926BEE9D25DC2E35A9A178205DCE2EAE076"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/challenge/ChallengeViewModelTest.kt",
+      "sha256": "A920C572AF3EDE84122C44A3E9568DE09DC50C68BB908ECD230957E7E5403407"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/clock/RingRevealTest.kt",
+      "sha256": "B7A81AA52C0B0A8298BAEAC9C0C812484A93BCB7D3E4C2F604D5CF3C0F9349AB"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/components/ConfettiMathTest.kt",
+      "sha256": "4F9AB44E421B84F57D3462FE8FD68233A59ABDAE6F1A5E0729EC3D5D29BF3BBB"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/doll/DollMotionTest.kt",
+      "sha256": "5FB045697000C3569A9F06E78B3E1DE9FBE44093D85C6997A8BE4FE92D2A2524"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/FakeServices.kt",
+      "sha256": "BB36DB0875A7893ED26C2B9F61B9567ADDA9DE25A803223543714D6BF9707CE2"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/game/GameViewModelTest.kt",
+      "sha256": "8DDFC01713A507EDA128253B91D9AA2215D9D031E15EB460DD90D4F2BDC0916B"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/intro/IntroTimelineTest.kt",
+      "sha256": "4A7CCE7A6CDF018A787A17FC2CBF37399697E872C3B69B3C6E93E9FA5C7B7018"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/ItemNamesTest.kt",
+      "sha256": "74CE8907A78B0EE6137BE86F4F5B4D9D8490FF4106B06E57EB9EEB68E9A4FB2A"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/lesson/LessonCatalogTest.kt",
+      "sha256": "DAEF6245147094F6617AE1038D6059640D18DDF8671E2B0188422CEC3416774F"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/lesson/LessonViewModelTest.kt",
+      "sha256": "F640BD29316E2A39C9C2A5938D3CB2DCB4F200F1D94A3010DAF52739F902F6F7"
+    },
+    {
+      "path": "app/src/test/java/fi/sateenkaarikello/ui/MainDispatcherRule.kt",
+      "sha256": "8ADD8D307D39D5F51922A8586316633F260E908E2C47791815BC33B4D255292C"
+    },
+    {
+      "path": "app/stability/app-debug.stability",
+      "sha256": "790C7DE7B689EDFC11840088255AE3B8AB3BE96E7F6E862F1E54AA9D2799D205"
+    },
+    {
+      "path": "app/stability/app-release.stability",
+      "sha256": "790C7DE7B689EDFC11840088255AE3B8AB3BE96E7F6E862F1E54AA9D2799D205"
+    },
+    {
+      "path": "build.gradle.kts",
+      "sha256": "6197546CC27B42161485BCA63E4F95024727C49A5C5A2264AD19F85BD8D4B605"
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha256": "4E77349DB9FE28DC05471E77F3655127846DF58A92894C69C486F0EFAE732871"
+    },
+    {
+      "path": "config/android-check.json",
+      "sha256": "8A72CB4C3A73B6DAE73BCAA847B80CEBE169275E6CCA296D02D53C1ACA8CFB68"
+    },
+    {
+      "path": "config/check-exceptions.json",
+      "sha256": "4DE4D15CD58E62727FEBECEA89E8F0BC32036B8DE61B93C398A07AFF33D61BB7"
+    },
+    {
+      "path": "config/compose-stability.conf",
+      "sha256": "9C8D1C8CCCD3A53E932BF824EAB39F8E6DD917039259FC432D03A9288FB1B1AD"
+    },
+    {
+      "path": "config/dependency-check-suppressions.xml",
+      "sha256": "F2768192C8FBB87DCCCC4E2BBF803DD92AB8F6BA269FDC8D4BF7AEFFA5D7C89C"
+    },
+    {
+      "path": "config/detekt.yml",
+      "sha256": "8D2ECA5E6CBA90118BCA6EEFBE035B0946D2CA9FF037738DDCBC6702DE446441"
+    },
+    {
+      "path": "config/semgrep/sateenkaarikello-security.yml",
+      "sha256": "347032D8680E9B35AAC165E0E7B2951CE9A53C9CC3A2C1924FF909A251977F6D"
+    },
+    {
+      "path": "docs/android-apk-plan.md",
+      "sha256": "18A5D9AAF3FB2105470AC202AB32A2253921CE1B05860E45092B32992993A6F3"
+    },
+    {
+      "path": "docs/play-store-app-plan-claude.md",
+      "sha256": "D0EFA0798FC24AE59272366EF368F1B44F06041A658C47B6B15BB08112628ECF"
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-20-public-clock-learning-app.md",
+      "sha256": "296810210A9D1B093C1B47E90F3AA398EBD2F82895E91574FB5E4496BF8C0396"
+    },
+    {
+      "path": "gradle.properties",
+      "sha256": "16D63EF629EF427F439581FFA3CC5A6E1E71CB388AE09A332139788C5980467E"
+    },
+    {
+      "path": "gradle/libs.versions.toml",
+      "sha256": "C1FB48BCC5199AE05418826E65CF5B7CECFD6A66C75BCB36809776B888C746FE"
+    },
+    {
+      "path": "gradle/verification-keyring.keys",
+      "sha256": "72942C2035AA0E91D4B130DA6F588CF2CE652DCA558FB8033EF1DC33D6D28992"
+    },
+    {
+      "path": "gradle/verification-metadata.xml",
+      "sha256": "5154C3B62F0F2965F7E2D05083771A044B6F29AA9696C006B355D5566DFD6FC2"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.jar",
+      "sha256": "3B8A25775A69158B5AD2B1D17A80A88DC7B40A352A73EB27D06C612A7CE68E98"
+    },
+    {
+      "path": "gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "B9C24447093E4FAB2B1F37BFB461D2A1EB14157A4808DFF50E0F954801A8F8F1"
+    },
+    {
+      "path": "gradlew",
+      "sha256": "A5A5C199BA02189AE8C46A334223371A20599D9C298EF65E7540EDE4A3F72D59"
+    },
+    {
+      "path": "gradlew.bat",
+      "sha256": "F17917F8DBE61182B149273EE78090FEC1197442C3F38276AF907BFA5190DB16"
+    },
+    {
+      "path": "lint.xml",
+      "sha256": "6C1D0BA499FD458A7C592ABBAA872EA5C19CC868128C49AA51400C08047F57AE"
+    },
+    {
+      "path": "PROJECT.md",
+      "sha256": "CF96567EDCBDC2650AFD26BFE1D9A32A73ADD742880BF4F336897527F63C7E1E"
+    },
+    {
+      "path": "settings.gradle.kts",
+      "sha256": "B29AB042581AC0D0054BD038231FF5298436AF5AFB4EEA06ADF207933B36258F"
+    },
+    {
+      "path": "sonar-project.properties",
+      "sha256": "C2803554B92CD2FF6BCF31513568439610123241FBF9BC3C9C2BAD26B99F7996"
+    },
+    {
+      "path": "tools/ac.ps1",
+      "sha256": "7D6BE15EC33649F7AA43E792B23B4F84301473A273D06B3F8CD83C99978DE107"
+    },
+    {
+      "path": "tools/bc.ps1",
+      "sha256": "27112AFF960FBD317D6A95D6A7E0068A8916A7E57E1BE688F9DD242EE9726958"
+    },
+    {
+      "path": "tools/cr.ps1",
+      "sha256": "B1C915A0600D6B02DF35D2F336C8C2A968C0DDC889126518DFC95B14A7011019"
+    },
+    {
+      "path": "tools/cs.ps1",
+      "sha256": "F911CC765FED35716890092A15EA3D74FF887DB4AD6F27AECBCB38155DFCB1BF"
+    },
+    {
+      "path": "tools/db.ps1",
+      "sha256": "97E4E4E96A15C23547CE4606ECFBDE1AF5509120FE516B8A70DF8BDE82BB3E6F"
+    },
+    {
+      "path": "tools/dc.ps1",
+      "sha256": "5D6861F0FCAFAE18FBBE3A45E1663DFC747316872B6FFB814A878158C7743FF2"
+    },
+    {
+      "path": "tools/ds.ps1",
+      "sha256": "6791CF5FA01B88C5114E7DB7A5B17B7F67D6F45ED9222A1F5CCACCFAF9CF2BED"
+    },
+    {
+      "path": "tools/ga.ps1",
+      "sha256": "3289AC18AD1C74D5553FB6FC5037545253CE850342A2147E39F4AE66E06B3BAB"
+    },
+    {
+      "path": "tools/lc.ps1",
+      "sha256": "09E9286DE803D068B942D58416DFA24986B036D34FC4EA43C87728A9BD80D409"
+    },
+    {
+      "path": "tools/ms.ps1",
+      "sha256": "56B83164BE0B8075E3E38CE8073E42E83D306E6382D4A36A7449F4983245CFC1"
+    },
+    {
+      "path": "tools/os.ps1",
+      "sha256": "030F2808660EC760FA5D831BA71D38ED561474E123F49515EAC4991235EF5195"
+    },
+    {
+      "path": "tools/pc.ps1",
+      "sha256": "4A44A3B4B5E8FAC46795EAD9BCEABB69731F947C704781F49B84A1FC721AD561"
+    },
+    {
+      "path": "tools/ql.ps1",
+      "sha256": "1B7A6927FCF959FDCDB75B037C8BDEAA837969FA2370E24FADBDDCDA0ED69F09"
+    },
+    {
+      "path": "tools/sc.ps1",
+      "sha256": "71909E54CCF5AE757AD8A308C68135F29C74E2DC06AA21766D4013230622BCCA"
+    },
+    {
+      "path": "tools/sonar.ps1",
+      "sha256": "BD6392BF6717A6A35CEE387AD6532C63680C5A9EB5340508BA9AE37C16A6C01E"
+    },
+    {
+      "path": "tools/ss.ps1",
+      "sha256": "3895637EBE26ED52D2ABCE648B41D19F03447EEC63864142E0AA367816E32510"
+    },
+    {
+      "path": "tools/tc.ps1",
+      "sha256": "E6086AC0D61B4AB0F492FF31D460895A08F2B1CCC4388449C18B3E9831F29364"
+    }
+  ],
+  "gitFiles": [
+    {
+      "path": ".git/HEAD",
+      "sha256": "B78F51FA1359D7DBF8B5AA6BDF20D9336BFF1508417EE64528D4A9C75304AD15"
+    },
+    {
+      "path": ".git/index",
+      "sha256": "187760179D06C43C4431748B68335C76DEE21DE0984D9096C03235B3BB270B22"
+    },
+    {
+      "path": ".git/config",
+      "sha256": "5923943EB9F368F39457469EFCBFC8F5469C257BAFF1625AC19AC7FE0D2FB5B4"
+    }
+  ]
+}

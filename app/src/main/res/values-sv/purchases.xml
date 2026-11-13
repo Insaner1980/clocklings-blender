@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parent_title">För föräldrar</string>
+    <string name="parent_gate_instruction">För vuxna: skriv dessa fyra siffror i omvänd ordning: %1$s</string>
+    <string name="parent_gate_answer">Koden i omvänd ordning</string>
+    <string name="parent_gate_error">Kontrollera ordningen och försök igen.</string>
+    <string name="parent_continue">Fortsätt</string>
+    <string name="parent_cancel">Avbryt</string>
+    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_description">Ett engångsköp låser upp alla fem nivåer, deras lektioner och alla övningar och utmaningar permanent.</string>
+    <string name="full_unlock_rewards">Fullversionen ger möjlighet att tjäna hela utbudet av belöningar. Stjärnor, slutförda lektioner och belöningar kommer fortfarande från lärandet.</string>
+    <string name="purchase_ready">Ingen prenumeration. Ingen reklam.</string>
+    <string name="purchase_buy">Köp en gång — %1$s</string>
+    <string name="purchase_unavailable">Köp är inte tillgängliga just nu. Försök igen senare.</string>
+    <string name="purchase_pending">Köpet väntar på betalning. Full åtkomst börjar när betalningen är klar och verifierad.</string>
+    <string name="purchase_cancelled">Köpet avbröts. Du kan fortsätta använda gratisaktiviteterna.</string>
+    <string name="purchase_verifying">Kontrollerar ditt köp…</string>
+    <string name="purchase_owned">Fullversionen är upplåst.</string>
+    <string name="purchase_restored">Fullversionen har återställts.</string>
+    <string name="purchase_not_owned">Inget köp av fullversionen hittades för det aktuella Google Play-kontot.</string>
+    <string name="purchase_failed">Köpet kunde inte kontrolleras. Försök igen.</string>
+    <string name="purchase_acknowledgement_pending">Full åtkomst är tillgänglig. Bekräftelsen till Google Play behöver ett nytt försök.</string>
+    <string name="purchase_retry">Försök igen</string>
+    <string name="purchase_restore">Återställ köp</string>
+    <string name="purchase_restore_explanation">Använd det Google Play-konto som köpte fullversionen. Att återställa ett köp återställer inte framsteg som bara sparats på en annan enhet.</string>
+    <string name="full_version_label">Fullversion</string>
+    <string name="companion_access_requirement">Kräver fullversionen och 3 intjänade stjärnor.</string>
+    <string name="wardrobe_full_requirement">Fullversionen innehåller fler kläder. Stjärnkraven gäller fortfarande.</string>
+</resources>

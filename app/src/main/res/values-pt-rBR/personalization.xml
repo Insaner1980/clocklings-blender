@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appearance_title">Do seu jeito</string>
+    <string name="companions_title">Amigos</string>
+    <string name="clock_styles_title">Estilos de relógio</string>
+    <string name="companion_human">Boneca</string>
+    <string name="companion_cat">Gato</string>
+    <string name="companion_dog">Cachorro</string>
+    <string name="companion_robot">Robô</string>
+    <string name="companion_dragon">Dragão</string>
+    <string name="companion_dinosaur">Dinossauro</string>
+    <string name="companion_bunny">Coelho</string>
+    <string name="companion_unicorn">Unicórnio</string>
+    <string name="companion_car">Carro</string>
+    <string name="companion_none">Só o relógio</string>
+    <string name="no_companion_hint">Pratique as horas sem companheiro.</string>
+    <string name="companion_color">Cor</string>
+    <string name="color_original">Original</string>
+    <string name="color_blue">Azul</string>
+    <string name="color_green">Verde</string>
+    <string name="color_purple">Roxo</string>
+    <string name="color_orange">Laranja</string>
+    <string name="color_coral">Coral</string>
+    <string name="theme_classic">Clássico</string>
+    <string name="theme_rainbow">Arco-íris</string>
+    <string name="theme_space">Espaço</string>
+    <string name="theme_forest">Floresta</string>
+    <string name="theme_ocean">Oceano</string>
+    <string name="theme_garden">Jardim</string>
+    <string name="theme_workshop">Oficina</string>
+    <string name="theme_custom">Meu relógio</string>
+    <string name="custom_clock_hint">Misture suas cores e formas favoritas. O ponteiro pequeno e rosa mostra as horas, e o grande e azul mostra os minutos.</string>
+    <string name="clock_color">Cor da borda</string>
+    <string name="clock_frame">Desenho da borda</string>
+    <string name="frame_round">Liso</string>
+    <string name="frame_scalloped">Pérolas</string>
+    <string name="frame_blocks">Blocos</string>
+    <string name="clock_numerals">Números</string>
+    <string name="numerals_rounded">Arredondados</string>
+    <string name="numerals_plain">Simples</string>
+    <string name="clock_hands">Ponteiros</string>
+    <string name="hands_round">Pontas redondas</string>
+    <string name="hands_pointer">Pontas finas</string>
+    <string name="home_companion_choices">Escolha um companheiro e deixe tudo do seu jeito</string>
+</resources>

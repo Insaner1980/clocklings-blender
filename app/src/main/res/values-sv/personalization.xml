@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appearance_title">Gör den till din</string>
+    <string name="companions_title">Kompisar</string>
+    <string name="clock_styles_title">Klockstilar</string>
+    <string name="companion_human">Docka</string>
+    <string name="companion_cat">Katt</string>
+    <string name="companion_dog">Hund</string>
+    <string name="companion_robot">Robot</string>
+    <string name="companion_dragon">Drake</string>
+    <string name="companion_dinosaur">Dinosaurie</string>
+    <string name="companion_bunny">Kanin</string>
+    <string name="companion_unicorn">Enhörning</string>
+    <string name="companion_car">Bil</string>
+    <string name="companion_none">Bara klockan</string>
+    <string name="no_companion_hint">Öva på klockan utan en kompis.</string>
+    <string name="companion_color">Färg</string>
+    <string name="color_original">Ursprunglig</string>
+    <string name="color_blue">Blå</string>
+    <string name="color_green">Grön</string>
+    <string name="color_purple">Lila</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_coral">Korall</string>
+    <string name="theme_classic">Klassisk</string>
+    <string name="theme_rainbow">Regnbåge</string>
+    <string name="theme_space">Rymden</string>
+    <string name="theme_forest">Skogen</string>
+    <string name="theme_ocean">Havet</string>
+    <string name="theme_garden">Trädgården</string>
+    <string name="theme_workshop">Verkstaden</string>
+    <string name="theme_custom">Min egen klocka</string>
+    <string name="custom_clock_hint">Blanda dina favoritfärger och former. Den korta rosa visaren visar timmar och den långa blå visar minuter.</string>
+    <string name="clock_color">Ramens färg</string>
+    <string name="clock_frame">Ramens mönster</string>
+    <string name="frame_round">Slät</string>
+    <string name="frame_scalloped">Pärlor</string>
+    <string name="frame_blocks">Klossar</string>
+    <string name="clock_numerals">Siffror</string>
+    <string name="numerals_rounded">Rundade</string>
+    <string name="numerals_plain">Enkla</string>
+    <string name="clock_hands">Visare</string>
+    <string name="hands_round">Runda spetsar</string>
+    <string name="hands_pointer">Spetsiga ändar</string>
+    <string name="home_companion_choices">Välj en kompis och gör den till din</string>
+</resources>

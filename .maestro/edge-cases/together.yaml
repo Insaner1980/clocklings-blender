@@ -1,0 +1,30 @@
+# TG-02/TG-03/RP-01. English, 12 h synthetic fixture. Ten turns, no data reset.
+# Clock descriptions come from the observed external hierarchy; no hidden oracle.
+appId: fi.clocklings
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- tapOn: "Play Together. Set a time, take a guess, and swap turns"
+- assertVisible: "Player 1 sets the time"
+- repeat:
+    times: 10
+    commands:
+      - tapOn: "Pass to partner"
+      - assertVisible: "Clock question. Ask your partner to describe the hands, or reveal the time together."
+      - assertNotVisible: "Clock face:.*"
+      - assertNotVisible: "3:00"
+      - assertNotVisible: "Listen"
+      - tapOn: "Show the answer"
+      - scrollUntilVisible:
+          element: "3:00"
+          direction: DOWN
+          timeout: 10000
+      - assertVisible: "3:00"
+      - tapOn: "Swap turns"
+      - assertVisible: "Choose a time"
+- assertVisible: "Player 1 sets the time"
+- back
+- assertVisible: "Clocklings"

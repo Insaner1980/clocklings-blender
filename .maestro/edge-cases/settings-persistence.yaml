@@ -1,0 +1,65 @@
+# ST-04/05, LO-03. Seeds its own English synthetic fixture through personalization.yaml.
+# Confirms a destructive reset only inside the owned read-only emulator overlay.
+# Restart evidence is force-stop/relaunch, never OS process-death restoration.
+appId: fi.clocklings
+---
+- runFlow: personalization.yaml
+- tapOn: "Settings"
+- tapOn: "24 h"
+- back
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- tapOn: "Explore. Move the hands and explore the time"
+# The default afternoon time proves the persisted 24 h setting, not Explore time persistence.
+- assertVisible: "15:00"
+- back
+- tapOn: "Settings"
+- tapOn: "Language: .*"
+- tapOn: "Suomi"
+- assertVisible: "Kieli"
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Asetukset"
+    timeout: 15000
+- tapOn: "Asetukset"
+- tapOn: "Kieli: Suomi"
+- tapOn: "English"
+- back
+- scrollUntilVisible:
+    element: "Reset progress"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Reset progress"
+- assertVisible: "Reset learning progress?"
+- tapOn: "Cancel"
+- back
+- tapOn: "My Companion. Choose a companion and make it yours"
+- tapOn: "Choose an outfit"
+- assertVisible: "Luna"
+- back
+- back
+- tapOn: "Settings"
+- scrollUntilVisible:
+    element: "Reset progress"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Reset progress"
+- tapOn: "Reset progress"
+- assertNotVisible: "Reset learning progress?"
+- back
+- tapOn: "My Companion. Choose a companion and make it yours"
+- tapOn: "Choose an outfit"
+- assertNotVisible: "Luna"
+- assertVisible: "Choose a name"
+- back
+- back
+- tapOn: "Explore. Move the hands and explore the time"
+- assertVisible: "15:00"
+- back
+- tapOn: "Settings"
+- tapOn: "12 h"
+- back

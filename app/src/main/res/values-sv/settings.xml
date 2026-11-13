@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Inställningar</string>
+    <string name="language_title">Språk</string>
+    <string name="language_device">Enhetens språk</string>
+    <string name="language_english">English</string>
+    <string name="language_finnish">Suomi</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="settings_clock_display">Klockvisning</string>
+    <string name="settings_guides_title">Hjälp på klockan</string>
+    <string name="settings_guides_description">Visar minuttalen och färgar klockans två halvor. I 24-timmarsläge även talen 13–23 och 0.</string>
+    <string name="settings_sound_group">Ljud</string>
+    <string name="settings_sound_title">Ljudeffekter</string>
+    <string name="settings_sound_description">Ljud för tryck, svar och firanden.</string>
+    <string name="settings_progress_title">Framsteg i lärandet</string>
+    <string name="settings_reset_title">Nollställ framsteg i lärandet?</string>
+    <string name="settings_reset_body">Detta nollställer stjärnor, bästa resultat, klara lektioner, kompisarnas namn och kläder. Språk, klockvisning, ljudeffekter, hjälp på klockan och val av utseende behålls.</string>
+    <string name="settings_reset_action">Nollställ framsteg</string>
+    <string name="settings_cancel">Avbryt</string>
+    <string name="settings_save_error">Det gick inte att spara ändringen. Försök igen.</string>
+    <string name="language_save_error">Det gick inte att ändra språket. Försök igen.</string>
+    <string name="settings_retry">Försök igen</string>
+    <string name="settings_speech_info_available">Uppläsning är tillgänglig på det här språket. Talet börjar bara när du trycker på högtalaren.</string>
+    <string name="settings_speech_info_unavailable">Uppläsning är inte tillgänglig på det här språket.</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_french">Français</string>
+    <string name="language_spanish">Español (España)</string>
+    <string name="language_portuguese_brazil">Português (Brasil)</string>
+</resources>

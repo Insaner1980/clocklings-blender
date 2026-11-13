@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Settings</string>
+    <string name="language_title">Language</string>
+    <string name="language_device">Device language</string>
+    <string name="language_english">English</string>
+    <string name="language_finnish">Suomi</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="settings_clock_display">Clock display</string>
+    <string name="settings_guides_title">Clock guides</string>
+    <string name="settings_guides_description">Shows the minute numbers and colours the two halves of the clock. In 24-hour mode, also the numbers 13–23 and 0.</string>
+    <string name="settings_sound_group">Sound</string>
+    <string name="settings_sound_title">Sound effects</string>
+    <string name="settings_sound_description">Sounds for taps, answers, and celebrations.</string>
+    <string name="settings_progress_title">Learning progress</string>
+    <string name="settings_reset_title">Reset learning progress?</string>
+    <string name="settings_reset_body">This clears stars, best scores, completed lessons, companion names, and outfits. Your language, clock display, sound effects, clock guides, and appearance settings stay the same.</string>
+    <string name="settings_reset_action">Reset progress</string>
+    <string name="settings_cancel">Cancel</string>
+    <string name="settings_save_error">Could not save the change. Please try again.</string>
+    <string name="language_save_error">Could not change the language. Please try again.</string>
+    <string name="settings_retry">Try again</string>
+    <string name="settings_speech_info_available">Read aloud is available for this language. Speech starts only when you tap the speaker.</string>
+    <string name="settings_speech_info_unavailable">Read aloud is not available for this language.</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_french">Français</string>
+    <string name="language_spanish">Español (España)</string>
+    <string name="language_portuguese_brazil">Português (Brasil)</string>
+</resources>

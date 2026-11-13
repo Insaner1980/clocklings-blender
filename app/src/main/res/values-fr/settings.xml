@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Paramètres</string>
+    <string name="language_title">Langue</string>
+    <string name="language_device">Langue de l’appareil</string>
+    <string name="language_english">English</string>
+    <string name="language_finnish">Suomi</string>
+    <string name="language_swedish">Svenska</string>
+    <string name="language_german">Deutsch</string>
+    <string name="language_french">Français</string>
+    <string name="language_spanish">Español (España)</string>
+    <string name="language_portuguese_brazil">Português (Brasil)</string>
+    <string name="settings_clock_display">Affichage de l’heure</string>
+    <string name="settings_guides_title">Repères du cadran</string>
+    <string name="settings_guides_description">Affiche les nombres des minutes et colore les deux moitiés du cadran. En mode 24 heures, affiche aussi les nombres de 13 à 23 et le 0.</string>
+    <string name="settings_sound_group">Son</string>
+    <string name="settings_sound_title">Effets sonores</string>
+    <string name="settings_sound_description">Des sons pour les appuis, les réponses et les réussites.</string>
+    <string name="settings_progress_title">Progression</string>
+    <string name="settings_reset_title">Réinitialiser la progression ?</string>
+    <string name="settings_reset_body">Cela efface les étoiles, les meilleurs scores, les leçons terminées, les noms des compagnons et leurs tenues. La langue, l’affichage de l’heure, les effets sonores, les repères du cadran et l’apparence restent inchangés.</string>
+    <string name="settings_reset_action">Réinitialiser la progression</string>
+    <string name="settings_cancel">Annuler</string>
+    <string name="settings_save_error">Impossible d’enregistrer la modification. Réessaie.</string>
+    <string name="language_save_error">Impossible de changer de langue. Réessaie.</string>
+    <string name="settings_retry">Réessayer</string>
+    <string name="settings_speech_info_available">La lecture à voix haute est disponible dans cette langue. Elle commence uniquement quand tu appuies sur le haut-parleur.</string>
+    <string name="settings_speech_info_unavailable">La lecture à voix haute n’est pas disponible dans cette langue.</string>
+</resources>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cat -->
+    <string name="item_cat_neck_scarf">Gestreifter Schal</string>
+    <string name="item_cat_head_bow">Schleife</string>
+    <string name="item_cat_extra_yarn">Wollknäuel</string>
+    <string name="item_cat_neck_bell_collar">Halsband mit Glöckchen</string>
+    <string name="item_cat_head_bobble_hat">Bommelmütze</string>
+    <string name="item_cat_extra_glasses">Runde Brille</string>
+    <string name="item_cat_neck_bow_tie">Fliege</string>
+    <string name="item_cat_head_sailor_hat">Matrosenmütze</string>
+    <string name="item_cat_extra_fish_backpack">Fischrucksack</string>
+    <string name="item_cat_neck_ruffle">Rüschenkragen</string>
+    <string name="item_cat_head_flower_crown">Blumenkranz</string>
+    <string name="item_cat_neck_pearls">Perlenkette</string>
+    <string name="item_cat_extra_wand">Zauberstab</string>
+    <string name="item_cat_neck_cape">Glitzerumhang</string>
+    <string name="item_cat_head_crown">Krone</string>
+    <string name="item_cat_extra_wings">Schmetterlingsflügel</string>
+
+    <!-- Dog -->
+    <string name="item_dog_neck_bandana">Halstuch</string>
+    <string name="item_dog_head_cap">Kappe</string>
+    <string name="item_dog_extra_ball">Tennisball</string>
+    <string name="item_dog_neck_bone_collar">Halsband mit Knochenanhänger</string>
+    <string name="item_dog_head_sun_hat">Sonnenhut</string>
+    <string name="item_dog_extra_frisbee">Frisbee</string>
+    <string name="item_dog_neck_bow_tie">Fliege</string>
+    <string name="item_dog_head_party_hat">Partyhut</string>
+    <string name="item_dog_extra_boots">Gummistiefel</string>
+    <string name="item_dog_neck_lei">Blumenkette</string>
+    <string name="item_dog_head_aviator">Entdeckerhut</string>
+    <string name="item_dog_extra_backpack">Rucksack</string>
+    <string name="item_dog_neck_medal">Medaille</string>
+    <string name="item_dog_head_helmet">Feuerwehrhelm</string>
+    <string name="item_dog_extra_raincoat">Regenmantel</string>
+    <string name="item_dog_neck_cape">Heldenumhang</string>
+
+    <!-- Robot -->
+    <string name="item_robot_head_antenna">Antenne</string>
+    <string name="item_robot_neck_bow_tie">Fliege</string>
+    <string name="item_robot_extra_wrench">Schraubenschlüssel</string>
+    <string name="item_robot_head_propeller">Propellermütze</string>
+    <string name="item_robot_neck_cape">Heldenumhang</string>
+    <string name="item_robot_extra_heart_eyes">Bildschirm mit Herzaugen</string>
+    <string name="item_robot_head_headphones">Kopfhörer</string>
+    <string name="item_robot_extra_bubble_pack">Seifenblasen-Rucksack</string>
+    <string name="item_robot_extra_star_eyes">Bildschirm mit Sternenaugen</string>
+    <string name="item_robot_head_chef_hat">Kochmütze</string>
+    <string name="item_robot_extra_wind_up_key">Aufziehschlüssel</string>
+    <string name="item_robot_extra_pet">Roboterhaustier</string>
+    <string name="item_robot_head_star_antennas">Sternenantennen</string>
+    <string name="item_robot_neck_medal">Goldmedaille</string>
+    <string name="item_robot_head_astronaut">Astronautenhelm</string>
+    <string name="item_robot_extra_jetpack">Raketenrucksack</string>
+
+    <!-- Dragon -->
+    <string name="item_dragon_neck_pendant">Anhänger</string>
+    <string name="item_dragon_head_flower_crown">Blumenkranz</string>
+    <string name="item_dragon_extra_coins">Goldmünzenbeutel</string>
+    <string name="item_dragon_neck_bow">Schleife</string>
+    <string name="item_dragon_head_wizard_hat">Zauberhut</string>
+    <string name="item_dragon_extra_book">Zauberbuch</string>
+    <string name="item_dragon_neck_scarf">Schal</string>
+    <string name="item_dragon_head_tiara">Diadem</string>
+    <string name="item_dragon_extra_shield">Schild</string>
+    <string name="item_dragon_neck_chain">Goldkette</string>
+    <string name="item_dragon_head_knight_helmet">Ritterhelm</string>
+    <string name="item_dragon_extra_star_cloud">Sternenwolke</string>
+    <string name="item_dragon_neck_sparkles">Glitzerkette</string>
+    <string name="item_dragon_neck_cape">Königlicher Umhang</string>
+    <string name="item_dragon_head_crown">Krone</string>
+    <string name="item_dragon_extra_wings">Glitzerflügel</string>
+
+    <!-- Dinosaur -->
+    <string name="item_dinosaur_extra_backpack">Rucksack</string>
+    <string name="item_dinosaur_head_flower">Blume auf dem Kopf</string>
+    <string name="item_dinosaur_extra_bucket">Trinkbecher</string>
+    <string name="item_dinosaur_neck_scarf">Schal</string>
+    <string name="item_dinosaur_head_cap">Kappe</string>
+    <string name="item_dinosaur_extra_balloon">Luftballon</string>
+    <string name="item_dinosaur_neck_bow_tie">Fliege</string>
+    <string name="item_dinosaur_head_party_hat">Partyhut</string>
+    <string name="item_dinosaur_extra_umbrella">Regenschirm</string>
+    <string name="item_dinosaur_extra_swim_ring">Enten-Schwimmring</string>
+    <string name="item_dinosaur_head_hard_hat">Bauhelm</string>
+    <string name="item_dinosaur_extra_kite">Flugdrachen</string>
+    <string name="item_dinosaur_neck_binoculars">Fernglas</string>
+    <string name="item_dinosaur_neck_medal">Medaille</string>
+    <string name="item_dinosaur_extra_ice_cream">Eis</string>
+    <string name="item_dinosaur_extra_skateboard">Skateboard</string>
+
+    <!-- Bunny -->
+    <string name="item_bunny_neck_ribbon">Bandschleife</string>
+    <string name="item_bunny_extra_carrot">Karotte</string>
+    <string name="item_bunny_head_ear_bow">Ohrschleife</string>
+    <string name="item_bunny_neck_daisies">Perlenkette</string>
+    <string name="item_bunny_extra_basket">Eierkorb</string>
+    <string name="item_bunny_head_sun_hat">Sonnenhut</string>
+    <string name="item_bunny_neck_locket">Herzmedaillon</string>
+    <string name="item_bunny_extra_watering_can">Gießkanne</string>
+    <string name="item_bunny_head_top_hat">Zauberzylinder</string>
+    <string name="item_bunny_neck_bow_tie">Gepunktete Fliege</string>
+    <string name="item_bunny_extra_bubbles">Seifenblasenstab</string>
+    <string name="item_bunny_head_flower_crown">Blumenkranz</string>
+    <string name="item_bunny_extra_bouquet">Sternenzauberstab</string>
+    <string name="item_bunny_neck_cape">Sternenumhang</string>
+    <string name="item_bunny_head_tiara">Diadem</string>
+    <string name="item_bunny_extra_wings">Feenflügel</string>
+
+    <!-- Unicorn -->
+    <string name="item_unicorn_neck_lei">Blumengirlande</string>
+    <string name="item_unicorn_head_horn_rings">Hornringe</string>
+    <string name="item_unicorn_extra_cloud">Wolkenkissen</string>
+    <string name="item_unicorn_neck_stars">Sternenkette</string>
+    <string name="item_unicorn_head_flower_crown">Blumenkranz</string>
+    <string name="item_unicorn_extra_balloon">Sternenzauberstab</string>
+    <string name="item_unicorn_neck_scarf">Halstuch</string>
+    <string name="item_unicorn_head_ribbons">Mähnenbänder</string>
+    <string name="item_unicorn_extra_boots">Glitzerstiefel</string>
+    <string name="item_unicorn_neck_rainbow_scarf">Regenbogenschal</string>
+    <string name="item_unicorn_head_butterfly">Schmetterlingsspange</string>
+    <string name="item_unicorn_extra_rainbow">Regenbogen</string>
+    <string name="item_unicorn_neck_moon">Mondanhänger</string>
+    <string name="item_unicorn_head_crown">Krone</string>
+    <string name="item_unicorn_neck_cape">Königlicher Umhang</string>
+    <string name="item_unicorn_extra_wings">Federflügel</string>
+
+    <!-- Car -->
+    <string name="item_car_front_plate">Nummernschild</string>
+    <string name="item_car_wheels_sport">Sportfelgen</string>
+    <string name="item_car_roof_suitcase">Dachgepäckträger mit Koffer</string>
+    <string name="item_car_front_sunglasses">Sonnenbrille</string>
+    <string name="item_car_wheels_offroad">Geländereifen</string>
+    <string name="item_car_model_race">Rennwagen</string>
+    <string name="item_car_roof_surfboard">Surfbrett</string>
+    <string name="item_car_front_bull_bar">Frontbügel</string>
+    <string name="item_car_wheels_flames">Flammenradkappen</string>
+    <string name="item_car_roof_flag">Zielflagge</string>
+    <string name="item_car_model_fire_engine">Feuerwehrauto</string>
+    <string name="item_car_front_plow">Schneepflug</string>
+    <string name="item_car_roof_taxi">Taxischild</string>
+    <string name="item_car_wheels_gold">Goldfelgen</string>
+    <string name="item_car_roof_rally_lights">Rallyescheinwerfer</string>
+    <string name="item_car_model_rocket">Raketenauto</string>
+</resources>

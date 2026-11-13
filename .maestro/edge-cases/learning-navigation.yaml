@@ -1,0 +1,35 @@
+# LS-04/NV-03. English synthetic fixture; authored Two hands quiz has a fixed oracle.
+# Leaves one committed lesson completion; does not clear data or guess random answers.
+appId: fi.clocklings
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 15000
+- tapOn: "Learn. Discover how the hands tell time"
+- tapOn: "Whole hours. Two hands.*"
+- tapOn: "Next"
+- tapOn: "Next"
+- tapOn: "Try it"
+- assertVisible: "Which hand shows the hour?"
+- tapOn: "The long blue hand"
+- scrollUntilVisible:
+    element: "The hour hand is the shorter, pink hand."
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "The hour hand is the shorter, pink hand."
+- scrollUntilVisible:
+    element: "The short pink hand"
+    direction: UP
+    timeout: 10000
+- tapOn: "The short pink hand"
+- scrollUntilVisible:
+    element: ".*You completed Two hands.*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: ".*You completed Two hands.*"
+- tapOn: "Done"
+- assertVisible: ".*Two hands.*Completed.*"
+- back
+- assertVisible: "Clocklings"

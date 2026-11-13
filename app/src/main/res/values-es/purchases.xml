@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parent_title">Para familias</string>
+    <string name="parent_gate_instruction">Para adultos: introduce estas cuatro cifras en orden inverso: %1$s</string>
+    <string name="parent_gate_answer">Código al revés</string>
+    <string name="parent_gate_error">Comprueba el orden e inténtalo de nuevo.</string>
+    <string name="parent_continue">Continuar</string>
+    <string name="parent_cancel">Cancelar</string>
+    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_description">Una compra única desbloquea para siempre los cinco niveles, sus lecciones y todas las actividades de práctica y los retos.</string>
+    <string name="full_unlock_rewards">La versión completa permite conseguir todas las recompensas. Las estrellas, las lecciones completadas y las recompensas se siguen ganando al aprender.</string>
+    <string name="purchase_ready">Sin suscripción. Sin anuncios.</string>
+    <string name="purchase_buy">Comprar una vez — %1$s</string>
+    <string name="purchase_unavailable">Las compras no están disponibles. Vuelve a intentarlo más tarde.</string>
+    <string name="purchase_pending">El pago está pendiente. El acceso completo comienza cuando se completa y verifica el pago.</string>
+    <string name="purchase_cancelled">Compra cancelada. Puedes seguir usando las actividades gratuitas.</string>
+    <string name="purchase_verifying">Comprobando tu compra…</string>
+    <string name="purchase_owned">Versión completa desbloqueada.</string>
+    <string name="purchase_restored">Versión completa restaurada.</string>
+    <string name="purchase_not_owned">No se ha encontrado una compra de la versión completa en la cuenta de Google Play actual.</string>
+    <string name="purchase_failed">No se ha podido comprobar la compra. Vuelve a intentarlo.</string>
+    <string name="purchase_acknowledgement_pending">El acceso completo está disponible. Hay que volver a intentar la confirmación con Google Play.</string>
+    <string name="purchase_retry">Volver a intentar</string>
+    <string name="purchase_restore">Restaurar compras</string>
+    <string name="purchase_restore_explanation">Usa la cuenta de Google Play con la que compraste la versión completa. Restaurar una compra no restaura el progreso guardado únicamente en otro dispositivo.</string>
+    <string name="full_version_label">Versión completa</string>
+    <string name="companion_access_requirement">Requiere la versión completa y 3 estrellas ganadas.</string>
+    <string name="wardrobe_full_requirement">La versión completa incluye más atuendos. Se siguen necesitando las estrellas correspondientes.</string>
+</resources>

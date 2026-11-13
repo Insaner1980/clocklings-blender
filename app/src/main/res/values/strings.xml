@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shared English content; Finnish and Swedish use the same resource keys. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Clocklings</string>
+    <string name="back_description">Back</string>
+    <string name="help_on">Help on</string>
+    <string name="help_off">Help off</string>
+    <string name="listen">Listen</string>
+    <string name="random_time">Random time</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+    <string name="question_read">What time is it?</string>
+    <string name="digital_24">%1$s</string>
+    <string name="speak_time">It is %1$s</string>
+    <string name="speak_time_24">It is %1$s. On a 24-hour clock, %2$s</string>
+    <string name="speak_midnight_24">It is midnight. On a 24-hour clock, %1$s.</string>
+    <string name="speak_noon_24">It is noon. On a 24-hour clock, %1$s.</string>
+    <string-array name="praise">
+        <item>That\'s right!</item><item>Well done!</item><item>Great work!</item>
+        <item>You got it!</item><item>Nice work!</item><item>Brilliant!</item><item>Wonderful!</item>
+    </string-array>
+    <plurals name="stars_count"><item quantity="one">%1$d\u00A0star</item><item quantity="other">%1$d\u00A0stars</item></plurals>
+    <plurals name="minutes_count"><item quantity="one">%1$d\u00A0minute</item><item quantity="other">%1$d\u00A0minutes</item></plurals>
+
+    <!-- Clock accessibility and teaching overlays. -->
+    <string name="clock_description">Clock face: %1$s</string>
+    <string name="clock_question_description">Clock question. Ask your partner to describe the hands, or reveal the time together.</string>
+    <plurals name="clock_add"><item quantity="one">Add %1$d\u00A0minute</item><item quantity="other">Add %1$d\u00A0minutes</item></plurals>
+    <plurals name="clock_subtract"><item quantity="one">Subtract %1$d\u00A0minute</item><item quantity="other">Subtract %1$d\u00A0minutes</item></plurals>
+    <string name="clock_zone_yli">past</string>
+    <string name="clock_zone_vaille">to</string>
+    <string name="intro_greeting_morning">Good morning!</string>
+    <string name="intro_greeting_day">Hello!</string>
+    <string name="intro_greeting_evening">Good evening!</string>
+    <string name="intro_greeting_night">Hello, night owl!</string>
+    <string name="intro_description">%1$s. %2$s</string>
+    <string name="intro_skip">Skip intro</string>
+
+    <!-- Home and inherited customization baseline. -->
+    <string name="home_star_total">%1$d / %2$d</string>
+    <string name="menu_koulu">Learn</string>
+    <string name="menu_koulu_sub">Discover how the hands tell time</string>
+    <string name="menu_vapaa">Explore</string>
+    <string name="menu_vapaa_sub">Move the hands and explore the time</string>
+    <string name="menu_pelaa">Play</string>
+    <string name="menu_pelaa_sub">Practise reading and setting the clock</string>
+    <string name="menu_kysy">Play Together</string>
+    <string name="menu_kysy_sub">Set a time, take a guess, and swap turns</string>
+    <string name="menu_nukke">My Companion</string>
+    <string name="mode_12">12 h</string>
+    <string name="mode_24">24 h</string>
+
+    <string name="free_title">Explore</string>
+    <string name="legend_hour">The short pink hand shows the hour.</string>
+    <string name="legend_minute">The long blue hand shows the minutes.</string>
+    <string name="legend_drag">Drag either hand to change the time.</string>
+    <string name="level_example">For example, %1$s</string>
+    <string name="watch_lesson">Watch the lesson</string>
+    <string name="level_tasatunnit">Whole hours</string>
+    <string name="level_puolet">Half past</string>
+    <string name="level_vartit">Quarter hours</string>
+    <string name="level_viisi">Five-minute steps</string>
+    <string name="level_minuutit">Exact minutes</string>
+    <string name="challenge_title">Minute Challenge</string>
+    <string name="challenge_time_remaining">Time remaining</string>
+    <string name="challenge_desc">How many can you answer in one minute?</string>
+    <string name="record">Best score: %1$d</string>
+    <string name="question_set">Set the clock to</string>
+    <string name="praise_with_time">%1$s %2$s.</string>
+    <string name="reveal_read">The answer is %1$s. Look at where each hand points.</string>
+    <string name="reveal_set">Here is how the hands show %1$s.</string>
+
+    <!-- Hints refer to the actual hand positions. -->
+    <string name="hint_hands_right">The hands match! Look at the %1$s and the label in the centre: %2$s.</string>
+    <string name="hint_sun">sun</string>
+    <string name="hint_moon">moon</string>
+    <string name="hint_read_hour">Look at the short pink hand. It %1$s.</string>
+    <string name="hint_read_hour_half">Near half past, it is near the halfway point between this hour and the next.</string>
+    <string name="hint_read_minute">Look at the long blue hand. It points %1$s.</string>
+    <string name="hint_read_minute_also_hour">Then check the short pink hand.</string>
+    <string name="hint_set_minute">The long blue hand needs to point %1$s.</string>
+    <string name="hint_set_hour">The long hand is right! Move the short pink hand so it %1$s.</string>
+    <string name="hint_set_hour_turn">Move the long hand all the way around to move the short hand forward one hour.</string>
+    <string name="hour_pos_exact">points straight at %1$d</string>
+    <string name="hour_pos_passed">has just passed %1$d</string>
+    <string name="hour_pos_between" tools:ignore="PluralsCandidate">is between %1$d and %2$d</string>
+    <string name="hour_pos_almost">is almost at %1$d</string>
+    <string name="minute_pos_top">up at 12. It is a whole hour</string>
+    <string name="minute_pos_bottom">down at 6. It is half past</string>
+    <string name="minute_pos_quarter_past">at 3. It is quarter past</string>
+    <string name="minute_pos_quarter_to">at 9. It is quarter to</string>
+    <string name="minute_pos_number" tools:ignore="PluralsCandidate">at %1$d. That means %2$d\u00A0minutes past the hour</string>
+    <string name="minute_pos_ticks" tools:ignore="PluralsCandidate">at minute mark %1$d. Count the small marks from 12</string>
+
+    <string name="result_title_3">Wonderful!</string>
+    <string name="result_title_2">Well done!</string>
+    <string name="result_title_1">Keep exploring!</string>
+    <plurals name="result_text">
+        <item quantity="one">%1$s complete! You earned %2$d\u00A0star.</item>
+        <item quantity="other">%1$s complete! You earned %2$d\u00A0stars.</item>
+    </plurals>
+    <plurals name="result_previous_best">
+        <item quantity="one">Your best for this level is %1$d\u00A0star.</item>
+        <item quantity="other">Your best for this level is %1$d\u00A0stars.</item>
+    </plurals>
+    <string name="result_new_item">You unlocked an outfit item:</string>
+    <string name="result_new_items">You unlocked outfit items:</string>
+    <string name="result_play_more">You can play again whenever you like.</string>
+    <string name="play_again">Play again</string>
+    <string name="next_level">Next level</string>
+    <string name="dress_doll">Choose an outfit</string>
+    <plurals name="result_stars_description"><item quantity="one">%1$d\u00A0star out of three</item><item quantity="other">%1$d\u00A0stars out of three</item></plurals>
+    <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d correct</string>
+    <string name="challenge_intro">You have one minute. Answer as many as you can. After a wrong answer, the clock shows the time and play continues.</string>
+    <string name="challenge_best" tools:ignore="PluralsCandidate">Best score: %1$d correct</string>
+    <string name="challenge_no_best">No score yet</string>
+    <string name="challenge_go">Start!</string>
+    <string name="challenge_over">Time is up!</string>
+    <string name="challenge_new_best">New best!</string>
+    <string name="challenge_new_record" tools:ignore="PluralsCandidate">New best! You answered %1$d correctly.</string>
+    <string name="challenge_result" tools:ignore="PluralsCandidate">You answered %1$d correctly. Your best is %2$d.</string>
+
+    <!-- Together uses neutral player numbers, no names or scored answers.
+         Player numbers are identifiers, not quantities; both labels use singular wording. -->
+    <string name="ask_title">Play Together</string>
+    <string name="ask_big_eyebrow" tools:ignore="PluralsCandidate">Player %1$d sets the time</string>
+    <string name="ask_big_question">Choose a time</string>
+    <string name="ask_big_text">Move the hands while your partner looks away. Then tap Pass to partner and hand over the clock.</string>
+    <string name="ask_go">Pass to partner</string>
+    <string name="ask_small_eyebrow" tools:ignore="PluralsCandidate">Player %1$d answers</string>
+    <string name="ask_small_text">Say the time, point, or discuss it together. Reveal the answer when you are ready.</string>
+    <string name="ask_reveal">Show the answer</string>
+    <string name="ask_new">Swap turns</string>
+
+    <string name="doll_title">Outfits</string>
+    <string name="doll_name_label">Companion name</string>
+    <string name="doll_name_placeholder">Choose a name</string>
+    <plurals name="doll_info">
+        <item quantity="one">You have %1$d\u00A0star. Each new star unlocks an outfit item. Tap an item to wear it.</item>
+        <item quantity="other">You have %1$d\u00A0stars. Each new star unlocks an outfit item. Tap an item to wear it.</item>
+    </plurals>
+    <string name="doll_all_open">All outfit items are available. Try any combination!</string>
+    <string name="doll_optional_hint">Tap an item to put it on. Tap it again to take it off.</string>
+    <string name="doll_optional_hint_partial">Tap an item to put it on. Hats and extras come off when you tap them again.</string>
+    <plurals name="doll_item_locked">
+        <item quantity="one">Locked. Opens at %1$d\u00A0star. You have %2$d.</item>
+        <item quantity="other">Locked. Opens at %1$d\u00A0stars. You have %2$d.</item>
+    </plurals>
+    <string name="slot_hair">Hair</string>
+    <string name="slot_dress">Dresses</string>
+    <string name="slot_shoes">Shoes</string>
+    <string name="slot_head">Headwear</string>
+    <string name="slot_neck">Neckwear</string>
+    <string name="slot_extra">Extras</string>
+    <string name="slot_roof">On the roof</string>
+    <string name="slot_front">Front</string>
+    <string name="slot_wheels">Wheels</string>
+    <string name="slot_model">Transformations</string>
+    <string name="item_hair_letit">Brown braids</string>
+    <string name="item_dress_perus">Yellow dress</string>
+    <string name="item_shoes_tossut">White slippers</string>
+    <string name="item_dress_pilkku">Polka-dot dress</string>
+    <string name="item_head_rusetti">Bow</string>
+    <string name="item_shoes_punaiset">Red shoes</string>
+    <string name="item_hair_pitkat">Golden hair</string>
+    <string name="item_dress_tahti">Star dress</string>
+    <string name="item_head_kukat">Flower crown</string>
+    <string name="item_extra_strawberry_bag">Strawberry bag</string>
+    <string name="item_shoes_saappaat">Purple boots</string>
+    <string name="item_hair_kiharat">Pink curls</string>
+    <string name="item_dress_overalls">Overalls</string>
+    <string name="item_head_kruunu">Crown</string>
+    <string name="item_extra_siivet">Butterfly wings</string>
+    <string name="item_shoes_roller_skates">Roller skates</string>
+    <string name="item_hair_sateenkaari">Rainbow hair</string>
+    <string name="item_dress_sateenkaari">Rainbow dress</string>
+
+    <!-- Lesson order and clock demonstrations reuse the working original. -->
+    <string name="koulu_title">Learn</string>
+    <string name="lesson_done">Completed</string>
+    <string name="path_current">Up next</string>
+    <string name="lesson_skip">Skip and play</string>
+    <string name="lesson_replay">Show again</string>
+    <string name="lesson_prev">Previous</string>
+    <string name="lesson_try">Try it</string>
+    <string name="lesson_next_lesson">Next lesson</string>
+    <string name="lesson_start_game">Start playing!</string>
+    <string name="lesson_practise">Practise</string>
+    <string name="lesson_learned">%1$s You completed %2$s.</string>
+    <!-- Full sentences end with punctuation; bare labels do not. Measurements use digits.
+         Counting phrases may spell out counts. Keep numbers and units together. -->
+    <string name="say_quarter">Quarter %1$d</string>
+    <string name="say_number_minutes" tools:ignore="PluralsCandidate">Number %1$d marks %2$d\u00A0minutes.</string>
+
+    <string name="l_viisarit_title">Two hands</string>
+    <string name="l_viisarit_desc">What does each hand show?</string>
+    <string name="l_viisarit_p1a">This clock has two hands.</string>
+    <string name="l_viisarit_p1b">The short pink hand is the hour hand. It shows which hour we are in.</string>
+    <string name="l_viisarit_p2a">The long blue hand is the minute hand. It shows the minutes.</string>
+    <string name="l_viisarit_p3a">As time passes, the hands move from 1 towards 2, then 3, and on around the clock.</string>
+    <string name="l_viisarit_p3b">We call this direction clockwise.</string>
+    <string name="l_viisarit_q">Which hand shows the hour?</string>
+    <string name="l_viisarit_c1">The short pink hand</string>
+    <string name="l_viisarit_c2">The long blue hand</string>
+    <string name="l_viisarit_hint">The hour hand is the shorter, pink hand.</string>
+
+    <string name="l_kierros_title">One trip around</string>
+    <string name="l_kierros_desc">What happens in one hour?</string>
+    <string name="l_kierros_p1a">The long hand keeps moving around the clock.</string>
+    <string name="l_kierros_p1b">One whole trip around takes one hour.</string>
+    <string name="l_kierros_say_start">It is three o\'clock.</string>
+    <string name="l_kierros_say_go">The long hand starts its trip.</string>
+    <string name="l_kierros_say_end">Now it is four o\'clock. One hour has passed!</string>
+    <string name="l_kierros_p2a">Now watch the short hand!</string>
+    <string name="l_kierros_p2b">While the long hand goes all the way around, the short hand moves forward just one number.</string>
+    <string name="l_kierros_say_moved">The short hand moved from 3 to 4.</string>
+    <string name="l_kierros_p3a">One hour has 60\u00A0minutes.</string>
+    <string name="l_kierros_p3b">There are 60\u00A0minute marks around the edge. The long hand moves from one mark to the next each minute.</string>
+    <string name="l_kierros_say_hour">60\u00A0minutes make one hour.</string>
+    <string name="l_kierros_q">How much time passes when the long hand goes all the way around?</string>
+    <string name="l_kierros_c1">One hour</string>
+    <string name="l_kierros_c2">One minute</string>
+    <string name="l_kierros_c3">One day</string>
+    <string name="l_kierros_hint">The short hand moved forward one number. That is one hour.</string>
+
+    <string name="l_tasan_title">Whole hours</string>
+    <string name="l_tasan_desc">The long hand points straight up</string>
+    <string name="l_tasan_p1a">When the long hand points straight up at 12, it is a whole hour.</string>
+    <string name="l_tasan_p2a">Look at the short hand to find the hour.</string>
+    <string name="l_tasan_p2b">Here it points at 3, so it is three o\'clock.</string>
+    <string name="l_tasan_p3a">Let\'s explore some other whole hours.</string>
+    <string name="l_tasan_p3b">The long hand stays at the top. The short hand tells us the hour.</string>
+    <string name="l_tasan_q">What time is it?</string>
+    <string name="l_tasan_c1">Nine o\'clock</string>
+    <string name="l_tasan_c2">Twelve o\'clock</string>
+    <string name="l_tasan_c3">Three o\'clock</string>
+    <string name="l_tasan_hint">The long hand is at the top. Look at the short pink hand for the hour.</string>
+
+    <string name="l_puoli_title">Half past</string>
+    <string name="l_puoli_desc">The long hand points down</string>
+    <string name="l_puoli_p1a">After half a trip around the clock, the long hand points down at 6.</string>
+    <string name="l_puoli_p1b">Half an hour has passed. That is 30\u00A0minutes.</string>
+    <string name="l_puoli_say_half">Half an hour has passed.</string>
+    <string name="l_puoli_p2a">The short hand has left 3 but has not reached 4 yet.</string>
+    <string name="l_puoli_p2b">It is halfway between them.</string>
+    <string name="l_puoli_p3a">We say half past three: half an hour has passed since three o\'clock.</string>
+    <string name="l_puoli_p3b">In numbers, it is 3:30.</string>
+    <string name="l_puoli_say_digits">Half past three is 3:30.</string>
+    <string name="l_puoli_p4a">After half past, name the hour the short hand has passed.</string>
+    <string name="l_puoli_p4b">Between 7 and 8, it is half past seven.</string>
+    <string name="l_puoli_q">What time is it?</string>
+    <string name="l_puoli_c1">Half past five</string>
+    <string name="l_puoli_c2">Half past four</string>
+    <string name="l_puoli_c3">Six o\'clock</string>
+    <string name="l_puoli_hint">The short hand has passed 5 and is halfway to 6. Name the hour it has passed.</string>
+
+    <string name="l_vartti_title">Quarter hours</string>
+    <string name="l_vartti_desc">A quarter of an hour</string>
+    <string name="l_vartti_p1a">Divide one hour into four equal parts. Each part is a quarter of an hour.</string>
+    <string name="l_vartti_p1b">A quarter of an hour is 15\u00A0minutes.</string>
+    <string name="l_vartti_say_four">Four quarters make one hour.</string>
+    <string name="l_vartti_p2a">When the long hand reaches 3, a quarter of the hour has passed.</string>
+    <string name="l_vartti_p2b">Here we say quarter past three.</string>
+    <string name="l_vartti_p3a">When the long hand reaches 9, there is a quarter of an hour left until the next whole hour.</string>
+    <string name="l_vartti_p3b">Here we say quarter to four.</string>
+    <string name="l_vartti_q">What time is it?</string>
+    <string name="l_vartti_c1">Quarter to seven</string>
+    <string name="l_vartti_c2">Quarter past six</string>
+    <string name="l_vartti_c3">Quarter to six</string>
+    <string name="l_vartti_hint">The long hand is at 9. There is a quarter of an hour left. Which hour comes next?</string>
+
+    <string name="l_ylivaille_title">Past and to</string>
+    <string name="l_ylivaille_desc">Two sides of the clock</string>
+    <string name="l_ylivaille_p1a">On the right side, we can say past.</string>
+    <string name="l_ylivaille_p1b">We count how many minutes have passed since the whole hour.</string>
+    <string name="l_ylivaille_p2a">On the left side, we can say to.</string>
+    <string name="l_ylivaille_p2b">We count how many minutes remain until the next whole hour.</string>
+    <string name="l_ylivaille_p3a">With past, name the hour the short hand has passed.</string>
+    <string name="l_ylivaille_p3b">With to, name the hour that comes next.</string>
+    <string name="l_ylivaille_q">What time is it?</string>
+    <string name="l_ylivaille_c1">Ten past four</string>
+    <string name="l_ylivaille_c2">Ten to four</string>
+    <string name="l_ylivaille_c3">Ten to five</string>
+    <string name="l_ylivaille_hint">The long hand is on the right. Count past the hour the short hand has passed.</string>
+
+    <string name="l_viisi_title">Five-minute steps</string>
+    <string name="l_viisi_desc">Numbers and minutes</string>
+    <string name="l_viisi_p1a">For the long hand, each step from one number to the next takes five minutes.</string>
+    <string name="l_viisi_p1b">Number 1 marks 5\u00A0minutes, number 2 marks 10, and so on.</string>
+    <string name="l_viisi_p2a">Count in fives: 5, 10, 15, 20.</string>
+    <string name="l_viisi_p2b">At number 4, 20\u00A0minutes have passed. We say twenty past.</string>
+    <string name="l_viisi_p3a">Keep counting in fives on either side of half past.</string>
+    <string name="l_viisi_p3b">At number 5, say twenty-five past. At number 7, say twenty-five to the next hour.</string>
+    <string name="l_viisi_q">What time is it?</string>
+    <string name="l_viisi_c1">Twenty to nine</string>
+    <string name="l_viisi_c2">Twenty past eight</string>
+    <string name="l_viisi_c3">Ten to nine</string>
+    <string name="l_viisi_hint">At number 8, 40\u00A0minutes have passed. There are 20\u00A0minutes left until the next hour.</string>
+
+    <string name="l_minuutit_title">Exact minutes</string>
+    <string name="l_minuutit_desc">The small marks</string>
+    <string name="l_minuutit_p1a">Each small mark around the clock represents one minute.</string>
+    <string name="l_minuutit_p1b">There are 5\u00A0minutes between neighbouring numbers.</string>
+    <string name="l_minuutit_p2a">Start at the numbered mark just before the long hand. Count the extra small marks forward.</string>
+    <string name="l_minuutit_p2b">Number 2 marks 10\u00A0minutes. Two more marks make 10 + 2 = 12\u00A0minutes.</string>
+    <string name="l_minuutit_q">What time is it?</string>
+    <string name="l_minuutit_c1">Seven minutes past three</string>
+    <string name="l_minuutit_c2">Five past three</string>
+    <string name="l_minuutit_c3">Eight minutes past three</string>
+    <string name="l_minuutit_hint">Number 1 marks 5\u00A0minutes. Count two more small marks forward.</string>
+
+    <string name="l_vrk_title">24\u00A0hours in a day</string>
+    <string name="l_vrk_desc">Morning, afternoon, and night</string>
+    <string name="l_vrk_p1a">One whole day has 24\u00A0hours.</string>
+    <string name="l_vrk_p1b">The short hand goes around the clock twice each day.</string>
+    <string name="l_vrk_say_first">First trip: midnight to noon</string>
+    <string name="l_vrk_say_second">Second trip: noon to midnight</string>
+    <string name="l_vrk_say_day">One whole day has passed.</string>
+    <string name="l_vrk_p2a">For afternoon and evening hours from 1 to 11, add 12 to get the 24-hour number.</string>
+    <string name="l_vrk_p2b">Three in the afternoon is 3 + 12 = 15. We write 15:00.</string>
+    <string name="l_vrk_say_night">Three at night: 03:00</string>
+    <string name="l_vrk_say_sum">3 + 12 = 15: the time is 15:00.</string>
+    <string name="l_vrk_p3a">The hands look the same at three at night and three in the afternoon.</string>
+    <string name="l_vrk_p3b">Read the label in the centre to find the part of the day. The hands alone cannot tell you.</string>
+    <string name="l_vrk_say_afternoon">Three in the afternoon: 15:00</string>
+    <string name="l_vrk_q">What time is it?</string>
+    <string name="l_vrk_c1">Seven in the evening: 19:00</string>
+    <string name="l_vrk_c2">Seven in the morning: 07:00</string>
+    <string name="l_vrk_c3">Five in the afternoon: 17:00</string>
+    <string name="l_vrk_hint">The centre label says evening. Add 12 to the hour: 7 + 12 = 19.</string>
+    <string name="doll_stars_explained">Stars are never used up. New clothes open when you have enough stars.</string>
+    <string name="answer_correct">Correct</string>
+    <string name="answer_incorrect">Incorrect</string>
+    <string name="app_launcher_name">Clocklings Blender</string>
+</resources>

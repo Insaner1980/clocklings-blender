@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Compose Rules 0.4.28 supports Detekt 1.23.8; rules 0.5.0+ require Detekt 2.
+         Revisit when migrating Detekt. https://mrmans0n.github.io/compose-rules/detekt/ -->
+    <issue id="NewerVersionAvailable">
+        <ignore regexp="^A newer version of io\.nlopez\.compose\.rules:detekt than 0\.4\.28 is available: 0\.6\.8$" />
+    </issue>
+</lint>

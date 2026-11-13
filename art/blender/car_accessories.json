@@ -1,0 +1,255 @@
+{
+  "car-front-plate": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        135,
+        255,
+        68,
+        26
+      ],
+      "source": [
+        0,
+        0
+      ]
+    }
+  },
+  "car-wheels-sport": {
+    "front": {
+      "part": "WHEELS",
+      "destination": [
+        9,
+        203,
+        84,
+        68
+      ],
+      "source": [
+        210,
+        0
+      ]
+    }
+  },
+  "car-roof-suitcase": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        56,
+        102,
+        84,
+        65
+      ],
+      "source": [
+        468,
+        0
+      ]
+    }
+  },
+  "car-front-sunglasses": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        87,
+        210,
+        143,
+        41
+      ],
+      "source": [
+        726,
+        0
+      ]
+    }
+  },
+  "car-wheels-offroad": {
+    "front": {
+      "part": "WHEELS",
+      "destination": [
+        1,
+        194,
+        104,
+        86
+      ],
+      "source": [
+        1161,
+        0
+      ]
+    }
+  },
+  "car-model-race": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        88,
+        152,
+        101,
+        113
+      ],
+      "source": [
+        0,
+        264
+      ]
+    }
+  },
+  "car-roof-surfboard": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        10,
+        136,
+        188,
+        34
+      ],
+      "source": [
+        309,
+        264
+      ]
+    }
+  },
+  "car-front-bull-bar": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        105,
+        247,
+        125,
+        29
+      ],
+      "source": [
+        879,
+        264
+      ]
+    }
+  },
+  "car-wheels-flames": {
+    "front": {
+      "part": "WHEELS",
+      "destination": [
+        9,
+        203,
+        84,
+        69
+      ],
+      "source": [
+        1260,
+        264
+      ]
+    }
+  },
+  "car-roof-flag": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        98,
+        80,
+        56,
+        82
+      ],
+      "source": [
+        0,
+        609
+      ]
+    }
+  },
+  "car-model-fire-engine": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        27,
+        124,
+        85,
+        112
+      ],
+      "source": [
+        174,
+        609
+      ]
+    }
+  },
+  "car-front-plow": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        108,
+        257,
+        125,
+        42
+      ],
+      "source": [
+        435,
+        609
+      ]
+    }
+  },
+  "car-roof-taxi": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        67,
+        135,
+        64,
+        31
+      ],
+      "source": [
+        816,
+        609
+      ]
+    }
+  },
+  "car-wheels-gold": {
+    "front": {
+      "part": "WHEELS",
+      "destination": [
+        9,
+        203,
+        84,
+        69
+      ],
+      "source": [
+        1014,
+        609
+      ]
+    }
+  },
+  "car-roof-rally-lights": {
+    "front": {
+      "part": "BODY",
+      "destination": [
+        56,
+        132,
+        78,
+        28
+      ],
+      "source": [
+        1272,
+        609
+      ]
+    }
+  },
+  "car-model-rocket": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        2,
+        117,
+        90,
+        88
+      ],
+      "source": [
+        0,
+        951
+      ]
+    },
+    "front": {
+      "part": "BODY",
+      "destination": [
+        -22,
+        205,
+        91,
+        38
+      ],
+      "source": [
+        276,
+        951
+      ]
+    }
+  }
+}

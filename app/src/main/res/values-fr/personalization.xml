@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appearance_title">À ton goût</string>
+    <string name="companions_title">Amis</string>
+    <string name="clock_styles_title">Styles d’horloge</string>
+    <string name="companion_human">Poupée</string>
+    <string name="companion_cat">Chat</string>
+    <string name="companion_dog">Chien</string>
+    <string name="companion_robot">Robot</string>
+    <string name="companion_dragon">Dragon</string>
+    <string name="companion_dinosaur">Dinosaure</string>
+    <string name="companion_bunny">Lapin</string>
+    <string name="companion_unicorn">Licorne</string>
+    <string name="companion_car">Voiture</string>
+    <string name="companion_none">Juste l’horloge</string>
+    <string name="no_companion_hint">Apprends à lire l’heure sans compagnon.</string>
+    <string name="companion_color">Couleur</string>
+    <string name="color_original">D’origine</string>
+    <string name="color_blue">Bleu</string>
+    <string name="color_green">Vert</string>
+    <string name="color_purple">Violet</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_coral">Corail</string>
+    <string name="theme_classic">Classique</string>
+    <string name="theme_rainbow">Arc-en-ciel</string>
+    <string name="theme_space">Espace</string>
+    <string name="theme_forest">Forêt</string>
+    <string name="theme_ocean">Océan</string>
+    <string name="theme_garden">Jardin</string>
+    <string name="theme_workshop">Atelier</string>
+    <string name="theme_custom">Mon horloge</string>
+    <string name="custom_clock_hint">Mélange tes couleurs et tes formes préférées. La petite aiguille rose indique les heures et la grande aiguille bleue indique les minutes.</string>
+    <string name="clock_color">Couleur du cadre</string>
+    <string name="clock_frame">Motif du cadre</string>
+    <string name="frame_round">Lisse</string>
+    <string name="frame_scalloped">Perles</string>
+    <string name="frame_blocks">Blocs</string>
+    <string name="clock_numerals">Nombres</string>
+    <string name="numerals_rounded">Arrondis</string>
+    <string name="numerals_plain">Simples</string>
+    <string name="clock_hands">Aiguilles</string>
+    <string name="hands_round">Bouts ronds</string>
+    <string name="hands_pointer">Bouts pointus</string>
+    <string name="home_companion_choices">Choisis un compagnon et personnalise-le</string>
+</resources>

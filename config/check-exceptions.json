@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "exceptions": [
+    {
+      "id": "clocklings-mobsf-wind-up-key-outline",
+      "tool": "mobsfscan",
+      "rule": "android_kotlin_hardcoded",
+      "scope": "WindUpKeyTrace.KEY artwork path",
+      "reason": "The matched literal contains SVG coordinates for the robot's wind-up key outline. RobotItems passes it to itemShape for drawing.",
+      "owner": "Clocklings project owner",
+      "added": "2026-11-11",
+      "expires": "2027-02-11",
+      "tracking": "local-review:clocklings-mobsf-wind-up-key-outline",
+      "sourcePath": "app/src/main/java/fi/clocklings/ui/companion/WindUpKeyTrace.kt",
+      "selector": "M215 207C216.5 207 218 207 219.5 207.5C221 207.5 222 208 223.5 209C224.5 210 226 211 227 212",
+      "findingPath": "app/src/main/java/fi/clocklings/ui/companion/WindUpKeyTrace.kt",
+      "findingSelectors": [
+        "key = \"m215 207c216.5 207 218 207 219.5 207.5c221 207.5 222 208 223.5 209c224.5 210 226 211 227 212\""
+      ]
+    },
+    {
+      "id": "clocklings-mobsf-task-hijacking-target-sdk",
+      "tool": "mobsfscan",
+      "rule": "android_task_hijacking2",
+      "scope": "app/src/main/AndroidManifest.xml MainActivity targetSdk fallback",
+      "reason": "MobSF 0.4.5 reads only the source manifest and defaults a missing uses-sdk target to 26. Gradle sets targetSdk = 37 for all app variants, confirmed in the merged debug manifest, so this rule's targetSdk < 29 precondition is false. This does not establish OS patch status or protection on older unpatched Android versions supported by minSdk 26.",
+      "owner": "Clocklings project owner",
+      "added": "2026-10-20",
+      "expires": "2027-01-20",
+      "tracking": "local-review:clocklings-mobsf-task-hijacking-target-sdk",
+      "sourcePath": "app/build.gradle.kts",
+      "selector": "targetSdk = 37",
+      "findingPath": "app/src/main/AndroidManifest.xml",
+      "findingSelectors": [
+        "Activity exported, targetSdk<29 and launchMode != singleInstance or taskAffinity is not empty"
+      ]
+    },
+    {
+      "id": "clocklings-mobsf-play-receipt-signature",
+      "tool": "mobsfscan",
+      "rule": "android_kotlin_sha1",
+      "scope": "app/src/main/java/fi/clocklings/billing/LocalPurchaseVerifier.kt Play receipt signature verification",
+      "reason": "Google Play purchase-data signatures use SHA1withRSA, as implemented in Google's TrivialDrive Security.java (https://dl.google.com/android/repository/play_billing_r05.zip). This code only verifies Play receipts with the application's public licensing key; changing the hash would reject those signatures. It does not sign production data or hash passwords. This protocol-compatibility exception does not establish general SHA-1 safety or live Play purchase validation.",
+      "owner": "Clocklings project owner",
+      "added": "2026-11-09",
+      "expires": "2027-02-09",
+      "tracking": "local-review:clocklings-mobsf-play-receipt-signature",
+      "sourcePath": "app/src/main/java/fi/clocklings/billing/LocalPurchaseVerifier.kt",
+      "selector": "val verifier = Signature.getInstance(\"SHA1withRSA\")",
+      "findingPath": "app/src/main/java/fi/clocklings/billing/LocalPurchaseVerifier.kt",
+      "findingSelectors": [
+        ".getInstance(\"SHA1"
+      ]
+    },
+    {
+      "id": "clocklings-mobsf-play-receipt-unit-fixture",
+      "tool": "mobsfscan",
+      "rule": "android_kotlin_sha1",
+      "scope": "app/src/test/java/fi/clocklings/billing/BillingTestFixtures.kt Play receipt test signing",
+      "reason": "This JVM-test fixture signs synthetic purchase receipts with an ephemeral RSA key generated in the test process. SHA1withRSA matches Google Play's purchase-data protocol and LocalPurchaseVerifier so tests exercise signature verification, tampering and wrong-key rejection. The fixture and its private key are not packaged in the application. Protocol reference: Google's TrivialDrive Security.java in https://dl.google.com/android/repository/play_billing_r05.zip.",
+      "owner": "Clocklings project owner",
+      "added": "2026-11-09",
+      "expires": "2027-02-09",
+      "tracking": "local-review:clocklings-mobsf-play-receipt-unit-fixture",
+      "sourcePath": "app/src/test/java/fi/clocklings/billing/BillingTestFixtures.kt",
+      "selector": "val signer = Signature.getInstance(\"SHA1withRSA\")",
+      "findingPath": "app/src/test/java/fi/clocklings/billing/BillingTestFixtures.kt",
+      "findingSelectors": [
+        ".getInstance(\"SHA1"
+      ]
+    },
+    {
+      "id": "clocklings-mobsf-play-receipt-device-fixture",
+      "tool": "mobsfscan",
+      "rule": "android_kotlin_sha1",
+      "scope": "app/src/androidTest/java/fi/clocklings/ReceiptStorageDeviceTest.kt Play receipt storage test signing",
+      "reason": "This instrumented-test fixture signs a synthetic purchase receipt with an ephemeral RSA key to verify receipt persistence with Android crypto and DataStore. SHA1withRSA matches Google Play's purchase-data protocol and LocalPurchaseVerifier. It is test-only signing, not an application signing key or a real Play purchase. Protocol reference: Google's TrivialDrive Security.java in https://dl.google.com/android/repository/play_billing_r05.zip.",
+      "owner": "Clocklings project owner",
+      "added": "2026-11-09",
+      "expires": "2027-02-09",
+      "tracking": "local-review:clocklings-mobsf-play-receipt-device-fixture",
+      "sourcePath": "app/src/androidTest/java/fi/clocklings/ReceiptStorageDeviceTest.kt",
+      "selector": "Signature.getInstance(\"SHA1withRSA\").run",
+      "findingPath": "app/src/androidTest/java/fi/clocklings/ReceiptStorageDeviceTest.kt",
+      "findingSelectors": [
+        ".getInstance(\"SHA1"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:allowBackup="false">
+        <service
+            android:name="fi.clocklings.fixture.AuditInputMethodService"
+            android:exported="true"
+            android:label="Clocklings audit keyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:process=":audit_ime">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data android:name="android.view.im" android:resource="@xml/audit_input_method" />
+        </service>
+        <service
+            android:name="fi.clocklings.fixture.AuditSpeechService"
+            android:exported="true"
+            android:label="Clocklings audit speech"
+            android:process=":audit_tts">
+            <intent-filter>
+                <action android:name="android.intent.action.TTS_SERVICE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="android.speech.tts" android:resource="@xml/audit_speech_engine" />
+        </service>
+    </application>
+</manifest>

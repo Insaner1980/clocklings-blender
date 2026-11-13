@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appearance_title">Make it yours</string>
+    <string name="companions_title">Companions</string>
+    <string name="clock_styles_title">Clock styles</string>
+    <string name="companion_human">Doll</string>
+    <string name="companion_cat">Cat</string>
+    <string name="companion_dog">Dog</string>
+    <string name="companion_robot">Robot</string>
+    <string name="companion_dragon">Dragon</string>
+    <string name="companion_dinosaur">Dinosaur</string>
+    <string name="companion_bunny">Bunny</string>
+    <string name="companion_unicorn">Unicorn</string>
+    <string name="companion_car">Car</string>
+    <string name="companion_none">Just the clock</string>
+    <string name="no_companion_hint">Practise telling the time without a companion.</string>
+    <string name="companion_color">Color</string>
+    <string name="color_original">Original</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_green">Green</string>
+    <string name="color_purple">Purple</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_coral">Coral</string>
+    <string name="theme_classic">Classic</string>
+    <string name="theme_rainbow">Rainbow</string>
+    <string name="theme_space">Space</string>
+    <string name="theme_forest">Forest</string>
+    <string name="theme_ocean">Ocean</string>
+    <string name="theme_garden">Garden</string>
+    <string name="theme_workshop">Workshop</string>
+    <string name="theme_custom">My own clock</string>
+    <string name="custom_clock_hint">Mix your favorite colors and shapes. The short pink hand tells the hour and the long blue hand tells the minutes.</string>
+    <string name="clock_color">Frame color</string>
+    <string name="clock_frame">Frame pattern</string>
+    <string name="frame_round">Smooth</string>
+    <string name="frame_scalloped">Pearls</string>
+    <string name="frame_blocks">Blocks</string>
+    <string name="clock_numerals">Numbers</string>
+    <string name="numerals_rounded">Rounded</string>
+    <string name="numerals_plain">Plain</string>
+    <string name="clock_hands">Hands</string>
+    <string name="hands_round">Round ends</string>
+    <string name="hands_pointer">Pointed ends</string>
+    <string name="home_companion_choices">Choose a companion and make it yours</string>
+</resources>

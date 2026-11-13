@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appearance_title">Gestalte selbst</string>
+    <string name="companions_title">Figuren</string>
+    <string name="clock_styles_title">Uhren</string>
+    <string name="companion_human">Puppe</string>
+    <string name="companion_cat">Katze</string>
+    <string name="companion_dog">Hund</string>
+    <string name="companion_robot">Roboter</string>
+    <string name="companion_dragon">Drache</string>
+    <string name="companion_dinosaur">Dinosaurier</string>
+    <string name="companion_bunny">Hase</string>
+    <string name="companion_unicorn">Einhorn</string>
+    <string name="companion_car">Auto</string>
+    <string name="companion_none">Nur die Uhr</string>
+    <string name="no_companion_hint">Übe die Uhrzeit ohne Figur.</string>
+    <string name="companion_color">Farbe</string>
+    <string name="color_original">Original</string>
+    <string name="color_blue">Blau</string>
+    <string name="color_green">Grün</string>
+    <string name="color_purple">Lila</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_coral">Koralle</string>
+    <string name="theme_classic">Klassisch</string>
+    <string name="theme_rainbow">Regenbogen</string>
+    <string name="theme_space">Weltraum</string>
+    <string name="theme_forest">Wald</string>
+    <string name="theme_ocean">Meer</string>
+    <string name="theme_garden">Garten</string>
+    <string name="theme_workshop">Werkstatt</string>
+    <string name="theme_custom">Meine eigene Uhr</string>
+    <string name="custom_clock_hint">Kombiniere deine Lieblingsfarben und Formen. Der kurze rosa Zeiger zeigt die Stunde und der lange blaue Zeiger die Minuten.</string>
+    <string name="clock_color">Rahmenfarbe</string>
+    <string name="clock_frame">Rahmenmuster</string>
+    <string name="frame_round">Glatt</string>
+    <string name="frame_scalloped">Perlen</string>
+    <string name="frame_blocks">Bausteine</string>
+    <string name="clock_numerals">Zahlen</string>
+    <string name="numerals_rounded">Abgerundet</string>
+    <string name="numerals_plain">Schlicht</string>
+    <string name="clock_hands">Zeiger</string>
+    <string name="hands_round">Runde Enden</string>
+    <string name="hands_pointer">Spitze Enden</string>
+    <string name="home_companion_choices">Wähle eine Figur und gestalte sie selbst</string>
+</resources>
