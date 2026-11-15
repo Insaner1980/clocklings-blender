@@ -310,4 +310,7 @@
     <string name="app_launcher_name">Clocklings Blender</string>
     <string name="lesson_start">Empezar</string>
     <string name="task_position">%1$d / %2$d</string>
+    <string name="task_outcome_first_try">Ejercicio %1$d. Acierto a la primera</string>
+    <string name="task_outcome_with_hint">Ejercicio %1$d. Acierto después de una pista</string>
+    <string name="task_outcome_shown">Ejercicio %1$d. Se mostró la respuesta</string>
 </resources>

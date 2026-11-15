@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -26,7 +27,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
-import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import fi.clocklings.R
@@ -147,7 +148,7 @@ fun TimeReadout(
     }
 }
 
-/** The outcome colour of a finished game segment. */
+/** The outcome of a finished game task. */
 enum class DotOutcome { FIRST_TRY, WITH_HINT, SHOWN }
 
 /** Segmented task progress with a readable counter and the existing flying-star anchors. */
@@ -181,7 +182,7 @@ fun ProgressSegments(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
-            Modifier.weight(1f).clearAndSetSemantics { },
+            Modifier.weight(1f),
             horizontalArrangement =
                 Arrangement.spacedBy(
                     if (count <=
@@ -194,20 +195,23 @@ fun ProgressSegments(
                 ),
         ) {
             repeat(count) { k ->
-                val finished = segmentOutcomeColor(outcomes?.getOrNull(k))
+                val completing = k == current && currentDone
+                val outcome = outcomes?.getOrNull(k)?.takeIf { k < current || completing }
+                val finished = segmentOutcomeColor(outcome)
                 val color =
                     when {
                         k < current -> finished
                         k == current -> SkColors.PrimarySoft
                         else -> track
                     }
+                val anchor = onSegmentCenter?.let { report -> Modifier.confettiAnchor { report(k, it) } } ?: Modifier
                 ProgressSegment(
                     color,
                     finished,
-                    if (k == current && currentDone) fraction else 0f,
-                    Modifier.weight(1f).then(
-                        if (onSegmentCenter != null) Modifier.confettiAnchor { onSegmentCenter(k, it) } else Modifier,
-                    ),
+                    if (completing) fraction else 0f,
+                    outcome,
+                    k + 1,
+                    modifier = Modifier.weight(1f).then(anchor),
                 )
             }
         }
@@ -220,15 +224,40 @@ private fun ProgressSegment(
     color: Color,
     finished: Color,
     fraction: Float,
+    outcome: DotOutcome?,
+    taskNumber: Int,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier.height(SkDimens.ProgressSegmentHeight).clip(SkShapes.ProgressSegment).background(color)) {
-        if (fraction >
-            0f
-        ) {
-            Box(Modifier.fillMaxWidth(fraction).height(SkDimens.ProgressSegmentHeight).background(finished))
+    val segment = modifier.height(SkDimens.ProgressSegmentHeight).outcomeSemantics(outcome, taskNumber)
+    if (outcome == DotOutcome.SHOWN) {
+        Row(segment, horizontalArrangement = Arrangement.spacedBy(SkDimens.ProgressSegmentGap)) {
+            repeat(2) {
+                Box(Modifier.weight(1f).fillMaxHeight().background(finished, SkShapes.ProgressSegment))
+            }
+        }
+    } else {
+        Box(segment.clip(SkShapes.ProgressSegment).background(color)) {
+            if (fraction > 0f) {
+                Box(Modifier.fillMaxWidth(fraction).fillMaxHeight().background(finished))
+            }
         }
     }
+}
+
+@Composable
+private fun Modifier.outcomeSemantics(
+    outcome: DotOutcome?,
+    taskNumber: Int,
+): Modifier {
+    val label =
+        when (outcome) {
+            DotOutcome.FIRST_TRY -> R.string.task_outcome_first_try
+            DotOutcome.WITH_HINT -> R.string.task_outcome_with_hint
+            DotOutcome.SHOWN -> R.string.task_outcome_shown
+            null -> return this
+        }
+    val description = stringResource(label, taskNumber)
+    return semantics { contentDescription = description }
 }
 
 /** Duration of the segment fill after its flying star arrives. */

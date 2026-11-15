@@ -329,4 +329,7 @@
     <string name="app_launcher_name">Clocklings Blender</string>
     <string name="lesson_start">Aloita</string>
     <string name="task_position">%1$d / %2$d</string>
+    <string name="task_outcome_first_try">Tehtävä %1$d. Oikein ensimmäisellä yrittämällä</string>
+    <string name="task_outcome_with_hint">Tehtävä %1$d. Oikein vihjeen jälkeen</string>
+    <string name="task_outcome_shown">Tehtävä %1$d. Vastaus näytettiin</string>
 </resources>

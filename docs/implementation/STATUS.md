@@ -1,6 +1,6 @@
 # Clocklings implementation
 
-> **Current Blender UI status (14 November 2026):** See the Modern Android UI entry below and its verification report. [CONSOLIDATED-STATUS.md](CONSOLIDATED-STATUS.md) records the earlier 6 November baseline. Earlier scope, branch, open-task and cleanup statements may be superseded.
+> **Current Blender UI status (14 November 2026):** See the Modern Android UI entry below for implementation and verification. [CONSOLIDATED-STATUS.md](CONSOLIDATED-STATUS.md) records the earlier 6 November baseline. Earlier scope, branch, open-task and cleanup statements may be superseded.
 
 Updated: 14 November 2026 for the independent Blender artwork experiment. Earlier copied checkpoints remain below as history. This is an internal construction record, not a release.
 
@@ -35,7 +35,9 @@ The full JVM suite passed **522 tests with zero failures/errors/skips**. After a
 
 On the dedicated `ClocklingsReview20261030` emulator, all ten phone/tablet/wide/short-window flow configurations passed, including 320 dp and 200% text. Final 320 x 800 and 1000 x 360 flows at 200% passed again after the row changes. Live resize, rotation, state/scroll restoration, actual keyboard editing, rendered focus and localization checks passed. The final gallery contains 782 verified PNGs. The artwork integrity/normal-motion suite passed 9 tests and reduced motion passed 8; robot persistence was checked separately. All 154 protected files and their inventory match the starting SHA-256 evidence.
 
-The earlier pressable-control ledge rule is retired, and Learn/Levels use rows instead of paths. Human TalkBack listening, physical hardware and native-speaker listening were not verified; owner `lc`/`sc` were not run. Long feedback and large-text content retain vertical scrolling. See [the verification report](../../reports/modern-android-ui/VERIFICATION.md) for exact coverage and limits.
+The emulator matrix used 360 × 800, 320 × 800, 800 × 900, 1200 × 600 and 1000 × 360 dp at both 100% and 200% font scale. After the final row changes, the 320 × 800 and 1000 × 360 dp cases also passed again at 200%. The gallery was compared with the eleven Finnish mockups, and localization checks covered all seven app languages. Build and gallery artifacts are stored locally under `reports/`.
+
+The earlier pressable-control ledge rule is retired, and Learn/Levels use rows instead of paths. Long feedback and large-text content retain vertical scrolling. Human TalkBack listening, physical hardware and native-speaker listening were not verified. The owner-run `lc` and `sc` checks did not run during this implementation.
 
 The final debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Disposable task artifacts were removed and the owned emulator/Gradle processes exited. No commit, push or pull request was made.
 

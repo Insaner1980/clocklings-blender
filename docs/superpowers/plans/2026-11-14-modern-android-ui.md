@@ -4,7 +4,7 @@
 
 **Date:** 14 November 2026
 
-**Status:** Implemented locally on 14 November 2026. The full 522-test JVM suite, the final focused follow-up, build/static/stability checks and documented emulator matrix passed. All 154 protected artwork/rendering files remain unchanged. Human TalkBack listening and full manual accessibility acceptance remain unverified. See [the execution report](../../../reports/modern-android-ui/VERIFICATION.md) for the exact checks, consolidated work-package gating, scrolling behavior and remaining limits. No commit or push was made.
+**Status:** Implemented locally on 14 November 2026. The full 522-test JVM suite, the final focused follow-up, build/static/stability checks and documented emulator matrix passed. All 154 protected artwork/rendering files remain unchanged. Human TalkBack listening and full manual accessibility acceptance remain unverified. See the [implementation and verification record](../../implementation/STATUS.md#modern-android-ui--14-november-2026) for coverage and limits.
 
 **Review correction (14 November 2026):** The owner explicitly requires the Blender characters and accessories to remain unchanged. The corrections below clarify that boundary, layout measurements and validation. That review correction itself did not implement the UI; the implementation is recorded in the status above.
 
@@ -467,7 +467,7 @@ fun ProgressSegments(
 - Segment colours: finished without outcome data `Primary`; finished with outcome `FIRST_TRY` `Good`, `WITH_HINT` `GoldDeep`, `SHOWN` `UiInkSoft`; current `PrimarySoft`; not reached `track`.
 - `currentDone`: after `fillDelayMs` the current segment fills from its start edge with its finished colour (150 ms, snap under reduced motion). This replaces `PoppingDot`.
 - `onSegmentCenter` reports each segment centre through `confettiAnchor`, exactly as `onDotCenter` did, so the flying star in `GameScreen` still lands on the current segment.
-- Semantics: the segment row stays cleared. The counter text is read by TalkBack as plain text.
+- Each completed game segment has a localized task number and outcome description. A split segment marks an answer that was shown. The counter remains plain text.
 - Callers: `LessonScreen` passes `Section.LEARN.track`; `GameScreen` passes `Section.PLAY.track` and its existing `outcomes`, `currentDone` and `fillDelayMs`.
 - Delete `ProgressDots`, `OutcomeDot`, `PoppingDot` and their constants. Keep `DotOutcome` and `dotOutcomes`.
 
@@ -1002,4 +1002,4 @@ Implement the right-hand column. Each row is a deliberate difference.
 - The mockups were rendered with headless Chrome using the app's own font files. They were not checked on a physical phone.
 - The 14 November review inspected all 11 mockup PNGs, relevant HTML measurements, current source and the Home/Wardrobe/Settings baseline images. It confirmed the missing narrow-panel padding rule, conflicting level-badge sizes and shared `InkSoft` use in `ClockFace.kt`. The corrections above are planning changes, not runtime verification.
 - [BringIntoViewRequester API reference](https://developer.android.com/reference/kotlin/androidx/compose/foundation/relocation/BringIntoViewRequester): the visibility request does not specify top alignment; section 7.8 defines measured, clamped scroll targets instead.
-- The original plan was not runtime evidence. Implementation and actual validation are recorded separately in `reports/modern-android-ui/VERIFICATION.md`.
+- The [implementation and verification record](../../implementation/STATUS.md#modern-android-ui--14-november-2026) records the checks that ran and the limits of their coverage.

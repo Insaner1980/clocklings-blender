@@ -953,13 +953,15 @@ public fun fi.clocklings.ui.components.PressSurface(onClick: kotlin.Function0<ko
     - content: STABLE (composable function type)
 
 @Composable
-private fun fi.clocklings.ui.components.ProgressSegment(color: androidx.compose.ui.graphics.Color, finished: androidx.compose.ui.graphics.Color, fraction: kotlin.Float, modifier: androidx.compose.ui.Modifier): kotlin.Unit
+private fun fi.clocklings.ui.components.ProgressSegment(color: androidx.compose.ui.graphics.Color, finished: androidx.compose.ui.graphics.Color, fraction: kotlin.Float, outcome: fi.clocklings.ui.components.DotOutcome?, taskNumber: kotlin.Int, modifier: androidx.compose.ui.Modifier): kotlin.Unit
   skippable: true
   restartable: true
   params:
     - color: STABLE (marked @Stable or @Immutable)
     - finished: STABLE (marked @Stable or @Immutable)
     - fraction: STABLE (primitive type)
+    - outcome: STABLE (class with no mutable properties)
+    - taskNumber: STABLE (primitive type)
     - modifier: STABLE (marked @Stable or @Immutable)
 
 @Composable
@@ -1242,6 +1244,14 @@ public fun fi.clocklings.ui.components.WordSafeText(text: kotlin.String, style: 
     - modifier: STABLE (marked @Stable or @Immutable)
     - minScale: STABLE (primitive type)
     - textAlign: STABLE (known stable type)
+
+@Composable
+private fun fi.clocklings.ui.components.outcomeSemantics(outcome: fi.clocklings.ui.components.DotOutcome?, taskNumber: kotlin.Int): androidx.compose.ui.Modifier
+  skippable: false
+  restartable: false
+  params:
+    - outcome: STABLE (class with no mutable properties)
+    - taskNumber: STABLE (primitive type)
 
 @Composable
 public fun fi.clocklings.ui.components.rememberCelebrationAnchors(celebrate: kotlin.Int, count: kotlin.Int, flyTo: kotlin.Function0<androidx.compose.ui.geometry.Offset?>, anchorKey: kotlin.Function0<kotlin.Int?>): androidx.compose.runtime.snapshots.SnapshotStateMap<kotlin.Int, androidx.compose.ui.geometry.Offset>

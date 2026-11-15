@@ -329,4 +329,7 @@
     <string name="app_launcher_name">Clocklings Blender</string>
     <string name="lesson_start">Börja</string>
     <string name="task_position">%1$d / %2$d</string>
+    <string name="task_outcome_first_try">Uppgift %1$d. Rätt på första försöket</string>
+    <string name="task_outcome_with_hint">Uppgift %1$d. Rätt efter en ledtråd</string>
+    <string name="task_outcome_shown">Uppgift %1$d. Svaret visades</string>
 </resources>
