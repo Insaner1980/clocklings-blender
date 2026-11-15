@@ -39,8 +39,7 @@ import org.junit.runner.RunWith
 class NameEditingDeviceTest : InputDeviceTest() {
     @Test
     fun realClipboardCutCopyAndUndoRedoStayInsideTheNameField() {
-        click(hasContentDescription("My Companion") and hasClickAction())
-        click(action("Choose an outfit"))
+        click(action("Outfits"))
         val field = compose.onNode(hasSetTextAction())
         field.scrollToIfScrollable().performTouchInput { click() }
         compose.waitUntil(5_000) { imeVisible() }
@@ -74,9 +73,8 @@ class NameEditingDeviceTest : InputDeviceTest() {
                 }
             }
             key(KeyEvent.KEYCODE_BACK)
-            key(KeyEvent.KEYCODE_BACK)
             waitFor(hasText("Clocklings"))
-            click(hasContentDescription("My Companion") and hasClickAction())
+            click(hasContentDescription("My Companion", substring = true) and hasClickAction())
             click(action("Choose an outfit"))
             waitForNameField("CutCopy")
         } finally {

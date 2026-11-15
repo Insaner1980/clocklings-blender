@@ -164,6 +164,7 @@ internal object AnswerRooms {
             timeLabel(key.language, t, key.h24),
             timeLanguage(key.language).digital(t, key.h24),
             key.width,
+            state = OptionState.CORRECT,
         )
     }
 
@@ -208,7 +209,8 @@ internal fun CountAnswerRow() {
 
 /**
  * Measures [times] as real answer rows as wide as [constraints] allow, at any height, in [slot] without placing
- * them. Their text is cleared so it never matches a shown answer.
+ * them. Feedback reserves the leading state icon as well as the words and time.
+ * Their text is cleared so it never matches a shown answer.
  */
 internal fun SubcomposeMeasureScope.measureAnswerRows(
     slot: Any,
@@ -218,7 +220,7 @@ internal fun SubcomposeMeasureScope.measureAnswerRows(
 ): List<Int> =
     subcompose(slot) {
         for (t in times) {
-            RunOption(t, h24, OptionState.NORMAL, {}, Modifier.clearAndSetSemantics { }, enabled = false)
+            RunOption(t, h24, OptionState.CORRECT, {}, Modifier.clearAndSetSemantics { }, enabled = false)
         }
     }.map { it.measure(Constraints(maxWidth = constraints.maxWidth)).height }
 

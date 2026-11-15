@@ -226,7 +226,6 @@ class ChallengeInteractionTest {
                 ChallengeScreen(state.value, false, false, {}, {}, {})
             }
         }
-        val ledge = with(compose.density) { SkDimens.OptionDepth.toPx() }
 
         // Unclipped tops and bottoms: an answer below the fold must not count as one clipped to nothing.
         fun answers(options: List<Int>) =
@@ -258,7 +257,7 @@ class ChallengeInteractionTest {
                 compose.waitForIdle()
                 val viewport = compose.onNode(hasScrollAction()).fetchSemanticsNode().boundsInRoot
                 if (fontScale == 1f) {
-                    val bottom = answers(options).maxOf { it.second } + ledge
+                    val bottom = answers(options).maxOf { it.second }
                     assertTrue("$label: answers end at $bottom, viewport ${viewport.bottom}", bottom <= viewport.bottom)
                 } else {
                     val top = answers(options).minOf { it.first }

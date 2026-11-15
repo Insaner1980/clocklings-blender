@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
@@ -13,45 +12,35 @@ import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import fi.clocklings.ui.theme.SkDimens
 
-/**
- * Sizes and positions on the stage. [hanger] is the top left corner of the wardrobe button inside the
- * content box, [contentTop] where that box starts in the stage, and [leftCloudY] the centre height of
- * the left cloud in the stage, or null when the cloud is left out.
- */
+/** Companion geometry in a measured stage; the wardrobe button reserves room below its feet. */
 internal class CompanionStageLayout(
     val companion: DpSize,
-    val hanger: DpOffset,
+    val companionBottom: Dp,
     val contentTop: Dp,
     val leftCloudY: Dp?,
 )
 
-/**
- * The companion stands bottom left of a content box [contentHeight] tall ([SkDimens.GapS] from the
- * edges) with the wardrobe button in the free sky directly above it, centred on it. The companion is
- * as tall as the box allows, keeping room above it for the button and its gaps, and at most
- * [COMPANION_WIDTH_SHARE] of the width, so the button never reaches the right column. On a stage
- * taller than the box, the group from the button to the companion's feet is centred in it.
- */
+/** Preserves aspect ratio and animation clearance above the measured wardrobe action. */
 internal fun companionStageLayout(
     stageWidth: Dp,
     stageHeight: Dp,
     contentHeight: Dp,
     aspectRatio: Float,
+    wardrobeHeight: Dp = SkDimens.WardrobeButtonHeight,
 ): CompanionStageLayout {
-    val height =
-        min(
-            min(contentHeight * COMPANION_HEIGHT_SHARE, stageWidth * COMPANION_WIDTH_SHARE / aspectRatio),
-            contentHeight - (SkDimens.IconButton + SkDimens.GapS * HANGER_RESERVE_GAPS),
-        )
-    val width = height * aspectRatio
-    val feet = contentHeight - SkDimens.GapS
-    val hangerY = max(SkDimens.GapS, feet - height - SkDimens.GapS - SkDimens.IconButton)
-    val contentTop = centredContentTop(stageHeight, contentHeight, hangerY, feet)
+    val bottom = SkDimens.StageInset + wardrobeHeight + SkDimens.GapM
+    val widthLimit = min(stageWidth * COMPANION_WIDTH_SHARE, stageWidth * (1 - RIGHT_COLUMN_SHARE) - SkDimens.GapS * 2)
+    val height = max(0.dp, min(widthLimit / aspectRatio, contentHeight - bottom - SkDimens.GapS))
+    val top = contentHeight - bottom - height
+    val contentTop = centredContentTop(stageHeight, contentHeight, top, contentHeight - SkDimens.StageInset)
     return CompanionStageLayout(
-        DpSize(width, height),
-        DpOffset(max(SkDimens.GapS, SkDimens.GapS + width / 2 - SkDimens.IconButton / 2), hangerY),
+        DpSize(height * aspectRatio, height),
+        bottom,
         contentTop,
-        skyCloudY(contentTop + hangerY, stageWidth * CLOUD_A_SIZE),
+        skyCloudY(
+            contentTop + top,
+            stageWidth * CLOUD_A_SIZE,
+        ),
     )
 }
 
@@ -127,11 +116,7 @@ internal fun skyCloudY(
 internal fun cloudReach(width: Dp): Pair<Dp, Dp> =
     width * CLOUD_PUFF * CLOUD_TOP to width * CLOUD_PUFF * (2 * CLOUD_DROP + 1)
 
-private const val COMPANION_HEIGHT_SHARE = 0.88f
 internal const val COMPANION_WIDTH_SHARE = 0.52f
-
-/** Gaps above the stage content, between the hanger and companion, and below the feet. */
-internal const val HANGER_RESERVE_GAPS = 3
 
 internal const val CLOUD_A_SIZE = 0.26f
 private const val CLOUD_B_Y = 0.3f

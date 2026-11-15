@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etusivu</title>
+<!-- Static mockup, 412 x 915 dp. One CSS px equals one dp (sp for font sizes). -->
+<style>
+@font-face{font-family:'Fredoka';font-weight:500;src:url('../../../../../app/src/main/res/font/fredoka_medium.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:600;src:url('../../../../../app/src/main/res/font/fredoka_semibold.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:700;src:url('../../../../../app/src/main/res/font/fredoka_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:600;src:url('../../../../../app/src/main/res/font/nunito_semibold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:700;src:url('../../../../../app/src/main/res/font/nunito_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:800;src:url('../../../../../app/src/main/res/font/nunito_extrabold.ttf') format('truetype')}
+body{margin:0}
+a{color:#3A2453;text-decoration:none}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+</style>
+</head>
+<body>
+<div style="width: 412px; height: 915px; box-sizing: border-box; padding: 40px 16px 24px; display: flex; flex-direction: column; gap: 16px; background: #FFF8FB; color: #3A2453; font-family: 'Nunito', sans-serif; overflow: hidden">
+
+<header style="height: 56px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0">
+<h1 aria-label="Clocklings" style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 30px; line-height: 36px; letter-spacing: 0.01em"><span style="color: #F03E3E">C</span><span style="color: #F76707">l</span><span style="color: #E8A200">o</span><span style="color: #2F9E44">c</span><span style="color: #1C7ED6">k</span><span style="color: #7048E8">l</span><span style="color: #C2255C">i</span><span style="color: #F03E3E">n</span><span style="color: #F76707">g</span><span style="color: #E8A200">s</span></h1>
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="height: 48px; padding: 0 16px 0 12px; border-radius: 24px; background: #FFE8A3; display: flex; align-items: center; gap: 8px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 19px">
+<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.45 6.2 20.5l1.1-6.45-4.7-4.6 6.5-.95z" fill="#FCC419" stroke="#F59F00" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<span>6 / 15</span>
+</div>
+<a href="09-settings.html" aria-label="Asetukset" style="width: 48px; height: 48px; border-radius: 24px; background: #F1E9FA; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+</a>
+</div>
+</header>
+
+<section aria-label="Kaveri ja kello" style="position: relative; flex-grow: 1; border-radius: 36px; background: #DCEEFF; overflow: hidden">
+<div aria-hidden="true" style="position: absolute; left: 44px; top: 30px; width: 92px; height: 36px; border-radius: 18px; background: #FFFFFF; opacity: 0.8"></div>
+<div aria-hidden="true" style="position: absolute; right: 26px; top: 22px; width: 64px; height: 26px; border-radius: 13px; background: #FFFFFF; opacity: 0.8"></div>
+<div aria-hidden="true" style="position: absolute; left: -70px; bottom: -128px; width: 520px; height: 240px; border-radius: 50%; background: #CDEFD3"></div>
+
+<a href="08-wardrobe.html" style="position: absolute; left: 16px; bottom: 16px; height: 48px; padding: 0 18px 0 14px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; gap: 8px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 18px; z-index: 3">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+<span>Asut</span>
+</a>
+
+<img src="assets/doll.webp" alt="Nukke-kaveri" style="position: absolute; left: 6px; bottom: 76px; height: 300px; width: auto; z-index: 1">
+
+<div style="position: absolute; right: 16px; top: 76px; width: 196px; box-sizing: border-box; padding: 14px 16px 16px; border-radius: 24px; background: #FFFFFF; z-index: 2; display: flex; flex-direction: column; gap: 6px">
+<div aria-hidden="true" style="position: absolute; left: -6px; bottom: 26px; width: 16px; height: 16px; background: #FFFFFF; transform: rotate(45deg); border-radius: 3px"></div>
+<span style="font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Kello on nyt</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 19px; line-height: 24px">Seitsemäntoista minuuttia vaille kaksitoista</span>
+</div>
+
+<img src="assets/clock-home-1143.webp" alt="Kello näyttää 11.43" style="position: absolute; right: 30px; bottom: 34px; width: 148px; height: 148px; z-index: 1">
+</section>
+
+<nav aria-label="Toiminnot" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; flex-shrink: 0">
+<a href="02-learn-path.html" style="height: 132px; box-sizing: border-box; padding: 16px; border-radius: 32px; background: #FFE8A3; display: flex; flex-direction: column; justify-content: space-between">
+<span style="width: 52px; height: 52px; border-radius: 26px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 26px">Opi</span>
+</a>
+<a href="07-explore.html" style="height: 132px; box-sizing: border-box; padding: 16px; border-radius: 32px; background: #BFE3FF; display: flex; flex-direction: column; justify-content: space-between">
+<span style="width: 52px; height: 52px; border-radius: 26px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 26px">Tutki</span>
+</a>
+<a href="04-game-read.html" style="height: 132px; box-sizing: border-box; padding: 16px; border-radius: 32px; background: #FFD1E3; display: flex; flex-direction: column; justify-content: space-between">
+<span style="width: 52px; height: 52px; border-radius: 26px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.45 6.2 20.5l1.1-6.45-4.7-4.6 6.5-.95z" fill="#FCC419" stroke="#F59F00" stroke-width="1.6" stroke-linejoin="round"/></svg>
+</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 26px">Pelaa</span>
+</a>
+<a href="01-home.html" style="height: 132px; box-sizing: border-box; padding: 16px; border-radius: 32px; background: #C3F2CB; display: flex; flex-direction: column; justify-content: space-between">
+<span style="width: 52px; height: 52px; border-radius: 26px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+</span>
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; line-height: 26px">Pelaa yhdessä</span>
+</a>
+</nav>
+
+</div>
+</body>
+</html>

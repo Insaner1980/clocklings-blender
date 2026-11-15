@@ -2,6 +2,7 @@ package fi.clocklings
 
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import fi.clocklings.data.ProgressRepository
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.Lessons
@@ -33,7 +34,7 @@ internal suspend fun initializeBlenderPreview(
     if (preferences.getBoolean("initialized", false)) return
     repository.updateProgress { it.copy(stars = List(Lessons.levelLessons.size) { PREVIEW_STARS_PER_LEVEL }) }
     repository.updateSettings { it.copy(personalization = it.personalization.copy(companion = CompanionKind.ROBOT)) }
-    preferences.edit().putBoolean("initialized", true).apply()
+    preferences.edit { putBoolean("initialized", true) }
 }
 
 private const val PREVIEW_STARS_PER_LEVEL = 3

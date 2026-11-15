@@ -2,13 +2,20 @@ package fi.clocklings.ui.companion
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import fi.clocklings.domain.CompanionColor
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
+import fi.clocklings.ui.art.groundShadow
 import fi.clocklings.ui.doll.DOLL_GRID_HEIGHT
 import fi.clocklings.ui.doll.DOLL_GRID_WIDTH
 
@@ -44,16 +51,25 @@ internal interface CompanionRig {
 }
 
 /**
- * The frame shared by the animal companions and the car: the 240 x 300 design grid, the wardrobe
- * thumbnail [crops] by slot, the [itemCrops] that zoom an item's thumbnail further by item id, and the
- * whole grid for every other slot.
+ * The shared 240 x 300 design grid, wardrobe crops, shadow and body pose for the Blender rigs.
  */
 internal abstract class AnimalRig(
     private val crops: Map<Slot, Rect>,
+    private val atlas: ImageBitmap,
+    protected val accessories: BlenderAccessories,
+    private val fullFrame: Rect,
+    private val ground: Rect,
     private val itemCrops: Map<String, Rect> = emptyMap(),
 ) : CompanionRig {
-    constructor(headCrop: Rect, neckCrop: Rect, itemCrops: Map<String, Rect> = emptyMap()) :
-        this(mapOf(Slot.HEAD to headCrop, Slot.NECK to neckCrop), itemCrops)
+    constructor(
+        headCrop: Rect,
+        neckCrop: Rect,
+        atlas: ImageBitmap,
+        accessories: BlenderAccessories,
+        fullFrame: Rect,
+        ground: Rect,
+        itemCrops: Map<String, Rect> = emptyMap(),
+    ) : this(mapOf(Slot.HEAD to headCrop, Slot.NECK to neckCrop), atlas, accessories, fullFrame, ground, itemCrops)
 
     final override val width = ANIMAL_GRID_WIDTH
     final override val height = ANIMAL_GRID_HEIGHT
@@ -62,11 +78,75 @@ internal abstract class AnimalRig(
 
     final override fun crop(slot: Slot): Rect = crops[slot] ?: grid
 
-    override fun crop(item: Item): Rect = itemCrops[item.id] ?: crop(item.slot)
+    final override fun crop(item: Item): Rect = accessories.crop(item.id, itemCrops[item.id] ?: crop(item.slot))
+
+    final override fun full(): Rect = fullFrame
+
+    final override fun DrawScope.draw(
+        color: CompanionColor,
+        outfit: Outfit,
+        pose: CompanionPose,
+    ) {
+        groundShadow(ground)
+        posedBody(pose) { drawBody(outfit, pose) }
+    }
+
+    protected abstract fun DrawScope.drawBody(
+        outfit: Outfit,
+        pose: CompanionPose,
+    )
+
+    protected fun DrawScope.part(region: BlenderBodyRegion) {
+        drawImage(
+            image = atlas,
+            srcOffset = region.source,
+            srcSize = region.sourceSize,
+            dstOffset = region.destination,
+            dstSize = region.size,
+            filterQuality = FilterQuality.Medium,
+        )
+    }
+
+    protected inline fun DrawScope.drawBodyWithAccessories(
+        outfit: Outfit,
+        drawParts: DrawScope.() -> Unit,
+    ) {
+        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
+        drawParts()
+        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
+    }
+
+    protected fun DrawScope.drawTailedBody(
+        outfit: Outfit,
+        angle: Float,
+        pivot: Offset,
+        tail: BlenderBodyRegion,
+        body: BlenderBodyRegion,
+    ) = drawBodyWithAccessories(outfit) {
+        rotate(angle, pivot) { part(tail) }
+        part(body)
+    }
+
+    protected fun DrawScope.drawBlinkingEyes(
+        region: BlenderBodyRegion,
+        center: Offset,
+        blink: Float,
+    ) {
+        scale(1f, 1f - blink * ANIMAL_BLINK_SQUASH, center) { part(region) }
+    }
+}
+
+internal class BlenderBodyRegion(
+    val source: IntOffset,
+    val destination: IntOffset,
+    val size: IntSize,
+) {
+    val sourceSize = IntSize(size.width * 3, size.height * 3)
 }
 
 private const val ANIMAL_GRID_WIDTH = 240f
 private const val ANIMAL_GRID_HEIGHT = 300f
+private const val ANIMAL_BLINK_SQUASH = 0.94f
 
 /** Where an animal stands in its grid: the sway and the breathing turn around this point. */
 internal val AnimalFeet = Offset(ANIMAL_GRID_WIDTH / 2, 280f)

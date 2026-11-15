@@ -6,20 +6,23 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.lerp
 
 private val SkColorScheme =
     lightColorScheme(
-        primary = SkColors.Hour,
-        onPrimary = SkColors.Surface,
+        primary = SkColors.Primary,
+        onPrimary = SkColors.OnPrimary,
+        primaryContainer = SkColors.PrimaryContainer,
+        onPrimaryContainer = SkColors.Ink,
         secondary = SkColors.Minute,
         background = SkColors.Bg,
         onBackground = SkColors.Ink,
         surface = SkColors.Surface,
         onSurface = SkColors.Ink,
-        onSurfaceVariant = SkColors.InkSoft,
+        onSurfaceVariant = SkColors.UiInkSoft,
+        surfaceVariant = SkColors.SurfaceContainer,
+        surfaceContainerHigh = SkColors.Surface,
+        error = SkColors.Danger,
         outline = SkColors.Line,
     )
 
@@ -39,23 +42,19 @@ fun ClocklingsTheme(content: @Composable () -> Unit) {
 
 enum class Section(
     val color: Color,
-    private val bottom: Color? = null,
+    val track: Color = SkColors.Line,
 ) {
-    /** Home is a place of its own: a soft sky fading into a warm blush. */
-    HOME(SkColors.HomeSky, SkColors.HomeBlush),
-    LEARN(SkColors.KouluFill),
-    EXPLORE(SkColors.VapaaFill),
-    PLAY(SkColors.PelaaFill),
-    TOGETHER(SkColors.KysyFill),
-    COMPANION(SkColors.NukkeFill),
+    HOME(SkColors.Bg),
+    LEARN(SkColors.LearnSurface, SkColors.LearnTrack),
+    EXPLORE(SkColors.ExploreSurface),
+    PLAY(SkColors.PlaySurface, SkColors.PlayTrack),
+    TOGETHER(SkColors.TogetherSurface),
+    COMPANION(SkColors.CompanionSurface),
     SETTINGS(SkColors.SettingsBackground),
     ;
 
-    val bottomColor: Color get() = bottom ?: lerp(color, SkColors.Surface, SkColors.SECTION_TINT)
+    val bottomColor: Color get() = color
 }
 
-/** Soft activity colors cover the full window, including the system bars. */
-fun Modifier.sectionBackground(section: Section): Modifier =
-    drawBehind {
-        drawRect(Brush.verticalGradient(listOf(section.color, section.bottomColor)))
-    }
+/** A flat activity tint covers the full window, including the system bars. */
+fun Modifier.sectionBackground(section: Section): Modifier = drawBehind { drawRect(section.color) }

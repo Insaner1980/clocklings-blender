@@ -60,7 +60,7 @@ class AuditCompletionDeviceTest : InputDeviceTest() {
     @Test
     fun clockStylePreviewCanFitInsideTheWindow() {
         val resources = environment.resources(artworkLanguage())
-        click(hasContentDescription(resources.getString(R.string.menu_nukke)) and hasClickAction())
+        click(hasContentDescription(resources.getString(R.string.menu_nukke), substring = true) and hasClickAction())
         click(action(resources.getString(R.string.clock_styles_title)))
         assertArtworkFits(hasTestTag("selected_clock"))
     }
@@ -69,8 +69,9 @@ class AuditCompletionDeviceTest : InputDeviceTest() {
         val language =
             AppLanguage.fromTag(InstrumentationRegistry.getArguments().getString("language")) ?: AppLanguage.ENGLISH
         environment.changeLanguage(language, compose.activityRule.scenario)
+        val companionName = environment.resources(language).getString(R.string.menu_nukke)
         waitFor(
-            hasContentDescription(environment.resources(language).getString(R.string.menu_nukke)) and hasClickAction(),
+            hasContentDescription(companionName, substring = true) and hasClickAction(),
         )
         return language
     }
@@ -105,7 +106,7 @@ class AuditCompletionDeviceTest : InputDeviceTest() {
             focusEvidence(label, matcher, directoryName = "audit-completion-focus") { focus(matcher) }
         }
         key(KeyEvent.KEYCODE_BACK)
-        activate(hasContentDescription("My Companion") and hasClickAction())
+        activate(hasContentDescription("My Companion", substring = true) and hasClickAction())
         activate(action("Choose an outfit"))
         focus(action("Back"))
         focusEvidence(
@@ -138,7 +139,7 @@ class AuditCompletionDeviceTest : InputDeviceTest() {
 
     @Test
     fun nameDraftSurvivesActivityRecreation() {
-        activate(hasContentDescription("My Companion") and hasClickAction())
+        activate(hasContentDescription("My Companion", substring = true) and hasClickAction())
         activate(action("Choose an outfit"))
         focus(hasSetTextAction())
         compose.onNode(hasSetTextAction()).performTextReplacement("Draft ")

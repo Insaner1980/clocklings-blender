@@ -141,6 +141,31 @@ class NavigationFlowTest {
         awaitHome()
     }
 
+    @Test
+    fun homeOutfitsOpensWardrobeAndStageStillOpensPersonalize() {
+        compose.setContent { App() }
+        awaitHome()
+        val outfits = clickAction("Outfits")
+        compose.runOnIdle { outfits() }
+        compose.onNodeWithText("Choose a name").assertExists()
+        compose.runOnUiThread { compose.activity.onBackPressedDispatcher.onBackPressed() }
+        awaitHome()
+        val stage = clickAction("My Companion.")
+        compose.runOnIdle { stage() }
+        compose.onNodeWithText("Make it yours").assertExists()
+    }
+
+    @Test
+    fun settingsParentsRowOpensTheExistingGate() {
+        compose.setContent { App() }
+        awaitHome()
+        val settings = clickAction("Settings")
+        compose.runOnIdle { settings() }
+        val parents = clickAction("For parents")
+        compose.runOnIdle { parents() }
+        compose.onNodeWithText("Continue").assertExists()
+    }
+
     @Composable
     private fun App() {
         val (width, fontScale) = viewport.value

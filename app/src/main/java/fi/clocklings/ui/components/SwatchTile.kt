@@ -1,7 +1,9 @@
 package fi.clocklings.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,10 +14,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkShapes
-import fi.clocklings.ui.theme.ledgeColor
 import kotlin.math.max
 import kotlin.math.min
 
@@ -27,32 +29,40 @@ fun SwatchTile(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    pageColor: Color = SkColors.CompanionSurface,
 ) {
-    DepthSurface(
+    PressSurface(
         onClick,
         color,
-        ledgeColor(color),
         SkShapes.Pill,
         modifier.size(SkDimens.ChildTarget).semantics {
             contentDescription = label
             this.selected = selected
         },
+        border = if (selected) BorderStroke(SkDimens.SelectionBorder, SkColors.Primary) else null,
         role = Role.RadioButton,
         decorativeContent = true,
     ) {
-        // The ring is drawn as content, before the check, so the check stays on top of it. The check
-        // sits at the top corner, as on the other choice tiles. A pale swatch keeps its outline, also
-        // around the white ring when chosen.
-        Box {
+        Box(contentAlignment = Alignment.Center) {
             if (selected) {
-                Box(Modifier.matchParentSize().border(SkDimens.SwatchRing, SkColors.Surface, SkShapes.Pill))
+                Box(
+                    Modifier
+                        .matchParentSize()
+                        .padding(
+                            SkDimens.SelectionBorder,
+                        ).border(SkDimens.SelectionBorder, pageColor, SkShapes.Pill),
+                )
             }
             if (swatchNeedsOutline(color)) {
-                Box(Modifier.matchParentSize().border(SkDimens.BorderThin, SkColors.SwatchOutline, SkShapes.Pill))
+                Box(
+                    Modifier
+                        .matchParentSize()
+                        .padding(
+                            if (selected) SkDimens.SelectionBorder * 2 else 0.dp,
+                        ).border(SkDimens.BorderThin, SkColors.SwatchOutline, SkShapes.Pill),
+                )
             }
-            if (selected) {
-                SelectionBadge(Modifier.align(Alignment.TopEnd))
-            }
+            if (selected) SkIcon(SkIcons.Check, SkDimens.ActionIcon, tint = SkColors.Ink)
         }
     }
 }

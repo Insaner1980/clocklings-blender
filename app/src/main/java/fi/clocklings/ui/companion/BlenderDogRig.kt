@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
@@ -16,10 +15,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
 import fi.clocklings.domain.CompanionColor
-import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
-import fi.clocklings.ui.art.groundShadow
 import fi.clocklings.ui.art.ovalRect
 
 @Composable
@@ -43,9 +40,14 @@ internal fun rememberBlenderDogRig(
 
 /** Reuses the dog's wardrobe anchors and crops, with the existing seated-dog motion. */
 internal class BlenderDogRig(
-    private val atlas: ImageBitmap,
-    private val accessories: BlenderAccessories,
+    atlas: ImageBitmap,
+    accessories: BlenderAccessories,
 ) : AnimalRig(
+        atlas = atlas,
+        accessories = accessories,
+        // Keep tall headwear below the wardrobe's star badge, including at 200% font scale.
+        fullFrame = FullFrame,
+        ground = Ground,
         // The crops keep every item of the slot whole while leaving out the tail and the mouth and tongue.
         headCrop = Rect(20f, 0f, 220f, 174f),
         neckCrop = Rect(66f, 158f, 174f, 238f),
@@ -59,24 +61,12 @@ internal class BlenderDogRig(
                 "dog-extra-raincoat" to Rect(40f, 128f, 200f, 288f),
             ),
     ) {
-    // Keep tall headwear below the wardrobe's star badge, including at 200% font scale.
-    override fun full(): Rect = FullFrame
-
-    override fun crop(item: Item): Rect = accessories.crop(item.id, super.crop(item))
-
-    override fun DrawScope.draw(
-        color: CompanionColor,
+    override fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(Ground)
-        posedBody(pose) {
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
-            rotate(pose.partDeg, TailPivot) { part(Tail) }
-            part(Body)
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-            rotate(pose.headTiltDeg, Neck) { head(outfit, pose) }
-        }
+        drawTailedBody(outfit, pose.partDeg, TailPivot, Tail, Body)
+        rotate(pose.headTiltDeg, Neck) { head(outfit, pose) }
     }
 
     private fun DrawScope.head(
@@ -89,33 +79,14 @@ internal class BlenderDogRig(
         rotate(-pose.partDeg, RightEarPivot) { part(RightEar) }
         accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
     }
-
-    private fun DrawScope.part(region: DogRegion) {
-        drawImage(
-            image = atlas,
-            srcOffset = region.source,
-            srcSize = region.sourceSize,
-            dstOffset = region.destination,
-            dstSize = region.size,
-            filterQuality = FilterQuality.Medium,
-        )
-    }
 }
 
-private class DogRegion(
-    val source: IntOffset,
-    val destination: IntOffset,
-    val size: IntSize,
-) {
-    val sourceSize = IntSize(size.width * 3, size.height * 3)
-}
-
-private val Head = DogRegion(IntOffset(0, 0), IntOffset(48, 28), IntSize(144, 147))
-private val Body = DogRegion(IntOffset(436, 0), IntOffset(38, 148), IntSize(164, 138))
-private val Tail = DogRegion(IntOffset(932, 0), IntOffset(169, 186), IntSize(59, 90))
-private val LeftEar = DogRegion(IntOffset(0, 448), IntOffset(18, 26), IntSize(77, 143))
-private val RightEar = DogRegion(IntOffset(236, 448), IntOffset(145, 26), IntSize(77, 143))
-private val Eyes = DogRegion(IntOffset(472, 448), IntOffset(68, 83), IntSize(104, 49))
+private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(48, 28), IntSize(144, 147))
+private val Body = BlenderBodyRegion(IntOffset(436, 0), IntOffset(38, 148), IntSize(164, 138))
+private val Tail = BlenderBodyRegion(IntOffset(932, 0), IntOffset(169, 186), IntSize(59, 90))
+private val LeftEar = BlenderBodyRegion(IntOffset(0, 448), IntOffset(18, 26), IntSize(77, 143))
+private val RightEar = BlenderBodyRegion(IntOffset(236, 448), IntOffset(145, 26), IntSize(77, 143))
+private val Eyes = BlenderBodyRegion(IntOffset(472, 448), IntOffset(68, 83), IntSize(104, 49))
 private val TailPivot = Offset(189f, 251f)
 private val RightEarPivot = Offset(162f, 52f)
 private val Neck = Offset(120f, 160f)

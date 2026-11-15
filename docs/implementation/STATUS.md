@@ -1,8 +1,8 @@
 # Clocklings implementation
 
-> **Current consolidated status (6 November 2026):** Read [CONSOLIDATED-STATUS.md](CONSOLIDATED-STATUS.md) for implemented work, actual test evidence, unavailable hardware checks, optional follow-ups and deferred publication work. The dated entries below remain implementation history; earlier scope, branch, open-task and cleanup statements may be superseded.
+> **Current Blender UI status (14 November 2026):** See the Modern Android UI entry below for implementation and verification. [CONSOLIDATED-STATUS.md](CONSOLIDATED-STATUS.md) records the earlier 6 November baseline. Earlier scope, branch, open-task and cleanup statements may be superseded.
 
-Updated: 4 November 2026. Earlier dated checkpoints remain below. This is an internal construction record, not a release or an agreed final feature inventory.
+Updated: 14 November 2026 for the independent Blender artwork experiment. Earlier copied checkpoints remain below as history. This is an internal construction record, not a release.
 
 ## Authority and decisions
 
@@ -10,8 +10,8 @@ The owner's current instructions override both copied proposals. In particular, 
 
 | Decision | Current status |
 | --- | --- |
-| Workspace | Confirmed: `C:\Dev\Clocklings`. Independent local repository; current work is on `codex/localization-settings`. |
-| Identity | Confirmed: app **Clocklings**, Play title **Clocklings: Learn to Tell Time**, application ID and namespace `fi.clocklings`. |
+| Workspace | Independent Blender experiment: `C:\Dev\Clocklings-Blender-version`, branch `codex/modern-android-ui`. The original Clocklings projects are read-only source material. |
+| Identity | Launcher **Clocklings Blender**, application ID `fi.clocklings.blender`, source namespace `fi.clocklings`. Release signing remains unconfigured. |
 | Languages | Expanded by the owner on 4 November 2026: English, Finnish, shared Swedish, German, French, Spain Spanish (`es-ES`), and Brazilian Portuguese (`pt-BR`). Device `pt` and `pt-PT` also select Brazilian content, as explicitly confirmed by the owner. All languages belong to the single complete public release. |
 | English expressions | Confirmed: shared past/to style, including “quarter past three”, “half past three”, and “quarter to four”; numeric time alongside. No separate British/American modes. |
 | Together | Confirmed: set a time, ask, reveal, and swap turns. No assumed family roles. Cooperative stories, split-screen racing, and other variants remain proposals. |
@@ -19,13 +19,29 @@ The owner's current instructions override both copied proposals. In particular, 
 | Companions | Confirmed by the owner on 21 October: human, cat, dog, robot, dragon, dinosaur, and no-companion mode. |
 | Clock appearances | Confirmed by the owner on 21 October: classic, rainbow, space, forest, ocean, garden, workshop, and a constrained custom clock. |
 | Exclusions | No curriculum mapping, Teacher Approved work, or partial/MVP publication. |
-| Learning chapters | The eight standard lessons are grouped under the five existing game levels, with a practice node after each chapter; the optional 24-hour lesson is a final chapter without a new game level. Chapter header text is removed and each chapter's practice node is titled "Practise" (fi "Harjoittele", sv "Öva"), with the level name kept in its accessibility description (owner decision D-1, 30 October 2026; reverses item 1 of decision 2.1 of the 2026-10-27 plan). |
+| Learning chapters | The eight standard lessons are grouped under the five existing game levels, with a practice row after each chapter; the optional 24-hour lesson is a final chapter without a new game level. Chapter header text is removed and each chapter's practice row is titled "Practise" (fi "Harjoittele", sv "Öva"), with the level name kept in its accessibility description (owner decision D-1, 30 October 2026; reverses item 1 of decision 2.1 of the 2026-10-27 plan). |
 | Level identity | Learning chapters and practice use the same level names and `SkColors.LevelCards` palette; the 24-hour chapter uses `ChallengeCard`. |
 | Wardrobe stars | Stars are never spent: an item's threshold is compared with the total best-level stars. Locked items show current/required progress and explain the threshold. |
-| Primary actions | Pink `ButtonKind.PRIMARY` remains the single app-wide primary action colour. |
+| Primary actions | Violet `Primary` (`#6741D9`) with white content, following the approved 14 November UI plan. The clock and artwork keep their existing pink/blue colours. |
 | Publication | No commits, pushes, remote creation, signing-key setup, uploads, or pull requests authorized. |
 
 Before their dependent implementation, resolve the final activity inventory, profiles, rewards/session rules, everyday timer/routines/widget, commercial model, data transfer, adult controls, and final audience declaration. Existing copied wardrobe/reward behavior remains a development baseline for broader reward decisions. The companion and clock inventory above is now explicitly approved.
+
+## Modern Android UI — 14 November 2026
+
+Implemented the [approved UI plan](../superpowers/plans/2026-11-14-modern-android-ui.md) locally: flat surfaces, violet pill actions, start-aligned headers, progress segments, learning and level rows, Home's direct Outfits action, answer feedback, adaptive results, Wardrobe section tabs and Settings controls. Existing navigation, storage, languages and the clock/companion artwork remain the foundation.
+
+The full JVM suite passed **522 tests with zero failures/errors/skips**. After a final equivalent Boolean extraction for Detekt, the focused row test passed again, as did debug app/test APK assembly, ktlint, Detekt, Android Lint and all four variant stability checks. Localization resource parity passed in all seven languages. The separate per-work-package build/test gates in the proposal were consolidated into implementation and final validation runs.
+
+On the dedicated `ClocklingsReview20261030` emulator, all ten phone/tablet/wide/short-window flow configurations passed, including 320 dp and 200% text. Final 320 x 800 and 1000 x 360 flows at 200% passed again after the row changes. Live resize, rotation, state/scroll restoration, actual keyboard editing, rendered focus and localization checks passed. The final gallery contains 782 verified PNGs. The artwork integrity/normal-motion suite passed 9 tests and reduced motion passed 8; robot persistence was checked separately. All 154 protected files and their inventory match the starting SHA-256 evidence.
+
+The emulator matrix used 360 × 800, 320 × 800, 800 × 900, 1200 × 600 and 1000 × 360 dp at both 100% and 200% font scale. After the final row changes, the 320 × 800 and 1000 × 360 dp cases also passed again at 200%. The gallery was compared with the eleven Finnish mockups, and localization checks covered all seven app languages. Build and gallery artifacts are stored locally under `reports/`.
+
+The earlier pressable-control ledge rule is retired, and Learn/Levels use rows instead of paths. Long feedback and large-text content retain vertical scrolling. Human TalkBack listening, physical hardware and native-speaker listening were not verified. The owner-run `lc` and `sc` checks did not run during this implementation.
+
+The final debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Disposable task artifacts were removed and the owned emulator/Gradle processes exited. No commit, push or pull request was made.
+
+A scoped build prerequisite enables unit-test resources for all existing app variants, extending the existing release workaround required by the AGP Compose Preview tasks when stability tasks are realized. No dependencies or toolchain versions changed.
 
 ## German, French, Spanish and Brazilian Portuguese — 4 November 2026
 

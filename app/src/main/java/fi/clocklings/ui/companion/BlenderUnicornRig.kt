@@ -7,19 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
 import fi.clocklings.domain.CompanionColor
-import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
-import fi.clocklings.ui.art.groundShadow
 import fi.clocklings.ui.art.ovalRect
 
 @Composable
@@ -43,9 +39,13 @@ internal fun rememberBlenderUnicornRig(
 
 /** Keeps the unicorn's wardrobe anchors, head tilt, blinking and independent tail motion. */
 internal class BlenderUnicornRig(
-    private val atlas: ImageBitmap,
-    private val accessories: BlenderAccessories,
+    atlas: ImageBitmap,
+    accessories: BlenderAccessories,
 ) : AnimalRig(
+        atlas = atlas,
+        accessories = accessories,
+        fullFrame = FullFrame,
+        ground = Ground,
         // The crops keep every item of the slot whole: the head crop takes in the horn tip and the mane,
         // the neck crop the pendants and the cape clasp.
         headCrop = Rect(12f, 0f, 196f, 172f),
@@ -60,53 +60,23 @@ internal class BlenderUnicornRig(
                 "unicorn-extra-wings" to Rect(102f, 87f, 222f, 207f),
             ),
     ) {
-    override fun full(): Rect = FullFrame
-
-    override fun crop(item: Item): Rect = accessories.crop(item.id, super.crop(item))
-
-    override fun DrawScope.draw(
-        color: CompanionColor,
+    override fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(Ground)
-        posedBody(pose) {
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
-            rotate(pose.partDeg, TailPivot) { part(Tail) }
-            part(Body)
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-            rotate(pose.headTiltDeg, Neck) {
-                part(Head)
-                scale(1f, 1f - pose.blink * 0.94f, EyeCenter) { part(Eyes) }
-                accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
-            }
+        drawTailedBody(outfit, pose.partDeg, TailPivot, Tail, Body)
+        rotate(pose.headTiltDeg, Neck) {
+            part(Head)
+            drawBlinkingEyes(Eyes, EyeCenter, pose.blink)
+            accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
         }
     }
-
-    private fun DrawScope.part(region: UnicornRegion) {
-        drawImage(
-            image = atlas,
-            srcOffset = region.source,
-            srcSize = region.sourceSize,
-            dstOffset = region.destination,
-            dstSize = region.size,
-            filterQuality = FilterQuality.Medium,
-        )
-    }
 }
 
-private class UnicornRegion(
-    val source: IntOffset,
-    val destination: IntOffset,
-    val size: IntSize,
-) {
-    val sourceSize = IntSize(size.width * 3, size.height * 3)
-}
-
-private val Head = UnicornRegion(IntOffset(0, 0), IntOffset(22, 0), IntSize(157, 191))
-private val Body = UnicornRegion(IntOffset(475, 0), IntOffset(63, 123), IntSize(122, 162))
-private val Tail = UnicornRegion(IntOffset(0, 577), IntOffset(151, 138), IntSize(70, 95))
-private val Eyes = UnicornRegion(IntOffset(214, 577), IntOffset(40, 99), IntSize(79, 37))
+private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(22, 0), IntSize(157, 191))
+private val Body = BlenderBodyRegion(IntOffset(475, 0), IntOffset(63, 123), IntSize(122, 162))
+private val Tail = BlenderBodyRegion(IntOffset(0, 577), IntOffset(151, 138), IntSize(70, 95))
+private val Eyes = BlenderBodyRegion(IntOffset(214, 577), IntOffset(40, 99), IntSize(79, 37))
 private val TailPivot = Offset(166f, 172f)
 private val Neck = Offset(100f, 162f)
 private val EyeCenter = Offset(79f, 117f)

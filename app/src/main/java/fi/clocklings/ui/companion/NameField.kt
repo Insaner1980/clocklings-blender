@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -73,7 +74,7 @@ internal fun NameField(
         },
         singleLine = true,
         textStyle = SkType.NameField.copy(textAlign = TextAlign.Center),
-        cursorBrush = SolidColor(SkColors.Hour),
+        cursorBrush = SolidColor(SkColors.Primary),
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Done),
         modifier =
             modifier
@@ -93,30 +94,42 @@ internal fun NameField(
                 }.widthIn(max = SkDimens.NameFieldMaxWidth)
                 .fillMaxWidth()
                 .semantics { contentDescription = label },
-        decorationBox = { inner ->
-            Row(
-                Modifier
-                    .background(SkColors.Surface, SkShapes.Field)
-                    .border(SkDimens.BorderThin, SkColors.Line, SkShapes.Field)
-                    .padding(horizontal = SkDimens.FieldPaddingHorizontal, vertical = SkDimens.FieldPaddingVertical),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapS),
-            ) {
-                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    if (text.isEmpty()) {
-                        Text(
-                            stringResource(R.string.doll_name_placeholder),
-                            style = SkType.NameFieldPlaceholder.copy(textAlign = TextAlign.Center),
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    }
-                    inner()
-                }
-                // Shows that the name can be typed in; the field itself carries the label.
-                SkIcon(SkIcons.Pencil, SkDimens.ActionIcon, Modifier.clearAndSetSemantics { })
-            }
-        },
+        decorationBox = { inner -> NameEditorContent(text, inner) },
     )
+}
+
+@Composable
+private fun NameEditorContent(
+    text: String,
+    inner: @Composable () -> Unit,
+) {
+    Row(
+        Modifier
+            .background(SkColors.Surface, SkShapes.Pill)
+            .border(SkDimens.BorderThin, SkColors.FieldOutline, SkShapes.Pill)
+            .heightIn(min = SkDimens.IconButton)
+            .padding(
+                start = SkDimens.PanelPadding,
+                end = SkDimens.FieldPaddingHorizontal,
+                top = SkDimens.FieldPaddingVertical,
+                bottom = SkDimens.FieldPaddingVertical,
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(SkDimens.GapS),
+    ) {
+        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+            if (text.isEmpty()) {
+                Text(
+                    stringResource(R.string.doll_name_placeholder),
+                    style = SkType.NameFieldPlaceholder.copy(textAlign = TextAlign.Center),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            inner()
+        }
+        // Shows that the name can be typed in; the field itself carries the label.
+        SkIcon(SkIcons.Pencil, SkDimens.ActionIcon, Modifier.clearAndSetSemantics { })
+    }
 }
 
 /** Re-request visibility after the IME changes the short window's scrolling container. */

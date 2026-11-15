@@ -66,7 +66,6 @@ class RunOptionReservationTest {
         compose.setContent {
             ReservationContent(cell.value, run.value, rowWidth.value)
         }
-        val ledge = with(compose.density) { SkDimens.OptionDepth.toPx() }
         val failures = mutableListOf<String>()
         for (current in CELLS) {
             val width = current.width
@@ -99,7 +98,7 @@ class RunOptionReservationTest {
                     .boundsInRoot.bottom
             val nodes = tallest.map { answer(language, h24, it) }
             val top = nodes.minOf { it.positionInRoot.y }
-            val bottom = nodes.maxOf { it.positionInRoot.y + it.size.height } + ledge
+            val bottom = nodes.maxOf { it.positionInRoot.y + it.size.height }
             val atMinimum = with(compose.density) { clock <= SkDimens.FitClockMin.roundToPx() }
             when {
                 top >= viewport -> {

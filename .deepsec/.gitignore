@@ -1,4 +1,7 @@
 node_modules/
-data/
+data/*
+!data/clocklings/
+data/clocklings/*
+!data/clocklings/config.json
 findings/
 comment.md

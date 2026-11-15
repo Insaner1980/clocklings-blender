@@ -7,7 +7,23 @@ buildscript {
             classpath(libs.guava) {
                 because("Fix CVE-2026-102554 in build-tool dependencies")
             }
+            classpath(libs.bouncycastle.bcpkix) {
+                because("Use the patched Bouncy Castle release in AGP's signing tools")
+            }
+            classpath(libs.jose4j) {
+                because("Fix GHSA-3677-xxcr-wjqv in AGP's device testing tools")
+            }
+            classpath(libs.jdom2) {
+                because("Fix GHSA-2363-cqg2-863c in AGP's XML processing tools")
+            }
+            classpath(libs.json) {
+                because("Fix GHSA-ghc9-756g-vrcv in OWASP Dependency-Check")
+            }
+            classpath(libs.jsoup) {
+                because("Fix GHSA-65r4-943x-97jj in OWASP Dependency-Check")
+            }
         }
+        classpath(platform(libs.jackson.bom))
     }
 }
 

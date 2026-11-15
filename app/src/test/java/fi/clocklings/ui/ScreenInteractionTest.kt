@@ -154,9 +154,10 @@ class ScreenInteractionTest {
         for (name in levelNames) {
             compose.onAllNodes(isHeading() and hasText(name)).assertCountEquals(0)
         }
-        compose.onAllNodesWithText("Practise").assertCountEquals(levelNames.size)
-        compose.onAllNodesWithText("Play again").assertCountEquals(1)
-        compose.onAllNodesWithText("Start playing!").assertCountEquals(levelNames.size - 1)
+        // Visible labels remain in the unmerged tree; the accessible row has one complete description.
+        compose.onAllNodesWithText("Practise", useUnmergedTree = true).assertCountEquals(levelNames.size)
+        compose.onAllNodesWithText("Play again", useUnmergedTree = true).assertCountEquals(1)
+        compose.onAllNodesWithText("Start playing!", useUnmergedTree = true).assertCountEquals(levelNames.size - 1)
         compose
             .onNode(hasContentDescription("Whole hours. Practise. Play again.", substring = true) and hasClickAction())
             .assertExists()
@@ -211,9 +212,8 @@ class ScreenInteractionTest {
             assertEquals(0f, viewport.config[SemanticsProperties.VerticalScrollAxisRange].maxValue(), 1f)
             for (title in listOf("Learn", "Explore", "Play", "Play Together")) {
                 val tile = compose.onNode(hasText(title) and hasClickAction()).assertIsDisplayed().fetchSemanticsNode()
-                val ledge = with(compose.density) { SkDimens.BigButtonDepth.toPx() }
-                val bottom = tile.positionInRoot.y + tile.size.height + ledge
-                assertTrue("$companion / $title: entire tile and ledge visible", bottom <= viewport.boundsInRoot.bottom)
+                val bottom = tile.positionInRoot.y + tile.size.height
+                assertTrue("$companion / $title: entire tile visible", bottom <= viewport.boundsInRoot.bottom)
             }
         }
     }
@@ -383,7 +383,7 @@ class ScreenInteractionTest {
                 assertEquals("replay", action)
                 compose.onNodeWithText("Next level").scrollIfNeeded().performClick()
                 assertEquals("next", action)
-                compose.onNodeWithText("Back").scrollIfNeeded().performClick()
+                compose.onNodeWithContentDescription("Back").scrollIfNeeded().performClick()
                 assertEquals("levels", action)
             }
         }

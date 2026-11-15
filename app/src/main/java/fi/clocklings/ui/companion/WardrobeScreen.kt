@@ -29,21 +29,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
-import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,17 +58,16 @@ import fi.clocklings.ui.LocalAppViewModel
 import fi.clocklings.ui.RetryableSave
 import fi.clocklings.ui.appearance.companionColorName
 import fi.clocklings.ui.components.AdaptiveContent
-import fi.clocklings.ui.components.DepthSurface
 import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.PillKind
+import fi.clocklings.ui.components.PressSurface
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SelectionBadge
 import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.SkIcon
 import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.SwatchTile
-import fi.clocklings.ui.components.TopBar
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.itemName
 import fi.clocklings.ui.observeAccessPolicy
@@ -83,7 +78,6 @@ import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkShapes
 import fi.clocklings.ui.theme.SkType
-import fi.clocklings.ui.theme.ledgeColor
 
 /**
  * The selected companion's wardrobe: the big companion and its name, then (for animals) its color,
@@ -107,18 +101,22 @@ fun WardrobeScreen(
     val retry = nameRetry ?: colorSave.retry ?: itemSaves.values.firstNotNullOfOrNull { it.retry }
     val total = progress.totalStars
     val outfit = access.displayedOutfit(kind, progress.outfitFor(kind), total)
+    val navigation = rememberWardrobeSections(kind)
+    val hasColor = kind != CompanionKind.HUMAN
+    val labels =
+        (if (hasColor) listOf(stringResource(R.string.companion_color)) else emptyList()) +
+            kind.slots.map { stringResource(slotName(it)) }
     val keyboardOpen = WindowInsets.ime.getBottom(LocalDensity.current) > 0
-    val failureBar: @Composable () -> Unit = {
-        Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
-            Text(stringResource(R.string.settings_save_error), style = SkType.Body)
-            SkButton(stringResource(R.string.settings_retry), { retry?.invoke() }, Modifier.fillMaxWidth())
-        }
-    }
+    val failureBar: @Composable () -> Unit = { WardrobeSaveFailure(retry) }
     ScreenScaffold(
         modifier,
         wideContent = true,
         section = Section.COMPANION,
-        topBar = { TopBar(stringResource(R.string.doll_title), onBack) },
+        scrollState = navigation.scroll,
+        onViewportTop = { navigation.viewportTop = it },
+        topBar = {
+            WardrobeHeader(kind, total, access, labels, navigation, onBack)
+        },
         bottomBar = failureBar.takeIf { retry != null && !keyboardOpen },
     ) { clockSize ->
         AdaptiveContent(clockSize, visual = {
@@ -128,8 +126,6 @@ fun WardrobeScreen(
                 color,
                 name,
                 nameError = if (nameRetry != null) stringResource(R.string.settings_save_error) else null,
-                stars = stringResource(R.string.home_star_total, total, Wardrobe.MAX_STARS),
-                starInfo = wardrobeStarInfo(kind, total, access),
                 onNameChange = {
                     name = it
                     saveName(it)
@@ -137,14 +133,17 @@ fun WardrobeScreen(
             )
         }) {
             if (retry != null && keyboardOpen) failureBar()
-            WardrobeHints(kind, total)
-            if (!access.fullAccess) Text(stringResource(R.string.wardrobe_full_requirement), style = SkType.BodySoft)
-            if (kind != CompanionKind.HUMAN) {
-                WardrobeSection(stringResource(R.string.companion_color)) {
-                    CompanionColors(kind, color) { chosen -> colorSave.run { app.setColor(kind, chosen, it) } }
-                }
+            WardrobeIntro(kind, total, access, color, { navigation.headings[0] = it }) { chosen ->
+                colorSave.run { app.setColor(kind, chosen, it) }
             }
-            WardrobeItems(kind, total, outfit, color, access) { item ->
+            WardrobeItems(
+                kind,
+                total,
+                outfit,
+                color,
+                access,
+                { index, top -> navigation.headings[index + if (hasColor) 1 else 0] = top },
+            ) { item ->
                 itemSaves.getValue(item.slot).run { app.toggleItem(kind, item, it) }
             }
             if (!access.fullAccess) SkButton(stringResource(R.string.parent_title), onParent)
@@ -159,14 +158,15 @@ private fun WardrobeItems(
     outfit: Outfit,
     color: CompanionColor,
     access: AccessPolicy,
+    onHeadingTop: (Int, Float) -> Unit,
     onItemClick: (Item) -> Unit,
 ) {
     val app = LocalAppViewModel.current
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val (columns, nameStyle) = rememberItemGridLayout(Wardrobe.itemsFor(kind), maxWidth)
         Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen)) {
-            for (slot in kind.slots) {
-                WardrobeSection(stringResource(slotName(slot))) {
+            for ((index, slot) in kind.slots.withIndex()) {
+                WardrobeSection(stringResource(slotName(slot)), { onHeadingTop(index, it) }) {
                     ItemGrid(Wardrobe.itemsFor(kind, slot), columns) { item, cell ->
                         if (access.item(item, total)) {
                             val on = outfit.isOn(item)
@@ -184,21 +184,6 @@ private fun WardrobeItems(
     }
 }
 
-/**
- * A heading kept close to its own content and set further apart from the section above. The heading
- * shrinks rather than breaks a long word, such as Finnish "Muodonmuutokset".
- */
-@Composable
-private fun WardrobeSection(
-    title: String,
-    content: @Composable () -> Unit,
-) {
-    Column(Modifier.padding(top = SkDimens.GapS), verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
-        WordSafeText(title, SkType.SectionTitle, Modifier.semantics { heading() }, textAlign = TextAlign.Start)
-        content()
-    }
-}
-
 @Composable
 private fun WardrobeStage(
     kind: CompanionKind,
@@ -206,14 +191,12 @@ private fun WardrobeStage(
     color: CompanionColor,
     name: String,
     nameError: String?,
-    stars: String,
-    starInfo: String,
     onNameChange: (String) -> Unit,
 ) {
     Box(
         Modifier
             .fillMaxWidth()
-            .background(Brush.verticalGradient(listOf(SkColors.DollStageTop, SkColors.DollStageBottom)), SkShapes.Card)
+            .background(SkColors.Surface, SkShapes.Tile)
             .padding(SkDimens.Gap),
     ) {
         Column(
@@ -221,15 +204,6 @@ private fun WardrobeStage(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
         ) {
-            Pill(
-                stars,
-                Modifier
-                    .align(Alignment.End)
-                    .testTag("wardrobe_star_balance")
-                    .semantics { contentDescription = starInfo },
-                icon = SkIcons.StarOn,
-                large = true,
-            )
             CompanionView(
                 kind,
                 outfit,
@@ -316,16 +290,15 @@ fun ItemTile(
     if (onClick == null) {
         FlatPanel(modifier, padding = SkDimens.GapS) { ItemTileContent(item, outfit, color, on, nameStyle) }
     } else {
-        val fill = if (on) SkColors.ItemOnBg else SkColors.Surface
-        DepthSurface(
+        val fill = SkColors.Surface
+        PressSurface(
             onClick,
             fill,
-            ledgeColor(fill),
             SkShapes.Item,
             modifier.semantics { selected = on },
-            border = if (on) BorderStroke(SkDimens.Border, SkColors.ItemOnBorder) else null,
+            border = if (on) BorderStroke(SkDimens.SelectionBorder, SkColors.Primary) else null,
         ) {
-            Box(Modifier.padding(TilePadding), contentAlignment = Alignment.TopCenter) {
+            Box(Modifier.padding(SkDimens.GapS), contentAlignment = Alignment.TopCenter) {
                 ItemTileContent(item, outfit, color, on, nameStyle)
             }
         }
@@ -345,10 +318,13 @@ private fun ItemTileContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(SkDimens.GapS),
     ) {
-        Box {
-            ItemArtWindow(item, outfit, color)
+        Box(Modifier.width(SkDimens.ItemWindow).height(SkDimens.SelectionBadge)) {
             if (on) SelectionBadge(Modifier.align(Alignment.TopEnd))
         }
+        Box {
+            ItemArtWindow(item, outfit, color)
+        }
+
         val name = stringResource(itemName(item.id))
         if (nameStyle == null) {
             WordSafeText(name, SkType.ItemName)
@@ -402,7 +378,7 @@ private fun LockedTile(
         // The name takes the spare height, so the progress pills of one row stay level when a
         // neighbouring name takes two lines.
         Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
-            WordSafeText(stringResource(itemName(item.id)), nameStyle.copy(color = SkColors.InkSoft), minScale = 1f)
+            WordSafeText(stringResource(itemName(item.id)), nameStyle.copy(color = SkColors.UiInkSoft), minScale = 1f)
         }
         Pill(stringResource(R.string.home_star_total, total, item.star), kind = PillKind.MUTED, icon = SkIcons.StarOn)
         if (requiresFullVersion) Text(stringResource(R.string.full_version_label), style = SkType.Small)
@@ -411,7 +387,11 @@ private fun LockedTile(
 
 private const val LOCKED_ALPHA = 0.55f
 
-private val TilePadding = PaddingValues(start = 8.dp, end = 8.dp, top = 10.dp, bottom = 12.dp)
+/** The existing locked-item frame preserves its thumbnail and caption clearance. */
+private val TilePadding =
+    PaddingValues(start = SkDimens.GapS, end = SkDimens.GapS, top = SkDimens.GapOptions, bottom = SkDimens.GapM)
+
+/** Narrow wardrobes use two columns before testing long item names. */
 private val NarrowGridWidth = 360.dp
 private val WordBreak = Regex("(?<=-)|\\s+")
 
@@ -440,6 +420,24 @@ private fun CompanionColors(
                 },
                 Modifier.testTag("color_${option.name}"),
             )
+        }
+    }
+}
+
+@Composable
+private fun WardrobeIntro(
+    kind: CompanionKind,
+    total: Int,
+    access: AccessPolicy,
+    color: CompanionColor,
+    onHeadingTop: (Float) -> Unit,
+    onColorChange: (CompanionColor) -> Unit,
+) {
+    WardrobeHints(kind, total)
+    if (!access.fullAccess) Text(stringResource(R.string.wardrobe_full_requirement), style = SkType.BodySoft)
+    if (kind != CompanionKind.HUMAN) {
+        WardrobeSection(stringResource(R.string.companion_color), onHeadingTop) {
+            CompanionColors(kind, color, onColorChange)
         }
     }
 }

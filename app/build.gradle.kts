@@ -103,8 +103,27 @@ baselineProfile {
 
 androidComponents {
     // AGP 9.5 preview tasks require unit-test resources when stability checks realize all tasks.
-    beforeVariants(selector().withBuildType("release")) {
+    beforeVariants {
         it.hostTests.getValue(HostTestBuilder.UNIT_TEST_TYPE).enable = true
+    }
+}
+
+abstract class ResourcePackagingLock : BuildService<BuildServiceParameters.None>
+
+if (System.getProperty("os.name").startsWith("Windows", ignoreCase = true)) {
+    // Avoid intermittent access errors when variants copy the same raw resources.
+    val resourcePackagingLock =
+        gradle.sharedServices
+            .registerIfAbsent(
+                "resourcePackagingLock",
+                ResourcePackagingLock::class,
+            ) {
+                maxParallelUsages.set(1)
+            }
+    tasks.configureEach {
+        if (name.startsWith("package") && name.endsWith("Resources")) {
+            usesService(resourcePackagingLock)
+        }
     }
 }
 
@@ -155,12 +174,7 @@ dependencyCheck {
         }
     }
     nvd {
-        providers
-            .environmentVariable("NVD_API_KEY")
-            .orNull
-            ?.trim()
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { apiKey = it }
+        datafeedUrl = "https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-{0}.json.gz"
     }
 }
 
@@ -221,6 +235,9 @@ dependencies {
     constraints {
         testImplementation(libs.guava) {
             because("Fix CVE-2026-102554 in Robolectric's transitive dependency")
+        }
+        add("ktlint", libs.logback.classic.get()) {
+            because("Use the patched Logback release in ktlint")
         }
     }
     testImplementation(composeBom)

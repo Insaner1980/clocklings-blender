@@ -186,6 +186,10 @@ fun ClocklingsApp(
                                                                 Screen.Personalize
                                                             }
 
+                                                            HomeDestination.ASUT -> {
+                                                                Screen.Wardrobe
+                                                            }
+
                                                             HomeDestination.SETTINGS -> {
                                                                 Screen.Settings
                                                             }
