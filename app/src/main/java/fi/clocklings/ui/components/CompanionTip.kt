@@ -41,11 +41,13 @@ fun CompanionTip(
     modifier: Modifier = Modifier,
     kind: FeedbackKind = FeedbackKind.HINT,
     celebrate: Boolean = false,
+    color: Color = SkColors.Bubble,
 ) {
     CompanionTip(
         modifier,
         celebrationKey = text,
         celebrate = celebrate,
+        color = color,
         fallback = { FeedbackBox(text, kind) },
     ) {
         Text(text, style = SkType.Body)
@@ -61,6 +63,7 @@ fun CompanionTip(
     modifier: Modifier = Modifier,
     celebrationKey: String? = null,
     celebrate: Boolean = false,
+    color: Color = SkColors.Bubble,
     fallback: @Composable () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -87,7 +90,7 @@ fun CompanionTip(
         if (compact) {
             Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
                 avatar()
-                SpeechBubbleBox(tail = BubbleTail.UP_START, content = content)
+                SpeechBubbleBox(tail = BubbleTail.UP_START, color = color, content = content)
             }
         } else {
             // Align the first line and tail with the head, including short captions.
@@ -99,6 +102,7 @@ fun CompanionTip(
                 SpeechBubbleBox(
                     Modifier.weight(1f).padding(top = SkDimens.BubbleHeadOffset),
                     tail = BubbleTail.START,
+                    color = color,
                     content = content,
                 )
             }

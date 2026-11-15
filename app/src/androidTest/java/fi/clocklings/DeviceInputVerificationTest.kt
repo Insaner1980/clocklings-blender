@@ -180,7 +180,7 @@ class DeviceInputVerificationTest : InputDeviceTest() {
     @Test
     fun keyboardOnlyAppearanceWardrobeAndNameCommit() {
         runBlocking { environment.repository.updateProgress { it.withLevelResult(0, 1) } }
-        activate(hasContentDescription("My Companion") and hasClickAction())
+        activate(hasContentDescription("My Companion", substring = true) and hasClickAction())
         activate(hasTestTag("choose_companion_CAT") and hasClickAction())
         runBlocking {
             checkNotNull(
@@ -315,7 +315,7 @@ class DeviceInputVerificationTest : InputDeviceTest() {
                 it.copy(personalization = it.personalization.copy(companion = CompanionKind.CAT))
             }
         }
-        activate(hasContentDescription("My Companion") and hasClickAction())
+        activate(hasContentDescription("My Companion", substring = true) and hasClickAction())
         focus(action("Companions"))
         focusEvidence("segment", action("Clock styles")) { key(KeyEvent.KEYCODE_DPAD_RIGHT) }
         key(KeyEvent.KEYCODE_DPAD_CENTER)

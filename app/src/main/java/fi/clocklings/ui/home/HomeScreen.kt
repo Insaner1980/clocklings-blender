@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicText
@@ -41,7 +42,7 @@ import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.Progress
 import fi.clocklings.domain.Settings
 import fi.clocklings.domain.Wardrobe
-import fi.clocklings.ui.components.BigMenuButton
+import fi.clocklings.ui.components.MenuTile
 import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.RoundIconButton
 import fi.clocklings.ui.components.ScreenScaffold
@@ -123,11 +124,18 @@ private fun FillHeightLayout(
         val sideBySide = hasSideBySideRoom(width.toDp(), density.fontScale)
         val bodyWidth = if (sideBySide) (width - gap) / 2 else width
         val footerP = footerM.map { it.measure(Constraints.fixedWidth(bodyWidth)) }
-        // The footer tiles' ledges draw below their bounds; reserve that room so scrolling never clips them.
         val headerHeight = headerP.sumOf { it.height } + gap
-        val footerHeight = footerP.sumOf { it.height } + SkDimens.BigButtonDepth.roundToPx()
+        val footerHeight = footerP.sumOf { it.height }
         val fixed = headerHeight + if (sideBySide) 0 else footerHeight + gap
-        val stageMin = if (compact) 0 else SkDimens.StageMinHeight.roundToPx()
+        val available = viewport.roundToPx() - fixed
+        val stageMin =
+            if (compact) {
+                0
+            } else if (available >= SkDimens.FitClockMin.roundToPx()) {
+                minOf(SkDimens.StageMinHeight.roundToPx(), available)
+            } else {
+                SkDimens.StageMinHeight.roundToPx()
+            }
         val free =
             maxOf(
                 with(density) { viewport.roundToPx() } - fixed,
@@ -161,7 +169,7 @@ private fun HomeHeader(
     onOpen: (HomeDestination) -> Unit,
 ) {
     Row(
-        Modifier.fillMaxWidth(),
+        Modifier.fillMaxWidth().heightIn(min = SkDimens.ButtonHeightSmall),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SkDimens.GapS),
     ) {
@@ -192,6 +200,7 @@ private fun HomeHeader(
             SkIcons.Settings,
             stringResource(R.string.settings_title),
             { onOpen(HomeDestination.SETTINGS) },
+            tonal = true,
         )
     }
 }
@@ -203,7 +212,6 @@ private fun Menu(onOpen: (HomeDestination) -> Unit) {
         listOf(R.string.menu_koulu_sub, R.string.menu_vapaa_sub, R.string.menu_pelaa_sub, R.string.menu_kysy_sub)
     val icons = listOf(SkIcons.Book, SkIcons.Clock, SkIcons.Star, SkIcons.Together)
     val fills = listOf(SkColors.KouluFill, SkColors.VapaaFill, SkColors.PelaaFill, SkColors.KysyFill)
-    val shadows = listOf(SkColors.KouluShadow, SkColors.VapaaShadow, SkColors.PelaaShadow, SkColors.KysyShadow)
     val destinations = listOf(HomeDestination.KOULU, HomeDestination.VAPAA, HomeDestination.PELAA, HomeDestination.KYSY)
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val columns = adaptiveGridColumns(maxWidth, LocalDensity.current.fontScale)
@@ -211,12 +219,11 @@ private fun Menu(onOpen: (HomeDestination) -> Unit) {
             titles.indices.chunked(columns).forEach { row ->
                 Row(Modifier.height(IntrinsicSize.Max), horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM)) {
                     row.forEach { i ->
-                        BigMenuButton(
+                        MenuTile(
                             stringResource(titles[i]),
                             stringResource(descriptions[i]),
                             icons[i],
                             fills[i],
-                            shadows[i],
                             { onOpen(destinations[i]) },
                             Modifier.weight(1f).fillMaxHeight(),
                         )

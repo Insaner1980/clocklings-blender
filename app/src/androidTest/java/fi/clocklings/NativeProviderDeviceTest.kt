@@ -395,7 +395,7 @@ class NativeProviderDeviceTest : InputDeviceTest() {
     }
 
     private fun openField() {
-        click(hasContentDescription("My Companion") and hasClickAction())
+        click(hasContentDescription("My Companion", substring = true) and hasClickAction())
         click(hasText("Choose an outfit") and hasClickAction())
         compose.onNode(hasSetTextAction()).scrollToIfScrollable().performTouchInput { click() }
     }

@@ -30,6 +30,7 @@ import fi.clocklings.ui.LocalAppViewModel
 import fi.clocklings.ui.clock.ClockCommand
 import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.components.AdaptiveContent
+import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.ClockBox
 import fi.clocklings.ui.components.CompanionTip
 import fi.clocklings.ui.components.FlatPanel
@@ -75,6 +76,14 @@ fun FreeClockScreen(
         wideContent = true,
         centerContent = true,
         section = Section.EXPLORE,
+        bottomBar = {
+            SkButton(stringResource(R.string.random_time), {
+                val t = Levels.randomClockTime(period, time, Random.Default)
+                time = t
+                command = ClockCommand(t, RANDOM_MOVE_MS)
+                app.play(Sound.POP)
+            }, Modifier.fillMaxWidth(), kind = ButtonKind.PRIMARY, icon = SkIcons.Shuffle)
+        },
         topBar = {
             HelpTopBar(
                 title = stringResource(R.string.free_title),
@@ -97,12 +106,7 @@ fun FreeClockScreen(
                 )
             }
         }) {
-            ExplorePanel(time, h24, speechAvailable) {
-                val t = Levels.randomClockTime(period, time, Random.Default)
-                time = t
-                command = ClockCommand(t, RANDOM_MOVE_MS)
-                app.play(Sound.POP)
-            }
+            ExplorePanel(time, h24, speechAvailable)
         }
     }
 }
@@ -113,12 +117,10 @@ private fun ExplorePanel(
     time: Int,
     h24: Boolean,
     speechAvailable: Boolean,
-    onRandom: () -> Unit,
 ) {
     val app = LocalAppViewModel.current
     FlatPanel {
         TimeReadout(time, h24, speechAvailable, app::speak)
-        SkButton(stringResource(R.string.random_time), onRandom, Modifier.fillMaxWidth(), icon = SkIcons.Shuffle)
         HandLegend()
     }
 }
@@ -131,7 +133,7 @@ private fun HandLegend() {
     val drag = stringResource(R.string.legend_drag)
     CompanionTip(
         fallback = {
-            FlatPanel(color = SkColors.Legend) { LegendRows(hour, minute, drag) }
+            FlatPanel(color = SkColors.Bubble) { LegendRows(hour, minute, drag) }
         },
     ) {
         LegendRows(hour, minute, drag)

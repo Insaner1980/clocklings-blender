@@ -30,17 +30,28 @@ class HomeStageMathTest {
     }
 
     @Test
-    fun hangerSitsAboveTheCompanionAndNeverReachesTheRightColumn() {
+    fun measuredWardrobeButtonStaysBelowEveryCompanionAndOutsideTheClockColumn() {
         forEveryStage { kind, width, height, layout ->
             val label = "$kind $width x $height"
-            val companionTop = height - SkDimens.GapS - layout.companion.height
-            val hangerBottom = layout.hanger.y + SkDimens.IconButton
-            val hangerRight = layout.hanger.x + SkDimens.IconButton
-            // Disjoint from the companion box (above it, with the gap), inside the stage, left of the right column.
-            assertTrue(label, hangerBottom <= companionTop - SkDimens.GapS)
-            assertTrue(label, layout.hanger.y >= SkDimens.GapS)
-            assertTrue(label, layout.hanger.x >= SkDimens.GapS)
-            assertTrue(label, hangerRight <= width * (1 - RIGHT_COLUMN_SHARE))
+            assertTrue(
+                label,
+                layout.companionBottom >= SkDimens.StageInset + SkDimens.WardrobeButtonHeight + SkDimens.GapM,
+            )
+            assertTrue(label, SkDimens.GapS + layout.companion.width <= width * (1 - RIGHT_COLUMN_SHARE))
+            val large =
+                companionStageLayout(
+                    width,
+                    height,
+                    height,
+                    companionAspectRatio(kind),
+                    SkDimens.WardrobeButtonHeight * 2,
+                )
+            assertTrue(label, large.companion.height <= layout.companion.height)
+            assertEquals(
+                label,
+                SkDimens.StageInset + SkDimens.WardrobeButtonHeight * 2 + SkDimens.GapM,
+                large.companionBottom,
+            )
         }
     }
 
@@ -50,29 +61,32 @@ class HomeStageMathTest {
             val label = "$kind $width x $height"
             assertEquals(label, companionAspectRatio(kind), layout.companion.width / layout.companion.height, 0.001f)
             assertTrue(label, layout.companion.width <= width * COMPANION_WIDTH_SHARE + 0.01.dp)
-            val reserve = SkDimens.IconButton + SkDimens.GapS * HANGER_RESERVE_GAPS
+            val reserve = layout.companionBottom + SkDimens.GapS
             assertTrue(label, layout.companion.height <= height - reserve + 0.01.dp)
         }
     }
 
     @Test
-    fun companionGrowsWithTheStageAndLeavesRoomForTheHangerAbove() {
+    fun companionGrowsWithTheStageAndLeavesRoomForTheWardrobeBelow() {
         val ratio = companionAspectRatio(CompanionKind.CAT)
         val short = companionStageLayout(600.dp, 200.dp, 200.dp, ratio).companion
         val tall = companionStageLayout(600.dp, 360.dp, 360.dp, ratio).companion
         assertTrue(tall.height > short.height)
         // The room reserved for the hanger (button plus three gaps) is what limits the height here.
-        assertEquals(360.dp - SkDimens.IconButton - SkDimens.GapS * HANGER_RESERVE_GAPS, tall.height)
+        assertEquals(
+            360.dp - SkDimens.StageInset - SkDimens.WardrobeButtonHeight - SkDimens.GapM - SkDimens.GapS,
+            tall.height,
+        )
     }
 
     @Test
-    fun stageWithoutSlackKeepsTheContentAtTheTopAndNoCloudUnderTheHanger() {
+    fun stageWithoutSlackKeepsTheContentAtTheTopAndCloudsAboveTheCompanion() {
         forEveryStage { kind, width, height, layout ->
             val label = "$kind $width x $height"
             assertEquals(label, 0.dp, layout.contentTop)
             val cloudY = layout.leftCloudY ?: return@forEveryStage
             val cloudBottom = cloudY + cloudReach(width * CLOUD_A_SIZE).second
-            assertTrue(label, cloudBottom + SkDimens.GapS <= layout.hanger.y)
+            assertTrue(label, cloudBottom + SkDimens.GapS <= height - layout.companionBottom - layout.companion.height)
         }
     }
 
@@ -87,11 +101,11 @@ class HomeStageMathTest {
                 val tall = companionStageLayout(width, TALL, CONTENT, ratio)
                 // Same sizes and positions inside the content box; only the box moves down.
                 assertEquals(label, short.companion, tall.companion)
-                assertEquals(label, short.hanger, tall.hanger)
+                assertEquals(label, short.companionBottom, tall.companionBottom)
                 assertTrue(label, tall.contentTop > 0.dp && tall.contentTop + CONTENT <= TALL)
                 // The sky above the hanger equals the room below the companion's feet.
-                val skyAbove = tall.contentTop + tall.hanger.y
-                val roomBelow = TALL - (tall.contentTop + CONTENT - SkDimens.GapS)
+                val skyAbove = tall.contentTop + CONTENT - tall.companionBottom - tall.companion.height
+                val roomBelow = TALL - (tall.contentTop + CONTENT - SkDimens.StageInset)
                 assertEquals(label, skyAbove.value, roomBelow.value, 0.01f)
                 // On a phone the left cloud moves into that sky, clear of the stage top and of the hanger;
                 // a wider cloud that does not fit is left out.

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.unit.Dp
 import fi.clocklings.domain.CompanionColor
 import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
@@ -31,18 +32,19 @@ internal fun ItemArtWindow(
     outfit: Outfit,
     color: CompanionColor,
     modifier: Modifier = Modifier,
+    displaySize: Dp = SkDimens.ItemWindow,
 ) {
     Box(
         modifier
-            .size(SkDimens.ItemWindow)
-            .clip(SkShapes.Caption)
+            .size(displaySize)
+            .clip(SkShapes.ArtWindow)
             .background(SkColors.ItemWindow),
         contentAlignment = Alignment.Center,
     ) {
         CompanionView(
             item.companion,
             outfit.previewFor(item),
-            Modifier.size(SkDimens.ItemWindow),
+            Modifier.size(displaySize),
             color = color,
             animated = false,
             cropItem = item,

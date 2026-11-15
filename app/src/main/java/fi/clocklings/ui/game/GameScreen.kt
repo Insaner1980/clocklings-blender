@@ -1,6 +1,7 @@
 package fi.clocklings.ui.game
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,7 +46,7 @@ import fi.clocklings.ui.components.HelpToggle
 import fi.clocklings.ui.components.LocalConfetti
 import fi.clocklings.ui.components.OptionButton
 import fi.clocklings.ui.components.OptionState
-import fi.clocklings.ui.components.ProgressDots
+import fi.clocklings.ui.components.ProgressSegments
 import fi.clocklings.ui.components.ReadOptions
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
@@ -60,6 +61,7 @@ import fi.clocklings.ui.resources
 import fi.clocklings.ui.sharedClocklingsElement
 import fi.clocklings.ui.text
 import fi.clocklings.ui.theme.Section
+import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkType
 import fi.clocklings.ui.timeLabel
@@ -155,12 +157,13 @@ fun GameScreen(
         },
     ) { clockSize ->
         val currentDone = state.feedback is GameFeedback.Praise
-        ProgressDots(
+        ProgressSegments(
             state.taskCount,
             state.taskIndex,
+            track = Section.PLAY.track,
             currentDone = currentDone,
             fillDelayMs = ConfettiState.FLIGHT_MS,
-            onDotCenter = { i, c -> dots[i] = c },
+            onSegmentCenter = { i, c -> dots[i] = c },
             outcomes = dotOutcomes(state, currentDone),
         )
         AdaptiveContent(clockSize, controlsAlignment = Alignment.CenterVertically, visual = { size ->
@@ -179,36 +182,38 @@ private fun GameAnswerPanel(
     onDone: () -> Unit,
     onNext: () -> Unit,
 ) {
-    FlatPanel {
-        if (state.task.type == TaskType.READ) {
-            GameOptions(state, anchors, onPick)
-        } else {
-            SetTarget(state.task.time, state.h24)
-        }
-        if (state.showDone) {
-            SkButton(
-                stringResource(R.string.done),
-                onDone,
-                kind = ButtonKind.PRIMARY,
-                modifier = Modifier.fillMaxWidth().confettiAnchor { anchors[DONE_ANCHOR] = it },
-            )
-        }
-        GameFeedbackMessage(state.feedback, state.h24)
-        if (state.showNext) {
-            val label =
-                if (state.feedback ==
-                    GameFeedback.SaveFailed
-                ) {
-                    R.string.settings_retry
-                } else {
-                    R.string.next
-                }
-            SkButton(
-                stringResource(label),
-                onNext,
-                kind = ButtonKind.GREEN,
-                modifier = Modifier.fillMaxWidth(),
-            )
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        FlatPanel(padding = if (maxWidth < SkDimens.GridBreakpoint) SkDimens.Gutter else SkDimens.PanelPadding) {
+            if (state.task.type == TaskType.READ) {
+                GameOptions(state, anchors, onPick)
+            } else {
+                SetTarget(state.task.time, state.h24)
+            }
+            if (state.showDone) {
+                SkButton(
+                    stringResource(R.string.done),
+                    onDone,
+                    kind = ButtonKind.PRIMARY,
+                    modifier = Modifier.fillMaxWidth().confettiAnchor { anchors[DONE_ANCHOR] = it },
+                )
+            }
+            GameFeedbackMessage(state.feedback, state.h24)
+            if (state.showNext) {
+                val label =
+                    if (state.feedback ==
+                        GameFeedback.SaveFailed
+                    ) {
+                        R.string.settings_retry
+                    } else {
+                        R.string.next
+                    }
+                SkButton(
+                    stringResource(label),
+                    onNext,
+                    kind = ButtonKind.PRIMARY,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }
@@ -281,7 +286,19 @@ private fun GameFeedbackMessage(
                     res.getString(R.string.reveal_set, timeText(fb.time, h24)) to FeedbackKind.HINT
                 }
             }
-        CompanionTip(text, kind = kind, celebrate = feedback is GameFeedback.Praise)
+        CompanionTip(
+            text,
+            kind = kind,
+            celebrate = feedback is GameFeedback.Praise,
+            color =
+                if (kind ==
+                    FeedbackKind.HINT
+                ) {
+                    SkColors.TryBg
+                } else {
+                    SkColors.Bubble
+                },
+        )
     }
 }
 

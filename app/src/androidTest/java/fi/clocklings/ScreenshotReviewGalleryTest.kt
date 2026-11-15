@@ -18,9 +18,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.captureToImage
-import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onRoot
@@ -31,6 +31,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.test.platform.app.InstrumentationRegistry
+import fi.clocklings.billing.PurchaseUiState
+import fi.clocklings.domain.AccessPolicy
 import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.ClockAppearance
 import fi.clocklings.domain.ClockTheme
@@ -38,6 +40,7 @@ import fi.clocklings.domain.CompanionColor
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.CustomClock
 import fi.clocklings.domain.HandStyle
+import fi.clocklings.domain.Hints
 import fi.clocklings.domain.Mark
 import fi.clocklings.domain.MarkColor
 import fi.clocklings.domain.Personalization
@@ -52,12 +55,18 @@ import fi.clocklings.ui.appearance.AppearanceScreen
 import fi.clocklings.ui.appearance.LocalCompanionOutfit
 import fi.clocklings.ui.appearance.LocalPersonalization
 import fi.clocklings.ui.ask.AskScreen
+import fi.clocklings.ui.challenge.ChallengePhase
+import fi.clocklings.ui.challenge.ChallengeScreen
+import fi.clocklings.ui.challenge.ChallengeUiState
 import fi.clocklings.ui.clock.ClockCommand
 import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.companion.WardrobeScreen
+import fi.clocklings.ui.components.OptionState
 import fi.clocklings.ui.freeclock.FreeClockScreen
+import fi.clocklings.ui.game.GameFeedback
 import fi.clocklings.ui.game.GameScreen
 import fi.clocklings.ui.game.GameUiState
+import fi.clocklings.ui.game.ResultScreen
 import fi.clocklings.ui.home.HomeScreen
 import fi.clocklings.ui.lesson.LessonCatalog
 import fi.clocklings.ui.lesson.LessonListScreen
@@ -67,6 +76,8 @@ import fi.clocklings.ui.lesson.LessonViewModel
 import fi.clocklings.ui.levels.LevelsScreen
 import fi.clocklings.ui.locale.AppLocaleProvider
 import fi.clocklings.ui.locale.LocalAppLanguage
+import fi.clocklings.ui.parent.ParentScreen
+import fi.clocklings.ui.settings.LanguageScreen
 import fi.clocklings.ui.settings.SettingsScreen
 import fi.clocklings.ui.theme.ClocklingsTheme
 import org.junit.Assert.assertEquals
@@ -146,7 +157,12 @@ class ScreenshotReviewGalleryTest {
         }
         val requestedLanguage = InstrumentationRegistry.getArguments().getString("screenshotLanguage")
         val requestedScreen = InstrumentationRegistry.getArguments().getString("screenshotScreen")
-        for (value in AppLanguage.entries.filter { requestedLanguage == null || it.tag == requestedLanguage }) {
+        for (value in AppLanguage.entries.filter {
+            requestedLanguage == null || it.tag in
+                requestedLanguage.split(
+                    ',',
+                )
+        }) {
             compose.runOnIdle { language.value = value }
             captureScreens(value, requestedScreen) { destination, companion ->
                 compose.runOnIdle {
@@ -195,29 +211,112 @@ class ScreenshotReviewGalleryTest {
             }
 
             "settings" -> {
-                SettingsScreen(settings, true, {}, {})
+                SettingsScreen(settings, true, {}, {}, onParent = {})
             }
 
-            "game" -> {
-                GameScreen(
-                    GameUiState(
-                        3,
-                        false,
-                        0,
-                        10,
-                        Task(10, TaskType.READ),
-                        listOf(10, 70, 130),
-                        clock = ClockCommand(10),
-                        step = 5,
-                    ),
+            "game", "game-wrong", "game-correct" -> {
+                ReviewGame(screen)
+            }
+
+            else -> {
+                ReviewExtraScreen(screen, language, kind, progress)
+            }
+        }
+    }
+
+    @Composable
+    private fun ReviewGame(screen: String) {
+        GameScreen(
+            GameUiState(
+                3,
+                false,
+                0,
+                10,
+                Task(10, TaskType.READ),
+                listOf(10, 70, 130),
+                clock = ClockCommand(10),
+                step = 5,
+                optionStates =
+                    when (screen) {
+                        "game-wrong" -> mapOf(70 to OptionState.WRONG)
+                        "game-correct" -> mapOf(10 to OptionState.CORRECT)
+                        else -> emptyMap()
+                    },
+                feedback =
+                    when (screen) {
+                        "game-wrong" -> GameFeedback.HintText(Hints.forRead(10, 70))
+                        "game-correct" -> GameFeedback.Praise(0, 10)
+                        else -> null
+                    },
+                showNext = screen == "game-correct",
+            ),
+            true,
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+        )
+    }
+
+    @Composable
+    private fun ReviewResult(
+        screen: String,
+        kind: CompanionKind,
+        progress: Progress,
+    ) {
+        ResultScreen(
+            AccessPolicy(fullAccess = true),
+            Screen.Result(
+                if (screen == "result-final") 4 else 0,
+                if (screen == "result") 1 else 3,
+                if (screen in listOf("result-final", "result-fallback")) 3 else 0,
+                0,
+            ),
+            progress.outfitFor(kind),
+            {},
+            {},
+            {},
+            {},
+            canReplay = screen != "result-fallback",
+            canContinue = screen != "result-fallback",
+        )
+    }
+
+    @Composable
+    private fun ReviewExtraScreen(
+        screen: String,
+        language: AppLanguage,
+        kind: CompanionKind,
+        progress: Progress,
+    ) {
+        when (screen) {
+            "language" -> {
+                LanguageScreen({})
+            }
+
+            "parents" -> {
+                ParentScreen(PurchaseUiState(fullAccess = true), {}, {}, {}, {})
+            }
+
+            "challenge" -> {
+                ChallengeScreen(ChallengeUiState(), false, true, {}, {}, {})
+            }
+
+            "challenge-run" -> {
+                ChallengeScreen(
+                    ChallengeUiState(phase = ChallengePhase.RUN, options = listOf(180, 240, 420)),
+                    false,
                     true,
                     {},
                     {},
                     {},
-                    {},
-                    {},
-                    {},
                 )
+            }
+
+            "result", "result-many", "result-final", "result-fallback" -> {
+                ReviewResult(screen, kind, progress)
             }
 
             else -> {
@@ -231,19 +330,7 @@ class ScreenshotReviewGalleryTest {
         requestedScreen: String?,
         selectScreen: (String, CompanionKind) -> Unit,
     ) {
-        for (destination in listOf(
-            "home",
-            "learn",
-            "levels",
-            "explore",
-            "together",
-            "game",
-            "vartti",
-            "viisi",
-            "minuutit",
-            "wardrobe",
-            "settings",
-        ).filter { requestedScreen == null || it == requestedScreen }) {
+        for (destination in Screens.filter { requestedScreen == null || it in requestedScreen.split(',') }) {
             selectScreen(destination, CompanionKind.CAT)
             compose.waitForIdle()
             if (destination == "explore") {
@@ -255,27 +342,22 @@ class ScreenshotReviewGalleryTest {
                 capture("${language.tag}-$destination-top")
             }
             if (destination in
-                listOf("home", "learn", "levels", "together", "wardrobe", "settings", "vartti", "viisi", "minuutit")
+                ScrollableScreens
             ) {
                 scrollToEnd()
                 capture("${language.tag}-$destination-bottom")
             }
         }
-        if (requestedScreen != null && requestedScreen != "wardrobe") return
-        for (companion in listOf(
-            CompanionKind.DOG,
-            CompanionKind.ROBOT,
-            CompanionKind.BUNNY,
-            CompanionKind.UNICORN,
-            CompanionKind.CAR,
-        )) {
+        if (InstrumentationRegistry.getArguments().getString("screenshotCompanions") == "false") return
+        if (requestedScreen != null && "wardrobe" !in requestedScreen.split(',')) return
+        for (companion in CompanionKind.entries.filter { it != CompanionKind.NONE && it != CompanionKind.CAT }) {
             selectScreen("wardrobe", companion)
             capture("${language.tag}-wardrobe-${companion.name}-top")
             scrollToEnd()
             capture("${language.tag}-wardrobe-${companion.name}-bottom")
         }
         // The new companions on Home and in the picker, where the picker shows every companion.
-        for (companion in listOf(CompanionKind.BUNNY, CompanionKind.UNICORN, CompanionKind.CAR)) {
+        for (companion in CompanionKind.entries.filter { it != CompanionKind.CAT }) {
             selectScreen("home", companion)
             capture("${language.tag}-home-${companion.name}")
             selectScreen("appearance", companion)
@@ -329,7 +411,7 @@ class ScreenshotReviewGalleryTest {
     }
 
     private fun scrollToEnd() {
-        val nodes = compose.onAllNodes(hasScrollAction())
+        val nodes = compose.onAllNodes(SemanticsMatcher.keyIsDefined(SemanticsProperties.VerticalScrollAxisRange))
         if (nodes.fetchSemanticsNodes().isNotEmpty()) {
             nodes.onFirst().performSemanticsAction(SemanticsActions.ScrollBy) { it(0f, 20000f) }
         }
@@ -386,5 +468,55 @@ class ScreenshotReviewGalleryTest {
             caption = caption,
             over = if (id == "viisi") (1..5).map { Mark.Bubble(it * 5, (it * 5).toString()) } else emptyList(),
         )
+    }
+
+    private companion object {
+        val Screens =
+            listOf(
+                "home",
+                "learn",
+                "levels",
+                "explore",
+                "together",
+                "game",
+                "game-wrong",
+                "game-correct",
+                "result",
+                "result-many",
+                "result-final",
+                "result-fallback",
+                "challenge",
+                "challenge-run",
+                "parents",
+                "language",
+                "appearance",
+                "vartti",
+                "viisi",
+                "minuutit",
+                "wardrobe",
+                "settings",
+            )
+        val ScrollableScreens =
+            listOf(
+                "home",
+                "learn",
+                "levels",
+                "together",
+                "wardrobe",
+                "settings",
+                "vartti",
+                "viisi",
+                "minuutit",
+                "game-wrong",
+                "game-correct",
+                "result",
+                "result-many",
+                "result-final",
+                "result-fallback",
+                "challenge-run",
+                "parents",
+                "language",
+                "appearance",
+            )
     }
 }

@@ -105,7 +105,7 @@ class AuditCompletionDeviceTest : InputDeviceTest() {
             focusEvidence(label, matcher, directoryName = "audit-completion-focus") { focus(matcher) }
         }
         key(KeyEvent.KEYCODE_BACK)
-        activate(hasContentDescription("My Companion") and hasClickAction())
+        activate(hasContentDescription("My Companion", substring = true) and hasClickAction())
         activate(action("Choose an outfit"))
         focus(action("Back"))
         focusEvidence(
@@ -138,7 +138,7 @@ class AuditCompletionDeviceTest : InputDeviceTest() {
 
     @Test
     fun nameDraftSurvivesActivityRecreation() {
-        activate(hasContentDescription("My Companion") and hasClickAction())
+        activate(hasContentDescription("My Companion", substring = true) and hasClickAction())
         activate(action("Choose an outfit"))
         focus(hasSetTextAction())
         compose.onNode(hasSetTextAction()).performTextReplacement("Draft ")

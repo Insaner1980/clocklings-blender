@@ -184,6 +184,14 @@ class LocalAppFlowTest {
     fun settingsPersistAndResetRequiresConfirmation() {
         runBlocking { repository.updateProgress { it.withLevelResult(0, 3) } }
         click("Settings")
+        val radio =
+            androidx.compose.ui.test.SemanticsMatcher.expectValue(
+                androidx.compose.ui.semantics.SemanticsProperties.Role,
+                androidx.compose.ui.semantics.Role.RadioButton,
+            )
+        assertEquals(2, compose.onAllNodes(radio).fetchSemanticsNodes().size)
+        compose.onNode(radio and hasText("12 h")).assertExists()
+        compose.onNode(radio and hasText("24 h")).assertExists()
         click("24 h")
         click("Clock guides")
         waitSaved { runBlocking { repository.settings.first() }.let { it.h24 && !it.help } }

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutki kelloa</title>
+<!-- Static mockup, 412 x 915 dp. One CSS px equals one dp (sp for font sizes). -->
+<style>
+@font-face{font-family:'Fredoka';font-weight:500;src:url('../../../../../app/src/main/res/font/fredoka_medium.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:600;src:url('../../../../../app/src/main/res/font/fredoka_semibold.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:700;src:url('../../../../../app/src/main/res/font/fredoka_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:600;src:url('../../../../../app/src/main/res/font/nunito_semibold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:700;src:url('../../../../../app/src/main/res/font/nunito_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:800;src:url('../../../../../app/src/main/res/font/nunito_extrabold.ttf') format('truetype')}
+body{margin:0}
+a{color:#3A2453;text-decoration:none}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+</style>
+</head>
+<body>
+<div style="width: 412px; height: 915px; box-sizing: border-box; padding: 40px 16px 24px; display: flex; flex-direction: column; gap: 12px; background: #E6F3FF; color: #3A2453; font-family: 'Nunito', sans-serif; overflow: hidden">
+
+<header style="height: 56px; display: flex; align-items: center; gap: 12px; flex-shrink: 0">
+<a href="01-home.html" aria-label="Takaisin" style="width: 48px; height: 48px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+</a>
+<h1 style="margin: 0; flex-grow: 1; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">Tutki</h1>
+<button aria-label="Kellon apumerkinnät" aria-pressed="true" style="width: 48px; height: 48px; border-radius: 24px; background: #FFE066; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+</button>
+</header>
+
+<div style="display: flex; justify-content: center; flex-shrink: 0">
+<div style="position: relative; width: 344px; height: 344px; font-weight: 800; font-size: 13px; line-height: 20px; color: #655279; text-align: center">
+<img src="assets/clock-explore-0300.webp" alt="Kello näyttää tasan kolme" style="position: absolute; left: 30px; top: 30px; width: 284px; height: 284px">
+<span style="position: absolute; width: 28px; left: 158px; top: 4px">0</span>
+<span style="position: absolute; width: 28px; left: 237px; top: 25px">5</span>
+<span style="position: absolute; width: 28px; left: 295px; top: 83px">10</span>
+<span style="position: absolute; width: 28px; left: 316px; top: 162px">15</span>
+<span style="position: absolute; width: 28px; left: 295px; top: 241px">20</span>
+<span style="position: absolute; width: 28px; left: 237px; top: 299px">25</span>
+<span style="position: absolute; width: 28px; left: 158px; top: 320px">30</span>
+<span style="position: absolute; width: 28px; left: 79px; top: 299px">35</span>
+<span style="position: absolute; width: 28px; left: 21px; top: 241px">40</span>
+<span style="position: absolute; width: 28px; left: 0px; top: 162px">45</span>
+<span style="position: absolute; width: 28px; left: 21px; top: 83px">50</span>
+<span style="position: absolute; width: 28px; left: 79px; top: 25px">55</span>
+</div>
+</div>
+
+<section style="box-sizing: border-box; padding: 20px; border-radius: 28px; background: #FFFFFF; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px">Tasan kolme</h2>
+<span style="height: 44px; padding: 0 16px; border-radius: 16px; background: #F4EEFB; display: flex; align-items: center; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px">3.00</span>
+</div>
+<div style="display: flex; align-items: flex-end; gap: 10px">
+<img src="assets/doll.webp" alt="" style="height: 72px; width: auto; flex-shrink: 0">
+<div style="position: relative; flex-grow: 1; box-sizing: border-box; padding: 14px 16px; border-radius: 20px; background: #F4EEFB; display: flex; flex-direction: column; gap: 10px; font-weight: 700; font-size: 16px; line-height: 22px">
+<div aria-hidden="true" style="position: absolute; left: -5px; bottom: 20px; width: 14px; height: 14px; background: #F4EEFB; transform: rotate(45deg); border-radius: 3px"></div>
+<div style="display: flex; align-items: center; gap: 12px">
+<span aria-hidden="true" style="width: 44px; display: flex; flex-shrink: 0"><span style="width: 26px; height: 8px; border-radius: 4px; background: #E64980"></span></span>
+<span>Lyhyt pinkki viisari näyttää tunnit.</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px">
+<span aria-hidden="true" style="width: 44px; display: flex; flex-shrink: 0"><span style="width: 44px; height: 8px; border-radius: 4px; background: #228BE6"></span></span>
+<span>Pitkä sininen viisari näyttää minuutit.</span>
+</div>
+<span style="font-weight: 700; font-size: 14px; line-height: 20px; color: #655279">Muuta aikaa vetämällä kumpaa tahansa viisaria.</span>
+</div>
+</div>
+</section>
+
+<div style="flex-grow: 1"></div>
+
+<button style="height: 64px; border-radius: 32px; background: #6741D9; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg>
+<span>Satunnainen aika</span>
+</button>
+
+</div>
+</body>
+</html>

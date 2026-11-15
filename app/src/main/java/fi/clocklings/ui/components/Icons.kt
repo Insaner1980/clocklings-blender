@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 
@@ -46,16 +45,17 @@ fun SkIcon(
     icon: SvgIcon,
     size: Dp,
     modifier: Modifier = Modifier,
+    tint: Color? = null,
 ) {
     Canvas(modifier.size(size)) {
         val s = this.size.width / icon.viewBox
         scale(s, s, pivot = Offset.Zero) {
             for (layer in icon.layers) {
-                layer.fill?.let { drawPath(layer.path, it) }
+                layer.fill?.let { drawPath(layer.path, tint ?: it) }
                 layer.stroke?.let {
                     drawPath(
                         layer.path,
-                        it,
+                        tint ?: it,
                         style = Stroke(layer.strokeWidth, cap = layer.cap, join = StrokeJoin.Round),
                     )
                 }
@@ -83,7 +83,7 @@ fun StarRow(
 ) {
     Row(
         modifier.clearAndSetSemantics { contentDescription = description },
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(SkDimens.GapXS),
     ) {
         repeat(STAR_COUNT) { StarIcon(it < count, size = size) }
     }
@@ -92,6 +92,9 @@ fun StarRow(
 private const val STAR_COUNT = 3
 
 object SkIcons {
+    val Close = inkIcon("M6 6l12 12M18 6L6 18")
+    val Play = SvgIcon(24f, listOf(IconLayer("M8 5l11 7-11 7z", fill = SkColors.Ink)))
+    val Globe = inkIcon("M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0ZM3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18")
     val Back = inkIcon("M15 5l-7 7 7 7M8 12h13")
     val Chevron = inkIcon("M9 5l7 7-7 7")
     val Pencil = inkIcon("M4 20l4.5-1L19 8.5 15.5 5 5 15.5zM13.5 7l3.5 3.5")
@@ -207,8 +210,8 @@ object SkIcons {
         SvgIcon(
             40f,
             listOf(
-                IconLayer("M14 5h12l-2 7 9 22H7l9-22z", SkColors.Surface, SkColors.Ink, INK_STROKE),
-                IconLayer("M15 12h10", stroke = SkColors.MenuDressBelt, strokeWidth = INK_STROKE),
+                IconLayer("M14 5h12l-2 7 9 22H7l9-22z", stroke = SkColors.Ink, strokeWidth = INK_STROKE),
+                IconLayer("M15 12h10", stroke = SkColors.Ink, strokeWidth = INK_STROKE),
             ),
         )
 }

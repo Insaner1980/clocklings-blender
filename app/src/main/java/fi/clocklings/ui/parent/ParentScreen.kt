@@ -88,7 +88,7 @@ private fun AdultGate(
                     .fillMaxWidth()
                     .heightIn(min = SkDimens.ChildTarget)
                     .background(SkColors.Surface, SkShapes.Field)
-                    .border(SkDimens.BorderThin, SkColors.Line, SkShapes.Field)
+                    .border(SkDimens.BorderThin, SkColors.FieldOutline, SkShapes.Field)
                     .padding(horizontal = SkDimens.FieldPaddingHorizontal, vertical = SkDimens.FieldPaddingVertical)
                     .semantics { contentDescription = answerLabel },
             textStyle = SkType.Body,
@@ -107,6 +107,7 @@ private fun AdultGate(
             stringResource(R.string.parent_continue),
             submit,
             Modifier.fillMaxWidth(),
+            kind = ButtonKind.PRIMARY,
             enabled = answer.length == GATE_CODE_LENGTH,
         )
         SkButton(stringResource(R.string.parent_cancel), onCancel, Modifier.fillMaxWidth())

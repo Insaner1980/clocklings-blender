@@ -254,7 +254,7 @@ private fun AskActions(
                 }
             },
             Modifier.weight(1f).taskActionFocus(focus).confettiAnchor { revealAnchor.value = it },
-            kind = if (phase == AskPhase.REVEALED) ButtonKind.GREEN else ButtonKind.PRIMARY,
+            kind = ButtonKind.PRIMARY,
             icon = if (phase == AskPhase.SET) SkIcons.Pass else null,
         )
     }

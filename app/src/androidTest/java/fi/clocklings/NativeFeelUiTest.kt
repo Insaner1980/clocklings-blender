@@ -68,10 +68,7 @@ class NativeFeelUiTest {
     @get:Rule val rules: RuleChain = RuleChain.outerRule(fixture).around(compose)
 
     private fun click(text: String) {
-        val match =
-            (hasText(text, substring = true) or hasContentDescription(text, substring = true)) and hasClickAction()
-        compose.waitUntil(10_000) { compose.onAllNodes(match).fetchSemanticsNodes().isNotEmpty() }
-        compose.onAllNodes(match)[0].scrollToIfScrollable().performClick()
+        compose.clickByLabel(text, textSubstring = true)
     }
 
     private fun capture(name: String) {

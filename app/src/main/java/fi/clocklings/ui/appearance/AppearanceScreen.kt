@@ -16,20 +16,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -67,8 +63,8 @@ import fi.clocklings.ui.components.AdaptiveContent
 import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.ClockBox
 import fi.clocklings.ui.components.CompanionTip
-import fi.clocklings.ui.components.DepthSurface
 import fi.clocklings.ui.components.FlatPanel
+import fi.clocklings.ui.components.PressSurface
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SegmentedControl
 import fi.clocklings.ui.components.SelectionBadge
@@ -87,8 +83,6 @@ import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkShapes
 import fi.clocklings.ui.theme.SkType
-import fi.clocklings.ui.theme.ledgeColor
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 
 @Composable
@@ -216,7 +210,7 @@ private fun ClockChoices(
             ) {
                 ClockFace(
                     ClockCommand(PREVIEW_TIME),
-                    Modifier.size(SkDimens.PathNode),
+                    Modifier.size(SkDimens.ClockThumbnail),
                     mini = true,
                     appearance = appearance.clock.copy(theme = theme),
                 )
@@ -324,17 +318,16 @@ private fun ChoiceCard(
     showLabel: Boolean = true,
     art: @Composable () -> Unit,
 ) {
-    val fill = if (on) SkColors.ItemOnBg else SkColors.Surface
-    DepthSurface(
+    val fill = SkColors.Surface
+    PressSurface(
         onClick,
         fill,
-        ledgeColor(fill),
         SkShapes.Item,
         modifier.semantics {
             selected = on
             if (!showLabel) contentDescription = title
         },
-        border = if (on) BorderStroke(SkDimens.Border, SkColors.ItemOnBorder) else null,
+        border = if (on) BorderStroke(SkDimens.SelectionBorder, SkColors.Primary) else null,
         role = Role.RadioButton,
     ) {
         // Centered in a wide grid cell; the check sits on the preview's corner, as on wardrobe tiles.
@@ -365,7 +358,7 @@ private fun CompanionPager(
         CompanionKind.entries[it].name
     }) { page ->
         val option = CompanionKind.entries[page]
-        FlatPanel(Modifier.testTag("companion_preview")) {
+        FlatPanel(Modifier.testTag("companion_preview"), shape = SkShapes.Tile) {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 if (option == CompanionKind.NONE) {
                     ClockFace(ClockCommand(PREVIEW_TIME), Modifier.size(previewHeight), mini = true)
@@ -420,11 +413,10 @@ private fun CompanionThumbnails(
         ) {
             CompanionKind.entries.forEach { option ->
                 val label = stringResource(companionName(option))
-                DepthSurface(
+                PressSurface(
                     { scope.launch { goTo(option.ordinal) } },
-                    if (kind == option) SkColors.ItemOnBg else SkColors.Surface,
-                    ledgeColor(SkColors.Surface),
-                    SkShapes.Item,
+                    SkColors.Surface,
+                    SkShapes.Pill,
                     Modifier
                         .size(thumb)
                         .testTag("choose_companion_${option.name}")
@@ -432,7 +424,7 @@ private fun CompanionThumbnails(
                             contentDescription = label
                             selected = kind == option
                         },
-                    border = if (kind == option) BorderStroke(SkDimens.BorderThin, SkColors.ItemOnBorder) else null,
+                    border = if (kind == option) BorderStroke(SkDimens.SelectionBorder, SkColors.Primary) else null,
                     role = Role.RadioButton,
                     enabled = access.companion(option, progress.totalStars),
                 ) {

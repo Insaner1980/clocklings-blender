@@ -38,4 +38,15 @@ dependencies {
     implementation(libs.androidx.benchmark.macro.junit4)
     implementation(libs.androidx.test.ext.junit)
     implementation(libs.androidx.test.runner)
+    constraints {
+        add("ktlint", libs.logback.classic.get()) {
+            because("Use the patched Logback release in ktlint")
+        }
+        implementation(libs.moshi) {
+            because("Remove the benchmark's transitive request for vulnerable Okio 2.10.0")
+        }
+        implementation(libs.wire.runtime) {
+            because("Fix GHSA-9rm7-3qhh-h2mc in the benchmark trace processor")
+        }
+    }
 }

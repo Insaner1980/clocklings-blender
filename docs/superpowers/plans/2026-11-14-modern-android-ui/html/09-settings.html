@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asetukset</title>
+<!-- Static mockup, 412 x 915 dp. One CSS px equals one dp (sp for font sizes). -->
+<style>
+@font-face{font-family:'Fredoka';font-weight:500;src:url('../../../../../app/src/main/res/font/fredoka_medium.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:600;src:url('../../../../../app/src/main/res/font/fredoka_semibold.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:700;src:url('../../../../../app/src/main/res/font/fredoka_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:600;src:url('../../../../../app/src/main/res/font/nunito_semibold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:700;src:url('../../../../../app/src/main/res/font/nunito_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:800;src:url('../../../../../app/src/main/res/font/nunito_extrabold.ttf') format('truetype')}
+body{margin:0}
+a{color:#3A2453;text-decoration:none}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+</style>
+</head>
+<body>
+<div style="width: 412px; height: 915px; box-sizing: border-box; padding: 40px 16px 24px; display: flex; flex-direction: column; gap: 20px; background: #F7F3FA; color: #3A2453; font-family: 'Nunito', sans-serif; overflow: hidden">
+
+<header style="height: 56px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; margin-bottom: -4px">
+<a href="01-home.html" aria-label="Takaisin" style="width: 48px; height: 48px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+</a>
+<h1 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">Asetukset</h1>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0 0 0 8px; font-weight: 800; font-size: 14px; line-height: 20px; color: #655279">Kieli</h2>
+<button style="height: 64px; padding: 0 16px 0 12px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; gap: 14px; text-align: left">
+<span style="width: 40px; height: 40px; border-radius: 14px; background: #DCEEFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+</span>
+<span style="flex-grow: 1; font-weight: 700; font-size: 18px; line-height: 24px">Suomi</span>
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#655279" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+</button>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0 0 0 8px; font-weight: 800; font-size: 14px; line-height: 20px; color: #655279">Kellon näyttötapa</h2>
+<div role="radiogroup" aria-label="Kellon näyttötapa" style="box-sizing: border-box; padding: 8px; border-radius: 28px; background: #FFFFFF; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button role="radio" aria-checked="false" style="height: 64px; border-radius: 20px; background: #F7F3FA; display: flex; flex-direction: column; align-items: center; justify-content: center">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 19px; line-height: 24px">12 h</span>
+<span style="font-weight: 700; font-size: 14px; line-height: 18px; color: #655279">3.30</span>
+</button>
+<button role="radio" aria-checked="true" style="height: 64px; border-radius: 20px; background: #6741D9; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 10px">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+<span style="display: flex; flex-direction: column; align-items: flex-start">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 19px; line-height: 24px">24 h</span>
+<span style="font-weight: 700; font-size: 14px; line-height: 18px">15.30</span>
+</span>
+</button>
+</div>
+<div style="box-sizing: border-box; padding: 16px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; gap: 16px">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px">
+<span id="guides-label" style="font-weight: 700; font-size: 18px; line-height: 24px">Kellon apumerkinnät</span>
+<span style="font-weight: 600; font-size: 15px; line-height: 22px; color: #655279">Näyttää minuuttiluvut ja kellon puoliskot värillä. 24 tunnin tilassa myös luvut 13–23 ja 0.</span>
+</div>
+<button role="switch" aria-checked="false" aria-labelledby="guides-label" style="width: 56px; height: 32px; box-sizing: border-box; padding: 0 6px; border-radius: 16px; background: #EFE7F5; border: 2px solid #7A6A8C; display: flex; align-items: center; justify-content: flex-start; flex-shrink: 0">
+<span style="width: 16px; height: 16px; border-radius: 8px; background: #7A6A8C"></span>
+</button>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0 0 0 8px; font-weight: 800; font-size: 14px; line-height: 20px; color: #655279">Äänet</h2>
+<div style="box-sizing: border-box; padding: 16px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; gap: 16px">
+<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 4px">
+<span id="sound-label" style="font-weight: 700; font-size: 18px; line-height: 24px">Äänitehosteet</span>
+<span style="font-weight: 600; font-size: 15px; line-height: 22px; color: #655279">Äänet napautuksille, vastauksille ja onnistumisille.</span>
+</div>
+<button role="switch" aria-checked="true" aria-labelledby="sound-label" style="width: 56px; height: 32px; box-sizing: border-box; padding: 0 4px; border-radius: 16px; background: #6741D9; display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0">
+<span style="width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6741D9" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+</span>
+</button>
+</div>
+<p style="margin: 0 8px; font-weight: 600; font-size: 14px; line-height: 20px; color: #655279">Ääneen lukeminen ei ole käytössä tällä kielellä.</p>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 8px">
+<h2 style="margin: 0 0 0 8px; font-weight: 800; font-size: 14px; line-height: 20px; color: #655279">Oppimisen edistyminen</h2>
+<button style="height: 64px; padding: 0 16px 0 12px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; gap: 14px; text-align: left; color: #C92A2A">
+<span style="width: 40px; height: 40px; border-radius: 14px; background: #FFE3E3; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+</span>
+<span style="flex-grow: 1; font-weight: 700; font-size: 18px; line-height: 24px">Nollaa edistyminen</span>
+</button>
+<button style="height: 64px; padding: 0 16px 0 12px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; gap: 14px; text-align: left; margin-top: 4px">
+<span style="width: 40px; height: 40px; border-radius: 14px; background: #E5DBFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+</span>
+<span style="flex-grow: 1; font-weight: 700; font-size: 18px; line-height: 24px">Vanhemmille</span>
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#655279" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+</button>
+</section>
+
+</div>
+</body>
+</html>

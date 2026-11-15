@@ -1,5 +1,9 @@
 packages: []
 
+allowBuilds:
+  '@google/genai': false
+  protobufjs: false
+
 overrides:
   '@hono/node-server': 2.1.6
   '@openai/codex': 0.164.0

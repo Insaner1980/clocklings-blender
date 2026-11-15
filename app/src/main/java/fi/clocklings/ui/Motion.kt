@@ -51,6 +51,4 @@ object SkMotion {
     const val REDUCED_FADE = 80
     const val NAV_SLIDE_FRACTION = 4
     const val PREDICTIVE_SCALE = 0.92f
-    const val PULSE_DURATION = 1400
-    const val PULSE_SCALE = 1.04f
 }

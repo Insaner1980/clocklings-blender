@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asut</title>
+<!-- Static mockup, 412 x 915 dp. One CSS px equals one dp (sp for font sizes). -->
+<style>
+@font-face{font-family:'Fredoka';font-weight:500;src:url('../../../../../app/src/main/res/font/fredoka_medium.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:600;src:url('../../../../../app/src/main/res/font/fredoka_semibold.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:700;src:url('../../../../../app/src/main/res/font/fredoka_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:600;src:url('../../../../../app/src/main/res/font/nunito_semibold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:700;src:url('../../../../../app/src/main/res/font/nunito_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:800;src:url('../../../../../app/src/main/res/font/nunito_extrabold.ttf') format('truetype')}
+body{margin:0}
+a{color:#3A2453;text-decoration:none}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+</style>
+</head>
+<body>
+<div style="width: 412px; height: 915px; box-sizing: border-box; padding: 40px 16px 0; display: flex; flex-direction: column; gap: 12px; background: #F2ECFF; color: #3A2453; font-family: 'Nunito', sans-serif; overflow: hidden">
+
+<header style="height: 56px; display: flex; align-items: center; gap: 12px; flex-shrink: 0">
+<a href="01-home.html" aria-label="Takaisin" style="width: 48px; height: 48px; border-radius: 24px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+</a>
+<h1 style="margin: 0; flex-grow: 1; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">Asut</h1>
+<div style="height: 48px; padding: 0 16px 0 12px; border-radius: 24px; background: #FFE8A3; display: flex; align-items: center; gap: 8px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 19px; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.45 6.2 20.5l1.1-6.45-4.7-4.6 6.5-.95z" fill="#FCC419" stroke="#F59F00" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<span>15 / 15</span>
+</div>
+</header>
+
+<section aria-label="Kaveri" style="height: 256px; box-sizing: border-box; padding: 12px 16px 16px; border-radius: 32px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: space-between; flex-shrink: 0">
+<img src="assets/cat-crown.webp" alt="Kissa, jolla on kruunu" style="height: 168px; width: auto">
+<button aria-label="Valitse nimi" style="width: 248px; height: 48px; box-sizing: border-box; padding: 0 14px 0 20px; border-radius: 24px; background: #FFFFFF; border: 2px solid #D9C8EA; display: flex; align-items: center; justify-content: space-between; font-family: 'Fredoka', sans-serif; font-weight: 500; font-size: 19px; color: #655279">
+<span>Valitse nimi</span>
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3A2453" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+</button>
+</section>
+
+<div role="tablist" aria-label="Asusteryhmät" style="display: flex; gap: 8px; flex-shrink: 0; margin-right: -16px; overflow: hidden">
+<button role="tab" aria-selected="false" style="height: 40px; padding: 0 16px; border-radius: 12px; background: #FFFFFF; font-weight: 800; font-size: 15px; white-space: nowrap; flex-shrink: 0">Väri</button>
+<button role="tab" aria-selected="true" style="height: 40px; padding: 0 16px 0 10px; border-radius: 12px; background: #6741D9; color: #FFFFFF; display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 15px; white-space: nowrap; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+<span>Päähineet</span>
+</button>
+<button role="tab" aria-selected="false" style="height: 40px; padding: 0 16px; border-radius: 12px; background: #FFFFFF; font-weight: 800; font-size: 15px; white-space: nowrap; flex-shrink: 0">Kaulaan</button>
+<button role="tab" aria-selected="false" style="height: 40px; padding: 0 16px; border-radius: 12px; background: #FFFFFF; font-weight: 800; font-size: 15px; white-space: nowrap; flex-shrink: 0">Lisävarusteet</button>
+</div>
+
+<section style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px; flex-shrink: 0">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Väri</h2>
+<div style="display: flex; gap: 14px; padding: 0 6px; height: 52px; align-items: center">
+<button aria-label="Oranssi" aria-pressed="true" style="width: 48px; height: 48px; border-radius: 24px; background: #F2A03D; box-shadow: 0 0 0 3px #F2ECFF, 0 0 0 6px #6741D9; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#3A2453" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+</button>
+<button aria-label="Sininen" aria-pressed="false" style="width: 48px; height: 48px; border-radius: 24px; background: #8DBEF2"></button>
+<button aria-label="Vihreä" aria-pressed="false" style="width: 48px; height: 48px; border-radius: 24px; background: #8ED0A0"></button>
+<button aria-label="Violetti" aria-pressed="false" style="width: 48px; height: 48px; border-radius: 24px; background: #C5A6EA"></button>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Päähineet</h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+
+<button aria-pressed="false" style="box-sizing: border-box; padding: 8px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px; align-items: stretch">
+<span style="height: 104px; border-radius: 16px; background: #FFF5FA; overflow: hidden; display: flex"><img src="assets/it-bow.webp" alt="" style="width: 100%; height: 104px; object-fit: cover; object-position: center top"></span>
+<span style="height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; line-height: 16px; text-align: center">Rusetti</span>
+</button>
+
+<button aria-pressed="false" style="box-sizing: border-box; padding: 8px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px; align-items: stretch">
+<span style="height: 104px; border-radius: 16px; background: #FFF5FA; overflow: hidden; display: flex"><img src="assets/it-bobble.webp" alt="" style="width: 100%; height: 104px; object-fit: cover; object-position: center top"></span>
+<span style="height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; line-height: 16px; text-align: center">Tupsupipo</span>
+</button>
+
+<button aria-pressed="false" style="box-sizing: border-box; padding: 8px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px; align-items: stretch">
+<span style="height: 104px; border-radius: 16px; background: #FFF5FA; overflow: hidden; display: flex"><img src="assets/it-sailor.webp" alt="" style="width: 100%; height: 104px; object-fit: cover; object-position: center top"></span>
+<span style="height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; line-height: 16px; text-align: center">Merimieshattu</span>
+</button>
+
+<button aria-pressed="false" style="box-sizing: border-box; padding: 8px; border-radius: 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px; align-items: stretch">
+<span style="height: 104px; border-radius: 16px; background: #FFF5FA; overflow: hidden; display: flex"><img src="assets/it-flower.webp" alt="" style="width: 100%; height: 104px; object-fit: cover; object-position: center top"></span>
+<span style="height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; line-height: 16px; text-align: center">Kukkaseppele</span>
+</button>
+
+<button aria-pressed="true" style="position: relative; box-sizing: border-box; padding: 5px; border-radius: 24px; background: #FFFFFF; border: 3px solid #6741D9; display: flex; flex-direction: column; gap: 6px; align-items: stretch">
+<span style="height: 104px; border-radius: 16px; background: #FFF5FA; overflow: hidden; display: flex"><img src="assets/it-crown.webp" alt="" style="width: 100%; height: 104px; object-fit: cover; object-position: center top"></span>
+<span style="height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; line-height: 16px; text-align: center">Kruunu</span>
+<span aria-hidden="true" style="position: absolute; right: -8px; top: -8px; width: 28px; height: 28px; border-radius: 14px; background: #6741D9; color: #FFFFFF; box-shadow: 0 0 0 3px #F2ECFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+</span>
+</button>
+
+</div>
+</section>
+
+</div>
+</body>
+</html>

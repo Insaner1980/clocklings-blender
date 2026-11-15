@@ -2,23 +2,6 @@
   "schemaVersion": 1,
   "exceptions": [
     {
-      "id": "clocklings-mobsf-wind-up-key-outline",
-      "tool": "mobsfscan",
-      "rule": "android_kotlin_hardcoded",
-      "scope": "WindUpKeyTrace.KEY artwork path",
-      "reason": "The matched literal contains SVG coordinates for the robot's wind-up key outline. RobotItems passes it to itemShape for drawing.",
-      "owner": "Clocklings project owner",
-      "added": "2026-11-11",
-      "expires": "2027-02-11",
-      "tracking": "local-review:clocklings-mobsf-wind-up-key-outline",
-      "sourcePath": "app/src/main/java/fi/clocklings/ui/companion/WindUpKeyTrace.kt",
-      "selector": "M215 207C216.5 207 218 207 219.5 207.5C221 207.5 222 208 223.5 209C224.5 210 226 211 227 212",
-      "findingPath": "app/src/main/java/fi/clocklings/ui/companion/WindUpKeyTrace.kt",
-      "findingSelectors": [
-        "key = \"m215 207c216.5 207 218 207 219.5 207.5c221 207.5 222 208 223.5 209c224.5 210 226 211 227 212\""
-      ]
-    },
-    {
       "id": "clocklings-mobsf-task-hijacking-target-sdk",
       "tool": "mobsfscan",
       "rule": "android_task_hijacking2",

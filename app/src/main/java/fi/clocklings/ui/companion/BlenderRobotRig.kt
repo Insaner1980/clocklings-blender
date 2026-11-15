@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
@@ -17,10 +16,8 @@ import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
 import fi.clocklings.domain.CompanionColor
 import fi.clocklings.domain.CompanionKind
-import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
-import fi.clocklings.ui.art.groundShadow
 import fi.clocklings.ui.art.ovalRect
 import fi.clocklings.ui.doll.rememberBlenderDollRig
 
@@ -68,9 +65,13 @@ internal fun rememberBlenderRobotRig(
  * The grid and crops preserve wardrobe framing. No 3D engine runs on the device.
  */
 internal class BlenderRobotRig(
-    private val atlas: ImageBitmap,
-    private val accessories: BlenderAccessories,
+    atlas: ImageBitmap,
+    accessories: BlenderAccessories,
 ) : AnimalRig(
+        atlas = atlas,
+        accessories = accessories,
+        fullFrame = Rect(-20f, -40f, 260f, 306f),
+        ground = Ground,
         // The crops keep every item of the slot whole; the neck crop starts below the face screen and leaves
         // out the lower arms and hands.
         headCrop = Rect(24f, 0f, 216f, 172f),
@@ -87,74 +88,46 @@ internal class BlenderRobotRig(
                 "robot-extra-wind-up-key" to Rect(120f, 140f, 240f, 260f),
             ),
     ) {
-    override fun full(): Rect = Rect(-20f, -40f, 260f, 306f)
-
-    override fun crop(item: Item): Rect = accessories.crop(item.id, super.crop(item))
-
-    override fun DrawScope.draw(
-        color: CompanionColor,
+    override fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(Ground)
-        posedBody(pose, Feet) {
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
-            part(Legs)
-            rotate(pose.armDeg, LeftShoulder) { part(LeftArm) }
-            accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
-            part(RightArm)
-            // The torso occludes the inner shoulder joints in the original 3D model.
-            part(Body)
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-            rotate(pose.headTiltDeg, Neck) {
-                rotate(pose.partDeg, AntennaBase) {
-                    accessories.draw(this, outfit, ArtPart.ANTENNA, ItemLayer.BEHIND)
-                }
-                part(Head)
-                val screenItem =
-                    RobotAccessoryRegions[outfit[Slot.EXTRA]].orEmpty().any {
-                        it.layer == ItemLayer.SCREEN
-                    }
-                if (screenItem) {
-                    // Keep alternate eyes on the same screen and subject to the same blink.
-                    scale(1f, 1f - pose.blink * 0.92f, EyeCenter) {
-                        accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.SCREEN)
-                    }
-                } else {
-                    scale(1f, 1f - pose.blink * 0.92f, EyeCenter) { part(Eyes) }
-                }
-                accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
+        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
+        part(Legs)
+        rotate(pose.armDeg, LeftShoulder) { part(LeftArm) }
+        accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
+        part(RightArm)
+        // The torso occludes the inner shoulder joints in the original 3D model.
+        part(Body)
+        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
+        rotate(pose.headTiltDeg, Neck) {
+            rotate(pose.partDeg, AntennaBase) {
+                accessories.draw(this, outfit, ArtPart.ANTENNA, ItemLayer.BEHIND)
             }
+            part(Head)
+            val screenItem =
+                RobotAccessoryRegions[outfit[Slot.EXTRA]].orEmpty().any {
+                    it.layer == ItemLayer.SCREEN
+                }
+            if (screenItem) {
+                // Keep alternate eyes on the same screen and subject to the same blink.
+                scale(1f, 1f - pose.blink * 0.92f, EyeCenter) {
+                    accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.SCREEN)
+                }
+            } else {
+                scale(1f, 1f - pose.blink * 0.92f, EyeCenter) { part(Eyes) }
+            }
+            accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
         }
     }
-
-    private fun DrawScope.part(region: RobotRegion) {
-        drawImage(
-            image = atlas,
-            srcOffset = region.source,
-            srcSize = region.sourceSize,
-            dstOffset = region.destination,
-            dstSize = region.size,
-            filterQuality = FilterQuality.Medium,
-        )
-    }
 }
 
-private class RobotRegion(
-    val source: IntOffset,
-    val destination: IntOffset,
-    val size: IntSize,
-) {
-    val sourceSize = IntSize(size.width * 3, size.height * 3)
-}
-
-private val Head = RobotRegion(IntOffset(0, 0), IntOffset(30, 42), IntSize(180, 106))
-private val Body = RobotRegion(IntOffset(544, 0), IntOffset(68, 136), IntSize(104, 96))
-private val Legs = RobotRegion(IntOffset(244, 322), IntOffset(70, 202), IntSize(100, 82))
-private val LeftArm = RobotRegion(IntOffset(548, 322), IntOffset(32, 144), IntSize(56, 89))
-private val RightArm = RobotRegion(IntOffset(720, 322), IntOffset(152, 144), IntSize(56, 89))
-private val Eyes = RobotRegion(IntOffset(0, 322), IntOffset(80, 75), IntSize(80, 35))
-private val Feet = Offset(120f, 280f)
+private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(30, 42), IntSize(180, 106))
+private val Body = BlenderBodyRegion(IntOffset(544, 0), IntOffset(68, 136), IntSize(104, 96))
+private val Legs = BlenderBodyRegion(IntOffset(244, 322), IntOffset(70, 202), IntSize(100, 82))
+private val LeftArm = BlenderBodyRegion(IntOffset(548, 322), IntOffset(32, 144), IntSize(56, 89))
+private val RightArm = BlenderBodyRegion(IntOffset(720, 322), IntOffset(152, 144), IntSize(56, 89))
+private val Eyes = BlenderBodyRegion(IntOffset(0, 322), IntOffset(80, 75), IntSize(80, 35))
 private val Neck = Offset(120f, 143f)
 private val LeftShoulder = Offset(74f, 162f)
 private val AntennaBase = Offset(120f, 46f)

@@ -327,4 +327,6 @@
     <string name="answer_correct">Rätt</string>
     <string name="answer_incorrect">Fel</string>
     <string name="app_launcher_name">Clocklings Blender</string>
+    <string name="lesson_start">Börja</string>
+    <string name="task_position">%1$d / %2$d</string>
 </resources>

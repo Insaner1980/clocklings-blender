@@ -7,19 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
 import fi.clocklings.domain.CompanionColor
-import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
-import fi.clocklings.ui.art.groundShadow
 import fi.clocklings.ui.art.ovalRect
 
 @Composable
@@ -43,9 +39,14 @@ internal fun rememberBlenderCatRig(
 
 /** Reuses the cat's wardrobe anchors and crops, with the existing seated-cat motion. */
 internal class BlenderCatRig(
-    private val atlas: ImageBitmap,
-    private val accessories: BlenderAccessories,
+    atlas: ImageBitmap,
+    accessories: BlenderAccessories,
 ) : AnimalRig(
+        atlas = atlas,
+        accessories = accessories,
+        // Keep tall headwear below the wardrobe's star badge, including at 200% font scale.
+        fullFrame = FullFrame,
+        ground = Ground,
         // The crops keep every item of the slot whole while leaving out the tail and the mouth and whiskers.
         headCrop = Rect(42f, 8f, 198f, 164f),
         neckCrop = Rect(55f, 150f, 185f, 236f),
@@ -59,26 +60,17 @@ internal class BlenderCatRig(
                 "cat-extra-wings" to Rect(0f, 40f, 240f, 280f),
             ),
     ) {
-    // Keep tall headwear below the wardrobe's star badge, including at 200% font scale.
-    override fun full(): Rect = FullFrame
-
-    override fun crop(item: Item): Rect = accessories.crop(item.id, super.crop(item))
-
-    override fun DrawScope.draw(
-        color: CompanionColor,
+    override fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(Ground)
-        posedBody(pose) {
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
+        drawBodyWithAccessories(outfit) {
             rotate(-pose.partDeg, TailPivot) { part(Tail) }
             part(Body)
             accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
             part(Paws)
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-            rotate(pose.headTiltDeg, Neck) { head(outfit, pose.blink) }
         }
+        rotate(pose.headTiltDeg, Neck) { head(outfit, pose.blink) }
     }
 
     private fun DrawScope.head(
@@ -88,37 +80,18 @@ internal class BlenderCatRig(
         part(Ears)
         part(Head)
         part(Stripes)
-        scale(1f, 1f - blink * 0.94f, EyeCenter) { part(Eyes) }
+        drawBlinkingEyes(Eyes, EyeCenter, blink)
         accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
     }
-
-    private fun DrawScope.part(region: CatRegion) {
-        drawImage(
-            image = atlas,
-            srcOffset = region.source,
-            srcSize = region.sourceSize,
-            dstOffset = region.destination,
-            dstSize = region.size,
-            filterQuality = FilterQuality.Medium,
-        )
-    }
 }
 
-private class CatRegion(
-    val source: IntOffset,
-    val destination: IntOffset,
-    val size: IntSize,
-) {
-    val sourceSize = IntSize(size.width * 3, size.height * 3)
-}
-
-private val Head = CatRegion(IntOffset(0, 0), IntOffset(30, 48), IntSize(180, 122))
-private val Body = CatRegion(IntOffset(544, 0), IntOffset(40, 146), IntSize(160, 140))
-private val Tail = CatRegion(IntOffset(1028, 0), IntOffset(170, 148), IntSize(65, 130))
-private val Paws = CatRegion(IntOffset(0, 424), IntOffset(72, 170), IntSize(98, 116))
-private val Eyes = CatRegion(IntOffset(300, 424), IntOffset(70, 88), IntSize(102, 44))
-private val Ears = CatRegion(IntOffset(610, 424), IntOffset(40, 18), IntSize(162, 73))
-private val Stripes = CatRegion(IntOffset(300, 560), IntOffset(94, 50), IntSize(52, 34))
+private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(30, 48), IntSize(180, 122))
+private val Body = BlenderBodyRegion(IntOffset(544, 0), IntOffset(40, 146), IntSize(160, 140))
+private val Tail = BlenderBodyRegion(IntOffset(1028, 0), IntOffset(170, 148), IntSize(65, 130))
+private val Paws = BlenderBodyRegion(IntOffset(0, 424), IntOffset(72, 170), IntSize(98, 116))
+private val Eyes = BlenderBodyRegion(IntOffset(300, 424), IntOffset(70, 88), IntSize(102, 44))
+private val Ears = BlenderBodyRegion(IntOffset(610, 424), IntOffset(40, 18), IntSize(162, 73))
+private val Stripes = BlenderBodyRegion(IntOffset(300, 560), IntOffset(94, 50), IntSize(52, 34))
 private val TailPivot = Offset(180f, 262f)
 private val Neck = Offset(120f, 160f)
 private val EyeCenter = Offset(121f, 110f)

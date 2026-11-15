@@ -10,6 +10,14 @@
       "required": true,
       "variants": ["debug", "release"],
       "sourceSets": ["main", "debug", "release", "test", "androidTest"]
+    },
+    {
+      "path": ":benchmark",
+      "relativePath": "benchmark",
+      "kind": "android-test",
+      "required": true,
+      "variants": ["benchmarkRelease"],
+      "sourceSets": ["main"]
     }
   ],
   "buildTasks": [":app:assembleDebug"],

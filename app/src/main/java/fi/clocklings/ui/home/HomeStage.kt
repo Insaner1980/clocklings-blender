@@ -1,5 +1,11 @@
 package fi.clocklings.ui.home
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -17,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,15 +31,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Constraints
@@ -50,10 +60,11 @@ import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.companion.CompanionCelebration
 import fi.clocklings.ui.companion.CompanionView
 import fi.clocklings.ui.companion.companionAspectRatio
-import fi.clocklings.ui.components.DepthSurface
-import fi.clocklings.ui.components.RoundIconButton
+import fi.clocklings.ui.components.PressSurface
+import fi.clocklings.ui.components.SkIcon
 import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.SpeechBubble
+import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.locale.LocalAppLanguage
 import fi.clocklings.ui.sharedClocklingsElement
 import fi.clocklings.ui.theme.SkColors
@@ -66,7 +77,7 @@ import fi.clocklings.ui.timeLabel
  * The companion stands on a soft ground and tells the time in a speech bubble beside the live
  * clock. Tapping the stage opens the companion choices. Without a companion the clock takes the
  * stage alone. The content is at most [SkDimens.HomeStageMaxHeight] tall; on a taller stage it is
- * centred, with sky above it and the ground reaching down to the menu below it.
+ * centred within the rounded scenery; the animated artwork remains unclipped.
  */
 @Composable
 internal fun HomeStage(
@@ -89,8 +100,11 @@ internal fun HomeStage(
         }
     } else {
         BoxWithConstraints(Modifier.fillMaxSize().testTag("home_stage")) {
+            val density = LocalDensity.current
+            var wardrobeHeight by remember { mutableStateOf(SkDimens.WardrobeButtonHeight) }
             val contentHeight = min(maxHeight, SkDimens.HomeStageMaxHeight)
-            val stage = companionStageLayout(maxWidth, maxHeight, contentHeight, companionAspectRatio(kind))
+            val stage =
+                companionStageLayout(maxWidth, maxHeight, contentHeight, companionAspectRatio(kind), wardrobeHeight)
             val (leftCloudY, rightCloudY) = homeCloudYs(stage, maxWidth, stage.contentTop, contentHeight)
             val scene = StageScene(stage.contentTop, contentHeight, leftCloudY, rightCloudY)
             Scenery { scene }
@@ -100,9 +114,17 @@ internal fun HomeStage(
                 Modifier.offset(y = stage.contentTop).fillMaxWidth().height(contentHeight),
             ) {
                 BoxWithConstraints(Modifier.fillMaxSize()) {
-                    CompanionStage(kind, progress, words, time, maxWidth, maxHeight, stage, onOpen)
+                    CompanionStage(kind, progress, words, time, maxWidth, maxHeight, stage)
                 }
             }
+            WardrobeButton(
+                onOpen,
+                Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(SkDimens.StageInset)
+                    .widthIn(max = maxWidth * (1 - RIGHT_COLUMN_SHARE))
+                    .onSizeChanged { wardrobeHeight = with(density) { it.height.toDp() } },
+            )
         }
     }
 }
@@ -149,7 +171,7 @@ private fun GroupStage(
 @Composable
 private fun Scenery(scene: () -> StageScene?) {
     Box(
-        Modifier.fillMaxSize().drawBehind {
+        Modifier.fillMaxSize().clip(SkShapes.Stage).background(SkColors.HomeSky).drawBehind {
             val s = scene() ?: return@drawBehind
             drawSkyAndGround(s.contentTop.toPx(), s.contentHeight.toPx(), s.leftCloudY?.toPx(), s.rightCloudY?.toPx())
         },
@@ -164,18 +186,19 @@ private fun StageSurface(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    DepthSurface(
-        { onOpen(HomeDestination.NUKKE) },
-        Color.Transparent,
-        Color.Transparent,
-        SkShapes.Card,
-        modifier.testTag("companion_stage").semantics { contentDescription = description },
-        depth = 0.dp,
-        pressedDepth = 0.dp,
-        // The ground does not scale with the content, so a press must not lift the companion off it.
-        pressScale = 1f,
-        content = content,
-    )
+    val interaction = remember { MutableInteractionSource() }
+    val focused by interaction.collectIsFocusedAsState()
+    Box(
+        modifier
+            .testTag("companion_stage")
+            .semantics { contentDescription = description }
+            .then(if (focused) Modifier.border(SkDimens.Border, SkColors.Ink, SkShapes.Stage) else Modifier)
+            .clickable(interaction, indication = null, role = Role.Button) { onOpen(HomeDestination.NUKKE) },
+        propagateMinConstraints = true,
+    ) {
+        Box(Modifier.matchParentSize().clip(SkShapes.Stage).indication(interaction, ripple(color = SkColors.Ink)))
+        content()
+    }
 }
 
 /**
@@ -252,7 +275,7 @@ private fun CompactCompanionStage(
 ) {
     val clockSize = min(stageWidth * CLOCK_WIDTH_SHARE, SkDimens.HomeStageMaxHeight)
     // The row never grows past the stage, so the companion leaves room for the button and the clock.
-    val companionMaxWidth = max(stageWidth - SkDimens.GapS * 2 - clockSize - SkDimens.IconButton, 0.dp)
+    val companionMaxWidth = max(stageWidth - SkDimens.GapS * 2 - clockSize - SkDimens.GapM, 0.dp)
     Column(
         Modifier.fillMaxWidth().padding(SkDimens.GapS),
         verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
@@ -272,13 +295,13 @@ private fun CompactCompanionStage(
                     .heightIn(max = SkDimens.HomeStageMaxHeight)
                     .aspectRatio(companionAspectRatio(kind), matchHeightConstraintsFirst = true),
             )
-            HangerButton(onOpen)
             ClockFace(
                 remember(time) { ClockCommand(time) },
                 Modifier.sharedClocklingsElement("clock").size(clockSize),
                 mini = true,
             )
         }
+        WardrobeButton(onOpen, Modifier.padding(start = SkDimens.GapS, bottom = SkDimens.GapS))
     }
 }
 
@@ -295,13 +318,12 @@ private fun BoxScope.CompanionStage(
     stageWidth: Dp,
     stageHeight: Dp,
     stage: CompanionStageLayout,
-    onOpen: (HomeDestination) -> Unit,
 ) {
     val greeting = remember(kind) { CompanionCelebration(newOutfit = null, jump = true) }
     Box(
         Modifier
             .align(Alignment.BottomStart)
-            .padding(start = SkDimens.GapS, bottom = SkDimens.GapS)
+            .padding(start = SkDimens.GapS, bottom = stage.companionBottom)
             .sharedClocklingsElement("companion")
             .size(stage.companion)
             .drawBehind {
@@ -314,10 +336,6 @@ private fun BoxScope.CompanionStage(
     ) {
         CompanionView(kind, progress.outfitFor(kind), Modifier.fillMaxSize(), celebration = greeting)
     }
-    HangerButton(
-        onOpen,
-        Modifier.align(Alignment.TopStart).padding(start = stage.hanger.x, top = stage.hanger.y),
-    )
     Column(
         Modifier
             .align(Alignment.TopEnd)
@@ -369,16 +387,22 @@ private const val CLOUD_A_X = 0.22f
 private const val CLOUD_B_X = 0.7f
 private const val CLOUD_SIDE = 0.24f
 
-/** The wardrobe button; it stands above the companion, never over it. */
+/** A labelled wardrobe action, measured independently from the character artwork. */
 @Composable
-private fun HangerButton(
+private fun WardrobeButton(
     onOpen: (HomeDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    RoundIconButton(
-        SkIcons.Hanger,
-        stringResource(R.string.menu_nukke),
-        { onOpen(HomeDestination.NUKKE) },
-        modifier,
-    )
+    PressSurface({ onOpen(HomeDestination.ASUT) }, SkColors.Surface, SkShapes.Pill, modifier) {
+        Row(
+            Modifier
+                .heightIn(min = SkDimens.WardrobeButtonHeight)
+                .padding(start = SkDimens.GapLabel, end = SkDimens.GapL, top = SkDimens.GapS, bottom = SkDimens.GapS),
+            horizontalArrangement = Arrangement.spacedBy(SkDimens.GapOptions),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SkIcon(SkIcons.Dress, SkDimens.ButtonIcon, tint = SkColors.Ink)
+            WordSafeText(stringResource(R.string.doll_title), SkType.ButtonSmall, Modifier.weight(1f, fill = false))
+        }
+    }
 }

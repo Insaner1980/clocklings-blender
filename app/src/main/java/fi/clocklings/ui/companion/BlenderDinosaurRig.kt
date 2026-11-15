@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipRect
@@ -17,10 +16,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
 import fi.clocklings.domain.CompanionColor
-import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
-import fi.clocklings.ui.art.groundShadow
 import fi.clocklings.ui.art.ovalRect
 
 @Composable
@@ -44,9 +41,13 @@ internal fun rememberBlenderDinosaurRig(
 
 /** Keeps the dinosaur's wardrobe anchors, alternate grip and existing tail motion. */
 internal class BlenderDinosaurRig(
-    private val atlas: ImageBitmap,
-    private val accessories: BlenderAccessories,
+    atlas: ImageBitmap,
+    accessories: BlenderAccessories,
 ) : AnimalRig(
+        atlas = atlas,
+        accessories = accessories,
+        fullFrame = FullFrame,
+        ground = Ground,
         // The crops keep every item of the slot whole: the head crop holds the hats and the head spikes and ends
         // under the jaw; the neck crop starts below the mouth.
         headCrop = Rect(34f, 0f, 226f, 146f),
@@ -64,69 +65,42 @@ internal class BlenderDinosaurRig(
                 "dinosaur-extra-ice-cream" to Rect(110f, 100f, 230f, 220f),
             ),
     ) {
-    override fun full(): Rect = FullFrame
-
-    override fun crop(item: Item): Rect = accessories.crop(item.id, super.crop(item))
-
-    override fun DrawScope.draw(
-        color: CompanionColor,
+    override fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(Ground)
-        posedBody(pose) {
-            val iceCream = outfit[Slot.EXTRA] == "dinosaur-extra-ice-cream"
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
-            rotate(pose.partDeg, TailPivot) { part(Tail) }
-            part(Body)
-            part(NearArm)
-            part(FarArm)
-            if (iceCream) part(Fist)
-            accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
-            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-            rotate(pose.headTiltDeg, Neck) {
-                part(Head)
-                scale(1f, 1f - pose.blink * 0.94f, NearEyeCenter) { part(NearEye) }
-                scale(1f, 1f - pose.blink * 0.94f, FarEyeCenter) { part(FarEye) }
-                accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
-            }
-            if (iceCream) {
-                // Keep the held scoops in front of the muzzle during head tilt.
-                clipRect(150f, 100f, 240f, 181f) {
-                    accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
-                }
+        val iceCream = outfit[Slot.EXTRA] == "dinosaur-extra-ice-cream"
+        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
+        rotate(pose.partDeg, TailPivot) { part(Tail) }
+        part(Body)
+        part(NearArm)
+        part(FarArm)
+        if (iceCream) part(Fist)
+        accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
+        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
+        rotate(pose.headTiltDeg, Neck) {
+            part(Head)
+            scale(1f, 1f - pose.blink * 0.94f, NearEyeCenter) { part(NearEye) }
+            scale(1f, 1f - pose.blink * 0.94f, FarEyeCenter) { part(FarEye) }
+            accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
+        }
+        if (iceCream) {
+            // Keep the held scoops in front of the muzzle during head tilt.
+            clipRect(150f, 100f, 240f, 181f) {
+                accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
             }
         }
     }
-
-    private fun DrawScope.part(region: DinosaurRegion) {
-        drawImage(
-            image = atlas,
-            srcOffset = region.source,
-            srcSize = region.sourceSize,
-            dstOffset = region.destination,
-            dstSize = region.size,
-            filterQuality = FilterQuality.Medium,
-        )
-    }
 }
 
-private class DinosaurRegion(
-    val source: IntOffset,
-    val destination: IntOffset,
-    val size: IntSize,
-) {
-    val sourceSize = IntSize(size.width * 3, size.height * 3)
-}
-
-private val Head = DinosaurRegion(IntOffset(0, 0), IntOffset(60, 30), IntSize(168, 126))
-private val Body = DinosaurRegion(IntOffset(508, 0), IntOffset(38, 10), IntSize(156, 276))
-private val Tail = DinosaurRegion(IntOffset(980, 0), IntOffset(4, 208), IntSize(100, 72))
-private val NearArm = DinosaurRegion(IntOffset(0, 384), IntOffset(94, 153), IntSize(55, 58))
-private val FarArm = DinosaurRegion(IntOffset(169, 384), IntOffset(158, 161), IntSize(34, 46))
-private val Fist = DinosaurRegion(IntOffset(275, 384), IntOffset(180, 181), IntSize(33, 33))
-private val NearEye = DinosaurRegion(IntOffset(0, 562), IntOffset(103, 75), IntSize(35, 38))
-private val FarEye = DinosaurRegion(IntOffset(109, 562), IntOffset(151, 62), IntSize(27, 35))
+private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(60, 30), IntSize(168, 126))
+private val Body = BlenderBodyRegion(IntOffset(508, 0), IntOffset(38, 10), IntSize(156, 276))
+private val Tail = BlenderBodyRegion(IntOffset(980, 0), IntOffset(4, 208), IntSize(100, 72))
+private val NearArm = BlenderBodyRegion(IntOffset(0, 384), IntOffset(94, 153), IntSize(55, 58))
+private val FarArm = BlenderBodyRegion(IntOffset(169, 384), IntOffset(158, 161), IntSize(34, 46))
+private val Fist = BlenderBodyRegion(IntOffset(275, 384), IntOffset(180, 181), IntSize(33, 33))
+private val NearEye = BlenderBodyRegion(IntOffset(0, 562), IntOffset(103, 75), IntSize(35, 38))
+private val FarEye = BlenderBodyRegion(IntOffset(109, 562), IntOffset(151, 62), IntSize(27, 35))
 private val Neck = Offset(130f, 148f)
 private val TailPivot = Offset(82f, 250f)
 private val NearEyeCenter = Offset(120f, 93f)

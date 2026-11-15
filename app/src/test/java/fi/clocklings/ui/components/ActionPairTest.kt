@@ -97,8 +97,8 @@ class ActionPairTest {
         startBounds: androidx.compose.ui.geometry.Rect,
         endBounds: androidx.compose.ui.geometry.Rect,
     ) {
-        // This label still fits beside Back at 411 dp with large text; 320 dp needs a column.
-        if (cell.first == 411 || cell.second == 1f) {
+        // The wider pill padding leaves room for a row only at normal text size.
+        if (cell.second == 1f) {
             assertEquals("$cell: same row", startBounds.top, endBounds.top)
             assertTrue("$cell: start before end", startBounds.right <= endBounds.left)
         } else {

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tyyliperusta</title>
+<!-- Static mockup, 1000 x 1060 dp. One CSS px equals one dp (sp for font sizes). -->
+<style>
+@font-face{font-family:'Fredoka';font-weight:500;src:url('../../../../../app/src/main/res/font/fredoka_medium.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:600;src:url('../../../../../app/src/main/res/font/fredoka_semibold.ttf') format('truetype')}
+@font-face{font-family:'Fredoka';font-weight:700;src:url('../../../../../app/src/main/res/font/fredoka_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:600;src:url('../../../../../app/src/main/res/font/nunito_semibold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:700;src:url('../../../../../app/src/main/res/font/nunito_bold.ttf') format('truetype')}
+@font-face{font-family:'Nunito';font-weight:800;src:url('../../../../../app/src/main/res/font/nunito_extrabold.ttf') format('truetype')}
+body{margin:0}
+a{color:#3A2453;text-decoration:none}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+</style>
+</head>
+<body>
+<div style="width: 1000px; height: 1060px; box-sizing: border-box; padding: 36px 40px; display: flex; flex-direction: column; gap: 24px; background: #FFF8FB; color: #3A2453; font-family: 'Nunito', sans-serif; overflow: hidden">
+
+<header style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+<h1 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 34px; line-height: 40px">Tyyliperusta</h1>
+<p style="margin: 0; font-weight: 700; font-size: 15px; line-height: 22px; color: #655279; text-align: right">Fredoka otsikoissa, Nunito leipätekstissä. Mitat ovat dp- ja sp-arvoja.</p>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; flex-grow: 1">
+
+<div style="display: flex; flex-direction: column; gap: 24px">
+
+<section style="box-sizing: border-box; padding: 20px; border-radius: 28px; background: #FFFFFF; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Värit</h2>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Toiminta ja teksti</h3>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #6741D9; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Päätoiminto</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#6741D9</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #E5DBFF; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Valittu</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#E5DBFF</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #3A2453; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Teksti</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#3A2453</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #655279; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Aputeksti</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#655279</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Merkitysvärit</h3>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #E64980; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Tunnit</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#E64980</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #228BE6; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Minuutit</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#228BE6</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #2B8A3E; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Oikein</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#2B8A3E</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #B35000; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Uusi yritys</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#B35000</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Osioiden sävyt</h3>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #FFE8A3; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Opi</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#FFE8A3</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #BFE3FF; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Tutki</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#BFE3FF</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #FFD1E3; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Pelaa</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#FFD1E3</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 44px; border-radius: 14px; background: #C3F2CB; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Yhdessä</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">#C3F2CB</span></div>
+</div>
+</div>
+</section>
+
+<section style="box-sizing: border-box; padding: 20px; border-radius: 28px; background: #FFFFFF; display: flex; flex-direction: column; gap: 16px; flex-grow: 1">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Välit ja muodot</h2>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Väliasteikko, 4 dp:n ruudukko</h3>
+<div style="display: flex; align-items: flex-end; gap: 20px; height: 56px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 4px; height: 4px; border-radius: 1px; background: #6741D9"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">4</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #6741D9"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">8</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #6741D9"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">12</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 16px; height: 16px; border-radius: 4px; background: #6741D9"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">16</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 24px; height: 24px; border-radius: 5px; background: #6741D9"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">24</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="width: 32px; height: 32px; border-radius: 6px; background: #6741D9"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">32</span></div>
+<p style="margin: 0 0 0 12px; flex-grow: 1; font-weight: 600; font-size: 14px; line-height: 20px; color: #655279">Reunamarginaali 16, kortin sisus 20, osien väli 12, ryhmien väli 24.</p>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Kulmat</h3>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 52px; border-radius: 12px; background: #E5DBFF; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">12</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Suodatin</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 52px; border-radius: 20px; background: #E5DBFF; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">20</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Vastaus</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 52px; border-radius: 28px 28px 0 0; background: #E5DBFF; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">28</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Kortti</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="height: 52px; border-radius: 26px; background: #E5DBFF; margin-bottom: 4px"></span><span style="font-weight: 800; font-size: 13px; line-height: 16px">Täysi</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Painike</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Kosketusalueet</h3>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column"><span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">48</span><span style="font-weight: 600; font-size: 13px; line-height: 18px; color: #655279">Kuvakepainike</span></div>
+<div style="display: flex; flex-direction: column"><span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">64</span><span style="font-weight: 600; font-size: 13px; line-height: 18px; color: #655279">Vastaus ja päätoiminto</span></div>
+<div style="display: flex; flex-direction: column"><span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">56</span><span style="font-weight: 600; font-size: 13px; line-height: 18px; color: #655279">Pienin vastaus 320 dp:llä</span></div>
+</div>
+</div>
+</section>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 24px">
+
+<section style="box-sizing: border-box; padding: 20px; border-radius: 28px; background: #FFFFFF; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0 0 4px; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Typografia</h2>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 34px; line-height: 40px">Jatka tutkimista!</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Juhlaotsikko</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Fredoka 600, 34 / 40</span></span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 26px; line-height: 32px">Mitä kello on?</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Kysymys</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Fredoka 600, 26 / 32</span></span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px">Tasatunnit</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Näkymän otsikko</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Fredoka 600, 24 / 28</span></span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Tasan kolme</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Painike ja vastaus</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Fredoka 600, 20 / 24</span></span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-weight: 700; font-size: 19px; line-height: 28px">Lyhyt pinkki viisari näyttää tunnit.</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Opetusteksti</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Nunito 700, 19 / 28</span></span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-weight: 600; font-size: 15px; line-height: 22px; color: #655279">Äänet napautuksille ja vastauksille.</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Aputeksti</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Nunito 600, 15 / 22</span></span>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px">
+<span style="font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Kello on nyt</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0"><span style="font-weight: 800; font-size: 13px; line-height: 16px">Tunniste</span><span style="font-weight: 600; font-size: 12px; line-height: 16px; color: #655279">Nunito 800, 12 / 16</span></span>
+</div>
+</section>
+
+<section style="box-sizing: border-box; padding: 20px; border-radius: 28px; background: #FFFFFF; display: flex; flex-direction: column; gap: 16px; flex-grow: 1">
+<h2 style="margin: 0; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Komponentit</h2>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Painikkeet ilman 3D-reunaa</h3>
+<div style="display: flex; align-items: center; gap: 8px">
+<button style="flex: 1.4 1 0; height: 56px; border-radius: 28px; background: #6741D9; color: #FFFFFF; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px">Seuraava</button>
+<button style="flex: 1 1 0; height: 56px; border-radius: 28px; background: #F1E9FA; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px">Edellinen</button>
+<button aria-label="Kellon apumerkinnät" aria-pressed="true" style="width: 48px; height: 48px; border-radius: 24px; background: #FFE066; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+</button>
+<button aria-label="Kellon apumerkinnät" aria-pressed="false" style="width: 48px; height: 48px; border-radius: 24px; background: #F1E9FA; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+</button>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Vastauksen tilat: perus, oikein, uusi yritys</h3>
+<button style="height: 56px; padding: 0 8px 0 20px; border-radius: 20px; background: #F4EEFB; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left">
+<span style="font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px">Tasan viisi</span>
+<span style="height: 40px; min-width: 64px; box-sizing: border-box; padding: 0 12px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 18px; color: #655279">5.00</span>
+</button>
+<button style="height: 56px; box-sizing: border-box; padding: 0 6px 0 14px; border-radius: 20px; background: #D3F9D8; border: 2px solid #2B8A3E; display: flex; align-items: center; gap: 10px; text-align: left">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#2B8A3E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+<span style="flex-grow: 1; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px">Tasan kolme</span>
+<span style="height: 40px; min-width: 64px; box-sizing: border-box; padding: 0 12px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 18px; color: #655279">3.00</span>
+</button>
+<button style="height: 56px; box-sizing: border-box; padding: 0 6px 0 14px; border-radius: 20px; background: #FFE8CC; border: 2px solid #D9480F; display: flex; align-items: center; gap: 10px; text-align: left">
+<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#B35000" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+<span style="flex-grow: 1; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 20px">Tasan neljä</span>
+<span style="height: 40px; min-width: 64px; box-sizing: border-box; padding: 0 12px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 18px; color: #655279">4.00</span>
+</button>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-weight: 800; font-size: 12px; line-height: 16px; letter-spacing: 0.06em; text-transform: uppercase; color: #655279">Valinnat ja lukittu asuste</h3>
+<div style="display: flex; align-items: center; gap: 12px">
+<button role="tab" aria-selected="true" style="height: 40px; padding: 0 16px 0 10px; border-radius: 12px; background: #6741D9; color: #FFFFFF; display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 15px">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+<span>Päähineet</span>
+</button>
+<button role="tab" aria-selected="false" style="height: 40px; padding: 0 16px; border-radius: 12px; background: #F1E9FA; font-weight: 800; font-size: 15px">Kaulaan</button>
+<button role="switch" aria-checked="true" aria-label="Äänitehosteet" style="width: 56px; height: 32px; box-sizing: border-box; padding: 0 4px; border-radius: 16px; background: #6741D9; display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0">
+<span style="width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF"></span>
+</button>
+<div style="flex-grow: 1"></div>
+<div style="position: relative; width: 64px; height: 64px; border-radius: 18px; background: #FFF5FA; overflow: hidden; flex-shrink: 0">
+<img src="assets/it-flower.webp" alt="Lukittu asuste: Kukkaseppele" style="width: 64px; height: 64px; object-fit: cover; object-position: center top; opacity: 0.45">
+<span aria-hidden="true" style="position: absolute; right: 4px; bottom: 4px; width: 28px; height: 28px; border-radius: 14px; background: #3A2453; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+</span>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+
+</div>
+</body>
+</html>

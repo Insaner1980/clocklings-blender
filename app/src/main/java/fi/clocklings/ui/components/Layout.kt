@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.only
@@ -35,17 +36,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
@@ -78,6 +84,8 @@ fun TopBar(
     backLabel: String = stringResource(R.string.back_description),
     trailing: @Composable (() -> Unit)? = null,
 ) {
+    val currentTrailing by rememberUpdatedState(trailing)
+    val trailingContent = remember { movableContentOf { currentTrailing?.invoke() } }
     BoxWithConstraints(modifier.fillMaxWidth()) {
         if (maxWidth / LocalDensity.current.fontScale < SkDimens.GridBreakpoint) {
             Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapM)) {
@@ -87,19 +95,29 @@ fun TopBar(
                     verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
                 ) {
                     RoundIconButton(SkIcons.Back, backLabel, onBack)
-                    trailing?.invoke()
+                    trailingContent()
                 }
-                WordSafeText(title, SkType.Title, Modifier.fillMaxWidth().semantics { heading() })
+                WordSafeText(
+                    title,
+                    SkType.Title,
+                    Modifier.fillMaxWidth().semantics { heading() },
+                    textAlign = TextAlign.Start,
+                )
             }
         } else {
             Row(
-                Modifier.fillMaxWidth(),
+                Modifier.fillMaxWidth().heightIn(min = SkDimens.ButtonHeightSmall),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
             ) {
                 RoundIconButton(SkIcons.Back, backLabel, onBack)
-                WordSafeText(title, SkType.Title, Modifier.weight(1f).semantics { heading() })
-                if (trailing != null) trailing() else Box(Modifier.size(SkDimens.IconButton))
+                WordSafeText(
+                    title,
+                    SkType.Title,
+                    Modifier.weight(1f).semantics { heading() },
+                    textAlign = TextAlign.Start,
+                )
+                trailingContent()
             }
         }
     }
@@ -111,7 +129,8 @@ fun TopBar(
  * [bottomBar] stays outside the scrolling area so task actions remain available.
  * Under pinned chrome, scrolled content fades out under the bar
  * instead of being cut off. With [scroll] false the content gets the exact remaining height and
- * arranges its own overflow. The clock size is capped by the content width and [clockHeightShare] of its height.
+ * arranges its own overflow. [onViewportTop] reports the visible scroll edge below any top fade.
+ * The clock size is capped by the content width and [clockHeightShare] of its height.
  * [clockFit] can also cap it so that the whole content fits without scrolling (see [ClockFit]). With
  * [animateClock] size changes are animated. A new [scrollState] opens the content at the top.
  */
@@ -129,6 +148,7 @@ fun ScreenScaffold(
     scrollState: ScrollState = rememberScrollState(),
     wideContent: Boolean = false,
     centerContent: Boolean = false,
+    onViewportTop: ((Float) -> Unit)? = null,
     content: @Composable ColumnScope.(clockSize: Dp) -> Unit,
 ) {
     // Zero initial Compose insets would clamp a restored offset before the system bars arrive.
@@ -150,7 +170,7 @@ fun ScreenScaffold(
                 // Let the header scroll when fixed bars would crowd out the task or the open IME.
                 val scrollChrome = scroll && windowHeight < SkDimens.PinnedChromeMinHeight
                 Column(
-                    Modifier.fillMaxSize().then(if (scrollChrome) Modifier.verticalScroll(scrollState) else Modifier),
+                    Modifier.fillMaxSize().scrollViewport(scrollChrome, scrollState, onViewportTop),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     if (topBar != null) {
@@ -169,6 +189,7 @@ fun ScreenScaffold(
                             .then(if (scrollChrome) Modifier else Modifier.weight(1f)),
                     ) {
                         ScaffoldBody(
+                            onViewportTop = onViewportTop,
                             availableWidth = maxWidth - SkDimens.Gutter * 2,
                             viewportHeight = if (scrollChrome) windowHeight else maxHeight,
                             wideContent = wideContent,
@@ -193,6 +214,7 @@ fun ScreenScaffold(
 
 @Composable
 private fun ScaffoldBody(
+    onViewportTop: ((Float) -> Unit)?,
     availableWidth: Dp,
     viewportHeight: Dp,
     wideContent: Boolean,
@@ -227,6 +249,7 @@ private fun ScaffoldBody(
     val bottom = with(density) { bottomInsets.getBottom(this).toDp() }
     Box(Modifier.fillMaxSize()) {
         ScaffoldColumn(
+            onViewportTop = onViewportTop,
             scrollState = scrollState,
             scrolling = scrolling,
             scrollChrome = scrollChrome,
@@ -243,6 +266,7 @@ private fun ScaffoldBody(
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 private fun ScaffoldColumn(
+    onViewportTop: ((Float) -> Unit)?,
     scrollState: ScrollState,
     scrolling: Boolean,
     scrollChrome: Boolean,
@@ -254,12 +278,21 @@ private fun ScaffoldColumn(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val nestedFocusScroll = LocalBringIntoViewSpec.current
+    val topFade = with(LocalDensity.current) { SkDimens.ScrollFadeTop.toPx() }
     CompositionLocalProvider(LocalBringIntoViewSpec provides rememberFocusScrollSpec(contentBottom)) {
         Column(
             Modifier
                 .fillMaxSize()
-                .then(if (scrolling) Modifier.verticalScroll(scrollState) else Modifier)
-                .then(if (measure) Modifier.measureRestHeight(clockSize, onRestHeight) else Modifier)
+                .then(
+                    if (scrolling) {
+                        Modifier
+                            .onGloballyPositioned {
+                                onViewportTop?.invoke(it.positionInRoot().y + topFade)
+                            }.verticalScroll(scrollState)
+                    } else {
+                        Modifier
+                    },
+                ).then(if (measure) Modifier.measureRestHeight(clockSize, onRestHeight) else Modifier)
                 .padding(
                     start = SkDimens.Gutter,
                     end = SkDimens.Gutter,

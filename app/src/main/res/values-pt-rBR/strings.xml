@@ -308,4 +308,6 @@
     <string name="answer_correct">Correto</string>
     <string name="answer_incorrect">Incorreto</string>
     <string name="app_launcher_name">Clocklings Blender</string>
+    <string name="lesson_start">Começar</string>
+    <string name="task_position">%1$d / %2$d</string>
 </resources>

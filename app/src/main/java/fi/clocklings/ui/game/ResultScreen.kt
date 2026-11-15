@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fi.clocklings.R
 import fi.clocklings.Screen
@@ -44,15 +48,20 @@ import fi.clocklings.domain.Wardrobe
 import fi.clocklings.ui.appearance.LocalPersonalization
 import fi.clocklings.ui.companion.CompanionCelebration
 import fi.clocklings.ui.companion.CompanionView
+import fi.clocklings.ui.companion.ItemArtWindow
 import fi.clocklings.ui.companion.ItemTile
 import fi.clocklings.ui.companion.companionAspectRatio
 import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.LocalConfetti
+import fi.clocklings.ui.components.RoundIconButton
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
+import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.StarIcon
+import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.components.confettiAnchor
+import fi.clocklings.ui.itemName
 import fi.clocklings.ui.levelName
 import fi.clocklings.ui.rememberReduceMotion
 import fi.clocklings.ui.theme.Section
@@ -101,41 +110,122 @@ fun ResultScreen(
         confetti?.burst(anchor.value, RESULT_CONFETTI)
     }
 
-    ScreenScaffold(modifier, section = Section.PLAY) {
-        FlatPanel(Modifier.fillMaxWidth()) {
-            Column(
-                Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
+    val hasNext = canContinue && result.level < Levels.all.lastIndex
+    ScreenScaffold(
+        modifier,
+        section = Section.PLAY,
+        topBar = {
+            Row(
+                Modifier.fillMaxWidth().heightIn(min = SkDimens.ButtonHeightSmall),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                ResultStars(stars, onSound.takeIf { firstVisit }) { anchor.value = it }
-                CompanionView(
-                    kind,
-                    outfit,
-                    Modifier.width(SkDimens.DollResult).aspectRatio(companionAspectRatio(kind)),
-                    celebration = dollCelebration,
-                )
-                ResultTitle(stars)
-                Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
-                if (newItems.isNotEmpty()) {
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterHorizontally)) {
-                        newItems.forEach { ItemTile(it, outfit, color, Modifier.width(SkDimens.ItemMinWidth)) }
-                    }
-                }
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM, Alignment.CenterHorizontally),
-                    verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
-                ) {
-                    if (canReplay) SkButton(stringResource(R.string.play_again), onPlayAgain)
-                    if (canContinue && result.level < Levels.all.lastIndex) {
-                        SkButton(stringResource(R.string.next_level), onNextLevel, kind = ButtonKind.PRIMARY)
-                    }
-                    if (newItems.isNotEmpty()) {
-                        SkButton(stringResource(R.string.dress_doll), onDress, kind = ButtonKind.GREEN)
-                    }
-                    SkButton(stringResource(R.string.back_description), onLevels)
+                RoundIconButton(SkIcons.Close, stringResource(R.string.back_description), onLevels)
+            }
+        },
+        bottomBar = { ResultActions(hasNext, canReplay, onNextLevel, onPlayAgain, onLevels) },
+    ) {
+        Column(
+            Modifier.fillMaxWidth().padding(top = SkDimens.GapS),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
+        ) {
+            ResultStars(stars, onSound.takeIf { firstVisit }) { anchor.value = it }
+            CompanionView(
+                kind,
+                outfit,
+                Modifier.width(SkDimens.DollResult).aspectRatio(companionAspectRatio(kind)),
+                celebration = dollCelebration,
+            )
+            ResultTitle(stars)
+            Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
+            if (newItems.isNotEmpty()) {
+                ResultRewards(newItems, outfit, color, onDress)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ResultActions(
+    hasNext: Boolean,
+    canReplay: Boolean,
+    onNextLevel: () -> Unit,
+    onPlayAgain: () -> Unit,
+    onLevels: () -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
+        if (hasNext) {
+            SkButton(
+                stringResource(R.string.next_level),
+                onNextLevel,
+                Modifier.fillMaxWidth(),
+                kind = ButtonKind.PRIMARY,
+                trailingIcon = SkIcons.Chevron,
+            )
+        }
+        if (canReplay) {
+            SkButton(
+                stringResource(R.string.play_again),
+                onPlayAgain,
+                Modifier.fillMaxWidth(),
+                kind = if (hasNext) ButtonKind.SECONDARY else ButtonKind.PRIMARY,
+                icon = SkIcons.Replay,
+            )
+        }
+        if (!hasNext &&
+            !canReplay
+        ) {
+            SkButton(stringResource(R.string.back_description), onLevels, Modifier.fillMaxWidth())
+        }
+    }
+}
+
+@Composable
+private fun ResultRewards(
+    newItems: List<Item>,
+    outfit: Outfit,
+    color: fi.clocklings.domain.CompanionColor,
+    onDress: () -> Unit,
+) {
+    FlatPanel(padding = SkDimens.GapM) {
+        if (newItems.size == 1) {
+            val item = newItems.single()
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
+                verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
+            ) {
+                ItemArtWindow(item, outfit, color, displaySize = SkDimens.RewardArt)
+                Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
+                    WordSafeText(
+                        stringResource(itemName(item.id)),
+                        SkType.SectionTitle,
+                        textAlign = TextAlign.Start,
+                    )
+                    SkButton(
+                        stringResource(R.string.dress_doll),
+                        onDress,
+                        kind = ButtonKind.CONTAINER,
+                        small = true,
+                        icon = SkIcons.Dress,
+                    )
                 }
             }
+        } else {
+            FlowRow(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM, Alignment.CenterHorizontally),
+                verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
+            ) {
+                newItems.forEach { ItemTile(it, outfit, color, Modifier.width(SkDimens.ItemMinWidth)) }
+            }
+            SkButton(
+                stringResource(R.string.dress_doll),
+                onDress,
+                Modifier.align(Alignment.CenterHorizontally),
+                kind = ButtonKind.CONTAINER,
+                small = true,
+                icon = SkIcons.Dress,
+            )
         }
     }
 }
@@ -177,6 +267,8 @@ private fun PoppingStar(
     on: Boolean,
     delayMs: Int,
     onPop: (() -> Unit)?,
+    size: Dp,
+    modifier: Modifier = Modifier,
 ) {
     val reduceMotion = rememberReduceMotion()
     val k = remember { Animatable(if (on && !reduceMotion) 0f else 1f) }
@@ -199,12 +291,12 @@ private fun PoppingStar(
     }
     StarIcon(
         on,
-        Modifier.graphicsLayer {
+        modifier.graphicsLayer {
             scaleX = k.value
             scaleY = k.value
             rotationZ = if (k.value < 1f && on) -POP_ROTATION * (1f - k.value) else 0f
         },
-        size = SkDimens.StarResult,
+        size = size,
     )
 }
 
@@ -284,11 +376,13 @@ private fun ResultStars(
     val description = pluralStringResource(R.plurals.result_stars_description, stars, stars)
     Row(
         Modifier.clearAndSetSemantics { contentDescription = description }.confettiAnchor(onCenter),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(SkDimens.GapOptions),
     ) {
         repeat(MAX_STARS) { k ->
             PoppingStar(
                 on = k < stars,
+                size = if (k == 1) SkDimens.StarResultMiddle else SkDimens.StarResultSide,
+                modifier = Modifier.offset(y = if (k == 1) -SkDimens.GapS else 0.dp),
                 delayMs = STAR_DELAY_MS + k * STAR_STAGGER_MS,
                 onPop = onSound?.let { play -> { play(Sound.STAR, STAR_RATES[k]) } },
             )
