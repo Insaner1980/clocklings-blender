@@ -154,11 +154,22 @@ class LevelsTest {
 
     @Test
     fun `set task starts in the target day half away from the answer`() {
-        assertEquals(0, Levels.setTaskStart(195))
-        assertEquals(360, Levels.setTaskStart(0))
-        assertEquals(360, Levels.setTaskStart(720 - 720))
-        assertEquals(720, Levels.setTaskStart(930))
-        assertEquals(1080, Levels.setTaskStart(720))
+        assertEquals(180, Levels.setTaskStart(540))
+        assertEquals(540, Levels.setTaskStart(180))
+        assertEquals(180, Levels.setTaskStart(525))
+        assertEquals(1260, Levels.setTaskStart(920))
+        assertEquals(540, Levels.setTaskStart(390))
+        assertEquals(1260, Levels.setTaskStart(720))
+
+        for (target in 0 until ClockTime.DAY step ClockTime.MINUTES_PER_NUMBER) {
+            val start = Levels.setTaskStart(target)
+            val hour = ClockTime.hourAngle(start.toFloat())
+            val minute = ClockTime.minuteAngle(start.toFloat())
+            val distance = kotlin.math.abs(hour - minute)
+            assertTrue("target=$target start=$start", start != target)
+            assertEquals(target / ClockTime.HALF_DAY, start / ClockTime.HALF_DAY)
+            assertTrue("target=$target angle=$distance", minOf(distance, ClockTime.FULL_TURN - distance) >= 60f)
+        }
     }
 
     @Test

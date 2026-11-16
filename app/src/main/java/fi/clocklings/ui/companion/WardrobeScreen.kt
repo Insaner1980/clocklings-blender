@@ -30,10 +30,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.selected
@@ -57,11 +60,14 @@ import fi.clocklings.domain.slots
 import fi.clocklings.ui.LocalAppViewModel
 import fi.clocklings.ui.RetryableSave
 import fi.clocklings.ui.appearance.companionColorName
+import fi.clocklings.ui.appearance.companionName
 import fi.clocklings.ui.components.AdaptiveContent
 import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.PillKind
+import fi.clocklings.ui.components.PinnedPreview
 import fi.clocklings.ui.components.PressSurface
+import fi.clocklings.ui.components.PreviewScroll
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SelectionBadge
 import fi.clocklings.ui.components.SkButton
@@ -102,10 +108,7 @@ fun WardrobeScreen(
     val total = progress.totalStars
     val outfit = access.displayedOutfit(kind, progress.outfitFor(kind), total)
     val navigation = rememberWardrobeSections(kind)
-    val hasColor = kind != CompanionKind.HUMAN
-    val labels =
-        (if (hasColor) listOf(stringResource(R.string.companion_color)) else emptyList()) +
-            kind.slots.map { stringResource(slotName(it)) }
+    val preview = remember(navigation) { PreviewScroll(navigation.scroll) }
     val keyboardOpen = WindowInsets.ime.getBottom(LocalDensity.current) > 0
     val failureBar: @Composable () -> Unit = { WardrobeSaveFailure(retry) }
     ScreenScaffold(
@@ -113,11 +116,17 @@ fun WardrobeScreen(
         wideContent = true,
         section = Section.COMPANION,
         scrollState = navigation.scroll,
-        onViewportTop = { navigation.viewportTop = it },
-        topBar = {
-            WardrobeHeader(kind, total, access, labels, navigation, onBack)
+        onViewportTop = {
+            navigation.viewportTop = it
+            preview.viewportTop = it
         },
+        topBar = { WardrobeHeader(kind, total, access, navigation, onBack) },
         bottomBar = failureBar.takeIf { retry != null && !keyboardOpen },
+        pinnedContent = { height ->
+            PinnedPreview(preview.showCompact, height, name.ifBlank { stringResource(companionName(kind)) }) { size ->
+                CompanionView(kind, outfit, Modifier.size(size), color = color, animated = false)
+            }
+        },
     ) { clockSize ->
         AdaptiveContent(clockSize, visual = {
             WardrobeStage(
@@ -130,20 +139,14 @@ fun WardrobeScreen(
                     name = it
                     saveName(it)
                 },
+                onPreviewPosition = preview::positionPreview,
             )
         }) {
             if (retry != null && keyboardOpen) failureBar()
             WardrobeIntro(kind, total, access, color, { navigation.headings[0] = it }) { chosen ->
                 colorSave.run { app.setColor(kind, chosen, it) }
             }
-            WardrobeItems(
-                kind,
-                total,
-                outfit,
-                color,
-                access,
-                { index, top -> navigation.headings[index + if (hasColor) 1 else 0] = top },
-            ) { item ->
+            WardrobeItems(kind, total, outfit, color, access, navigation) { item ->
                 itemSaves.getValue(item.slot).run { app.toggleItem(kind, item, it) }
             }
             if (!access.fullAccess) SkButton(stringResource(R.string.parent_title), onParent)
@@ -158,15 +161,17 @@ private fun WardrobeItems(
     outfit: Outfit,
     color: CompanionColor,
     access: AccessPolicy,
-    onHeadingTop: (Int, Float) -> Unit,
+    navigation: WardrobeSections,
     onItemClick: (Item) -> Unit,
 ) {
     val app = LocalAppViewModel.current
+    val firstItemSection = if (kind == CompanionKind.HUMAN) 0 else 1
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val (columns, nameStyle) = rememberItemGridLayout(Wardrobe.itemsFor(kind), maxWidth)
         Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen)) {
             for ((index, slot) in kind.slots.withIndex()) {
-                WardrobeSection(stringResource(slotName(slot)), { onHeadingTop(index, it) }) {
+                val section = firstItemSection + index
+                WardrobeSection(stringResource(slotName(slot)), { navigation.headings[section] = it }) {
                     ItemGrid(Wardrobe.itemsFor(kind, slot), columns) { item, cell ->
                         if (access.item(item, total)) {
                             val on = outfit.isOn(item)
@@ -192,6 +197,7 @@ private fun WardrobeStage(
     name: String,
     nameError: String?,
     onNameChange: (String) -> Unit,
+    onPreviewPosition: (LayoutCoordinates) -> Unit,
 ) {
     Box(
         Modifier
@@ -207,7 +213,10 @@ private fun WardrobeStage(
             CompanionView(
                 kind,
                 outfit,
-                Modifier.width(SkDimens.DollBigMax).aspectRatio(companionAspectRatio(kind)),
+                Modifier
+                    .onGloballyPositioned(onPreviewPosition)
+                    .width(SkDimens.DollBigMax)
+                    .aspectRatio(companionAspectRatio(kind)),
                 color = color,
             )
             NameField(
@@ -321,9 +330,7 @@ private fun ItemTileContent(
         Box(Modifier.width(SkDimens.ItemWindow).height(SkDimens.SelectionBadge)) {
             if (on) SelectionBadge(Modifier.align(Alignment.TopEnd))
         }
-        Box {
-            ItemArtWindow(item, outfit, color)
-        }
+        ItemArtWindow(item, outfit, color)
 
         val name = stringResource(itemName(item.id))
         if (nameStyle == null) {
@@ -348,19 +355,13 @@ private fun LockedTile(
     nameStyle: TextStyle = SkType.ItemName,
     requiresFullVersion: Boolean = false,
 ) {
-    val starsDescription = pluralStringResource(R.plurals.doll_item_locked, item.star, item.star, total)
+    val needsStars = total < item.star
     val description =
-        if (requiresFullVersion) {
-            "${stringResource(
-                R.string.full_version_label,
-            )}. $starsDescription"
-        } else {
-            starsDescription
-        }
+        if (needsStars) pluralStringResource(R.plurals.item_star_need_description, item.star, item.star) else ""
     Column(
         modifier
             .background(SkColors.ItemLockedBg, SkShapes.Item)
-            .semantics(mergeDescendants = true) { contentDescription = description }
+            .semantics(mergeDescendants = true) { if (needsStars) contentDescription = description }
             .padding(TilePadding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(SkDimens.GapS),
@@ -380,7 +381,14 @@ private fun LockedTile(
         Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
             WordSafeText(stringResource(itemName(item.id)), nameStyle.copy(color = SkColors.UiInkSoft), minScale = 1f)
         }
-        Pill(stringResource(R.string.home_star_total, total, item.star), kind = PillKind.MUTED, icon = SkIcons.StarOn)
+        if (needsStars) {
+            Pill(
+                stringResource(R.string.item_star_need, item.star),
+                modifier = Modifier.clearAndSetSemantics { },
+                kind = PillKind.MUTED,
+                icon = SkIcons.StarOn,
+            )
+        }
         if (requiresFullVersion) Text(stringResource(R.string.full_version_label), style = SkType.Small)
     }
 }
@@ -434,7 +442,7 @@ private fun WardrobeIntro(
     onColorChange: (CompanionColor) -> Unit,
 ) {
     WardrobeHints(kind, total)
-    if (!access.fullAccess) Text(stringResource(R.string.wardrobe_full_requirement), style = SkType.BodySoft)
+    if (!access.fullAccess) Text(stringResource(R.string.wardrobe_full_requirement), style = SkType.SmallSoft)
     if (kind != CompanionKind.HUMAN) {
         WardrobeSection(stringResource(R.string.companion_color), onHeadingTop) {
             CompanionColors(kind, color, onColorChange)

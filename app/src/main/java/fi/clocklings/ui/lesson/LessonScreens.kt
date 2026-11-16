@@ -229,7 +229,7 @@ private fun ColumnScope.LessonQuiz(
                 state.lesson.quiz.hint
                     .resolve(),
                 kind = FeedbackKind.HINT,
-                color = SkColors.TryBg,
+                color = SkColors.HintFill,
             )
         }
     }

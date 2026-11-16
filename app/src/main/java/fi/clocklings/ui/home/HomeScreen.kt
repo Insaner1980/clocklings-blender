@@ -104,7 +104,7 @@ internal fun rememberHomeTime(readTime: () -> Int = ClockTime::now): Int {
 
 /**
  * Header, flexible stage and footer: the stage gets whatever height is left in [viewport], but never
- * less than [SkDimens.StageMinHeight]. On a [compact] page the stage has no minimum and may grow to
+ * less than [SkDimens.ShortHomeStageHeight] while fitting the menu. On a [compact] page the stage may grow to
  * the height its content needs.
  */
 @Composable
@@ -131,7 +131,7 @@ private fun FillHeightLayout(
         val stageMin =
             if (compact) {
                 0
-            } else if (available >= SkDimens.FitClockMin.roundToPx()) {
+            } else if (available >= SkDimens.ShortHomeStageHeight.roundToPx()) {
                 minOf(SkDimens.StageMinHeight.roundToPx(), available)
             } else {
                 SkDimens.StageMinHeight.roundToPx()

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.coerceIn
@@ -11,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import fi.clocklings.ui.theme.SkDimens
+import kotlin.math.sqrt
 
 /** Companion geometry in a measured stage; the wardrobe button reserves room below its feet. */
 internal class CompanionStageLayout(
@@ -115,6 +117,19 @@ internal fun skyCloudY(
 /** How far a cloud [width] wide in the stage scenery reaches above and below its centre. */
 internal fun cloudReach(width: Dp): Pair<Dp, Dp> =
     width * CLOUD_PUFF * CLOUD_TOP to width * CLOUD_PUFF * (2 * CLOUD_DROP + 1)
+
+/** Place the curved ground edge just above the companion's shadow at its actual horizontal position. */
+internal fun groundHorizon(
+    ground: Offset,
+    centreX: Float,
+    radiusX: Float,
+    radiusY: Float,
+    overlap: Float,
+): Float {
+    val x = ((ground.x - centreX) / radiusX).coerceIn(-1f, 1f)
+    val curvedOffset = radiusY * (1f - sqrt(1f - x * x))
+    return ground.y - curvedOffset - overlap
+}
 
 internal const val COMPANION_WIDTH_SHARE = 0.52f
 

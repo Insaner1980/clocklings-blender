@@ -23,6 +23,25 @@ class AccessNavigationTest {
     }
 
     @Test
+    fun navigationReportsOnlyChangedDestinationsAfterApplyingAccessRules() {
+        val stack = mutableListOf<NavKey>(Screen.Home)
+        val reported = mutableListOf<Screen>()
+        val nav =
+            Navigator(stack, onDestinationChanged = {
+                assertEquals(stack.last(), it)
+                reported += it
+            }) { AccessPolicy(fullAccess = false) }
+        nav.pop()
+        nav.ifCurrent(Screen.Home) { nav.push(Screen.Settings) }
+        nav.ifCurrent(Screen.Home) { nav.push(Screen.FreeClock) }
+        nav.replace(Screen.Challenge)
+        nav.startLevel(4, emptyList(), false)
+        nav.replace(Screen.Levels)
+        nav.popTo(Screen.Home)
+        assertEquals(listOf(Screen.Settings, Screen.Levels, Screen.Home), reported)
+    }
+
+    @Test
     fun restoredQueuesKeepOnlyAccessibleLessonsAndCannotStartPaidPractice() {
         val stack = mutableListOf<NavKey>(Screen.Home, Screen.Lesson(listOf("viisarit", "puoli", "tasan"), 4))
         Navigator(stack) { AccessPolicy(fullAccess = false) }

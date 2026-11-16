@@ -3,8 +3,8 @@ package fi.clocklings.ui.settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
@@ -77,8 +76,8 @@ fun SettingsScreen(
                 !action.pending,
                 app::setSound,
             )
+            SpeechAvailabilityInfo(speechAvailable, Modifier.padding(horizontal = SkDimens.Gap))
         }
-        SpeechAvailabilityInfo(speechAvailable)
         SettingsGroup(stringResource(R.string.settings_progress_title)) {
             ResetProgressRow(!action.pending) {
                 app.clearSettingsError()
@@ -101,9 +100,12 @@ fun SettingsScreen(
 }
 
 @Composable
-internal fun SpeechAvailabilityInfo(available: Boolean) {
+internal fun SpeechAvailabilityInfo(
+    available: Boolean,
+    modifier: Modifier = Modifier,
+) {
     // Refreshing the voice must not shrink the content and clamp a restored scroll offset.
-    Box {
+    Box(modifier) {
         for ((state, message) in listOf(
             true to R.string.settings_speech_info_available,
             false to R.string.settings_speech_info_unavailable,
@@ -179,22 +181,23 @@ private fun ResetProgressDialog(
             }
         },
         confirmButton = {
-            FlowRow(
+            Column(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM, Alignment.End),
                 verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
             ) {
                 SkButton(
-                    stringResource(R.string.settings_cancel),
-                    onDismiss,
-                    kind = ButtonKind.TONAL,
+                    stringResource(R.string.settings_reset_action),
+                    onReset,
+                    Modifier.fillMaxWidth(),
+                    kind = ButtonKind.DANGER,
                     small = true,
                     enabled = !pending,
                 )
                 SkButton(
-                    stringResource(R.string.settings_reset_action),
-                    onReset,
-                    kind = ButtonKind.DANGER,
+                    stringResource(R.string.settings_cancel),
+                    onDismiss,
+                    Modifier.fillMaxWidth(),
+                    kind = ButtonKind.TONAL,
                     small = true,
                     enabled = !pending,
                 )

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +22,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -36,6 +38,7 @@ import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -65,6 +68,7 @@ import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.TaskActionFocus
 import fi.clocklings.ui.components.TopBar
 import fi.clocklings.ui.components.confettiAnchor
+import fi.clocklings.ui.components.excludeConfetti
 import fi.clocklings.ui.components.taskActionFocus
 import fi.clocklings.ui.locale.LocalAppLanguage
 import fi.clocklings.ui.theme.Section
@@ -73,6 +77,8 @@ import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkShapes
 import fi.clocklings.ui.theme.SkType
 import fi.clocklings.ui.timeLabel
+import java.util.concurrent.TimeUnit
+import kotlin.math.ceil
 
 @Composable
 fun ChallengeRoute(
@@ -139,7 +145,12 @@ fun ChallengeScreen(
             TopBar(
                 title = stringResource(R.string.challenge_title),
                 onBack = onBack,
-                trailing = { Pill(stringResource(R.string.challenge_score, state.score)) },
+                trailing =
+                    if (state.phase != ChallengePhase.END) {
+                        { Pill(stringResource(R.string.challenge_score, state.score)) }
+                    } else {
+                        null
+                    },
             )
         },
         // The start action and the result actions stay reachable below a narrow or large-font intro or result
@@ -288,23 +299,32 @@ private fun TimerBar(state: ChallengeUiState) {
             withFrameNanos { fraction = state.remainingFraction(System.nanoTime()) }
         }
     }
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(SkDimens.TimerHeight)
-            .clip(SkShapes.Timer)
-            .background(SkColors.DotEmpty)
-            .clearAndSetSemantics {
-                contentDescription = label
-                progressBarRangeInfo = ProgressBarRangeInfo(fraction, 0f..1f)
-            },
+    val seconds = ceil(fraction * TimeUnit.MILLISECONDS.toSeconds(ChallengeViewModel.DURATION_MS)).toInt()
+    val time = stringResource(R.string.challenge_seconds_left, seconds)
+    Row(
+        Modifier.fillMaxWidth().clearAndSetSemantics {
+            contentDescription = label
+            if (state.phase == ChallengePhase.RUN) stateDescription = time
+            progressBarRangeInfo = ProgressBarRangeInfo(fraction, 0f..1f)
+        },
+        horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(fraction)
-                .background(Brush.horizontalGradient(SkColors.Rainbow7)),
-        )
+                .weight(1f)
+                .height(SkDimens.TimerHeight)
+                .clip(SkShapes.Timer)
+                .background(SkColors.DotEmpty),
+        ) {
+            Box(
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(fraction)
+                    .background(Brush.horizontalGradient(SkColors.Rainbow7)),
+            )
+        }
+        if (state.phase == ChallengePhase.RUN) Text(time, style = SkType.Small)
     }
 }
 
@@ -375,7 +395,10 @@ private fun ChallengePanel(
     onAnchorChange: (Offset) -> Unit,
     compact: Boolean,
 ) {
-    FlatPanel(padding = if (compact) SkDimens.GapS else SkDimens.PanelPadding) {
+    FlatPanel(
+        modifier = if (state.phase == ChallengePhase.END) Modifier.excludeConfetti() else Modifier,
+        padding = if (compact) SkDimens.GapS else SkDimens.PanelPadding,
+    ) {
         when (state.phase) {
             ChallengePhase.START -> {
                 Text(stringResource(R.string.challenge_desc), style = SkType.Question)

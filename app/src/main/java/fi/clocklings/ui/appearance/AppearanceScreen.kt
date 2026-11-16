@@ -28,6 +28,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -65,13 +66,13 @@ import fi.clocklings.ui.components.ClockBox
 import fi.clocklings.ui.components.CompanionTip
 import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.PressSurface
+import fi.clocklings.ui.components.PreviewScroll
 import fi.clocklings.ui.components.ScreenScaffold
-import fi.clocklings.ui.components.SegmentedControl
 import fi.clocklings.ui.components.SelectionBadge
 import fi.clocklings.ui.components.SkButton
+import fi.clocklings.ui.components.SkIcon
 import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.SwatchTile
-import fi.clocklings.ui.components.TopBar
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.components.adaptiveGridColumns
 import fi.clocklings.ui.observeAccessPolicy
@@ -106,11 +107,20 @@ fun AppearanceScreen(
             companionVoice(chosen)?.let(app::play)
         }
     var clocks by rememberSaveable { mutableStateOf(false) }
+    val scroll = rememberScrollState()
+    val preview = remember(scroll, clocks) { PreviewScroll(scroll) }
     ScreenScaffold(
         modifier,
         wideContent = true,
         section = Section.COMPANION,
-        topBar = { TopBar(stringResource(R.string.appearance_title), onBack) },
+        scrollState = scroll,
+        onViewportTop = { preview.viewportTop = it },
+        topBar = { AppearanceHeader(clocks, onBack) { clocks = it } },
+        pinnedContent = { height ->
+            if (clocks) {
+                PinnedClockPreview(appearance.clock, preview.showCompact, height, PREVIEW_TIME)
+            }
+        },
         bottomBar =
             save.retry?.let { retry ->
                 {
@@ -121,15 +131,8 @@ fun AppearanceScreen(
                 }
             },
     ) { clockSize ->
-        SegmentedControl(
-            "",
-            listOf(stringResource(R.string.companions_title), stringResource(R.string.clock_styles_title)),
-            if (clocks) 1 else 0,
-            { clocks = it == 1 },
-            Modifier.fillMaxWidth(),
-        )
         if (clocks) {
-            ClockChoices(appearance, clockSize, onChange)
+            ClockChoices(appearance, clockSize, preview, onChange)
         } else {
             // The preview grows with the screen so the page uses its height instead of leaving it empty.
             CompanionChoices(
@@ -157,7 +160,7 @@ private fun CompanionChoices(
 ) {
     val kind = appearance.companion
     val preview = CompanionKind.entries[pager.settledPage]
-    AdaptiveContent(previewHeight, visual = { size -> CompanionPager(pager, progress, size) }) {
+    AdaptiveContent(previewHeight, visual = { size -> CompanionPager(pager, progress, access, size) }) {
         CompanionThumbnails(pager, kind, progress, access)
         if (!access.companion(preview, progress.totalStars)) {
             Text(stringResource(R.string.companion_access_requirement), style = SkType.BodySoft)
@@ -170,7 +173,7 @@ private fun CompanionChoices(
                 onOutfits,
                 Modifier.fillMaxWidth(),
                 kind = ButtonKind.PRIMARY,
-                icon = SkIcons.Dress,
+                icon = SkIcons.Outfit,
                 enabled = preview == kind,
             )
         }
@@ -181,6 +184,7 @@ private fun CompanionChoices(
 private fun ClockChoices(
     appearance: Personalization,
     previewSize: Dp,
+    preview: PreviewScroll,
     onChange: ((Personalization) -> Personalization) -> Unit,
 ) {
     AdaptiveContent(previewSize, visual = { size ->
@@ -188,7 +192,7 @@ private fun ClockChoices(
             ClockBox(size) {
                 ClockFace(
                     ClockCommand(PREVIEW_TIME),
-                    Modifier.testTag("selected_clock"),
+                    Modifier.testTag("selected_clock").onGloballyPositioned(preview::positionPreview),
                     appearance = appearance.clock,
                 )
             }
@@ -230,7 +234,7 @@ private fun CustomClockControls(
     onChange: ((CustomClock) -> CustomClock) -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapL)) {
-        CompanionTip(stringResource(R.string.custom_clock_hint))
+        CompanionTip(stringResource(R.string.custom_clock_hint), color = SkColors.TryBg)
         ClockColors(custom, onChange)
         ClockOptions(
             R.string.clock_frame,
@@ -352,6 +356,7 @@ private const val PREVIEW_TIME = 610
 private fun CompanionPager(
     pager: PagerState,
     progress: Progress,
+    access: AccessPolicy,
     previewHeight: Dp,
 ) {
     HorizontalPager(pager, Modifier.fillMaxWidth().testTag("companion_pager"), key = {
@@ -359,31 +364,36 @@ private fun CompanionPager(
     }) { page ->
         val option = CompanionKind.entries[page]
         FlatPanel(Modifier.testTag("companion_preview"), shape = SkShapes.Tile) {
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                if (option == CompanionKind.NONE) {
-                    ClockFace(ClockCommand(PREVIEW_TIME), Modifier.size(previewHeight), mini = true)
-                } else {
-                    val greeting =
-                        remember(option, pager.settledPage) { CompanionCelebration(newOutfit = null, jump = true) }
-                    CompanionView(
-                        option,
-                        progress.outfitFor(option),
-                        Modifier
-                            .then(
-                                if (page ==
-                                    pager.settledPage
-                                ) {
-                                    Modifier.sharedClocklingsElement("companion")
-                                } else {
-                                    Modifier
-                                },
-                            ).height(previewHeight)
-                            .aspectRatio(companionAspectRatio(option)),
-                        celebration = greeting,
-                        animated = page == pager.settledPage,
-                    )
+            Box(Modifier.fillMaxWidth()) {
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                    if (option == CompanionKind.NONE) {
+                        ClockFace(ClockCommand(PREVIEW_TIME), Modifier.size(previewHeight), mini = true)
+                    } else {
+                        val greeting =
+                            remember(option, pager.settledPage) { CompanionCelebration(newOutfit = null, jump = true) }
+                        CompanionView(
+                            option,
+                            progress.outfitFor(option),
+                            Modifier
+                                .then(
+                                    if (page ==
+                                        pager.settledPage
+                                    ) {
+                                        Modifier.sharedClocklingsElement("companion")
+                                    } else {
+                                        Modifier
+                                    },
+                                ).height(previewHeight)
+                                .aspectRatio(companionAspectRatio(option)),
+                            celebration = greeting,
+                            animated = page == pager.settledPage,
+                        )
+                    }
+                    Text(stringResource(companionName(option)), style = SkType.SectionTitle)
                 }
-                Text(stringResource(companionName(option)), style = SkType.SectionTitle)
+                if (!access.companion(option, progress.totalStars)) {
+                    SkIcon(SkIcons.Lock, SkDimens.Star, Modifier.align(Alignment.TopEnd))
+                }
             }
         }
     }
@@ -424,7 +434,12 @@ private fun CompanionThumbnails(
                             contentDescription = label
                             selected = kind == option
                         },
-                    border = if (kind == option) BorderStroke(SkDimens.SelectionBorder, SkColors.Primary) else null,
+                    border =
+                        if (pager.currentPage == option.ordinal) {
+                            BorderStroke(SkDimens.SelectionBorder, SkColors.Primary)
+                        } else {
+                            null
+                        },
                     role = Role.RadioButton,
                     enabled = access.companion(option, progress.totalStars),
                 ) {
@@ -441,6 +456,7 @@ private fun CompanionThumbnails(
                                 )
                             }
                         }
+                        if (kind == option) SelectionBadge(Modifier.align(Alignment.BottomCenter))
                     }
                 }
             }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="back_description">Takaisin</string>
-    <string name="help_on">Apu päällä</string>
-    <string name="help_off">Apu pois</string>
     <string name="listen">Kuuntele</string>
     <string name="random_time">Satunnainen aika</string>
     <string name="next">Seuraava</string>
@@ -148,10 +146,6 @@
     <string name="doll_all_open">Kaikki asusteet ovat käytettävissä. Kokeile erilaisia yhdistelmiä!</string>
     <string name="doll_optional_hint">Pue asuste napauttamalla. Riisu napauttamalla uudelleen.</string>
     <string name="doll_optional_hint_partial">Pue asuste napauttamalla. Päähineen ja lisävarusteen voi riisua napauttamalla uudelleen.</string>
-    <plurals name="doll_item_locked">
-        <item quantity="one">Lukittu. Avautuu, kun tähtiä on %1$d. Sinulla on %2$d.</item>
-        <item quantity="other">Lukittu. Avautuu, kun tähtiä on %1$d. Sinulla on %2$d.</item>
-    </plurals>
     <string name="slot_hair">Hiukset</string>
     <string name="slot_dress">Mekot</string>
     <string name="slot_shoes">Kengät</string>
@@ -189,7 +183,6 @@
     <string name="lesson_try">Kokeile</string>
     <string name="lesson_next_lesson">Seuraava oppitunti</string>
     <string name="lesson_start_game">Aloita pelaaminen!</string>
-    <string name="lesson_practise">Harjoittele</string>
     <string name="lesson_learned">%1$s Oppitunti %2$s on suoritettu.</string>
     <!-- Full sentences end with punctuation; bare labels do not. Measurements use digits.
          Counting phrases may spell out counts. Keep numbers and units together. -->
@@ -332,4 +325,12 @@
     <string name="task_outcome_first_try">Tehtävä %1$d. Oikein ensimmäisellä yrittämällä</string>
     <string name="task_outcome_with_hint">Tehtävä %1$d. Oikein vihjeen jälkeen</string>
     <string name="task_outcome_shown">Tehtävä %1$d. Vastaus näytettiin</string>
+    <string name="item_star_need">%1$d</string>
+    <plurals name="item_star_need_description">
+        <item quantity="one">Tarvitsee %1$d tähden</item>
+        <item quantity="other">Tarvitsee %1$d tähteä</item>
+    </plurals>
+    <string name="guides_on">Kellon apumerkit näkyvät</string>
+    <string name="guides_off">Kellon apumerkit piilossa</string>
+    <string name="challenge_seconds_left">%1$d s</string>
 </resources>

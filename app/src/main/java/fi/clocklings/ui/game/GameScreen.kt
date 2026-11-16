@@ -36,13 +36,14 @@ import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.components.AdaptiveContent
 import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.ClockBox
+import fi.clocklings.ui.components.ClockFit
 import fi.clocklings.ui.components.CompanionTip
 import fi.clocklings.ui.components.ConfettiState
 import fi.clocklings.ui.components.DigitalPill
 import fi.clocklings.ui.components.DotOutcome
 import fi.clocklings.ui.components.FeedbackKind
 import fi.clocklings.ui.components.FlatPanel
-import fi.clocklings.ui.components.HelpToggle
+import fi.clocklings.ui.components.GuidesToggle
 import fi.clocklings.ui.components.LocalConfetti
 import fi.clocklings.ui.components.OptionButton
 import fi.clocklings.ui.components.OptionState
@@ -51,6 +52,7 @@ import fi.clocklings.ui.components.ReadOptions
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.TopBar
+import fi.clocklings.ui.components.bringFeedbackIntoView
 import fi.clocklings.ui.components.confettiAnchor
 import fi.clocklings.ui.components.rememberCelebrationAnchors
 import fi.clocklings.ui.digitalLabel
@@ -147,12 +149,13 @@ fun GameScreen(
         wideContent = true,
         centerContent = true,
         clockHeightShare = SkDimens.GAME_CLOCK_HEIGHT_SHARE,
+        clockFit = if (state.feedback != null) ClockFit.FIT else ClockFit.NONE,
         section = Section.PLAY,
         topBar = {
             TopBar(
                 title = stringResource(levelName(state.level)),
                 onBack = onBack,
-                trailing = { HelpToggle(help, onToggleHelp) },
+                trailing = { GuidesToggle(help, onToggleHelp) },
             )
         },
     ) { clockSize ->
@@ -288,16 +291,10 @@ private fun GameFeedbackMessage(
             }
         CompanionTip(
             text,
+            modifier = Modifier.bringFeedbackIntoView(text),
             kind = kind,
             celebrate = feedback is GameFeedback.Praise,
-            color =
-                if (kind ==
-                    FeedbackKind.HINT
-                ) {
-                    SkColors.TryBg
-                } else {
-                    SkColors.Bubble
-                },
+            color = if (kind == FeedbackKind.HINT) SkColors.HintFill else null,
         )
     }
 }

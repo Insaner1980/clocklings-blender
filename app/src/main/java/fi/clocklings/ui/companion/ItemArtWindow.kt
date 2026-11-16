@@ -1,6 +1,5 @@
 package fi.clocklings.ui.companion
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -18,14 +17,10 @@ import androidx.compose.ui.unit.Dp
 import fi.clocklings.domain.CompanionColor
 import fi.clocklings.domain.Item
 import fi.clocklings.domain.Outfit
-import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkShapes
 
-/**
- * Every item preview sits in the same rounded window, so crops that reach the canvas edge read as a
- * framed close-up rather than a cut-off picture.
- */
+/** Clips each artwork close-up to the same rounded window on its tile. */
 @Composable
 internal fun ItemArtWindow(
     item: Item,
@@ -37,8 +32,7 @@ internal fun ItemArtWindow(
     Box(
         modifier
             .size(displaySize)
-            .clip(SkShapes.ArtWindow)
-            .background(SkColors.ItemWindow),
+            .clip(SkShapes.ArtWindow),
         contentAlignment = Alignment.Center,
     ) {
         CompanionView(

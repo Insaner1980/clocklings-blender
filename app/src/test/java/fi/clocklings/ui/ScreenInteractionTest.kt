@@ -21,6 +21,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isHeading
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -154,16 +155,16 @@ class ScreenInteractionTest {
         for (name in levelNames) {
             compose.onAllNodes(isHeading() and hasText(name)).assertCountEquals(0)
         }
-        // Visible labels remain in the unmerged tree; the accessible row has one complete description.
-        compose.onAllNodesWithText("Practise", useUnmergedTree = true).assertCountEquals(levelNames.size)
+        // The level names now identify the practice rows, with one complete description per action.
+        levelNames.forEachIndexed { index, name ->
+            val action = if (index == 0) "Play again" else "Start playing!"
+            compose
+                .onNode(hasContentDescription("$name. $action.", substring = true) and hasClickAction())
+                .assertExists()
+            compose.onAllNodesWithText(name, useUnmergedTree = true).onFirst().assertExists()
+        }
         compose.onAllNodesWithText("Play again", useUnmergedTree = true).assertCountEquals(1)
         compose.onAllNodesWithText("Start playing!", useUnmergedTree = true).assertCountEquals(levelNames.size - 1)
-        compose
-            .onNode(hasContentDescription("Whole hours. Practise. Play again.", substring = true) and hasClickAction())
-            .assertExists()
-        compose
-            .onNode(hasContentDescription("Half past. Practise. Start playing!", substring = true) and hasClickAction())
-            .assertExists()
     }
 
     @Test

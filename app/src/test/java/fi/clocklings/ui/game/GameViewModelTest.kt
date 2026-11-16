@@ -1,6 +1,8 @@
 package fi.clocklings.ui.game
 
+import fi.clocklings.AppServices
 import fi.clocklings.Screen
+import fi.clocklings.analytics.UsageAnalytics
 import fi.clocklings.audio.Sound
 import fi.clocklings.domain.Hint
 import fi.clocklings.domain.Levels
@@ -64,6 +66,38 @@ class GameViewModelTest {
             runCurrent()
             assertEquals(1, vm.state.value.taskIndex)
             assertEquals(1, vm.state.value.outcomes.size)
+        }
+
+    @Test
+    fun analyticsCountEachShownTaskAndOutcomeOnce() =
+        scope.runTest {
+            val metrics = mutableListOf<String>()
+            val analytics =
+                object : UsageAnalytics by UsageAnalytics.Disabled {
+                    override fun count(metric: String) {
+                        metrics.add(metric)
+                    }
+                }
+            val instrumented =
+                object : AppServices by services {
+                    override val usage = analytics
+                }
+            val vm = GameViewModel(0, false, instrumented, Random(11))
+            val answer = vm.state.value.task.time
+            vm.pick(answer)
+            vm.pick(answer)
+            advanceTimeBy(1_600)
+            val target = vm.state.value.task.time
+            vm.onClockChange((target + 60) % 720)
+            repeat(3) { vm.done() }
+            assertEquals(
+                listOf("game.0.start", "game.0.read", "game.0.read_first", "game.0.set", "game.0.set_reveal"),
+                metrics,
+            )
+            vm.next()
+            vm.next()
+            assertEquals("game.0.read", metrics.last())
+            assertEquals(6, metrics.size)
         }
 
     private fun game(

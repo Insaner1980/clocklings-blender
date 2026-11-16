@@ -33,6 +33,7 @@ internal enum class ArtPart { BODY, HEAD, WINGS, HAND, ANTENNA, WHEELS }
 internal interface CompanionRig {
     val width: Float
     val height: Float
+    val groundCenter: Offset
 
     /** The design-grid area that shows the [slot] in a wardrobe thumbnail. */
     fun crop(slot: Slot): Rect
@@ -73,6 +74,7 @@ internal abstract class AnimalRig(
 
     final override val width = ANIMAL_GRID_WIDTH
     final override val height = ANIMAL_GRID_HEIGHT
+    final override val groundCenter = ground.center
 
     private val grid = Rect(0f, 0f, width, height)
 

@@ -51,7 +51,7 @@ internal class BlenderDinosaurRig(
         // The crops keep every item of the slot whole: the head crop holds the hats and the head spikes and ends
         // under the jaw; the neck crop starts below the mouth.
         headCrop = Rect(34f, 0f, 226f, 146f),
-        neckCrop = Rect(66f, 138f, 192f, 230f),
+        neckCrop = Rect(58f, 55f, 202f, 199f),
         // Accessory crops: the item's drawing bounds plus 12 units on every side, squared to the thumbnail window.
         itemCrops =
             mapOf(

@@ -47,9 +47,9 @@ internal class BlenderCatRig(
         // Keep tall headwear below the wardrobe's star badge, including at 200% font scale.
         fullFrame = FullFrame,
         ground = Ground,
-        // The crops keep every item of the slot whole while leaving out the tail and the mouth and whiskers.
+        // Frame the accessory and the eyes together in the neckwear preview.
         headCrop = Rect(42f, 8f, 198f, 164f),
-        neckCrop = Rect(55f, 150f, 185f, 236f),
+        neckCrop = Rect(55f, 83f, 185f, 213f),
         // Accessory crops: the item's drawing bounds plus 12 units on every side, squared to the thumbnail window.
         itemCrops =
             mapOf(

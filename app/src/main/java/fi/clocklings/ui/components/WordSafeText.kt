@@ -28,11 +28,13 @@ fun WordSafeText(
     modifier: Modifier = Modifier,
     minScale: Float = MIN_SCALE,
     textAlign: TextAlign = TextAlign.Center,
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     BasicText(
         text = text,
         style = style.merge(TextStyle(textAlign = textAlign)),
         modifier = modifier,
+        maxLines = maxLines,
         autoSize = WordSafeAutoSize(style.fontSize.value, style.fontSize.value * minScale),
     )
 }
@@ -58,7 +60,7 @@ private inline fun wordSafeFontSize(
     var size = maxSp
     while (size > minSp) {
         val result = layout(size.sp)
-        if (!result.didOverflowWidth && !result.breaksInsideWord(text)) return size.sp
+        if (!result.hasVisualOverflow && !result.breaksInsideWord(text)) return size.sp
         size -= WORD_SAFE_STEP_SP
     }
     return minSp.sp

@@ -1,6 +1,26 @@
-import { defineConfig } from "deepsec/config";
+import { defineConfig, regexMatcher } from "deepsec/config";
+
+const networkConnectionSlug = "clocklings-kotlin-network-connection";
 
 export default defineConfig({
+  plugins: [
+    {
+      name: "clocklings-android",
+      matchers: [
+        {
+          slug: networkConnectionSlug,
+          description: "Review Android network destinations, consent, and transmitted application data.",
+          noiseTier: "normal",
+          filePatterns: ["app/src/main/**/*.kt"],
+          match: (content) => regexMatcher(
+            networkConnectionSlug,
+            [{ regex: /\.\s*openConnection\s*\(/, label: "Opens a network connection" }],
+            content,
+          ),
+        },
+      ],
+    },
+  ],
   projects: [
     {
       id: "clocklings",

@@ -42,7 +42,6 @@ import fi.clocklings.ui.theme.SkShapes
 import fi.clocklings.ui.theme.SkType
 import fi.clocklings.ui.timeLabel
 import kotlinx.coroutines.delay
-import java.util.Locale
 
 enum class PillKind { GOLD, MUTED, OK }
 
@@ -89,7 +88,7 @@ fun Eyebrow(
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text.uppercase(Locale.forLanguageTag(LocalAppLanguage.current.tag)),
+        text,
         style = SkType.Eyebrow,
         modifier = modifier,
     )
@@ -274,11 +273,12 @@ fun FeedbackBox(
     text: String,
     kind: FeedbackKind,
     modifier: Modifier = Modifier,
+    color: Color? = null,
 ) {
     val (bg, style) =
         when (kind) {
             FeedbackKind.OK -> SkColors.GoodBg to SkType.FeedbackOk
-            FeedbackKind.HINT -> SkColors.TryBg to SkType.FeedbackHint
+            FeedbackKind.HINT -> SkColors.HintFill to SkType.Body
         }
     Text(
         text,
@@ -287,7 +287,7 @@ fun FeedbackBox(
             modifier
                 .fillMaxWidth()
                 .semantics { liveRegion = LiveRegionMode.Polite }
-                .background(bg, SkShapes.Feedback)
+                .background(color ?: bg, SkShapes.Feedback)
                 .padding(horizontal = SkDimens.GapL, vertical = SkDimens.GapLabel),
     )
 }

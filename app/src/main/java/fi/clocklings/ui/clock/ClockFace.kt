@@ -168,8 +168,8 @@ fun ClockFace(
             under.forEach { drawMark(it, textMeasurer, styles) }
             drawTicks()
             drawNumbers(textMeasurer, styles)
-            if (is24) drawDayPart(dayPart, textMeasurer, styles)
             drawHands(raw, highlight, pulse, interactive && !mini, appearance.handsAt(mini))
+            if (is24) drawDayPart(dayPart, textMeasurer, styles)
             drawCoveredNumerals(textMeasurer, styles, raw, showHelp, under)
             drawCircle(SkColors.Ink, S.PIN_RADIUS, Offset(S.CENTER, S.CENTER))
             drawCircle(SkColors.Face, S.PIN_DOT, Offset(S.CENTER, S.CENTER))
@@ -280,6 +280,7 @@ internal class ClockTextStyles(
     val zone = style(Fredoka, FontWeight.SemiBold, S.ZONE_FONT, SkColors.InkSoft)
     val inner24 = style(Nunito, FontWeight.ExtraBold, S.INNER_24_FONT, SkColors.Hour24)
     val day = style(Fredoka, FontWeight.SemiBold, S.DAY_FONT, SkColors.Ink)
+    val dayHalo = day.copy(color = SkColors.Face, drawStyle = Stroke(width = S.NUMERAL_HALO, join = StrokeJoin.Round))
     val bubble = minute.copy(fontSize = with(density) { S.BUBBLE_FONT.toSp() })
 }
 
@@ -491,8 +492,9 @@ private fun DrawScope.drawDayPart(
     measurer: TextMeasurer,
     styles: ClockTextStyles,
 ) {
+    val c = Offset(S.CENTER, S.SUN_CY)
+    drawCircle(SkColors.Face, S.SUN_RADIUS + S.NUMERAL_HALO, c)
     if (part.isSun) {
-        val c = Offset(S.CENTER, S.SUN_CY)
         drawCircle(SkColors.Sun, S.SUN_RADIUS, c)
         for (i in 0 until SUN_RAY_COUNT) {
             val from = S.point(S.SUN_RAY_FROM, i * SUN_RAY_ANGLE) - Offset(0f, S.CENTER - S.SUN_CY)
@@ -502,6 +504,7 @@ private fun DrawScope.drawDayPart(
     } else {
         withTransform({ translate(S.CENTER, S.SUN_CY) }) { drawPath(MoonPath, SkColors.Moon) }
     }
+    drawOnBaseline(measurer, part.name, styles.dayHalo, S.CENTER, S.DAY_TEXT_Y)
     drawOnBaseline(measurer, part.name, styles.day, S.CENTER, S.DAY_TEXT_Y)
 }
 
@@ -539,10 +542,10 @@ private fun DrawScope.drawHands(
         )
     drawHandShadow(hour, hourAlpha)
     drawHandShadow(minute, minuteAlpha)
-    drawHandShape(hour, SkColors.Face.copy(alpha = hourAlpha), extraWidth = S.HAND_HALO * 2)
-    drawHandBody(hour, SkColors.Hour.copy(alpha = hourAlpha))
     drawHandShape(minute, SkColors.Face.copy(alpha = minuteAlpha), extraWidth = S.HAND_HALO * 2)
     drawHandBody(minute, SkColors.Minute.copy(alpha = minuteAlpha))
+    drawHandShape(hour, SkColors.Face.copy(alpha = hourAlpha), extraWidth = S.HAND_HALO * 2)
+    drawHandBody(hour, SkColors.Hour.copy(alpha = hourAlpha))
     // Knobs go on top of both hands so an overlapping hand never hides the other one's grip.
     // Pointed hands use the arrowhead itself as the grip, so they get no knob.
     if (knobs && handStyle == HandStyle.ROUND) {

@@ -14,6 +14,8 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
@@ -27,11 +29,13 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import fi.clocklings.R
+import fi.clocklings.analytics.UsageAnalytics
 import fi.clocklings.billing.PurchaseStatus
 import fi.clocklings.billing.PurchaseUiState
 import fi.clocklings.domain.AppLanguage
 import fi.clocklings.ui.parent.ParentScreen
 import fi.clocklings.ui.theme.ClocklingsTheme
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -58,23 +62,28 @@ class ParentScreenTest {
     @Test
     fun keyboardGateAndRestorationRequireAnIntentionalAdultAction() {
         val restoration = StateRestorationTester(compose)
+        val usage = TestUsage()
         restoration.setContent {
-            ClocklingsTheme { ParentScreen(PurchaseUiState(), {}, {}, {}, {}) }
+            ClocklingsTheme { ParentScreen(PurchaseUiState(), {}, {}, {}, {}, usage = usage) }
         }
+        compose.onNodeWithText("Share usage statistics", substring = true).assertDoesNotExist()
         compose.onNodeWithText("Continue").assertIsNotEnabled()
         compose.onNode(hasSetTextAction()).performTextInput("0000")
         compose.onNode(hasSetTextAction()).performImeAction()
         compose.onNodeWithText("Check the order and try again.").assertExists()
+        compose.onNodeWithText("Continue").assertIsNotEnabled()
         compose.onNodeWithText("Clocklings Full Unlock").assertDoesNotExist()
         restoration.emulateSavedInstanceStateRestore()
         passGate()
         compose.onNodeWithText("Clocklings Full Unlock").assertExists()
+        compose.onNodeWithText("Share usage statistics", substring = true).assertIsOff()
         restoration.emulateSavedInstanceStateRestore()
         compose.onNodeWithText("Clocklings Full Unlock").assertDoesNotExist()
+        compose.onNodeWithText("Share usage statistics", substring = true).assertDoesNotExist()
     }
 
     @Test
-    fun unavailablePriceDisablesPurchaseAndOffersRestoreAndRetry() {
+    fun unavailableStoreShowsOneMessageAndOffersRestoreAndRetry() {
         var restores = 0
         var retries = 0
         compose.setContent {
@@ -85,17 +94,19 @@ class ParentScreenTest {
                     { restores++ },
                     { retries++ },
                     {},
+                    usage = TestUsage(available = false),
                 )
             }
         }
         passGate()
+        compose.onNodeWithText("Share usage statistics", substring = true).assertDoesNotExist()
         compose.onNodeWithText("Restore purchases").performScrollTo().performClick()
         compose.onNodeWithText("Try again").performScrollTo().performClick()
         assertEquals(1, restores)
         assertEquals(1, retries)
-        compose
-            .onNode(hasText("Purchases are unavailable. Please try again later.") and hasClickAction())
-            .assertIsNotEnabled()
+        val unavailable = "Purchases are unavailable. Please try again later."
+        compose.onNodeWithText(unavailable).assertExists()
+        compose.onNode(hasText(unavailable) and hasClickAction()).assertDoesNotExist()
     }
 
     @Test
@@ -121,10 +132,11 @@ class ParentScreenTest {
     }
 
     @Test
-    fun recoveryControlsWorkAcrossLanguagesNarrowWidthsAndLargeText() {
+    fun recoveryAndUsageControlsWorkAcrossLanguagesNarrowWidthsAndLargeText() {
         val language = mutableStateOf(AppLanguage.ENGLISH)
         val viewport = mutableStateOf(360 to 1f)
         val state = mutableStateOf(PurchaseUiState(status = PurchaseStatus.FAILED))
+        val usage = TestUsage()
         var retries = 0
         var restores = 0
         compose.setContent {
@@ -138,7 +150,14 @@ class ParentScreenTest {
                 ClocklingsTheme {
                     key(language.value, viewport.value) {
                         Box(Modifier.width(viewport.value.first.dp)) {
-                            ParentScreen(state.value, { error("purchase") }, { restores++ }, { retries++ }, {})
+                            ParentScreen(
+                                state.value,
+                                { error("purchase") },
+                                { restores++ },
+                                { retries++ },
+                                {},
+                                usage = usage,
+                            )
                         }
                     }
                 }
@@ -152,12 +171,7 @@ class ParentScreenTest {
                     state.value = PurchaseUiState(status = PurchaseStatus.FAILED)
                 }
                 val resources = localizedContext(entry).resources
-                val prefix =
-                    resources
-                        .getString(R.string.parent_gate_instruction, "GATE_MARKER")
-                        .substringBefore("GATE_MARKER")
-                        .trim()
-                passGate(prefix)
+                passLocalizedGate(resources)
                 verifyRecoveryActions(resources)
                 compose.runOnIdle { state.value = state.value.copy(fullAccess = true) }
                 compose
@@ -171,10 +185,31 @@ class ParentScreenTest {
                 compose.runOnIdle { state.value = state.value.copy(busy = true) }
                 compose.onNodeWithText(resources.getString(R.string.purchase_retry)).assertIsNotEnabled()
                 compose.onNodeWithText(resources.getString(R.string.purchase_restore)).assertIsNotEnabled()
+                verifyUsageControls(resources)
             }
         }
         assertEquals(28, retries)
         assertEquals(28, restores)
+    }
+
+    private fun passLocalizedGate(resources: Resources) {
+        val prefix =
+            resources
+                .getString(R.string.parent_gate_instruction, "GATE_MARKER")
+                .substringBefore("GATE_MARKER")
+                .trim()
+        passGate(prefix)
+    }
+
+    private fun verifyUsageControls(resources: Resources) {
+        compose
+            .onNodeWithText(resources.getString(R.string.usage_sharing_description), useUnmergedTree = true)
+            .performScrollTo()
+            .assertIsDisplayed()
+        val toggle = compose.onNodeWithText(resources.getString(R.string.usage_sharing_title), substring = true)
+        toggle.performScrollTo().assertIsOff().performClick()
+        toggle.assertIsOn().performClick()
+        toggle.assertIsOff()
     }
 
     private fun verifyRecoveryActions(resources: Resources) {
@@ -184,7 +219,7 @@ class ParentScreenTest {
             .assertIsDisplayed()
         compose
             .onNode(hasText(resources.getString(R.string.purchase_unavailable)) and hasClickAction())
-            .assertIsNotEnabled()
+            .assertDoesNotExist()
         compose
             .onNodeWithText(resources.getString(R.string.purchase_retry))
             .performScrollTo()
@@ -208,4 +243,16 @@ class ParentScreenTest {
         compose.onNode(hasSetTextAction()).performTextInput(answer)
         compose.onNode(hasSetTextAction()).performImeAction()
     }
+}
+
+private class TestUsage(
+    override val available: Boolean = true,
+) : UsageAnalytics {
+    override val enabled = MutableStateFlow(false)
+
+    override fun setEnabled(enabled: Boolean) {
+        this.enabled.value = enabled
+    }
+
+    override fun count(metric: String) = Unit
 }

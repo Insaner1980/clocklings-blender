@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,9 +69,10 @@ fun ClocklingsApp(
     modifier: Modifier = Modifier,
     container: AppServices = (LocalContext.current.applicationContext as ClocklingsApplication).container,
     app: AppViewModel = viewModel(factory = viewModelFactory { initializer { AppViewModel(container) } }),
+    onStartupReady: () -> Unit = {},
 ) {
     val activity = LocalActivity.current
-    AppLocaleProvider(container.repository) {
+    AppLocaleProvider(container.repository, onStartupErrorReady = onStartupReady) {
         val language = LocalAppLanguage.current
         DisposableEffect(language) {
             app.services.setSpeechLanguage(language)
@@ -119,9 +121,20 @@ fun ClocklingsApp(
                         var introDone by rememberSaveable { mutableStateOf(false) }
                         // Settings, ownership and the home content are ready here; wait for the overlay too.
                         ReportDrawnWhen { introDone }
+                        SideEffect(onStartupReady)
                         val backStack = rememberNavBackStack(ScreenSavedState, Screen.Home)
+                        val usage = container.usage
                         // Stop the old screen's speech before the next ViewModel can start its narration.
-                        val nav = remember(backStack, app) { Navigator(backStack, app::stopSpeech) { app.access } }
+                        val nav =
+                            remember(backStack, app, usage) {
+                                Navigator(
+                                    backStack,
+                                    beforeNavigate = app::stopSpeech,
+                                    onDestinationChanged = { destination ->
+                                        destination.usageMetric()?.let(usage::count)
+                                    },
+                                ) { app.access }
+                            }
                         // Ignore repeated or delayed callbacks from a destination that has already left.
                         val go = { from: Screen, screen: Screen ->
                             nav.ifCurrent(from) {
@@ -213,6 +226,7 @@ fun ClocklingsApp(
                                                     onRestore = container.purchases::restore,
                                                     onRetry = container.purchases::refresh,
                                                     onBack = { back(Screen.Parent) },
+                                                    usage = usage,
                                                 )
                                             }
                                             entry<Screen.Language> { LanguageScreen({ back(Screen.Language) }) }
@@ -339,3 +353,19 @@ fun ClocklingsApp(
         }
     }
 }
+
+private fun Screen.usageMetric(): String? =
+    when (this) {
+        Screen.Home -> "screen.home"
+        Screen.LessonList -> "screen.lessons"
+        Screen.Levels -> "screen.levels"
+        Screen.FreeClock -> "screen.free_clock"
+        Screen.Ask -> "screen.play_together"
+        Screen.Wardrobe -> "screen.wardrobe"
+        Screen.Personalize -> "screen.personalize"
+        Screen.Settings -> "screen.settings"
+        Screen.Parent -> "screen.parent"
+        Screen.Challenge -> "screen.challenge"
+        is Screen.Result -> "screen.result"
+        is Screen.Game, is Screen.Lesson, Screen.Language -> null
+    }

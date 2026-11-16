@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="back_description">Zurück</string>
-    <string name="help_on">Hilfe an</string>
-    <string name="help_off">Hilfe aus</string>
     <string name="listen">Anhören</string>
     <string name="random_time">Zufällige Uhrzeit</string>
     <string name="next">Weiter</string>
@@ -135,10 +133,6 @@
     <string name="doll_all_open">Alle Teile sind verfügbar. Probiere jede Kombination aus!</string>
     <string name="doll_optional_hint">Tippe auf ein Teil, um es anzuziehen. Tippe erneut darauf, um es auszuziehen.</string>
     <string name="doll_optional_hint_partial">Tippe auf ein Teil, um es anzuziehen. Kopfbedeckungen und Extras kannst du mit erneutem Tippen ablegen.</string>
-    <plurals name="doll_item_locked">
-        <item quantity="one">Gesperrt. Wird bei %1$d\u00A0Stern freigeschaltet. Du hast %2$d.</item>
-        <item quantity="other">Gesperrt. Wird bei %1$d\u00A0Sternen freigeschaltet. Du hast %2$d.</item>
-    </plurals>
     <string name="slot_hair">Haare</string>
     <string name="slot_dress">Kleider</string>
     <string name="slot_shoes">Schuhe</string>
@@ -177,7 +171,6 @@
     <string name="lesson_try">Probiere es aus</string>
     <string name="lesson_next_lesson">Nächste Lektion</string>
     <string name="lesson_start_game">Jetzt spielen!</string>
-    <string name="lesson_practise">Üben</string>
     <string name="lesson_learned">%1$s Du hast %2$s abgeschlossen.</string>
     <string name="say_quarter">Viertel %1$d</string>
     <string name="say_number_minutes" tools:ignore="PluralsCandidate">Die Zahl %1$d steht für %2$d\u00A0Minuten.</string>
@@ -329,4 +322,12 @@
     <string name="task_outcome_first_try">Aufgabe %1$d. Beim ersten Versuch richtig</string>
     <string name="task_outcome_with_hint">Aufgabe %1$d. Nach einem Tipp richtig</string>
     <string name="task_outcome_shown">Aufgabe %1$d. Die Lösung wurde angezeigt</string>
+    <string name="item_star_need">%1$d</string>
+    <plurals name="item_star_need_description">
+        <item quantity="one">Benötigt %1$d Stern</item>
+        <item quantity="other">Benötigt %1$d Sterne</item>
+    </plurals>
+    <string name="guides_on">Uhrhilfen an</string>
+    <string name="guides_off">Uhrhilfen aus</string>
+    <string name="challenge_seconds_left">%1$d s</string>
 </resources>

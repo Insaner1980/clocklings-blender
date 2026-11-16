@@ -190,7 +190,7 @@ class LanguageSettingsTest {
         changeExternalLanguage(AppLanguage.FINNISH)
         waitText(string(AppLanguage.FINNISH, R.string.free_title))
         waitText("15.05")
-        compose.onNodeWithContentDescription(string(AppLanguage.FINNISH, R.string.help_off)).assertIsDisplayed()
+        compose.onNodeWithContentDescription(string(AppLanguage.FINNISH, R.string.guides_off)).assertIsDisplayed()
         assertDataUnchanged()
         back()
         click(string(AppLanguage.FINNISH, R.string.menu_kysy))

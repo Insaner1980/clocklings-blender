@@ -48,15 +48,15 @@ fun ClockBox(
     }
 }
 
-/** Apu päällä / Apu pois -siru yläpalkkiin. */
+/** Toggle the clock guides, with the current state available to screen readers. */
 @Composable
-fun HelpToggle(
+fun GuidesToggle(
     help: Boolean,
     onToggle: () -> Unit,
 ) {
     RoundIconButton(
-        if (help) SkIcons.HelpOn else SkIcons.Help,
-        stringResource(if (help) R.string.help_on else R.string.help_off),
+        SkIcons.Guides,
+        stringResource(if (help) R.string.guides_on else R.string.guides_off),
         onToggle,
         selected = help,
     )
@@ -72,6 +72,6 @@ fun HelpTopBar(
     TopBar(
         title = title,
         onBack = onBack,
-        trailing = { HelpToggle(help, onToggleHelp) },
+        trailing = { GuidesToggle(help, onToggleHelp) },
     )
 }

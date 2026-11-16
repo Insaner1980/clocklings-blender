@@ -1,0 +1,23 @@
+{
+  "name": "clocklings-analytics",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-11-15",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": {
+    "enabled": false,
+    "logs": { "enabled": false, "invocation_logs": false },
+    "traces": { "enabled": false }
+  },
+  "vars": {
+    "POSTHOG_HOST": "https://eu.i.posthog.com"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "clocklings-analytics",
+      "database_id": "cc860efc-c7e7-44c2-89fd-e591f179ae8a"
+    }
+  ],
+  "triggers": { "crons": ["12 * * * *"] }
+}

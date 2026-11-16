@@ -7,9 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splash = installSplashScreen()
         // Vaalea ulkoasu aina: tummat kuvakkeet tila- ja navigointipalkissa myös tummassa tilassa.
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
@@ -17,7 +19,9 @@ class MainActivity : ComponentActivity() {
         )
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced = false
-        setContent { ClocklingsApp() }
+        var ready = false
+        splash.setKeepOnScreenCondition { !ready }
+        setContent { ClocklingsApp(onStartupReady = { ready = true }) }
     }
 
     override fun onResume() {

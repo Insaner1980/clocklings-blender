@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -20,7 +21,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -28,6 +31,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotateRad
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -69,6 +73,7 @@ class ConfettiState internal constructor(
 ) {
     internal val particles = mutableListOf<Particle>()
     internal val flights = mutableListOf<Flight>()
+    internal val excludedBounds = mutableStateMapOf<Any, Rect>()
     internal var frame by mutableLongStateOf(0L)
     internal var running by mutableLongStateOf(0L)
     private val random = Random.Default
@@ -219,25 +224,31 @@ fun ConfettiHost(
             Canvas(Modifier.fillMaxSize()) {
                 height[0] = size.height
                 state.frame // luetaan, jotta piirretään joka ruudulla
-                for (p in state.particles) {
-                    val fade = ConfettiMath.particleAlpha(p.life, ConfettiState.LIFE, ConfettiState.FADE_FRAMES)
-                    translate(p.x, p.y) {
-                        rotateRad(p.rotation, pivot = Offset.Zero) {
-                            scale(p.size, p.size, pivot = Offset.Zero) {
-                                drawConfettiShape(p.shape, p.color.copy(alpha = p.color.alpha * fade))
+                withTransform({
+                    for (bounds in state.excludedBounds.values) {
+                        clipRect(bounds.left, bounds.top, bounds.right, bounds.bottom, ClipOp.Difference)
+                    }
+                }) {
+                    for (p in state.particles) {
+                        val fade = ConfettiMath.particleAlpha(p.life, ConfettiState.LIFE, ConfettiState.FADE_FRAMES)
+                        translate(p.x, p.y) {
+                            rotateRad(p.rotation, pivot = Offset.Zero) {
+                                scale(p.size, p.size, pivot = Offset.Zero) {
+                                    drawConfettiShape(p.shape, p.color.copy(alpha = p.color.alpha * fade))
+                                }
                             }
                         }
                     }
-                }
-                val starSize = FLYING_STAR_DP * density
-                for (f in state.flights) {
-                    val at = ConfettiMath.flightPoint(f.from, f.to, f.k)
-                    translate(at.x, at.y) {
-                        rotateRad(f.k * FLIGHT_TURN, pivot = Offset.Zero) {
-                            val s = starSize * ConfettiMath.flightScale(f.k)
-                            scale(s, s, pivot = Offset.Zero) {
-                                drawPath(UnitStar, SkColors.StarOn)
-                                drawPath(UnitStar, SkColors.StarOnStroke, style = Stroke(STAR_OUTLINE))
+                    val starSize = FLYING_STAR_DP * density
+                    for (f in state.flights) {
+                        val at = ConfettiMath.flightPoint(f.from, f.to, f.k)
+                        translate(at.x, at.y) {
+                            rotateRad(f.k * FLIGHT_TURN, pivot = Offset.Zero) {
+                                val s = starSize * ConfettiMath.flightScale(f.k)
+                                scale(s, s, pivot = Offset.Zero) {
+                                    drawPath(UnitStar, SkColors.StarOn)
+                                    drawPath(UnitStar, SkColors.StarOnStroke, style = Stroke(STAR_OUTLINE))
+                                }
                             }
                         }
                     }
@@ -245,6 +256,17 @@ fun ConfettiHost(
             }
         }
     }
+}
+
+/** Keeps a result's text clear while the surrounding particles continue to animate. */
+@Composable
+internal fun Modifier.excludeConfetti(): Modifier {
+    val state = LocalConfetti.current ?: return this
+    val key = remember { Any() }
+    DisposableEffect(state, key) {
+        onDispose { state.excludedBounds.remove(key) }
+    }
+    return onGloballyPositioned { state.excludedBounds[key] = it.boundsInRoot() }
 }
 
 /**

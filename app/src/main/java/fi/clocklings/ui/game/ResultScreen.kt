@@ -3,6 +3,7 @@ package fi.clocklings.ui.game
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -61,6 +62,7 @@ import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.StarIcon
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.components.confettiAnchor
+import fi.clocklings.ui.components.excludeConfetti
 import fi.clocklings.ui.itemName
 import fi.clocklings.ui.levelName
 import fi.clocklings.ui.rememberReduceMotion
@@ -136,11 +138,15 @@ fun ResultScreen(
                 Modifier.width(SkDimens.DollResult).aspectRatio(companionAspectRatio(kind)),
                 celebration = dollCelebration,
             )
-            ResultTitle(stars)
-            Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
-            if (newItems.isNotEmpty()) {
-                ResultRewards(newItems, outfit, color, onDress)
+            Column(
+                Modifier.fillMaxWidth().excludeConfetti(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
+            ) {
+                ResultTitle(stars)
+                Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
             }
+            if (newItems.isNotEmpty()) ResultRewards(newItems, outfit, color, onDress)
         }
     }
 }
@@ -289,15 +295,21 @@ private fun PoppingStar(
             )
         }
     }
-    StarIcon(
-        on,
-        modifier.graphicsLayer {
-            scaleX = k.value
-            scaleY = k.value
-            rotationZ = if (k.value < 1f && on) -POP_ROTATION * (1f - k.value) else 0f
-        },
-        size = size,
-    )
+    Box(modifier, contentAlignment = Alignment.Center) {
+        StarIcon(false, size = size)
+        if (on) {
+            StarIcon(
+                true,
+                Modifier.graphicsLayer {
+                    val scale = if (reduceMotion) 1f else k.value
+                    scaleX = scale
+                    scaleY = scale
+                    rotationZ = if (scale < 1f) -POP_ROTATION * (1f - scale) else 0f
+                },
+                size = size,
+            )
+        }
+    }
 }
 
 /** The items of [companion], the one shown on the result, that this result unlocked; none without a companion. */

@@ -81,7 +81,14 @@ class LessonViewModel(
     private var demoJob: Job? = null
 
     init {
+        countLesson("start")
         startDemo()
+    }
+
+    private fun countLesson(event: String) {
+        val lessonId = _state.value.lesson.id
+        val index = LessonCatalog.all(AppLanguage.ENGLISH).indexOfFirst { it.id == lessonId }
+        services.usage.count("lesson.$index.$event")
     }
 
     private fun pageState(
@@ -178,10 +185,12 @@ class LessonViewModel(
             return
         }
         // Leaving a finished quiz completes the lesson.
+        countLesson("finish")
         services.play(Sound.LESSON_COMPLETE)
         val access = AccessPolicy(services.purchases.state.value.fullAccess)
         if (s.queueIndex < queue.size - 1 && access.lesson(queue[s.queueIndex + 1])) {
             show(s.queueIndex + 1, 0)
+            countLesson("start")
         } else {
             _state.update { it.copy(finished = true) }
         }
@@ -196,7 +205,10 @@ class LessonViewModel(
 
     fun replay() {
         val s = _state.value
-        if (!s.isQuiz) show(s.queueIndex, s.page)
+        if (!s.isQuiz) {
+            countLesson("replay")
+            show(s.queueIndex, s.page)
+        }
     }
 
     fun pick(index: Int) {
@@ -204,10 +216,12 @@ class LessonViewModel(
         if (!s.isQuiz || s.quizDone || s.choiceStates[index] == OptionState.WRONG) return
         val choice = s.choices[index]
         if (!choice.correct) {
+            countLesson("wrong")
             services.play(Sound.BAD)
             _state.value = s.copy(choiceStates = s.choiceStates + (index to OptionState.WRONG), showHint = true)
             return
         }
+        if (!s.saveFailed) countLesson("correct")
         services.play(Sound.OK)
         val more = s.queueIndex < queue.size - 1
         _state.value =
