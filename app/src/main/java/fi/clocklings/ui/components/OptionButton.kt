@@ -141,7 +141,7 @@ private fun OptionLabel(
         ) {
             if (state != OptionState.NORMAL) {
                 SkIcon(
-                    if (state == OptionState.CORRECT) SkIcons.Check else SkIcons.Replay,
+                    if (state == OptionState.CORRECT) SkIcons.Check else SkIcons.Close,
                     SkDimens.ActionIcon,
                     tint = if (state == OptionState.CORRECT) SkColors.Good else SkColors.Try,
                 )

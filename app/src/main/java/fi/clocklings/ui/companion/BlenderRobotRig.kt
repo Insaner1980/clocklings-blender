@@ -75,7 +75,7 @@ internal class BlenderRobotRig(
         // The crops keep every item of the slot whole; the neck crop starts below the face screen and leaves
         // out the lower arms and hands.
         headCrop = Rect(24f, 0f, 216f, 172f),
-        neckCrop = Rect(67f, 148f, 173f, 238f),
+        neckCrop = Rect(60f, 70f, 180f, 190f),
         // Accessory crops: the item's drawing bounds plus 12 units on every side, squared to the thumbnail window.
         itemCrops =
             mapOf(

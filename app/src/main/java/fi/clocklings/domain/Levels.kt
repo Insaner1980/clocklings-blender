@@ -1,5 +1,6 @@
 package fi.clocklings.domain
 
+import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -137,13 +138,18 @@ object Levels {
             else -> 1
         }
 
-    /**
-     * Laita kello -tehtävän alkuaika: samasta vuorokauden puoliskosta kuin tavoite (jotta
-     * aurinko tai kuu täsmää), ja tasatunnin tavoitteella puoli kierrosta sivuun.
-     */
+    /** Start at three or nine in the target's day half so both hands and grips are visible. */
     fun setTaskStart(target: Int): Int {
         val half = if (target >= ClockTime.HALF_DAY) ClockTime.HALF_DAY else 0
-        return half + if (ClockTime.mod(target, ClockTime.HALF_DAY) == 0) ClockTime.HALF_DAY / 2 else 0
+        val position = ClockTime.mod(target, ClockTime.HALF_DAY)
+        val hour = (position + ClockTime.MINUTES_PER_HALF_HOUR - 1) / ClockTime.MINUTES_PER_HOUR
+        val startHour =
+            if (abs(hour - PREFERRED_START_HOUR) <= START_HOUR_CLEARANCE) {
+                ALTERNATE_START_HOUR
+            } else {
+                PREFERRED_START_HOUR
+            }
+        return half + startHour * ClockTime.MINUTES_PER_HOUR
     }
 
     /** Arvo aika -nappi: viiden minuutin aika, joka eroaa nykyisestä. */
@@ -179,3 +185,6 @@ object Levels {
 private const val TASK_DRAW_LIMIT = 500
 private const val OPTION_DRAW_LIMIT = 300
 private const val MAX_LEVEL_STARS = 3
+private const val PREFERRED_START_HOUR = 9
+private const val ALTERNATE_START_HOUR = 3
+private const val START_HOUR_CLEARANCE = 2

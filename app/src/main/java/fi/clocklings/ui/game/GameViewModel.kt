@@ -115,12 +115,15 @@ class GameViewModel(
     val state: StateFlow<GameUiState> = _state.asStateFlow()
 
     init {
+        services.usage.count("game.$level.start")
         announce(_state.value.task)
     }
 
     /** The narrator reads each task's instruction, since read and set tasks take turns. */
     private fun announce(task: Task) {
         hintVoiceJob?.cancel()
+        val kind = if (task.type == TaskType.READ) "read" else "set"
+        services.usage.count("game.$level.$kind")
         services.play(if (task.type == TaskType.READ) Sound.QUESTION_READ else Sound.QUESTION_SET)
     }
 
@@ -201,6 +204,7 @@ class GameViewModel(
             )
         _state.value =
             if (wrong.taskMistakes >= MAX_TRIES) {
+                services.usage.count("game.$level.read_reveal")
                 wrong.copy(
                     busy = true,
                     optionStates = wrong.optionStates + (s.task.time to OptionState.CORRECT),
@@ -228,6 +232,7 @@ class GameViewModel(
         val wrong = s.copy(mistakes = s.mistakes + 1, taskMistakes = s.taskMistakes + 1)
         _state.value =
             if (wrong.taskMistakes >= MAX_TRIES) {
+                services.usage.count("game.$level.set_reveal")
                 wrong.copy(
                     busy = true,
                     interactive = false,
@@ -247,6 +252,9 @@ class GameViewModel(
         hintVoiceJob?.cancel()
         services.play(Sound.OK)
         val isSet = s.task.type == TaskType.SET
+        val kind = if (isSet) "set" else "read"
+        val outcome = if (s.taskMistakes == 0) "first" else "hint"
+        services.usage.count("game.$level.${kind}_$outcome")
         _state.value =
             s.copy(
                 busy = true,
@@ -302,6 +310,7 @@ class GameViewModel(
                     starsBefore = it.totalStars
                     it.withLevelResult(level, stars)
                 }
+                services.usage.count("game.$level.finish")
                 services.play(Sound.WIN)
                 _state.update {
                     it.copy(

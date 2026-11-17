@@ -50,7 +50,7 @@ class ExpandedLocaleContentTest {
                     R.plurals.result_previous_best to levelStars.toList(),
                     R.plurals.result_stars_description to levelStars.toList(),
                     R.plurals.doll_info to totalStars.toList(),
-                    R.plurals.doll_item_locked to Wardrobe.items.map { it.star },
+                    R.plurals.item_star_need_description to Wardrobe.items.map { it.star },
                 )
             val resources = localizedContext(language).resources
             val rules = PluralRules.forLocale(Locale.forLanguageTag(language.tag))

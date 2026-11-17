@@ -97,7 +97,8 @@ class NavigationFlowTest {
         awaitHome()
         for (cell in listOf(411 to 1f, 320 to 1f, 411 to 2f, 320 to 2f)) {
             compose.runOnIdle { viewport.value = cell }
-            for ((destination, practice) in listOf("Play." to "Whole hours.", "Learn" to "Whole hours. Practise.")) {
+            val routes = listOf("Play." to "Whole hours.", "Learn" to "Whole hours. Start playing!")
+            for ((destination, practice) in routes) {
                 val open = clickAction(destination)
                 compose.runOnIdle { open() }
                 // The first start includes introductory lessons; later starts open the game directly.

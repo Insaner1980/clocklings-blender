@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="usage_sharing_title">Compartir estadísticas de uso</string>
+    <string name="usage_sharing_description">Ayuda a mejorar Clocklings compartiendo cifras sobre las visitas a pantallas, los ejercicios y las respuestas correctas e incorrectas. Cloudflare procesa la dirección IP de tu conexión cuando la aplicación envía esas cifras. PostHog recibe los totales semanales. Puedes dejar de compartir en cualquier momento.</string>
+</resources>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="back_description">Retour</string>
-    <string name="help_on">Aide activée</string>
-    <string name="help_off">Aide désactivée</string>
     <string name="listen">Écouter</string>
     <string name="random_time">Heure au hasard</string>
     <string name="next">Suivant</string>
@@ -142,10 +140,6 @@
     <string name="doll_all_open">Tous les accessoires sont disponibles. Essaie toutes les combinaisons !</string>
     <string name="doll_optional_hint">Appuie sur un accessoire pour le mettre. Appuie encore pour l’enlever.</string>
     <string name="doll_optional_hint_partial">Appuie sur un accessoire pour le mettre. Appuie encore sur un chapeau ou un extra pour l’enlever.</string>
-    <plurals name="doll_item_locked" tools:ignore="MissingQuantity">
-        <item quantity="one">Verrouillé. Disponible à %1$d\u00A0étoile. Tu en as %2$d.</item>
-        <item quantity="other">Verrouillé. Disponible à %1$d\u00A0étoiles. Tu en as %2$d.</item>
-    </plurals>
     <string name="slot_hair">Cheveux</string>
     <string name="slot_dress">Robes</string>
     <string name="slot_shoes">Chaussures</string>
@@ -185,7 +179,6 @@
     <string name="lesson_try">À toi d’essayer</string>
     <string name="lesson_next_lesson">Leçon suivante</string>
     <string name="lesson_start_game">Jouer !</string>
-    <string name="lesson_practise">S’entraîner</string>
     <string name="lesson_learned">%1$s Tu as terminé la leçon %2$s.</string>
     <string name="say_quarter">Quart %1$d</string>
     <string name="say_number_minutes" tools:ignore="PluralsCandidate">Le nombre %1$d indique %2$d\u00A0minutes.</string>
@@ -335,4 +328,13 @@
     <string name="task_outcome_first_try">Exercice %1$d. Bonne réponse du premier coup</string>
     <string name="task_outcome_with_hint">Exercice %1$d. Bonne réponse après un indice</string>
     <string name="task_outcome_shown">Exercice %1$d. La réponse a été affichée</string>
+    <string name="item_star_need">%1$d</string>
+    <plurals name="item_star_need_description">
+        <item quantity="one">Nécessite %1$d étoile</item>
+        <item quantity="many">Nécessite %1$d étoiles</item>
+        <item quantity="other">Nécessite %1$d étoiles</item>
+    </plurals>
+    <string name="guides_on">Repères de l’horloge affichés</string>
+    <string name="guides_off">Repères de l’horloge masqués</string>
+    <string name="challenge_seconds_left">%1$d s</string>
 </resources>

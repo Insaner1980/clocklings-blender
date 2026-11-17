@@ -51,7 +51,7 @@ internal class BlenderDragonRig(
         // The crops keep every item of the slot whole. The head crop shows the whole face, above the wings;
         // the neck crop starts below the mouth and is wide enough to show the royal cape beside the body.
         headCrop = Rect(24f, 0f, 216f, 151f),
-        neckCrop = Rect(60f, 156f, 180f, 240f),
+        neckCrop = Rect(54f, 76f, 186f, 208f),
         // Accessory crops: the item's drawing bounds plus 12 units on every side, squared to the thumbnail window.
         itemCrops =
             mapOf(

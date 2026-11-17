@@ -31,7 +31,7 @@ object SkColors {
     val Surface = Color(0xFFFFFFFF)
     val Line = Color(0xFFF1DDEA)
     val Ink = Color(0xFF3A2453)
-    val InkSoft = Color(0xFF76638C)
+    val InkSoft = Color(0xFF625075)
 
     /** Hairline around a colour swatch that is too close to the page background to read on its own. */
     val SwatchOutline = InkSoft.copy(alpha = 0.35f)
@@ -72,6 +72,7 @@ object SkColors {
     val GoodBg = Color(0xFFE3F8E7)
     val Try = Color(0xFFB35000)
     val TryBg = Color(0xFFFFF0E0)
+    val HintFill = Color(0xFFFFF5CC)
 
     // Kellon puoliskot
     val Yli = Color(0xFFFFF3BF)
@@ -163,7 +164,7 @@ object SkColors {
     // Kellotaulu
     val Face = Color(0xFFFFFFFF)
     val Tick = Color(0xFFD3C6DE)
-    val Hour24 = Color(0xFF9775FA)
+    val Hour24 = Color(0xFF6741C7)
     val Sun = Color(0xFFFCC419)
     val SunRay = Color(0xFFF59F00)
     val Moon = Color(0xFF5C7CFA)

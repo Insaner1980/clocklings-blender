@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="usage_sharing_title">Jaa käyttötilastoja</string>
+    <string name="usage_sharing_description">Auta kehittämään Clocklingsia jakamalla tilastoja näkymien avauksista, harjoituksista sekä oikeiden ja väärien vastausten määristä. Cloudflare käsittelee yhteytesi IP-osoitteen, kun sovellus lähettää tilastot. PostHog saa viikoittaiset yhteismäärät. Voit lopettaa jakamisen milloin tahansa.</string>
+</resources>

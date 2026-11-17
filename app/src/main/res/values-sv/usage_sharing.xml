@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="usage_sharing_title">Dela användningsstatistik</string>
+    <string name="usage_sharing_description">Hjälp till att förbättra Clocklings genom att dela statistik om öppnade skärmar, övningar och antalet rätta och felaktiga svar. Cloudflare behandlar din anslutnings IP-adress när appen skickar statistiken. PostHog får veckosummorna. Du kan stänga av delningen när som helst.</string>
+</resources>

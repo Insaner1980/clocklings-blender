@@ -54,6 +54,7 @@ internal class BlenderCarRig(
                 Slot.ROOF to Rect(10f, 96f, 200f, 226f),
                 Slot.FRONT to Rect(84f, 186f, 236f, 296f),
                 Slot.WHEELS to Rect(6f, 190f, 116f, 300f),
+                Slot.MODEL to Rect(0f, 96f, 240f, 294f),
             ),
     ) {
     override fun DrawScope.drawBody(
@@ -79,5 +80,5 @@ private val RightEye = BlenderBodyRegion(IntOffset(145, 671), IntOffset(191, 212
 private val RockPivot = Offset(120f, 276f)
 private val LeftEyeCenter = Offset(127f, 231f)
 private val RightEyeCenter = Offset(206.5f, 229f)
-private val Ground = ovalRect(122f, 278f, 104f, 8f)
+private val Ground = ovalRect(114f, 283f, 104f, 8f)
 private val FullFrame = Rect(-24f, 76f, 248f, 306f)

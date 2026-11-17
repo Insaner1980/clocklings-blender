@@ -2,6 +2,7 @@ import com.android.build.api.variant.HostTestBuilder
 import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.net.URI
 
 plugins {
     alias(libs.plugins.android.application)
@@ -12,6 +13,20 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.owasp.dependency.check)
     alias(libs.plugins.stability.analyzer)
+}
+
+val analyticsEndpointOverride = providers.gradleProperty("analyticsEndpoint")
+
+fun analyticsEndpointField(defaultOrigin: String = ""): String {
+    val endpoint = analyticsEndpointOverride.getOrElse(defaultOrigin).trim().trimEnd('/')
+    if (endpoint.isNotEmpty()) {
+        val uri = URI(endpoint)
+        require(
+            uri.scheme == "https" && uri.host != null && uri.rawUserInfo == null &&
+                uri.rawPath.isEmpty() && uri.rawQuery == null && uri.rawFragment == null,
+        ) { "analyticsEndpoint must be an HTTPS origin." }
+    }
+    return "\"$endpoint\""
 }
 
 android {
@@ -25,6 +40,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "fi.clocklings.ClocklingsTestRunner"
+        buildConfigField("String", "ANALYTICS_ENDPOINT", analyticsEndpointField())
     }
 
     // This independent visual experiment has no release signing configuration.
@@ -35,6 +51,11 @@ android {
             enableAndroidTestCoverage = true
         }
         release {
+            buildConfigField(
+                "String",
+                "ANALYTICS_ENDPOINT",
+                analyticsEndpointField("https://clocklings-analytics.emmahota.workers.dev"),
+            )
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -42,10 +63,12 @@ android {
         // Only local measurement variants use the standard debug key.
         create("benchmarkRelease") {
             initWith(getByName("release"))
+            buildConfigField("String", "ANALYTICS_ENDPOINT", analyticsEndpointField())
             signingConfig = signingConfigs.getByName("debug")
         }
         create("nonMinifiedRelease") {
             initWith(getByName("release"))
+            buildConfigField("String", "ANALYTICS_ENDPOINT", analyticsEndpointField())
             signingConfig = signingConfigs.getByName("debug")
         }
     }
@@ -56,6 +79,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
@@ -220,6 +244,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)

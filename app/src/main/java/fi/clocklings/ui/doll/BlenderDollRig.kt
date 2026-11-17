@@ -47,6 +47,7 @@ internal class BlenderDollRig(
 ) : CompanionRig {
     override val width = DOLL_GRID_WIDTH
     override val height = DOLL_GRID_HEIGHT
+    override val groundCenter = Ground.center
 
     override fun full(): Rect = Rect(-4f, -8f, 204f, 344f)
 

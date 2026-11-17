@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="back_description">Tillbaka</string>
-    <string name="help_on">Hjälp på</string>
-    <string name="help_off">Hjälp av</string>
     <string name="listen">Lyssna</string>
     <string name="random_time">Slumpa tid</string>
     <string name="next">Nästa</string>
@@ -148,10 +146,6 @@
     <string name="doll_all_open">Alla kläddelar går att använda. Prova olika kombinationer!</string>
     <string name="doll_optional_hint">Tryck på en sak för att ta på den. Tryck igen för att ta av den.</string>
     <string name="doll_optional_hint_partial">Tryck på en sak för att ta på den. Huvudbonader och tillbehör tas av om du trycker igen.</string>
-    <plurals name="doll_item_locked">
-        <item quantity="one">Låst. Låses upp vid %1$d\u00A0stjärna. Du har %2$d.</item>
-        <item quantity="other">Låst. Låses upp vid %1$d\u00A0stjärnor. Du har %2$d.</item>
-    </plurals>
     <string name="slot_hair">Hår</string>
     <string name="slot_dress">Klänningar</string>
     <string name="slot_shoes">Skor</string>
@@ -189,7 +183,6 @@
     <string name="lesson_try">Prova</string>
     <string name="lesson_next_lesson">Nästa lektion</string>
     <string name="lesson_start_game">Börja spela!</string>
-    <string name="lesson_practise">Öva</string>
     <string name="lesson_learned">%1$s Du har klarat lektionen %2$s.</string>
     <!-- Full sentences end with punctuation; bare labels do not. Measurements use digits.
          Counting phrases may spell out counts. Keep numbers and units together. -->
@@ -332,4 +325,12 @@
     <string name="task_outcome_first_try">Uppgift %1$d. Rätt på första försöket</string>
     <string name="task_outcome_with_hint">Uppgift %1$d. Rätt efter en ledtråd</string>
     <string name="task_outcome_shown">Uppgift %1$d. Svaret visades</string>
+    <string name="item_star_need">%1$d</string>
+    <plurals name="item_star_need_description">
+        <item quantity="one">Kräver %1$d stjärna</item>
+        <item quantity="other">Kräver %1$d stjärnor</item>
+    </plurals>
+    <string name="guides_on">Klockans hjälplinjer visas</string>
+    <string name="guides_off">Klockans hjälplinjer är dolda</string>
+    <string name="challenge_seconds_left">%1$d s</string>
 </resources>

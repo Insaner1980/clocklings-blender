@@ -49,7 +49,7 @@ internal class BlenderUnicornRig(
         // The crops keep every item of the slot whole: the head crop takes in the horn tip and the mane,
         // the neck crop the pendants and the cape clasp.
         headCrop = Rect(12f, 0f, 196f, 172f),
-        neckCrop = Rect(48f, 158f, 168f, 278f),
+        neckCrop = Rect(34f, 90f, 191f, 247f),
         // Accessory crops: the item's drawing bounds plus 12 units on every side, squared to the thumbnail window.
         itemCrops =
             mapOf(

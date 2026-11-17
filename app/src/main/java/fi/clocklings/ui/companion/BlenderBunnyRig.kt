@@ -48,7 +48,7 @@ internal class BlenderBunnyRig(
         fullFrame = FullFrame,
         ground = Ground,
         headCrop = Rect(20f, 0f, 220f, 176f),
-        neckCrop = Rect(60f, 160f, 180f, 240f),
+        neckCrop = Rect(56f, 90f, 184f, 218f),
         // Accessory crops: the item's drawing bounds plus 12 units on every side, squared to the thumbnail window.
         itemCrops =
             mapOf(

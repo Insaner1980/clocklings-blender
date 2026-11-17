@@ -80,6 +80,7 @@ object SkDimens {
     val LegendSwatchLong = 34.dp
     val LegendSwatchHeight = 8.dp
     val StageMinHeight = 200.dp
+    val ShortHomeStageHeight = 144.dp
     val LogoMinSize = 14.dp
     val PillIconLarge = 20.dp
     val CompanionThumbnail = 64.dp
@@ -118,7 +119,10 @@ object SkDimens {
     const val INACTIVE_CLOCK_ALPHA = 0.45f
 
     val HomeStageMaxHeight = 360.dp
+    val StageGroundOverlap = 4.dp
     val BubbleHeadOffset = 4.dp
+    val PinnedPreviewSize = 88.dp
+    const val PINNED_PREVIEW_MAX_SHARE = 0.25f
     val ScrollFade = 16.dp
 
     /** Taller, opaque at its start: text under the top bar is hidden or reduced rather than half-faded. */

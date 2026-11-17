@@ -6,6 +6,8 @@ import androidx.compose.runtime.Stable
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import fi.clocklings.analytics.UsageAnalytics
+import fi.clocklings.analytics.createUsageAnalytics
 import fi.clocklings.audio.Sfx
 import fi.clocklings.audio.Sound
 import fi.clocklings.audio.Speech
@@ -33,6 +35,7 @@ interface AppServices {
     val repository: ProgressRepository
     val speechAvailable: StateFlow<Boolean>
     val purchases: Purchases
+    val usage: UsageAnalytics get() = UsageAnalytics.Disabled
 
     /**
      * Plays a sound while the app is resumed and sound effects are enabled.
@@ -60,6 +63,7 @@ class AppContainer(
     context: Context,
     store: DataStore<Preferences> = context.dataStore,
     override val purchases: Purchases = UnconfiguredPurchases(),
+    override val usage: UsageAnalytics = UsageAnalytics.Disabled,
 ) : AppServices {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     override val repository = ProgressRepository(store)
@@ -109,7 +113,8 @@ class AppContainer(
 }
 
 open class ClocklingsApplication : Application() {
-    val container: AppContainer by lazy { AppContainer(this, preferencesStore(), purchases()) }
+    internal val usage: UsageAnalytics by lazy { createUsageAnalytics(this) }
+    val container: AppContainer by lazy { AppContainer(this, preferencesStore(), purchases(), usage) }
 
     protected open fun purchases(): Purchases = createAppPurchases(this)
 

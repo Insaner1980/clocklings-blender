@@ -221,7 +221,7 @@ fun SegmentedControl(
     }
 }
 
-/** A child-sized activity tile; supporting copy remains available to screen readers. */
+/** A child-sized activity tile with a title and supporting description. */
 @Composable
 fun MenuTile(
     title: String,
@@ -233,7 +233,9 @@ fun MenuTile(
 ) {
     PressSurface(onClick, fill, SkShapes.Tile, modifier.semantics { contentDescription = "$title. $subtitle" }) {
         Column(
-            Modifier.heightIn(min = SkDimens.MenuTileHeight).padding(SkDimens.Gap),
+            Modifier
+                .heightIn(min = SkDimens.MenuTileHeight)
+                .padding(horizontal = SkDimens.Gap, vertical = SkDimens.GapS),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start,
         ) {
@@ -243,7 +245,16 @@ fun MenuTile(
             ) {
                 SkIcon(icon, SkDimens.MenuIcon)
             }
-            WordSafeText(title, SkType.BigButton, textAlign = TextAlign.Start)
+            Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapXS)) {
+                WordSafeText(title, SkType.BigButton, textAlign = TextAlign.Start)
+                WordSafeText(
+                    subtitle,
+                    SkType.SmallSoft,
+                    Modifier.clearAndSetSemantics { },
+                    textAlign = TextAlign.Start,
+                    maxLines = 2,
+                )
+            }
         }
     }
 }

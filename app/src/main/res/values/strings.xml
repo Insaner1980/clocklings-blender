@@ -3,8 +3,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Clocklings</string>
     <string name="back_description">Back</string>
-    <string name="help_on">Help on</string>
-    <string name="help_off">Help off</string>
     <string name="listen">Listen</string>
     <string name="random_time">Random time</string>
     <string name="next">Next</string>
@@ -142,10 +140,6 @@
     <string name="doll_all_open">All outfit items are available. Try any combination!</string>
     <string name="doll_optional_hint">Tap an item to put it on. Tap it again to take it off.</string>
     <string name="doll_optional_hint_partial">Tap an item to put it on. Hats and extras come off when you tap them again.</string>
-    <plurals name="doll_item_locked">
-        <item quantity="one">Locked. Opens at %1$d\u00A0star. You have %2$d.</item>
-        <item quantity="other">Locked. Opens at %1$d\u00A0stars. You have %2$d.</item>
-    </plurals>
     <string name="slot_hair">Hair</string>
     <string name="slot_dress">Dresses</string>
     <string name="slot_shoes">Shoes</string>
@@ -185,7 +179,6 @@
     <string name="lesson_try">Try it</string>
     <string name="lesson_next_lesson">Next lesson</string>
     <string name="lesson_start_game">Start playing!</string>
-    <string name="lesson_practise">Practise</string>
     <string name="lesson_learned">%1$s You completed %2$s.</string>
     <!-- Full sentences end with punctuation; bare labels do not. Measurements use digits.
          Counting phrases may spell out counts. Keep numbers and units together. -->
@@ -337,4 +330,12 @@
     <string name="task_outcome_first_try">Task %1$d. Correct on the first try</string>
     <string name="task_outcome_with_hint">Task %1$d. Correct after a hint</string>
     <string name="task_outcome_shown">Task %1$d. Answer shown</string>
+    <string name="item_star_need">%1$d</string>
+    <plurals name="item_star_need_description">
+        <item quantity="one">Needs %1$d star</item>
+        <item quantity="other">Needs %1$d stars</item>
+    </plurals>
+    <string name="guides_on">Clock guides on</string>
+    <string name="guides_off">Clock guides off</string>
+    <string name="challenge_seconds_left">%1$d s</string>
 </resources>

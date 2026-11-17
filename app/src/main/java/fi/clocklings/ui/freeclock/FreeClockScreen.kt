@@ -148,7 +148,7 @@ private fun ColumnScope.LegendRows(
 ) {
     LegendRow(SkColors.Hour, SkDimens.LegendSwatchShort, hour)
     LegendRow(SkColors.Minute, SkDimens.LegendSwatchLong, minute)
-    Text(drag, style = SkType.SmallSoft)
+    Text(drag, style = SkType.SmallSoft.copy(color = SkColors.InkSoft))
 }
 
 @Composable

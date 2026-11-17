@@ -280,7 +280,7 @@ class ScreenshotReviewUiTest {
                 val name = if (kind == CompanionKind.CAT) "Cat" else "Dog"
                 compose.onNodeWithTag("choose_companion_${kind.name}").performScrollTo().performClick()
                 compose.onNodeWithText("Try again").assertIsDisplayed()
-                compose.onNodeWithText("Clock styles").performScrollTo().performClick()
+                compose.onNodeWithText("Clock styles").assertIsDisplayed().performClick()
                 compose.onNodeWithText("Companions").performClick()
                 compose.runOnIdle { reject = false }
                 compose.onNodeWithText("Try again").performClick()
@@ -330,18 +330,9 @@ class ScreenshotReviewUiTest {
         }
         val descriptions =
             mapOf(
-                "en" to
-                    listOf("Locked. Opens at 1\u00a0star. You have 0.", "Locked. Opens at 2\u00a0stars. You have 0."),
-                "fi" to
-                    listOf(
-                        "Lukittu. Avautuu, kun tähtiä on 1. Sinulla on 0.",
-                        "Lukittu. Avautuu, kun tähtiä on 2. Sinulla on 0.",
-                    ),
-                "sv" to
-                    listOf(
-                        "Låst. Låses upp vid 1\u00a0stjärna. Du har 0.",
-                        "Låst. Låses upp vid 2\u00a0stjärnor. Du har 0.",
-                    ),
+                "en" to listOf("Needs 1 star", "Needs 2 stars"),
+                "fi" to listOf("Tarvitsee 1 tähden", "Tarvitsee 2 tähteä"),
+                "sv" to listOf("Kräver 1 stjärna", "Kräver 2 stjärnor"),
             )
         for ((tag, expected) in descriptions) {
             for (cell in listOf(411 to 1f, 320 to 1f, 411 to 2f, 320 to 2f)) {
@@ -486,7 +477,7 @@ class ScreenshotReviewUiTest {
             assertWholeWords("Aloita pelaaminen!", level)
             compose
                 .onNode(
-                    hasContentDescription("$name. Harjoittele. Aloita pelaaminen!", substring = true) and
+                    hasContentDescription("$name. Aloita pelaaminen!", substring = true) and
                         hasClickAction(),
                 ).performScrollTo()
                 .assertIsDisplayed()

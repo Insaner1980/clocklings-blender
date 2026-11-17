@@ -61,7 +61,7 @@ object SkType {
     val BodySoft = body(18).copy(color = SkColors.UiInkSoft)
     val Small = body(15)
     val SmallSoft = body(15).copy(color = SkColors.UiInkSoft)
-    val Eyebrow = body(12, FontWeight.ExtraBold, 1.33f).copy(letterSpacing = 0.06.em, color = SkColors.UiInkSoft)
+    val Eyebrow = body(14, FontWeight.ExtraBold, 1.33f).copy(color = SkColors.UiInkSoft)
 
     val Logo = display(40, FontWeight.Bold, 1.1f)
     val Tagline = display(20).copy(color = SkColors.UiInkSoft)
@@ -83,7 +83,6 @@ object SkType {
     val BigButton = display(22, lineHeight = 1.18f)
 
     val FeedbackOk = display(26).copy(color = SkColors.Good)
-    val FeedbackHint = body(18).copy(color = SkColors.Try)
 
     val LessonTitle = display(20, lineHeight = 1.2f)
     val LessonTitleCurrent = display(24, lineHeight = 1.17f)

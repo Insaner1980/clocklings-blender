@@ -18,8 +18,10 @@ reports/
 keystore.properties
 
 # Local tooling and credentials
+.codex-attachments/
 .codex-remote-attachments/
 .sonar/
+.wrangler/
 .env
 .env.*
 *.p12

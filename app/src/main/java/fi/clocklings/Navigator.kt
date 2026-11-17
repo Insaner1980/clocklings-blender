@@ -9,6 +9,7 @@ import fi.clocklings.domain.AccessPolicy
 class Navigator(
     private val stack: MutableList<NavKey>,
     private val beforeNavigate: () -> Unit = {},
+    private val onDestinationChanged: (Screen) -> Unit = {},
     private val access: () -> AccessPolicy,
 ) {
     init {
@@ -26,36 +27,36 @@ class Navigator(
         if (stack.last() == screen) action()
     }
 
-    fun push(screen: Screen) {
-        beforeNavigate()
-        stack.add(screen.accessibleDestination(access()))
-    }
+    fun push(screen: Screen) =
+        navigate {
+            stack.add(screen.accessibleDestination(access()))
+        }
 
-    fun pop() {
-        beforeNavigate()
-        if (stack.size > 1) stack.removeAt(stack.lastIndex)
-        stack[stack.lastIndex] = (stack.last() as Screen).accessibleDestination(access())
-    }
+    fun pop() =
+        navigate {
+            if (stack.size > 1) stack.removeAt(stack.lastIndex)
+            stack[stack.lastIndex] = (stack.last() as Screen).accessibleDestination(access())
+        }
 
     /** Korvaa päällimmäisen näkymän (esim. peli → tulos), jolloin takaisin vie edelliseen näkymään. */
-    fun replace(screen: Screen) {
-        beforeNavigate()
-        val target = screen.accessibleDestination(access())
-        if (stack.size > 1) stack[stack.lastIndex] = target else stack.add(target)
-    }
+    fun replace(screen: Screen) =
+        navigate {
+            val target = screen.accessibleDestination(access())
+            if (stack.size > 1) stack[stack.lastIndex] = target else stack.add(target)
+        }
 
     /** Palaa pinossa näkymään [screen] tai lisää sen kodin päälle. */
-    fun popTo(screen: Screen) {
-        beforeNavigate()
-        val target = screen.accessibleDestination(access())
-        val index = stack.indexOfLast { it == target }
-        if (index >= 0) {
-            while (stack.size > index + 1) stack.removeAt(stack.lastIndex)
-        } else {
-            while (stack.size > 1) stack.removeAt(stack.lastIndex)
-            stack.add(target)
+    fun popTo(screen: Screen) =
+        navigate {
+            val target = screen.accessibleDestination(access())
+            val index = stack.indexOfLast { it == target }
+            if (index >= 0) {
+                while (stack.size > index + 1) stack.removeAt(stack.lastIndex)
+            } else {
+                while (stack.size > 1) stack.removeAt(stack.lastIndex)
+                stack.add(target)
+            }
         }
-    }
 
     /** Tason aloitus: ensin oppitunnit, jos niitä on, muuten suoraan peliin. */
     fun startLevel(
@@ -72,6 +73,15 @@ class Navigator(
                 Screen.Lesson(allowedQueue, thenLevel = level)
             }
         if (replaceTop) replace(target) else push(target)
+    }
+
+    private inline fun navigate(change: () -> Unit) {
+        val previous = stack.last()
+        val depth = stack.size
+        beforeNavigate()
+        change()
+        val destination = stack.last() as Screen
+        if (stack.size != depth || destination != previous) onDestinationChanged(destination)
     }
 }
 

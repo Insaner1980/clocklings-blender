@@ -1,5 +1,11 @@
 # Clocklings implementation
 
+## PostHog usage reporting — 15 November 2026
+
+Optional parent-area usage reporting is implemented on `codex/clocklings-analytics`. Android sends allowlisted weekly counters to a deployed Cloudflare Worker and EU D1 database; finalized aggregate cells go to the separate Clocklings PostHog EU project. See [POSTHOG.md](POSTHOG.md) for the event contract, dashboard, four-week reporting delay, suppression, privacy limitations, publishing information and verification. This supersedes earlier offline-only analytics statements for this Blender app; release signing remains unconfigured.
+
+Final verification passed 528 JVM tests, 4 receiver tests, the live HTTPS transport test on the dedicated Clocklings emulator, debug/release/test APK assembly, ktlint, Detekt, Android Lint and seven-language resource parity. Actual cron-to-PostHog delivery was read back successfully. UI size/font checks used Robolectric, including 320 dp with 200% text; the device check covered transport. All owned test processes stopped. Two small Wrangler cache directories remain because tool policy blocked deletion; no commit or push was made.
+
 > **Current Blender UI status (14 November 2026):** See the Modern Android UI entry below for implementation and verification. [CONSOLIDATED-STATUS.md](CONSOLIDATED-STATUS.md) records the earlier 6 November baseline. Earlier scope, branch, open-task and cleanup statements may be superseded.
 
 Updated: 14 November 2026 for the independent Blender artwork experiment. Earlier copied checkpoints remain below as history. This is an internal construction record, not a release.

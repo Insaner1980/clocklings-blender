@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -137,7 +138,6 @@ private fun LessonPracticeNode(
     onPlay: () -> Unit,
 ) {
     val starDescription = pluralStringResource(R.plurals.stars_count, stars, stars)
-    val practise = stringResource(R.string.lesson_practise)
     val chapterTitle = stringResource(levelName(level))
     val action =
         stringResource(
@@ -148,13 +148,20 @@ private fun LessonPracticeNode(
             },
         )
     PathRow(
-        practise,
-        "$chapterTitle. $practise. $action. $starDescription",
+        chapterTitle,
+        "$chapterTitle. $action. $starDescription",
         onPlay,
         style = PathRowStyle.PRACTICE,
         enabled = enabled,
         supporting = { WordSafeText(action, SkType.SmallSoft, textAlign = TextAlign.Start) },
-        trailing = { StarRow(stars, starDescription, size = SkDimens.StarSmall) },
+        trailing = {
+            StarRow(
+                stars,
+                starDescription,
+                Modifier.alpha(if (enabled) 1f else SkColors.DISABLED_CONTROL_ALPHA),
+                size = SkDimens.StarSmall,
+            )
+        },
         leading = { SkIcon(SkIcons.Star, SkDimens.Star) },
     )
 }

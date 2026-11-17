@@ -29,7 +29,7 @@ internal object ClockSpec {
     const val FACE_RADIUS = 170f
     const val HALF_RADIUS = 168f
     const val MINUTE_LABEL_RADIUS = 207f
-    const val INNER_24_RADIUS = 82f
+    const val INNER_24_RADIUS = 88f
     const val TICK_OUTER = 162f
     const val TICK_BIG_INNER = 145f
     const val TICK_SMALL_INNER = 153f
@@ -124,7 +124,7 @@ internal object ClockSpec {
     const val NUMBER_FONT = 39f
     const val MINUTE_FONT = 17f
     const val ZONE_FONT = 19f
-    const val INNER_24_FONT = 12f
+    const val INNER_24_FONT = 15.6f
     const val DAY_FONT = 17f
     const val BUBBLE_FONT = 16f
 

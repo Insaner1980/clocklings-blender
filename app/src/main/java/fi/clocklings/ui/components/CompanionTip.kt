@@ -41,14 +41,14 @@ fun CompanionTip(
     modifier: Modifier = Modifier,
     kind: FeedbackKind = FeedbackKind.HINT,
     celebrate: Boolean = false,
-    color: Color = SkColors.Bubble,
+    color: Color? = null,
 ) {
     CompanionTip(
         modifier,
         celebrationKey = text,
         celebrate = celebrate,
-        color = color,
-        fallback = { FeedbackBox(text, kind) },
+        color = color ?: SkColors.Bubble,
+        fallback = { FeedbackBox(text, kind, color = color) },
     ) {
         Text(text, style = SkType.Body)
     }

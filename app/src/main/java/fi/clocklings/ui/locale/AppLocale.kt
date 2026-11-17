@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -70,6 +71,7 @@ fun AppLocaleProvider(
     repository: ProgressRepository,
     modifier: Modifier = Modifier,
     controller: AppLocaleController = viewModel(factory = localeViewModelFactory(repository, LocalContext.current)),
+    onStartupErrorReady: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
@@ -99,6 +101,7 @@ fun AppLocaleProvider(
             if (selection.ready) {
                 content()
             } else if (selection.failed) {
+                SideEffect(onStartupErrorReady)
                 ClocklingsTheme {
                     ScreenScaffold(section = Section.HOME) {
                         Text(stringResource(R.string.language_save_error), style = SkType.Body)

@@ -97,6 +97,7 @@ class ChallengeViewModel(
         timer?.cancel()
         pending?.cancel()
         endSound?.cancel()
+        services.usage.count("challenge.start")
         services.play(Sound.CHALLENGE_GO)
         _state.update {
             it.copy(
@@ -135,6 +136,7 @@ class ChallengeViewModel(
         if (s.phase != ChallengePhase.RUN || s.busy) return
         if (nowNanos() >= s.deadlineNanos) return
         val correct = time == s.question
+        services.usage.count(if (correct) "challenge.correct" else "challenge.wrong")
         services.play(if (correct) Sound.OK else Sound.BAD)
         _state.value =
             if (correct) {
@@ -162,6 +164,7 @@ class ChallengeViewModel(
         val s = _state.value
         // A retried save ends the same run again: time ran out already, so only the fanfare repeats.
         val timeRanOut = s.phase == ChallengePhase.RUN
+        if (timeRanOut) services.usage.count("challenge.timeout")
         var best = s.best
         var record = s.score > best
         val saved =
@@ -180,6 +183,7 @@ class ChallengeViewModel(
         val newRecord = saved && record && s.score > 0
         val fanfare = if (newRecord) Sound.RECORD else Sound.WIN
         if (timeRanOut) {
+            services.usage.count("challenge.finish")
             services.play(Sound.CHALLENGE_OVER)
             endSound =
                 viewModelScope.launch {

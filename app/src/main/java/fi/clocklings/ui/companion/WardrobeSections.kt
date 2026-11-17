@@ -28,6 +28,7 @@ import fi.clocklings.R
 import fi.clocklings.domain.AccessPolicy
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.Wardrobe
+import fi.clocklings.domain.slots
 import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.SectionChips
@@ -36,6 +37,7 @@ import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.TopBar
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.rememberReduceMotion
+import fi.clocklings.ui.slotName
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkType
 import kotlinx.coroutines.CoroutineScope
@@ -86,11 +88,12 @@ internal fun WardrobeHeader(
     kind: CompanionKind,
     total: Int,
     access: AccessPolicy,
-    labels: List<String>,
     navigation: WardrobeSections,
     onBack: () -> Unit,
 ) {
     val reduced = rememberReduceMotion()
+    val colorLabel = if (kind != CompanionKind.HUMAN) listOf(stringResource(R.string.companion_color)) else emptyList()
+    val labels = colorLabel + kind.slots.map { stringResource(slotName(it)) }
     Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
         TopBar(stringResource(R.string.doll_title), onBack, trailing = {
             val starInfo = wardrobeStarInfo(kind, total, access)

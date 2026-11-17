@@ -1,15 +1,12 @@
 package fi.clocklings.ui.parent
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,17 +17,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fi.clocklings.R
+import fi.clocklings.analytics.UsageAnalytics
 import fi.clocklings.billing.PurchaseStatus
 import fi.clocklings.billing.PurchaseUiState
 import fi.clocklings.ui.components.ButtonKind
+import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.TopBar
+import fi.clocklings.ui.settings.SettingsCard
+import fi.clocklings.ui.settings.SettingsSwitch
 import fi.clocklings.ui.theme.Section
 import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
@@ -47,6 +50,7 @@ fun ParentScreen(
     onRetry: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    usage: UsageAnalytics = UsageAnalytics.Disabled,
 ) {
     var adult by remember { mutableStateOf(false) }
     ScreenScaffold(
@@ -56,9 +60,24 @@ fun ParentScreen(
     ) {
         if (adult) {
             PurchaseContent(state, onPurchase, onRestore, onRetry)
+            if (usage.available) UsageSharing(usage)
         } else {
             AdultGate(onContinue = { adult = true }, onCancel = onBack)
         }
+    }
+}
+
+@Composable
+private fun UsageSharing(usage: UsageAnalytics) {
+    val enabled by usage.enabled.collectAsStateWithLifecycle(initialValue = null)
+    SettingsCard {
+        SettingsSwitch(
+            text = stringResource(R.string.usage_sharing_title),
+            supporting = stringResource(R.string.usage_sharing_description),
+            checked = enabled == true,
+            enabled = enabled != null,
+            onChange = usage::setEnabled,
+        )
     }
 }
 
@@ -71,38 +90,27 @@ private fun AdultGate(
     var answer by remember { mutableStateOf("") }
     var failed by remember { mutableStateOf(false) }
     val submit = {
-        if (answer == code.reversed()) onContinue() else failed = true
+        if (answer == code.reversed()) {
+            onContinue()
+        } else {
+            answer = ""
+            failed = true
+        }
     }
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen)) {
         Text(stringResource(R.string.parent_gate_instruction, code.toList().joinToString(" ")), style = SkType.Body)
         val answerLabel = stringResource(R.string.parent_gate_answer)
         Text(answerLabel, style = SkType.Body)
-        BasicTextField(
-            value = answer,
+        GateAnswerField(
+            answer,
+            answerLabel,
+            failed,
+            submit,
             onValueChange = {
                 answer = it.filter(Char::isDigit).take(GATE_CODE_LENGTH)
                 failed = false
             },
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .heightIn(min = SkDimens.ChildTarget)
-                    .background(SkColors.Surface, SkShapes.Field)
-                    .border(SkDimens.BorderThin, SkColors.FieldOutline, SkShapes.Field)
-                    .padding(horizontal = SkDimens.FieldPaddingHorizontal, vertical = SkDimens.FieldPaddingVertical)
-                    .semantics { contentDescription = answerLabel },
-            textStyle = SkType.Body,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = { submit() }),
         )
-        if (failed) {
-            Text(
-                stringResource(R.string.parent_gate_error),
-                style = SkType.Body,
-                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-            )
-        }
         SkButton(
             stringResource(R.string.parent_continue),
             submit,
@@ -112,6 +120,54 @@ private fun AdultGate(
         )
         SkButton(stringResource(R.string.parent_cancel), onCancel, Modifier.fillMaxWidth())
     }
+}
+
+@Composable
+private fun GateAnswerField(
+    answer: String,
+    label: String,
+    failed: Boolean,
+    onSubmit: () -> Unit,
+    onValueChange: (String) -> Unit,
+) {
+    val errorMessage = stringResource(R.string.parent_gate_error)
+    OutlinedTextField(
+        value = answer,
+        onValueChange = onValueChange,
+        modifier =
+            Modifier.fillMaxWidth().semantics {
+                contentDescription = label
+                if (failed) error(errorMessage)
+            },
+        isError = failed,
+        shape = SkShapes.Field,
+        supportingText =
+            if (failed) {
+                {
+                    Text(
+                        errorMessage,
+                        style = SkType.Small,
+                        color = SkColors.Danger,
+                        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+                    )
+                }
+            } else {
+                null
+            },
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = SkColors.Surface,
+                unfocusedContainerColor = SkColors.Surface,
+                errorContainerColor = SkColors.Surface,
+                focusedBorderColor = SkColors.Primary,
+                unfocusedBorderColor = SkColors.FieldOutline,
+                errorBorderColor = SkColors.Danger,
+            ),
+        textStyle = SkType.Body,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = { onSubmit() }),
+    )
 }
 
 @Composable
@@ -125,31 +181,36 @@ private fun PurchaseContent(
         Text(stringResource(R.string.full_unlock_name), style = SkType.Title)
         Text(stringResource(R.string.full_unlock_description), style = SkType.Body)
         Text(stringResource(R.string.full_unlock_rewards), style = SkType.Body)
-        Text(
-            stringResource(state.status.message()),
-            style = SkType.Body,
-            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
-        )
-        if (!state.fullAccess) {
-            val price = state.localizedPrice
+        val unavailable = state.status == PurchaseStatus.UNAVAILABLE
+        val status = stringResource(state.status.message())
+        val statusSemantics = Modifier.semantics { liveRegion = LiveRegionMode.Polite }
+        if (unavailable) {
+            FlatPanel(color = SkColors.DangerContainer) {
+                Text(status, style = SkType.Body, modifier = statusSemantics)
+            }
+        } else {
+            Text(status, style = SkType.Body, modifier = statusSemantics)
+        }
+        val price = state.localizedPrice
+        if (!unavailable && !state.fullAccess && price != null) {
             SkButton(
-                if (price ==
-                    null
-                ) {
-                    stringResource(R.string.purchase_unavailable)
-                } else {
-                    stringResource(R.string.purchase_buy, price)
-                },
+                stringResource(R.string.purchase_buy, price),
                 onPurchase,
                 Modifier.fillMaxWidth(),
                 kind = ButtonKind.PRIMARY,
-                enabled = state.canPurchase && price != null && !state.busy,
+                enabled = state.canPurchase && !state.busy,
             )
         }
         if (state.status in
             setOf(PurchaseStatus.UNAVAILABLE, PurchaseStatus.FAILED, PurchaseStatus.ACKNOWLEDGEMENT_PENDING)
         ) {
-            SkButton(stringResource(R.string.purchase_retry), onRetry, Modifier.fillMaxWidth(), enabled = !state.busy)
+            SkButton(
+                stringResource(R.string.purchase_retry),
+                onRetry,
+                Modifier.fillMaxWidth(),
+                kind = if (unavailable) ButtonKind.PRIMARY else ButtonKind.SECONDARY,
+                enabled = !state.busy,
+            )
         }
         SkButton(stringResource(R.string.purchase_restore), onRestore, Modifier.fillMaxWidth(), enabled = !state.busy)
         Text(stringResource(R.string.purchase_restore_explanation), style = SkType.SmallSoft)

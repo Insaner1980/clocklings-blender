@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import fi.clocklings.domain.CompanionColor
@@ -45,6 +47,7 @@ fun CompanionView(
     celebration: CompanionCelebration? = null,
     animated: Boolean = true,
     cropItem: Item? = null,
+    onGroundPosition: ((Offset) -> Unit)? = null,
 ) {
     val loadAccessories = needsBlenderAccessories(kind, outfit, celebration?.newOutfit)
     val rig = rememberCompanionRig(kind, color, loadAccessories) ?: return
@@ -73,10 +76,27 @@ fun CompanionView(
         modifier
             .then(if (cropItem == null) Modifier.testTag("companion_${kind.name}") else Modifier)
             .then(if (active != null) Modifier.confettiAnchor { center.value = it } else Modifier)
+            .reportGroundPosition(crop, rig.groundCenter, onGroundPosition)
             .clearAndSetSemantics { }
     Canvas(art) {
         val pose = if (moving) poseAt(nowMs.longValue, active) else RestPose
         drawFitted(rig, crop, clip = cropItem != null, color, shown, pose)
+    }
+}
+
+private fun Modifier.reportGroundPosition(
+    crop: Rect,
+    groundCenter: Offset,
+    onGroundPosition: ((Offset) -> Unit)?,
+): Modifier {
+    if (onGroundPosition == null) return this
+    return onGloballyPositioned { coordinates ->
+        val width = coordinates.size.width.toFloat()
+        val height = coordinates.size.height.toFloat()
+        val scale = min(width / crop.width, height / crop.height)
+        val inset = Offset((width - crop.width * scale) / 2, (height - crop.height * scale) / 2)
+        val centre = inset + (groundCenter - crop.topLeft) * scale
+        onGroundPosition(coordinates.positionInRoot() + centre)
     }
 }
 
