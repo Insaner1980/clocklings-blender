@@ -67,17 +67,21 @@ internal class WeeklyUsageAnalytics(
     private var activeUpload: Job? = null
     private val initialized =
         scope.launch {
-            try {
-                val persisted =
-                    store.edit {
-                        if (it[CONSENT] == true) it.prune(currentWeek()) else it.clear()
+            while (true) {
+                try {
+                    val persisted =
+                        store.edit {
+                            if (it[CONSENT] == true) it.prune(currentWeek()) else it.clear()
+                        }
+                    if (consentRevision == 0L && persisted[CONSENT] == true) {
+                        consent.value = true
+                        schedule(true)
                     }
-                if (consentRevision == 0L && persisted[CONSENT] == true) {
-                    consent.value = true
-                    schedule(true)
+                    return@launch
+                } catch (_: IOException) {
+                    // Keep reporting disabled until persisted consent can be read.
+                    delay(STORAGE_RETRY_MS)
                 }
-            } catch (_: IOException) {
-                // Consent is unknown until storage can be read. Keep reporting disabled.
             }
         }
     private var lastConsentWrite = initialized

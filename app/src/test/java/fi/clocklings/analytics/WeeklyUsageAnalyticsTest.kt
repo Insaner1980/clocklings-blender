@@ -1,5 +1,9 @@
 package fi.clocklings.analytics
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import fi.clocklings.data.InMemoryPreferencesStore
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -8,6 +12,7 @@ import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -15,6 +20,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.IOException
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
@@ -28,8 +34,60 @@ class WeeklyUsageAnalyticsTest {
     private val scheduled = mutableListOf<Boolean>()
     private val requests = mutableListOf<WeeklyBatch>()
 
-    private fun TestScope.analytics() =
-        WeeklyUsageAnalytics(store, backgroundScope, StandardTestDispatcher(testScheduler), scheduled::add, clock)
+    private fun TestScope.analytics(preferences: DataStore<Preferences> = store) =
+        WeeklyUsageAnalytics(preferences, backgroundScope, StandardTestDispatcher(testScheduler), scheduled::add, clock)
+
+    private fun failFirstUpdate(): DataStore<Preferences> =
+        object : DataStore<Preferences> by store {
+            private var failed = false
+
+            override suspend fun updateData(transform: suspend (Preferences) -> Preferences): Preferences {
+                if (!failed) {
+                    failed = true
+                    throw IOException("Temporary storage failure")
+                }
+                return store.updateData(transform)
+            }
+        }
+
+    @Test
+    fun persistedConsentRecoversAfterAnInitialStorageFailure() =
+        runTest {
+            store.edit { it[booleanPreferencesKey("consent")] = true }
+            val usage = analytics(failFirstUpdate())
+            runCurrent()
+            assertFalse(usage.enabled.first())
+            assertTrue(scheduled.isEmpty())
+            usage.count("game.0.start")
+
+            advanceTimeBy(5_000)
+            runCurrent()
+            assertTrue(usage.enabled.first())
+            assertEquals(listOf(true), scheduled)
+            usage.count("lesson.0.start")
+            runCurrent()
+            clock.set("2026-11-16T12:00:00Z")
+            assertTrue(upload(usage))
+            assertEquals(mapOf("lesson.0.start" to 1), requests.single().counts)
+        }
+
+    @Test
+    fun revocationWhileInitializationRetriesOverridesPersistedConsent() =
+        runTest {
+            store.edit { it[booleanPreferencesKey("consent")] = true }
+            val usage = analytics(failFirstUpdate())
+            runCurrent()
+            usage.setEnabled(false)
+
+            advanceTimeBy(5_000)
+            runCurrent()
+            assertFalse(usage.enabled.first())
+            assertEquals(listOf(false), scheduled)
+            val remaining = store.data.first()
+            assertTrue(remaining.asMap().isEmpty())
+            assertTrue(upload(usage))
+            assertTrue(requests.isEmpty())
+        }
 
     private suspend fun upload(
         usage: WeeklyUsageAnalytics,

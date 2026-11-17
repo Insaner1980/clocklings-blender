@@ -168,8 +168,8 @@ fun ClockFace(
             under.forEach { drawMark(it, textMeasurer, styles) }
             drawTicks()
             drawNumbers(textMeasurer, styles)
-            drawHands(raw, highlight, pulse, interactive && !mini, appearance.handsAt(mini))
             if (is24) drawDayPart(dayPart, textMeasurer, styles)
+            drawHands(raw, highlight, pulse, interactive && !mini, appearance.handsAt(mini))
             drawCoveredNumerals(textMeasurer, styles, raw, showHelp, under)
             drawCircle(SkColors.Ink, S.PIN_RADIUS, Offset(S.CENTER, S.CENTER))
             drawCircle(SkColors.Face, S.PIN_DOT, Offset(S.CENTER, S.CENTER))

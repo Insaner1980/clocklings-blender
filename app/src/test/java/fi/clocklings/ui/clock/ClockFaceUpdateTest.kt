@@ -6,6 +6,7 @@ import android.view.View
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -24,6 +25,7 @@ import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import fi.clocklings.domain.AppLanguage
+import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.timeLanguage
 import fi.clocklings.ui.theme.ClocklingsTheme
 import fi.clocklings.ui.theme.SkColors
@@ -41,6 +43,58 @@ import kotlin.math.sin
 @RunWith(RobolectricTestRunner::class)
 class ClockFaceUpdateTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun dayPartNeverErasesTheMinuteHand() {
+        val viewport = mutableStateOf(411 to 1f)
+        val time = mutableIntStateOf(30)
+        val period = mutableIntStateOf(ClockTime.HALF_DAY)
+        lateinit var view: View
+        compose.setContent {
+            view = LocalView.current
+            CompositionLocalProvider(LocalDensity provides Density(1f, viewport.value.second)) {
+                key(viewport.value, time.intValue, period.intValue) {
+                    ClocklingsTheme {
+                        ClockFace(
+                            ClockCommand(time.intValue),
+                            Modifier.size(viewport.value.first.dp).testTag("clock"),
+                            period = period.intValue,
+                        )
+                    }
+                }
+            }
+        }
+        for (cell in listOf(411 to 1f, 320 to 1f, 411 to 2f, 320 to 2f)) {
+            for (halfPast in listOf(30, 750)) {
+                compose.runOnIdle {
+                    viewport.value = cell
+                    time.intValue = halfPast
+                    period.intValue = ClockTime.HALF_DAY
+                }
+                val bounds = compose.onNodeWithTag("clock").fetchSemanticsNode().boundsInRoot
+                val baseline = captureClock(view, bounds)
+                compose.runOnIdle { period.intValue = ClockTime.DAY }
+                val pixels = captureClock(view, bounds)
+                val scale = pixels.width / ClockSpec.VIEW_SIZE
+                val x = ((ClockSpec.CENTER - ClockSpec.VIEW_ORIGIN) * scale).roundToInt()
+                var maxBlueContrast = 0f
+                // Both the sun and moon sit on the downward minute shaft at half past.
+                for (offset in -5..5) {
+                    val y = ((ClockSpec.SUN_CY + offset - ClockSpec.VIEW_ORIGIN) * scale).roundToInt()
+                    val color = pixels[x, y]
+                    val expected = baseline[x, y]
+                    maxBlueContrast = maxOf(maxBlueContrast, expected.blue - expected.red)
+                    assertTrue(
+                        "$cell at $halfPast: day part erased the minute hand at $offset: $color",
+                        abs(color.red - expected.red) < 0.03f &&
+                            abs(color.green - expected.green) < 0.03f &&
+                            abs(color.blue - expected.blue) < 0.03f,
+                    )
+                }
+                assertTrue("$cell at $halfPast: baseline must contain the blue minute hand", maxBlueContrast > 0.1f)
+            }
+        }
+    }
 
     @Test
     fun retainedAnswerUpdatesDoNotSnapTheHandDuringAnActiveDrag() {
