@@ -79,14 +79,45 @@ class WeeklyUsageAnalyticsTest {
             runCurrent()
             usage.setEnabled(false)
 
-            advanceTimeBy(5_000)
             runCurrent()
             assertFalse(usage.enabled.first())
             assertEquals(listOf(false), scheduled)
             val remaining = store.data.first()
             assertTrue(remaining.asMap().isEmpty())
+            val restarted = analytics()
+            runCurrent()
+            assertFalse(restarted.enabled.first())
+
+            advanceTimeBy(5_000)
+            runCurrent()
+            assertFalse(usage.enabled.first())
+            assertEquals(listOf(false), scheduled)
             assertTrue(upload(usage))
             assertTrue(requests.isEmpty())
+        }
+
+    @Test
+    fun consentChangesStayOrderedWhileInitializationRetries() =
+        runTest {
+            store.edit { it[booleanPreferencesKey("consent")] = true }
+            val usage = analytics(failFirstUpdate())
+            runCurrent()
+
+            usage.setEnabled(true)
+            usage.setEnabled(false)
+            runCurrent()
+            assertFalse(usage.enabled.first())
+            val remaining = store.data.first()
+            assertTrue(remaining.asMap().isEmpty())
+            assertEquals(listOf(false), scheduled)
+
+            usage.setEnabled(true)
+            runCurrent()
+            assertTrue(usage.enabled.first())
+            assertEquals(true, store.data.first()[booleanPreferencesKey("consent")])
+            advanceTimeBy(5_000)
+            runCurrent()
+            assertEquals(listOf(false, true), scheduled)
         }
 
     private suspend fun upload(

@@ -84,7 +84,7 @@ internal class WeeklyUsageAnalytics(
                 }
             }
         }
-    private var lastConsentWrite = initialized
+    private var lastConsentWrite: Job? = null
 
     override fun setEnabled(enabled: Boolean) {
         val revision = ++consentRevision
@@ -96,7 +96,7 @@ internal class WeeklyUsageAnalytics(
         val previousWrite = lastConsentWrite
         lastConsentWrite =
             scope.launch {
-                previousWrite.join()
+                previousWrite?.join()
                 writes.withLock {
                     persistConsent(enabled)
                     if (revision == consentRevision && enabled) {
