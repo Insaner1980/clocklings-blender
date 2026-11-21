@@ -64,6 +64,11 @@ class StartupFailureDeviceTest {
             },
         )
     }
+    private val services by lazy {
+        object : AppServices by (context.applicationContext as ClocklingsApplication).container {
+            override val repository = this@StartupFailureDeviceTest.repository
+        }
+    }
 
     @get:Rule val rules: RuleChain = RuleChain.outerRule(EnglishLocaleRule()).around(files).around(compose)
 
@@ -75,10 +80,6 @@ class StartupFailureDeviceTest {
             committed.updateSettings { it.copy(sound = false) }
         }
         val original = file.readBytes()
-        val services =
-            object : AppServices by (context.applicationContext as ClocklingsApplication).container {
-                override val repository = this@StartupFailureDeviceTest.repository
-            }
         val model = AppViewModel(services)
         try {
             compose.setContent { ClocklingsApp(container = services, app = model) }
@@ -91,6 +92,30 @@ class StartupFailureDeviceTest {
             compose.waitUntil(10_000) { model.progress.value?.totalStars == 3 && model.settings.value?.sound == false }
             compose.onNodeWithText("Clocklings").assertIsDisplayed()
             assertArrayEquals(original, file.readBytes())
+        } finally {
+            model.viewModelScope.cancel()
+            runBlocking { job.cancelAndJoin() }
+        }
+    }
+
+    @Test
+    fun openChallengeShowsTheStoredBestWhenReadsRecover() {
+        runBlocking { ProgressRepository(delegate).updateProgress { it.withChallengeScore(7) } }
+        val model = AppViewModel(services)
+        try {
+            compose.setContent { ClocklingsApp(container = services, app = model) }
+            compose.clickStorageAction("Play")
+            compose.clickStorageAction("Minute Challenge")
+            compose.onNodeWithText("No score yet").scrollToIfScrollable().assertIsDisplayed()
+
+            readable.set(true)
+            val best = context.getString(R.string.challenge_best, 7)
+            // A failed read can back off for up to 30 seconds before the store is read again.
+            compose.waitUntil(40_000) {
+                model.progress.value?.challengeBest == 7 &&
+                    compose.onAllNodesWithText(best).fetchSemanticsNodes().isNotEmpty()
+            }
+            compose.onNodeWithText(best).scrollToIfScrollable().assertIsDisplayed()
         } finally {
             model.viewModelScope.cancel()
             runBlocking { job.cancelAndJoin() }

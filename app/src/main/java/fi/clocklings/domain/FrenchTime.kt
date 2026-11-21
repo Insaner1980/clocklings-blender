@@ -52,8 +52,6 @@ object FrenchTime : TimeLanguage {
             else -> DayPart("nuit", "du soir", time.isSun)
         }
     }
-
-    override fun greeting(total: Int): Greeting = EnglishTime.greeting(total)
 }
 
 private val small =

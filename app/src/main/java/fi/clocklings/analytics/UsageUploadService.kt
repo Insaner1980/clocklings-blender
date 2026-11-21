@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.datastore.preferences.preferencesDataStore
 import fi.clocklings.BuildConfig
 import fi.clocklings.ClocklingsApplication
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -94,8 +95,9 @@ internal suspend fun sendWeeklyBatch(
     endpoint: URL,
     network: Network?,
     batch: WeeklyBatch,
+    ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ): UploadOutcome =
-    withContext(Dispatchers.IO) {
+    withContext(ioDispatcher) {
         suspendCancellableCoroutine { call ->
             val connection = (network?.openConnection(endpoint) ?: endpoint.openConnection()) as HttpsURLConnection
             call.invokeOnCancellation { connection.disconnect() }

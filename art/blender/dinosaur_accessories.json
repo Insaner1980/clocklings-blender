@@ -1,16 +1,29 @@
 {
   "dinosaur-extra-backpack": {
-    "front": {
+    "back": {
       "part": "BODY",
       "destination": [
-        25,
-        138,
-        70,
-        101
+        31,
+        124,
+        149,
+        100
       ],
       "source": [
         0,
-        0
+        858
+      ]
+    },
+    "front": {
+      "part": "HAND",
+      "destination": [
+        59,
+        125,
+        121,
+        86
+      ],
+      "source": [
+        0,
+        1161
       ]
     }
   },
@@ -24,14 +37,14 @@
         68
       ],
       "source": [
-        216,
-        0
+        150,
+        1422
       ]
     }
   },
   "dinosaur-extra-bucket": {
     "front": {
-      "part": "BODY",
+      "part": "GROUND",
       "destination": [
         185,
         198,
@@ -39,23 +52,23 @@
         86
       ],
       "source": [
-        408,
-        0
+        366,
+        1407
       ]
     }
   },
   "dinosaur-neck-scarf": {
     "front": {
-      "part": "BODY",
+      "part": "HAND",
       "destination": [
-        97,
-        145,
-        84,
-        85
+        96,
+        124,
+        76,
+        93
       ],
       "source": [
-        570,
-        0
+        450,
+        858
       ]
     }
   },
@@ -63,29 +76,29 @@
     "front": {
       "part": "HEAD",
       "destination": [
-        63,
-        -4,
-        155,
-        76
+        79,
+        2,
+        120,
+        66
       ],
       "source": [
-        828,
-        0
+        864,
+        1494
       ]
     }
   },
   "dinosaur-extra-balloon": {
     "front": {
-      "part": "BODY",
+      "part": "HAND",
       "destination": [
-        172,
-        9,
+        174,
+        3,
         76,
-        198
+        186
       ],
       "source": [
-        1299,
-        0
+        765,
+        639
       ]
     }
   },
@@ -99,8 +112,8 @@
         30
       ],
       "source": [
-        0,
-        600
+        585,
+        1857
       ]
     }
   },
@@ -114,36 +127,23 @@
         91
       ],
       "source": [
-        195,
-        600
+        996,
+        954
       ]
     }
   },
   "dinosaur-extra-umbrella": {
     "back": {
-      "part": "BODY",
+      "part": "HAND",
       "destination": [
-        120,
-        -16,
-        40,
-        190
+        111,
+        -67,
+        254,
+        285
       ],
       "source": [
-        387,
-        600
-      ]
-    },
-    "front": {
-      "part": "BODY",
-      "destination": [
-        25,
-        -54,
-        202,
-        243
-      ],
-      "source": [
-        513,
-        600
+        0,
+        0
       ]
     }
   },
@@ -151,27 +151,27 @@
     "back": {
       "part": "BODY",
       "destination": [
-        62,
-        185,
-        150,
-        55
+        35,
+        167,
+        194,
+        59
       ],
       "source": [
         0,
-        1335
+        1713
       ]
     },
     "front": {
       "part": "BODY",
       "destination": [
-        62,
-        161,
-        173,
-        94
+        35,
+        160,
+        200,
+        87
       ],
       "source": [
-        456,
-        1335
+        651,
+        1230
       ]
     }
   },
@@ -179,59 +179,72 @@
     "front": {
       "part": "HEAD",
       "destination": [
-        60,
-        -13,
-        150,
-        78
+        75,
+        -5,
+        112,
+        72
       ],
       "source": [
-        981,
-        1335
+        525,
+        1494
       ]
     }
   },
   "dinosaur-extra-kite": {
+    "back": {
+      "part": "HAND",
+      "destination": [
+        124,
+        140,
+        20,
+        16
+      ],
+      "source": [
+        1182,
+        1695
+      ]
+    },
     "front": {
-      "part": "BODY",
+      "part": "HAND",
       "destination": [
         22,
         -22,
-        153,
-        217
+        157,
+        212
       ],
       "source": [
-        0,
-        1623
+        765,
+        0
       ]
     }
   },
   "dinosaur-neck-binoculars": {
     "front": {
-      "part": "BODY",
+      "part": "HAND",
       "destination": [
-        93,
-        144,
-        82,
-        77
+        104,
+        125,
+        66,
+        88
       ],
       "source": [
-        465,
-        1623
+        450,
+        1140
       ]
     }
   },
   "dinosaur-neck-medal": {
     "front": {
-      "part": "BODY",
+      "part": "HAND",
       "destination": [
-        89,
-        147,
-        82,
-        92
+        102,
+        124,
+        65,
+        104
       ],
       "source": [
-        717,
-        1623
+        996,
+        639
       ]
     }
   },
@@ -239,20 +252,20 @@
     "front": {
       "part": "HAND",
       "destination": [
-        167,
-        120,
-        58,
-        102
+        172,
+        130,
+        49,
+        79
       ],
       "source": [
-        969,
-        1623
+        0,
+        1422
       ]
     }
   },
   "dinosaur-extra-skateboard": {
-    "front": {
-      "part": "BODY",
+    "back": {
+      "part": "GROUND",
       "destination": [
         25,
         261,
@@ -260,8 +273,8 @@
         47
       ],
       "source": [
-        0,
-        2280
+        585,
+        1713
       ]
     }
   }

@@ -1,4 +1,4 @@
-// Atlas coordinates come from tools/blender/render_bunny_layers.py.
+// Atlas regions are stored with the editable bunny.blend model.
 @file:Suppress("MagicNumber")
 
 package fi.clocklings.ui.companion
@@ -8,9 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
@@ -64,19 +68,68 @@ internal class BlenderBunnyRig(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
-        part(Body)
-        part(Arms)
-        accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
-        // Only the paws close over held items; leaves and flowers stay in front of the arms.
-        clipRect(top = 224f) { part(Arms) }
-        accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-        rotate(pose.headTiltDeg, Neck) {
-            part(Head)
-            rotate(pose.partDeg, LeftEarPivot) { part(LeftEar) }
-            rotate(-pose.partDeg, RightEarPivot) { part(RightEar) }
-            drawBlinkingEyes(Eyes, EyeCenter, pose.blink)
+        val tuck = (pose.lift / CompanionMotion.HOP_HEIGHT).coerceIn(0f, 1f)
+        scale(1f - .025f * tuck, 1f + .035f * tuck, AnimalFeet) {
+            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
+            part(Body)
+            hindFeet(tuck)
+            translate(top = -5.5f * tuck) {
+                accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
+                part(Arms)
+            }
+            accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
+            rotate(pose.headTiltDeg - 2f * tuck, Neck) { head(outfit, pose) }
+        }
+    }
+
+    private fun DrawScope.hindFeet(tuck: Float) {
+        if (tuck == 0f) {
+            part(Feet)
+            return
+        }
+        translate(4f * tuck, -5f * tuck) {
+            rotate(13f * tuck, LeftAnkle) { clipRect(right = 120f) { part(Feet) } }
+        }
+        translate(-4f * tuck, -5f * tuck) {
+            rotate(-13f * tuck, RightAnkle) { clipRect(left = 120f) { part(Feet) } }
+        }
+    }
+
+    private fun DrawScope.head(
+        outfit: Outfit,
+        pose: CompanionPose,
+    ) {
+        val swing = -pose.partDeg * .37f
+        rotate(swing, LeftEarPivot) { part(LeftEar) }
+        rotate(-swing, RightEarPivot) { part(RightEar) }
+        part(Head)
+        eyes(pose.blink)
+        if (outfit[Slot.HEAD] == "bunny-head-ear-bow") {
+            rotate(swing, LeftEarPivot) { accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT) }
+        } else {
             accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
+        }
+    }
+
+    private fun DrawScope.eyes(blink: Float) {
+        if (blink <= 0f) {
+            part(Eyes)
+            return
+        }
+        part(Lids)
+        val open = (1f - blink / .91f).coerceAtLeast(0f)
+        if (open > 0f) {
+            val apertures = Path()
+            for (center in EyeCenters) {
+                val top = 114f - 23f * open
+                val bottom = 114f + 17f * open
+                apertures.moveTo(center - 18f, top + 5f)
+                apertures.quadraticTo(center, top - 4f, center + 18f, top + 5f)
+                apertures.lineTo(center + 18f, bottom + 5f)
+                apertures.quadraticTo(center, bottom - 4f, center - 18f, bottom + 5f)
+                apertures.close()
+            }
+            clipPath(apertures) { part(Eyes) }
         }
     }
 }
@@ -87,9 +140,13 @@ private val LeftEar = BlenderBodyRegion(IntOffset(0, 454), IntOffset(0, 42), Int
 private val RightEar = BlenderBodyRegion(IntOffset(340, 454), IntOffset(133, 42), IntSize(107, 172))
 private val Arms = BlenderBodyRegion(IntOffset(665, 454), IntOffset(68, 164), IntSize(107, 89))
 private val Eyes = BlenderBodyRegion(IntOffset(665, 725), IntOffset(67, 91), IntSize(108, 44))
-private val LeftEarPivot = Offset(84f, 58f)
-private val RightEarPivot = Offset(156f, 58f)
+private val Feet = BlenderBodyRegion(IntOffset(0, 1032), IntOffset(46, 225), IntSize(144, 59))
+private val Lids = BlenderBodyRegion(IntOffset(665, 866), IntOffset(70, 108), IntSize(102, 15))
+private val LeftAnkle = Offset(87f, 239f)
+private val RightAnkle = Offset(154f, 240f)
+private val LeftEarPivot = Offset(79f, 56f)
+private val RightEarPivot = Offset(154f, 56f)
 private val Neck = Offset(120f, 172f)
-private val EyeCenter = Offset(120.5f, 112.75f)
+private val EyeCenters = floatArrayOf(88f, 153f)
 private val Ground = ovalRect(120f, 284f, 96f, 11f)
-private val FullFrame = Rect(0f, -80f, 240f, 300f)
+private val FullFrame = Rect(-20f, -80f, 260f, 300f)

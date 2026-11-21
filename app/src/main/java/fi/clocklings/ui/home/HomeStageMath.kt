@@ -29,12 +29,17 @@ internal fun companionStageLayout(
     contentHeight: Dp,
     aspectRatio: Float,
     wardrobeHeight: Dp = SkDimens.WardrobeButtonHeight,
+    skyTrim: Dp = 0.dp,
 ): CompanionStageLayout {
     val bottom = SkDimens.StageInset + wardrobeHeight + SkDimens.GapM
     val widthLimit = min(stageWidth * COMPANION_WIDTH_SHARE, stageWidth * (1 - RIGHT_COLUMN_SHARE) - SkDimens.GapS * 2)
     val height = max(0.dp, min(widthLimit / aspectRatio, contentHeight - bottom - SkDimens.GapS))
     val top = contentHeight - bottom - height
-    val contentTop = centredContentTop(stageHeight, contentHeight, top, contentHeight - SkDimens.StageInset)
+    val contentTop =
+        max(
+            0.dp,
+            centredContentTop(stageHeight + skyTrim, contentHeight, top, contentHeight - SkDimens.StageInset) - skyTrim,
+        )
     return CompanionStageLayout(
         DpSize(height * aspectRatio, height),
         bottom,

@@ -32,6 +32,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import fi.clocklings.ui.components.PressSurface
 import fi.clocklings.ui.components.SkIcon
 import fi.clocklings.ui.components.SkIcons
@@ -59,12 +60,15 @@ internal fun SettingsGroup(
 
 /** White rounded container; rows bring their own vertical padding, so the card adds only a little. */
 @Composable
-internal fun SettingsCard(content: @Composable ColumnScope.() -> Unit) {
+internal fun SettingsCard(
+    horizontalPadding: Dp = SkDimens.SettingsGroupPadding,
+    content: @Composable ColumnScope.() -> Unit,
+) {
     Column(
         Modifier
             .fillMaxWidth()
             .background(SkColors.Surface, SkShapes.Card)
-            .padding(horizontal = SkDimens.SettingsGroupPadding, vertical = SkDimens.SettingsCardInset),
+            .padding(horizontal = horizontalPadding, vertical = SkDimens.SettingsCardInset),
         content = content,
     )
 }

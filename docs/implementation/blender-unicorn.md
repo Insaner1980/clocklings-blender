@@ -1,5 +1,23 @@
 # Blender unicorn
 
+The current model has a four-beat walk in place. Play the timeline in
+`art/blender/unicorn.blend` to see the forelegs flex at the carpus and the
+hind legs at the hock. The app poses the four textured legs independently and
+attaches each sparkle boot to its own hoof. Reduced motion and wardrobe
+thumbnails use the standing pose.
+
+To reproduce the current Android artwork, render both edited scenes from the
+repository root, then encode the PNG masters.
+
+```powershell
+$blender = 'C:\Program Files\Blender Foundation\Blender 5.3\blender.exe'
+& $blender -b art/blender/unicorn.blend --python-exit-code 1 -P tools/blender/export_wardrobe.py
+& $blender -b art/blender/unicorn_accessories.blend --python-exit-code 1 -P tools/blender/export_wardrobe.py
+python tools/blender/optimize_atlases.py
+```
+
+## Original prototype and its verification
+
 The seventh Blender companion follows the owner's
 `White unicorn character reference sheet-8.png` and existing `08-unicorn.png`
 app screenshot. It has a pearl-white coat, a cream muzzle, a smiling face,

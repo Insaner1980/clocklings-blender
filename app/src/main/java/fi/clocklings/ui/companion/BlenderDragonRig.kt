@@ -1,4 +1,4 @@
-// Atlas coordinates come from tools/blender/render_dragon_layers.py.
+// Atlas coordinates follow the wardrobe export layout in art/blender/dragon.blend.
 @file:Suppress("MagicNumber")
 
 package fi.clocklings.ui.companion
@@ -8,7 +8,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.IntOffset
@@ -56,7 +58,7 @@ internal class BlenderDragonRig(
         itemCrops =
             mapOf(
                 "dragon-extra-coins" to Rect(64f, 174f, 190f, 300f),
-                "dragon-extra-book" to Rect(60f, 162f, 180f, 282f),
+                "dragon-extra-book" to Rect(56f, 147f, 184f, 275f),
                 "dragon-extra-shield" to Rect(0f, 164f, 120f, 284f),
                 "dragon-extra-star-cloud" to Rect(4f, 67f, 237f, 300f),
                 "dragon-extra-wings" to Rect(0f, 60f, 240f, 300f),
@@ -106,8 +108,31 @@ internal class BlenderDragonRig(
     ) {
         part(Horns)
         part(Head)
-        drawBlinkingEyes(Eyes, EyeCenter, blink)
+        eyes(blink)
         accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
+    }
+
+    private val eyeOpenings = Path()
+
+    private fun DrawScope.eyes(blink: Float) {
+        if (blink <= 0f) {
+            part(Eyes)
+            return
+        }
+        part(ClosedEyes)
+        if (blink >= LIDS_CLOSED) return
+        val opening = 1f - blink / LIDS_CLOSED
+        val top = 99f - 28f * opening
+        val bottom = 99f + 25f * opening
+        eyeOpenings.reset()
+        for (center in EyeCenters) {
+            eyeOpenings.moveTo(center - 21f, top)
+            eyeOpenings.quadraticTo(center, top + 8f, center + 21f, top)
+            eyeOpenings.lineTo(center + 21f, bottom)
+            eyeOpenings.quadraticTo(center, bottom + 8f, center - 21f, bottom)
+            eyeOpenings.close()
+        }
+        clipPath(eyeOpenings) { part(Eyes) }
     }
 }
 
@@ -118,9 +143,11 @@ private val RightWing = BlenderBodyRegion(IntOffset(1160, 250), IntOffset(140, 1
 private val Limbs = BlenderBodyRegion(IntOffset(0, 456), IntOffset(56, 158), IntSize(130, 128))
 private val Horns = BlenderBodyRegion(IntOffset(394, 456), IntOffset(70, 12), IntSize(100, 53))
 private val Eyes = BlenderBodyRegion(IntOffset(698, 456), IntOffset(68, 79), IntSize(105, 45))
+private val ClosedEyes = BlenderBodyRegion(IntOffset(1018, 508), IntOffset(71, 95), IntSize(99, 13))
 private val LeftShoulder = Offset(78f, 166f)
 private val RightShoulder = Offset(162f, 166f)
 private val Neck = Offset(120f, 158f)
-private val EyeCenter = Offset(120f, 100.4f)
+private const val LIDS_CLOSED = 0.82f
+private val EyeCenters = floatArrayOf(89.4f, 151.1f)
 private val Ground = ovalRect(120f, 284f, 92f, 11f)
 private val FullFrame = Rect(-12f, -64f, 252f, 310f)

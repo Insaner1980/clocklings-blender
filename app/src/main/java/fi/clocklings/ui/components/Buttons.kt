@@ -230,17 +230,20 @@ fun MenuTile(
     fill: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    compactHeight: Boolean = false,
 ) {
     PressSurface(onClick, fill, SkShapes.Tile, modifier.semantics { contentDescription = "$title. $subtitle" }) {
         Column(
             Modifier
-                .heightIn(min = SkDimens.MenuTileHeight)
-                .padding(horizontal = SkDimens.Gap, vertical = SkDimens.GapS),
-            verticalArrangement = Arrangement.SpaceBetween,
+                .heightIn(min = if (compactHeight) SkDimens.MenuTileCompactHeight else SkDimens.MenuTileHeight)
+                .padding(horizontal = SkDimens.Gap, vertical = if (compactHeight) SkDimens.GapS else SkDimens.Gap),
+            verticalArrangement = if (compactHeight) Arrangement.SpaceBetween else Arrangement.spacedBy(SkDimens.GapM),
             horizontalAlignment = Alignment.Start,
         ) {
             Box(
-                Modifier.size(SkDimens.TileIconBadge).background(SkColors.Surface, SkShapes.Pill),
+                Modifier
+                    .size(if (compactHeight) SkDimens.TileIconBadgeCompact else SkDimens.TileIconBadge)
+                    .background(SkColors.Surface, SkShapes.Pill),
                 contentAlignment = Alignment.Center,
             ) {
                 SkIcon(icon, SkDimens.MenuIcon)
@@ -252,7 +255,7 @@ fun MenuTile(
                     SkType.SmallSoft,
                     Modifier.clearAndSetSemantics { },
                     textAlign = TextAlign.Start,
-                    maxLines = 2,
+                    maxLines = if (compactHeight) 2 else Int.MAX_VALUE,
                 )
             }
         }

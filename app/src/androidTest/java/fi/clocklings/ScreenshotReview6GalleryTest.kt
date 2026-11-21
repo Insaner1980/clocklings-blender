@@ -1058,16 +1058,23 @@ class ScreenshotReview6Round3Test : ScreenshotReview6Host() {
             "r3 $label clockDp=${clockDp()} navTopDp=${nav.fmt()} " +
                 "viewport=${viewport?.span()} scroll=${scrollRange()}",
         )
-        for (node in compose.onAllNodes(hasText(score.toString())).fetchSemanticsNodes()) {
+        for (node in compose.onAllNodes(hasText(score.toString()), useUnmergedTree = true).fetchSemanticsNodes()) {
             appendMeasure("r3 $label score ${node.span()} centerPx=${node.boundsInRoot.center}")
         }
         if (record) {
             val headline = string(lang, R.string.challenge_new_best)
-            for (node in compose.onAllNodes(hasText(headline, ignoreCase = true)).fetchSemanticsNodes()) {
+            for (node in compose
+                .onAllNodes(
+                    hasText(headline, ignoreCase = true),
+                    useUnmergedTree = true,
+                ).fetchSemanticsNodes()) {
                 appendMeasure("r3 $label recordHeadline ${node.span()}")
             }
             val text = localized.getValue(lang).getString(R.string.challenge_new_record, score)
-            for (node in compose.onAllNodes(hasText(text)).fetchSemanticsNodes()) {
+            for (node in compose
+                .onAllNodes(
+                    SemanticsMatcher.expectValue(SemanticsProperties.ContentDescription, listOf(text)),
+                ).fetchSemanticsNodes()) {
                 appendMeasure("r3 $label recordText ${node.span()}")
             }
         }
@@ -1304,18 +1311,19 @@ abstract class ScreenshotReview6Host {
         bitmap.recycle()
     }
 
-    protected fun clockDp(): String =
-        (
-            compose
-                .onNodeWithTag("challenge_clock")
-                .fetchSemanticsNode()
-                .size.width / density
-        ).fmt()
+    private fun challengeClockNode() =
+        compose
+            .onAllNodes(SemanticsMatcher.expectValue(SemanticsProperties.TestTag, "challenge_clock"))
+            .fetchSemanticsNodes()
+            .singleOrNull()
 
-    /** The clock width and the unclipped geometry of every clickable below the clock, against the viewport. */
+    protected fun clockDp(): String = challengeClockNode()?.let { (it.size.width / density).fmt() } ?: "none"
+
+    /** The clock width and the unclipped geometry of its controls against the viewport. */
     protected fun measureChallenge(label: String) {
-        val clock = compose.onNodeWithTag("challenge_clock").fetchSemanticsNode()
-        val clockBottom = clock.positionInRoot.y + clock.size.height
+        val clock = challengeClockNode()
+        val clockBottom = clock?.let { it.positionInRoot.y + it.size.height } ?: 0f
+        val clockTop = clock?.let { (it.positionInRoot.y / density).fmt() } ?: "none"
         val rootHeight =
             compose
                 .onRoot()
@@ -1328,7 +1336,7 @@ abstract class ScreenshotReview6Host {
                 .firstOrNull()
                 ?.boundsInRoot
         appendMeasure(
-            "$label clockDp=${clockDp()} clockTopDp=${(clock.positionInRoot.y / density).fmt()}" +
+            "$label clockDp=${clockDp()} clockTopDp=$clockTop" +
                 " viewportBottomDp=${((viewport?.bottom ?: rootHeight.toFloat()) / density).fmt()}" +
                 " rootHeightDp=${(rootHeight / density).fmt()} scroll=${scrollRange()}",
         )

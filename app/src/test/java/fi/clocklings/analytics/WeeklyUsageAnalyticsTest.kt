@@ -153,8 +153,17 @@ class WeeklyUsageAnalyticsTest {
             assertEquals(listOf(true), scheduled)
             repeat(1_001) { usage.count("game.0.read") }
             usage.count("lesson.0.replay")
-            usage.count("game.000.start")
-            usage.count("profile.child")
+            usage.count("game.99.set_reveal")
+            usage.count("challenge.timeout")
+            usage.count("screen.play_together")
+            listOf(
+                "game.000.start",
+                "game.100.read",
+                "game.01.read",
+                "game.0.read_extra",
+                "screen.home.",
+                "profile.child",
+            ).forEach(usage::count)
             runCurrent()
             assertTrue(upload(usage))
             assertTrue(requests.isEmpty())
@@ -163,7 +172,16 @@ class WeeklyUsageAnalyticsTest {
             assertTrue(upload(usage))
             val batch = requests.single()
             assertEquals("2026-11-09", batch.week)
-            assertEquals(mapOf("game.0.read" to 1_000, "lesson.0.replay" to 1), batch.counts)
+            assertEquals(
+                mapOf(
+                    "game.0.read" to 1_000,
+                    "lesson.0.replay" to 1,
+                    "game.99.set_reveal" to 1,
+                    "challenge.timeout" to 1,
+                    "screen.play_together" to 1,
+                ),
+                batch.counts,
+            )
             val id = UUID.fromString(batch.id)
             assertEquals(4, id.version())
             assertEquals(2, id.variant())

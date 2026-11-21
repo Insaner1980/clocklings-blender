@@ -69,7 +69,7 @@
     <string name="reveal_set">Here is how the hands show %1$s.</string>
 
     <!-- Hints refer to the actual hand positions. -->
-    <string name="hint_hands_right">The hands match! Look at the %1$s and the label in the centre: %2$s.</string>
+    <string name="hint_hands_right">The hands match! Look at the %1$s and the label under the clock: %2$s.</string>
     <string name="hint_sun">sun</string>
     <string name="hint_moon">moon</string>
     <string name="hint_read_hour">Look at the short pink hand. It %1$s.</string>
@@ -114,6 +114,10 @@
     <string name="challenge_no_best">No score yet</string>
     <string name="challenge_go">Start!</string>
     <string name="challenge_over">Time is up!</string>
+    <plurals name="challenge_correct_label">
+        <item quantity="one">correct answer</item>
+        <item quantity="other">correct answers</item>
+    </plurals>
     <string name="challenge_new_best">New best!</string>
     <string name="challenge_new_record" tools:ignore="PluralsCandidate">New best! You answered %1$d correctly.</string>
     <string name="challenge_result" tools:ignore="PluralsCandidate">You answered %1$d correctly. Your best is %2$d.</string>
@@ -314,13 +318,13 @@
     <string name="l_vrk_say_night">Three at night: 03:00</string>
     <string name="l_vrk_say_sum">3 + 12 = 15: the time is 15:00.</string>
     <string name="l_vrk_p3a">The hands look the same at three at night and three in the afternoon.</string>
-    <string name="l_vrk_p3b">Read the label in the centre to find the part of the day. The hands alone cannot tell you.</string>
+    <string name="l_vrk_p3b">Read the label under the clock to find the part of the day. The hands alone cannot tell you.</string>
     <string name="l_vrk_say_afternoon">Three in the afternoon: 15:00</string>
     <string name="l_vrk_q">What time is it?</string>
     <string name="l_vrk_c1">Seven in the evening: 19:00</string>
     <string name="l_vrk_c2">Seven in the morning: 07:00</string>
     <string name="l_vrk_c3">Five in the afternoon: 17:00</string>
-    <string name="l_vrk_hint">The centre label says evening. Add 12 to the hour: 7 + 12 = 19.</string>
+    <string name="l_vrk_hint">The label under the clock says evening. Add 12 to the hour: 7 + 12 = 19.</string>
     <string name="doll_stars_explained">Stars are never used up. New clothes open when you have enough stars.</string>
     <string name="answer_correct">Correct</string>
     <string name="answer_incorrect">Incorrect</string>

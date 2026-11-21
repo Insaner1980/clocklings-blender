@@ -213,13 +213,4 @@ object SkIcons {
         )
 
     val Star = SvgIcon(24f, listOf(IconLayer(STAR_D, SkColors.StarOn, SkColors.StarOnStroke, 1.4f)))
-
-    val Dress =
-        SvgIcon(
-            40f,
-            listOf(
-                IconLayer("M14 5h12l-2 7 9 22H7l9-22z", stroke = SkColors.Ink, strokeWidth = INK_STROKE),
-                IconLayer("M15 12h10", stroke = SkColors.Ink, strokeWidth = INK_STROKE),
-            ),
-        )
 }

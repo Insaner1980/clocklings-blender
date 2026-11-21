@@ -31,6 +31,55 @@ class BlenderDollRenderingTest {
     }
 
     @Test
+    fun blinkingCoversTheIrisAndClosesWithTwoLashes() {
+        val (open, half, closed) = rendering.captureBlinkFrames(Outfit.Default, 0.45f, 1f)
+        for (center in listOf(77, 123)) {
+            open.assertUnchanged(half, center - 3..center + 3, 92..98) { x, y -> "Iris moved at $x/$y" }
+            val changed = open.countDifferencesIn(closed, center - 9..center + 9, 82..102)
+            assertTrue("Iris still visible at $center", changed > 190)
+            val hasLash = (95..98).any { y -> android.graphics.Color.red(closed.at(center, y)) < 145 }
+            assertTrue("Missing closed lash at $center", hasLash)
+        }
+    }
+
+    @Test
+    fun wingsExtendPastBothShouldersAndSkatesCastAShadowAtTheWheels() {
+        val outfit = mutableStateOf(Outfit.Default)
+        rendering.setContent(outfit = { outfit.value })
+        val plain = rendering.capture()
+        compose.runOnIdle { outfit.value = Outfit.Default.with(Slot.EXTRA, "extra-siivet") }
+        val wings = rendering.capture()
+        for (xs in listOf(12..25, 175..188)) {
+            assertTrue("Upper wing hidden at $xs", plain.countDifferencesIn(wings, xs, 138..154) > 100)
+        }
+        compose.runOnIdle { outfit.value = Outfit.Default.with(Slot.SHOES, "shoes-roller-skates") }
+        val skates = rendering.capture()
+        assertTrue("Missing shadow between the wheels", plain.at(100, 331) != skates.at(100, 331))
+    }
+
+    @Test
+    fun strawberryStrapContinuesOverTheShoulderToTheBag() {
+        val outfit = Outfit.Default.with(Slot.EXTRA, "extra-strawberry-bag")
+        val pose = mutableStateOf(CompanionPose())
+        rendering.setContent(outfit = { outfit }, pose = { pose.value })
+        for (armAngle in listOf(0f, 95f)) {
+            compose.runOnIdle { pose.value = CompanionPose(armDeg = armAngle) }
+            val image = rendering.capture()
+            for (y in 140..206) {
+                val strapWidth =
+                    (91..138).count { x ->
+                        val pixel = image.at(x, y)
+                        val red = pixel ushr 16 and 255
+                        val green = pixel ushr 8 and 255
+                        val blue = pixel and 255
+                        red > blue + 32 && blue > green + 18
+                    }
+                assertTrue("Missing pink strap at height $y with arm at $armAngle", strapWidth >= 2)
+            }
+        }
+    }
+
+    @Test
     fun everyWardrobeChoiceIsDistinctAndOverallsReplaceTheHem() {
         val outfit = mutableStateOf(Outfit.Default)
         rendering.setContent(outfit = { outfit.value })

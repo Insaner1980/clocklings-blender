@@ -20,7 +20,7 @@
       "sourceSets": ["main"]
     }
   ],
-  "buildTasks": [":app:assembleDebug"],
+  "buildTasks": [":app:assembleDebug", ":benchmark:assembleBenchmarkRelease"],
   "testTasks": [":app:testDebugUnitTest"],
   "deviceTestTasks": [":app:connectedDebugAndroidTest"],
   "includedBuilds": [],

@@ -6,7 +6,16 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -14,11 +23,13 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,11 +40,14 @@ import fi.clocklings.R
 import fi.clocklings.data.ProgressRepository
 import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.resolveLanguage
+import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.LoadingScreen
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
+import fi.clocklings.ui.intro.LogoMascot
 import fi.clocklings.ui.theme.ClocklingsTheme
 import fi.clocklings.ui.theme.Section
+import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkType
 import java.util.Locale
 
@@ -102,18 +116,35 @@ fun AppLocaleProvider(
                 content()
             } else if (selection.failed) {
                 SideEffect(onStartupErrorReady)
-                ClocklingsTheme {
-                    ScreenScaffold(section = Section.HOME) {
-                        Text(stringResource(R.string.language_save_error), style = SkType.Body)
-                        SkButton(
-                            stringResource(R.string.settings_retry),
-                            controller::refresh,
-                            enabled = !selection.pending,
-                        )
-                    }
-                }
+                ClocklingsTheme { LocaleStartupError(!selection.pending, controller::refresh) }
             } else {
                 ClocklingsTheme { LoadingScreen() }
+            }
+        }
+    }
+}
+
+@Composable
+private fun LocaleStartupError(
+    retryEnabled: Boolean,
+    onRetry: () -> Unit,
+) {
+    ScreenScaffold(section = Section.HOME, scroll = false) {
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            Column(
+                Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).heightIn(min = maxHeight),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(SkDimens.Gap, Alignment.CenterVertically),
+            ) {
+                LogoMascot(time = { 0L }, reducedMotion = true, modifier = Modifier.size(SkDimens.LocaleErrorMascot))
+                Text(stringResource(R.string.language_save_error), style = SkType.Body, textAlign = TextAlign.Center)
+                SkButton(
+                    stringResource(R.string.settings_retry),
+                    onRetry,
+                    Modifier.fillMaxWidth(),
+                    kind = ButtonKind.PRIMARY,
+                    enabled = retryEnabled,
+                )
             }
         }
     }

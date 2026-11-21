@@ -84,6 +84,7 @@ internal fun HomeStage(
     time: Int,
     compact: Boolean,
     onOpen: (HomeDestination) -> Unit,
+    trimSky: Boolean,
 ) {
     val kind = settings.personalization.companion
     val description = "${stringResource(R.string.menu_nukke)}. ${stringResource(R.string.home_companion_choices)}"
@@ -102,8 +103,16 @@ internal fun HomeStage(
             val density = LocalDensity.current
             var wardrobeHeight by remember { mutableStateOf(SkDimens.WardrobeButtonHeight) }
             val contentHeight = min(maxHeight, SkDimens.HomeStageMaxHeight)
+            val skyTrim = if (trimSky) SkDimens.HomeStageSkyTrim else 0.dp
             val stage =
-                companionStageLayout(maxWidth, maxHeight, contentHeight, companionAspectRatio(kind), wardrobeHeight)
+                companionStageLayout(
+                    maxWidth,
+                    maxHeight,
+                    contentHeight,
+                    companionAspectRatio(kind),
+                    wardrobeHeight,
+                    skyTrim,
+                )
             val (leftCloudY, rightCloudY) = homeCloudYs(stage, maxWidth, stage.contentTop, contentHeight)
             val scene = StageScene(stage.contentTop, contentHeight, leftCloudY, rightCloudY)
             Scenery({ ground }) { scene }
@@ -113,7 +122,7 @@ internal fun HomeStage(
                 Modifier.offset(y = stage.contentTop).fillMaxWidth().height(contentHeight),
             ) {
                 BoxWithConstraints(Modifier.fillMaxSize()) {
-                    CompanionStage(kind, progress, words, time, maxWidth, maxHeight, stage) { ground = it }
+                    CompanionStage(kind, progress, words, time, maxWidth, maxHeight + skyTrim, stage) { ground = it }
                 }
             }
             WardrobeButton(

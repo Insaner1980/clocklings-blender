@@ -70,7 +70,7 @@
     <string name="reveal_set">Voici comment les aiguilles indiquent %1$s.</string>
 
     <!-- Hints refer to the actual hand positions. -->
-    <string name="hint_hands_right">Les aiguilles sont bien placées ! Regarde le symbole %1$s et le mot au centre : %2$s.</string>
+    <string name="hint_hands_right">Les aiguilles sont bien placées ! Regarde le symbole %1$s et le mot sous l’horloge : %2$s.</string>
     <string name="hint_sun">soleil</string>
     <string name="hint_moon">lune</string>
     <string name="hint_read_hour">Regarde la petite aiguille rose. Elle %1$s.</string>
@@ -115,6 +115,12 @@
     <string name="challenge_no_best">Pas encore de score</string>
     <string name="challenge_go">C’est parti !</string>
     <string name="challenge_over">Le temps est écoulé !</string>
+    <!-- The result screen displays the score above this label. -->
+    <plurals name="challenge_correct_label" tools:ignore="ImpliedQuantity">
+        <item quantity="one">bonne réponse</item>
+        <item quantity="many">bonnes réponses</item>
+        <item quantity="other">bonnes réponses</item>
+    </plurals>
     <string name="challenge_new_best">Nouveau record !</string>
     <string name="challenge_new_record" tools:ignore="PluralsCandidate">Nouveau record ! Bonnes réponses : %1$d.</string>
     <string name="challenge_result" tools:ignore="PluralsCandidate">Bonnes réponses : %1$d. Ton record est de %2$d.</string>
@@ -312,13 +318,13 @@
     <string name="l_vrk_say_night">Trois heures du matin : 03:00</string>
     <string name="l_vrk_say_sum">3 + 12 = 15 : il est 15:00.</string>
     <string name="l_vrk_p3a">Les aiguilles sont au même endroit à trois heures du matin et à trois heures de l’après-midi.</string>
-    <string name="l_vrk_p3b">Lis le mot au centre pour connaître le moment de la journée. Les aiguilles seules ne le disent pas.</string>
+    <string name="l_vrk_p3b">Lis le mot sous l’horloge pour connaître le moment de la journée. Les aiguilles seules ne le disent pas.</string>
     <string name="l_vrk_say_afternoon">Trois heures de l’après-midi : 15:00</string>
     <string name="l_vrk_q">Quelle heure est-il ?</string>
     <string name="l_vrk_c1">Sept heures du soir : 19:00</string>
     <string name="l_vrk_c2">Sept heures du matin : 07:00</string>
     <string name="l_vrk_c3">Cinq heures de l’après-midi : 17:00</string>
-    <string name="l_vrk_hint">Le mot au centre indique le soir. Ajoute 12 à l’heure : 7 + 12 = 19.</string>
+    <string name="l_vrk_hint">Le mot sous l’horloge indique le soir. Ajoute 12 à l’heure : 7 + 12 = 19.</string>
     <string name="doll_stars_explained">Les étoiles ne sont jamais dépensées. De nouveaux vêtements se débloquent quand tu as assez d’étoiles.</string>
     <string name="answer_correct">Bonne réponse</string>
     <string name="answer_incorrect">Mauvaise réponse</string>

@@ -41,7 +41,7 @@ interface TimeLanguage {
         }
     }
 
-    fun greeting(total: Int): Greeting
+    fun greeting(total: Int): Greeting = EnglishTime.greeting(total)
 }
 
 fun timeLanguage(language: AppLanguage): TimeLanguage =

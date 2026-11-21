@@ -11,7 +11,7 @@ import kotlin.math.sin
 /**
  * The companion pose at one moment. [blink] 0 = eyes open, 1 = closed. [swayDeg] is the sway around
  * the feet, [lift] the hop height in the artwork coordinate space, [armDeg] the left arm raise for
- * waving and [turn] the horizontal scale used for the spin (1 = front, -1 = back).
+ * waving and [turn] the projected width as the companion turns to present an outfit.
  * [breathe] is the raw breathing sine (-1..1) that renderers multiply by
  * [CompanionMotion.BREATHE_SQUASH], [headTiltDeg] is the head tilt in degrees and [partDeg] the
  * swing of a tail, wings or another part in degrees.
@@ -26,6 +26,7 @@ data class CompanionPose(
     val breathe: Float = 0f,
     val headTiltDeg: Float = 0f,
     val partDeg: Float = 0f,
+    val walkTimeMs: Long = 0L,
 )
 
 /** One celebration frame: the pose, whether the new outfit is already shown and whether the celebration is over. */
@@ -107,8 +108,16 @@ object CompanionMotion {
 
             elapsedMs < spinMs -> {
                 val k = elapsedMs.toFloat() / SPIN_MS
+                val arc = sin(PI.toFloat() * k).let { it * it }
+                val balance = arc * sin(2f * PI.toFloat() * k)
                 CelebrationFrame(
-                    CompanionPose(turn = cos(2f * PI.toFloat() * k)),
+                    CompanionPose(
+                        turn = 1f - .12f * arc,
+                        swayDeg = 4.5f * balance,
+                        headTiltDeg = -2.5f * balance,
+                        armDeg = 8f * arc,
+                        partDeg = 4f * balance,
+                    ),
                     showNewOutfit = elapsedMs > SPIN_MS / 4,
                     done = false,
                 )

@@ -23,7 +23,6 @@ object SkColors {
     val PlayTrack = Color(0xFFF5C2D6)
     val FieldOutline = Color(0xFFD9C8EA)
     val OptCorrectFill = Color(0xFFD3F9D8)
-    val OptWrongFill = Color(0xFFFFE8CC)
     val DangerContainer = Color(0xFFFFE3E3)
 
     // Pinnat ja teksti
@@ -57,6 +56,7 @@ object SkColors {
     val Glass = Surface.copy(alpha = 0.55f)
     val HandShadow = Shadow.copy(alpha = 0.14f)
     const val DISABLED_CONTROL_ALPHA = 0.45f
+    const val LOCKED_BADGE_ALPHA = 0.5f
 
     // Viisarit
     val Hour = Color(0xFFE64980)
@@ -64,6 +64,7 @@ object SkColors {
 
     // Kulta
     val Gold = Color(0xFFFCC419)
+    val StarTotalCompleteFill = Gold
     val HelpOnFill = Color(0xFFFFE066)
     val GoldDeep = Color(0xFFF59F00)
 
@@ -148,7 +149,6 @@ object SkColors {
 
     // Vastausvaihtoehdot
     val OptCorrectBorder = Good
-    val OptWrongBorder = Color(0xFFD9480F)
 
     // Tähdet ja lukko
     val StarOn = Color(0xFFFCC419)
@@ -176,4 +176,6 @@ object SkColors {
     val MarkRed = Color(0xFFFFC9C9)
     val MarkGreen = Color(0xFFB2F2BB)
     val MarkBlue = Color(0xFFA5D8FF)
+    val ZoneToBorder = MarkBlue
+    val ZonePastBorder = HelpOnFill
 }

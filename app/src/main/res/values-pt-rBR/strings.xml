@@ -63,7 +63,7 @@
     <string name="praise_with_time">%1$s %2$s.</string>
     <string name="reveal_read">A resposta é %1$s. Veja para onde cada ponteiro aponta.</string>
     <string name="reveal_set">É assim que os ponteiros mostram %1$s.</string>
-    <string name="hint_hands_right">Os ponteiros estão certos! Observe o símbolo de %1$s e o texto no centro: %2$s.</string>
+    <string name="hint_hands_right">Os ponteiros estão certos! Observe o símbolo de %1$s e o texto abaixo do relógio: %2$s.</string>
     <string name="hint_sun">sol</string>
     <string name="hint_moon">lua</string>
     <string name="hint_read_hour">Observe o ponteiro pequeno e rosa. Ele %1$s.</string>
@@ -107,6 +107,12 @@
     <string name="challenge_no_best">Ainda sem recorde</string>
     <string name="challenge_go">Começar!</string>
     <string name="challenge_over">O tempo acabou!</string>
+    <!-- The result screen displays the score above this label. -->
+    <plurals name="challenge_correct_label" tools:ignore="ImpliedQuantity">
+        <item quantity="one">resposta correta</item>
+        <item quantity="many">respostas corretas</item>
+        <item quantity="other">respostas corretas</item>
+    </plurals>
     <string name="challenge_new_best">Novo recorde!</string>
     <string name="challenge_new_record" tools:ignore="PluralsCandidate">Novo recorde! Você acertou %1$d.</string>
     <string name="challenge_result" tools:ignore="PluralsCandidate">Você acertou %1$d. Seu recorde é %2$d.</string>
@@ -290,13 +296,13 @@
     <string name="l_vrk_say_night">Três da madrugada: 03:00</string>
     <string name="l_vrk_say_sum">3 + 12 = 15: são 15:00.</string>
     <string name="l_vrk_p3a">Os ponteiros ficam na mesma posição às três da madrugada e às três da tarde.</string>
-    <string name="l_vrk_p3b">Leia o texto no centro para saber a parte do dia. Os ponteiros sozinhos não mostram isso.</string>
+    <string name="l_vrk_p3b">Leia o texto abaixo do relógio para saber a parte do dia. Os ponteiros sozinhos não mostram isso.</string>
     <string name="l_vrk_say_afternoon">Três da tarde: 15:00</string>
     <string name="l_vrk_q">Que horas são?</string>
     <string name="l_vrk_c1">Sete da noite: 19:00</string>
     <string name="l_vrk_c2">Sete da manhã: 07:00</string>
     <string name="l_vrk_c3">Cinco da tarde: 17:00</string>
-    <string name="l_vrk_hint">O texto no centro diz noite. Some 12 à hora: 7 + 12 = 19.</string>
+    <string name="l_vrk_hint">O texto abaixo do relógio diz noite. Some 12 à hora: 7 + 12 = 19.</string>
     <string name="doll_stars_explained">As estrelas nunca são gastas. Novas roupas ficam disponíveis quando você tem estrelas suficientes.</string>
     <string name="answer_correct">Correto</string>
     <string name="answer_incorrect">Incorreto</string>

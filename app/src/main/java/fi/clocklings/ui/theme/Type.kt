@@ -69,6 +69,7 @@ object SkType {
     val Words = display(30, lineHeight = 1.2f)
     val Question = display(26, lineHeight = 1.23f)
     val Digital = display(24, lineHeight = 1.2f)
+    val DayPart = display(18)
     val OptWords = display(20, lineHeight = 1.2f)
     val OptDigital = display(18, lineHeight = 1.2f).copy(color = SkColors.UiInkSoft)
 
@@ -77,6 +78,8 @@ object SkType {
     val Chip = body(15, FontWeight.ExtraBold, 1.2f)
     val Segment = body(15, FontWeight.ExtraBold, 1.2f)
     val Pill = body(13, FontWeight.ExtraBold, 1.2f)
+    val LockPill = body(13, lineHeight = 1.2f).copy(color = SkColors.UiInkSoft)
+    val LockPillTile = LockPill.copy(fontSize = 12.sp)
     val PillLarge = display(19, lineHeight = 1.1f)
     val NowWords = display(19, lineHeight = 1.26f)
 
@@ -94,7 +97,8 @@ object SkType {
 
     val ResultTitle = display(34, lineHeight = 1.18f)
     val ResultText = body(18)
-    val BigNumber = display(64, FontWeight.Bold, 1f).copy(color = SkColors.Primary)
+    val ScoreHuge = display(96, FontWeight.Bold).copy(lineHeight = 100.sp, color = SkColors.Primary)
+    val ChallengeBadge = display(16)
 
     /** Smaller than [Title], so a screen's own title stays its largest heading. */
     val SectionTitle = display(20, lineHeight = 1.2f)

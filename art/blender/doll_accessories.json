@@ -30,13 +30,26 @@
     }
   },
   "extra-strawberry-bag": {
+    "back": {
+      "part": "BODY",
+      "destination": [
+        48,
+        132,
+        87,
+        112
+      ],
+      "source": [
+        284,
+        170
+      ]
+    },
     "front": {
       "part": "BODY",
       "destination": [
         45,
-        143,
+        132,
         96,
-        106
+        117
       ],
       "source": [
         555,
@@ -63,14 +76,14 @@
     "back": {
       "part": "BODY",
       "destination": [
-        20,
-        143,
-        160,
-        89
+        2,
+        119,
+        196,
+        109
       ],
       "source": [
-        1038,
-        0
+        855,
+        166
       ]
     }
   },

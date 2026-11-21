@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -64,13 +65,13 @@ fun OptionButton(
         when (state) {
             OptionState.NORMAL -> SkColors.SurfaceContainer
             OptionState.CORRECT -> SkColors.OptCorrectFill
-            OptionState.WRONG -> SkColors.OptWrongFill
+            OptionState.WRONG -> Color.Transparent
         }
     val border =
         when (state) {
             OptionState.NORMAL -> null
             OptionState.CORRECT -> BorderStroke(SkDimens.BorderThin, SkColors.OptCorrectBorder)
-            OptionState.WRONG -> BorderStroke(SkDimens.BorderThin, SkColors.OptWrongBorder)
+            OptionState.WRONG -> BorderStroke(SkDimens.BorderQuiet, SkColors.FieldOutline)
         }
     val shake = remember { Animatable(0f) }
     val reduceMotion = rememberReduceMotion()
@@ -129,6 +130,8 @@ private fun OptionLabel(
     state: OptionState,
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val labelStyle = if (state == OptionState.WRONG) wordsStyle.copy(color = SkColors.UiInkSoft) else wordsStyle
+        val timeFill = if (state == OptionState.WRONG) SkColors.PillMuted else SkColors.Surface
         val compact = maxWidth < SkDimens.OptionCompactWidth
         val start = if (state == OptionState.NORMAL) SkDimens.PanelPadding else SkDimens.GapLabel
         Row(
@@ -143,14 +146,14 @@ private fun OptionLabel(
                 SkIcon(
                     if (state == OptionState.CORRECT) SkIcons.Check else SkIcons.Close,
                     SkDimens.ActionIcon,
-                    tint = if (state == OptionState.CORRECT) SkColors.Good else SkColors.Try,
+                    tint = if (state == OptionState.CORRECT) SkColors.Good else SkColors.UiInkSoft,
                 )
             }
             BoxWithConstraints(Modifier.weight(1f)) {
                 if (digital != null && optionTimeBelow(maxWidth, LocalDensity.current.fontScale)) {
                     Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
-                        WordSafeText(words, wordsStyle, Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
-                        OptionTime(digital, Modifier.align(Alignment.End))
+                        WordSafeText(words, labelStyle, Modifier.fillMaxWidth(), textAlign = TextAlign.Start)
+                        OptionTime(digital, timeFill, Modifier.align(Alignment.End))
                     }
                 } else {
                     Row(
@@ -158,8 +161,8 @@ private fun OptionLabel(
                         horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        WordSafeText(words, wordsStyle, Modifier.weight(1f), textAlign = TextAlign.Start)
-                        if (digital != null) OptionTime(digital)
+                        WordSafeText(words, labelStyle, Modifier.weight(1f), textAlign = TextAlign.Start)
+                        if (digital != null) OptionTime(digital, timeFill)
                     }
                 }
             }
@@ -170,6 +173,7 @@ private fun OptionLabel(
 @Composable
 private fun OptionTime(
     digital: String,
+    fill: Color,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -177,7 +181,7 @@ private fun OptionTime(
             .testTag("option_time")
             .widthIn(min = SkDimens.OptionTimeMinWidth)
             .heightIn(min = SkDimens.OptionTimeMinHeight)
-            .background(SkColors.Surface, SkShapes.OptDigital)
+            .background(fill, SkShapes.OptDigital)
             .padding(horizontal = SkDimens.OptionTimePadX),
         contentAlignment = Alignment.Center,
     ) { Text(digital, style = SkType.OptDigital, textAlign = TextAlign.Center) }

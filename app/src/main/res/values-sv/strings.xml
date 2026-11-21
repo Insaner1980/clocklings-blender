@@ -77,7 +77,7 @@
     <string name="praise_with_time">%1$s %2$s.</string>
     <string name="reveal_read">Rätt svar är %1$s. Titta på vart visarna pekar.</string>
     <string name="reveal_set">Så här visar visarna tiden: %1$s.</string>
-    <string name="hint_hands_right">Visarna stämmer! I mitten syns %1$s och texten: %2$s.</string>
+    <string name="hint_hands_right">Visarna stämmer! Under klockan syns %1$s och texten: %2$s.</string>
     <string name="hint_sun">solen</string>
     <string name="hint_moon">månen</string>
     <string name="hint_read_hour">Titta på den korta rosa visaren. Den %1$s.</string>
@@ -124,6 +124,10 @@
     <string name="challenge_no_best">Inget resultat ännu</string>
     <string name="challenge_go">Starta!</string>
     <string name="challenge_over">Tiden är ute!</string>
+    <plurals name="challenge_correct_label">
+        <item quantity="one">rätt svar</item>
+        <item quantity="other">rätta svar</item>
+    </plurals>
     <string name="challenge_new_best">Nytt rekord!</string>
     <string name="challenge_new_record" tools:ignore="PluralsCandidate">Nytt rekord! Rätta svar: %1$d.</string>
     <string name="challenge_result" tools:ignore="PluralsCandidate">Rätta svar: %1$d. Ditt bästa resultat är %2$d.</string>
@@ -309,13 +313,13 @@
     <string name="l_vrk_say_night">Tre på natten: 03.00</string>
     <string name="l_vrk_say_sum">3 + 12 = 15: klockan är 15.00.</string>
     <string name="l_vrk_p3a">Visarna ser likadana ut klockan tre på natten och tre på eftermiddagen.</string>
-    <string name="l_vrk_p3b">Läs texten i mitten för att se vilken del av dygnet det är. Visarna ensamma kan inte visa det.</string>
+    <string name="l_vrk_p3b">Läs texten under klockan för att se vilken del av dygnet det är. Visarna ensamma kan inte visa det.</string>
     <string name="l_vrk_say_afternoon">Tre på eftermiddagen: 15.00</string>
     <string name="l_vrk_q">Vad är klockan?</string>
     <string name="l_vrk_c1">Sju på kvällen: 19.00</string>
     <string name="l_vrk_c2">Sju på morgonen: 07.00</string>
     <string name="l_vrk_c3">Fem på eftermiddagen: 17.00</string>
-    <string name="l_vrk_hint">Texten i mitten säger kväll. Lägg till 12 till timmen: 7 + 12 = 19.</string>
+    <string name="l_vrk_hint">Texten under klockan säger kväll. Lägg till 12 till timmen: 7 + 12 = 19.</string>
     <string name="doll_stars_explained">Stjärnorna tar aldrig slut. Nya kläder låses upp när du har tillräckligt med stjärnor.</string>
     <string name="answer_correct">Rätt</string>
     <string name="answer_incorrect">Fel</string>

@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -52,7 +51,11 @@ internal fun ClockTaskScaffold(
     compactScrollState: ScrollState = rememberScrollState(),
     clockHeightShare: Float = SkDimens.CLOCK_HEIGHT_SHARE,
     clockFit: ClockFit = ClockFit.NONE,
+    tallFitMin: Dp = SkDimens.FeedbackClockMin,
+    centerStacked: Boolean = false,
+    stackedClockMax: Dp = SkDimens.ClockMax,
     animateClock: Boolean = false,
+    clockTaskKey: Int? = null,
     content: @Composable (compact: Boolean) -> Unit,
 ) {
     val header = rememberMovingTaskContent(topBar)
@@ -65,51 +68,58 @@ internal fun ClockTaskScaffold(
     val latestContent by rememberUpdatedState(content)
     val controls = remember { movableContentOf<Boolean> { latestContent(it) } }
     BoxWithConstraints(modifier.fillMaxSize()) {
-        val compact = isCompactTask(maxWidth - SkDimens.Gutter * 2, maxHeight, LocalDensity.current.fontScale)
-        val restoreFocus = remember(compact) { actionFocus.current }
-        LaunchedEffect(compact) {
-            if (restoreFocus != null) {
-                withFrameNanos { }
-                restoreFocus.requestFocus()
+        val fontScale = LocalDensity.current.fontScale
+        val width = min(maxWidth, SkDimens.WideContentWidth) - SkDimens.Gutter * 2
+        val compact = isCompactTask(width, maxHeight, fontScale)
+        RestoreTaskActionFocus(compact, actionFocus)
+        val footer: (@Composable () -> Unit)? =
+            if (actions == null) {
+                null
+            } else {
+                { buttons(compact) }
             }
-        }
         if (compact) {
-            CompactClockTask(
-                section,
-                header,
-                progress,
-                clock,
-                if (actions !=
-                    null
-                ) {
-                    { buttons(true) }
-                } else {
-                    null
-                },
-                compactScrollState,
-            ) {
-                controls(true)
-            }
+            CompactClockTask(section, header, progress, clock, footer, compactScrollState) { controls(true) }
         } else {
+            val stacked = !hasSideBySideRoom(width, fontScale)
+            val tall = maxHeight >= SkDimens.TallTaskHeight && fontScale <= SkDimens.MAX_ROW_FONT_SCALE
             ScreenScaffold(
                 section = section,
                 wideContent = true,
-                centerContent = true,
+                centerContent = !stacked || centerStacked,
                 topBar = header,
-                bottomBar =
-                    if (actions != null) {
-                        { buttons(false) }
-                    } else {
-                        null
-                    },
+                bottomBar = footer,
                 scrollState = scrollState,
                 clockHeightShare = clockHeightShare,
                 clockFit = clockFit,
+                fitMin = if (tall) tallFitMin else SkDimens.FitClockMin,
                 animateClock = animateClock,
+                clockTaskKey = clockTaskKey,
+                stackedClock = if (stacked) clock else null,
+                stackedStatus = if (stacked) progress else null,
+                stackedClockMax = stackedClockMax,
             ) { size ->
-                progress()
-                AdaptiveContent(size, clock, controlsAlignment = Alignment.CenterVertically) { controls(false) }
+                if (stacked) {
+                    controls(false)
+                } else {
+                    progress()
+                    AdaptiveContent(size, clock, controlsAlignment = Alignment.CenterVertically) { controls(false) }
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun RestoreTaskActionFocus(
+    compact: Boolean,
+    actionFocus: TaskActionFocus,
+) {
+    val restoreFocus = remember(compact) { actionFocus.current }
+    LaunchedEffect(compact) {
+        if (restoreFocus != null) {
+            withFrameNanos { }
+            restoreFocus.requestFocus()
         }
     }
 }
@@ -149,7 +159,7 @@ private fun CompactClockTask(
                     ) {
                         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                             val size = min(min(maxWidth, maxHeight), SkDimens.ClockMax)
-                            Box(Modifier.size(size).testTag("task_clock")) { visual(size) }
+                            visual(size)
                         }
                         status()
                     }

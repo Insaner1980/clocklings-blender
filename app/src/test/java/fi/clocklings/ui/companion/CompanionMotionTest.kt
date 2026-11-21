@@ -61,11 +61,14 @@ class CompanionMotionTest {
     }
 
     @Test
-    fun `spin turns all the way around and shows the new outfit after the first quarter`() {
+    fun `the outfit turn keeps its volume and reveals the clothes after the first quarter`() {
         val spin = CompanionMotion.SPIN_MS
         assertEquals(1f, CompanionMotion.celebration(0L, spin = true, jump = false).pose.turn, eps)
         assertFalse(CompanionMotion.celebration(0L, spin = true, jump = false).showNewOutfit)
-        assertEquals(-1f, CompanionMotion.celebration(spin / 2, spin = true, jump = false).pose.turn, eps)
+        val poses = (0L..spin step 10L).map { CompanionMotion.celebration(it, spin = true, jump = false).pose }
+        assertEquals(.88f, poses.minOf { it.turn }, eps)
+        assertTrue(poses.all { it.turn in .87f..1f })
+        assertTrue(poses.any { it.swayDeg > 1f } && poses.any { it.swayDeg < -1f })
         assertTrue(CompanionMotion.celebration(spin / 4 + 1, spin = true, jump = false).showNewOutfit)
         val end = CompanionMotion.celebration(spin, spin = true, jump = false)
         assertTrue(end.done)

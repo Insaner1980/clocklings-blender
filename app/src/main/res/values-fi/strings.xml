@@ -77,7 +77,7 @@
     <string name="praise_with_time">%1$s %2$s.</string>
     <string name="reveal_read">Oikea vastaus on %1$s. Katso, mihin kumpikin viisari osoittaa.</string>
     <string name="reveal_set">Näin viisarit näyttävät ajan: %1$s.</string>
-    <string name="hint_hands_right">Viisarit näyttävät samaa aikaa! Keskellä näkyy %1$s ja teksti: %2$s.</string>
+    <string name="hint_hands_right">Viisarit näyttävät samaa aikaa! Kellon alla näkyy %1$s ja teksti: %2$s.</string>
     <string name="hint_sun">aurinko</string>
     <string name="hint_moon">kuu</string>
     <string name="hint_read_hour">Katso lyhyttä pinkkiä viisaria. Se %1$s.</string>
@@ -124,6 +124,10 @@
     <string name="challenge_no_best">Ei vielä tulosta</string>
     <string name="challenge_go">Aloita!</string>
     <string name="challenge_over">Aika loppui!</string>
+    <plurals name="challenge_correct_label">
+        <item quantity="one">oikea vastaus</item>
+        <item quantity="other">oikeaa vastausta</item>
+    </plurals>
     <string name="challenge_new_best">Uusi ennätys!</string>
     <string name="challenge_new_record" tools:ignore="PluralsCandidate">Uusi ennätys! Oikeita vastauksia: %1$d.</string>
     <string name="challenge_result" tools:ignore="PluralsCandidate">Oikeita vastauksia: %1$d. Paras tuloksesi on %2$d.</string>
@@ -309,13 +313,13 @@
     <string name="l_vrk_say_night">Kolme yöllä: 3.00</string>
     <string name="l_vrk_say_sum">3 + 12 = 15: kello on 15.00.</string>
     <string name="l_vrk_p3a">Viisarit näyttävät samalta kolmelta yöllä ja kolmelta iltapäivällä.</string>
-    <string name="l_vrk_p3b">Katso keskellä olevasta tekstistä, mikä vuorokaudenaika on. Pelkät viisarit eivät kerro sitä.</string>
+    <string name="l_vrk_p3b">Katso kellon alla olevasta tekstistä, mikä vuorokaudenaika on. Pelkät viisarit eivät kerro sitä.</string>
     <string name="l_vrk_say_afternoon">Kolme iltapäivällä: 15.00</string>
     <string name="l_vrk_q">Mitä kello on?</string>
     <string name="l_vrk_c1">Seitsemän illalla: 19.00</string>
     <string name="l_vrk_c2">Seitsemän aamulla: 7.00</string>
     <string name="l_vrk_c3">Viisi iltapäivällä: 17.00</string>
-    <string name="l_vrk_hint">Keskellä lukee ilta. Lisää tuntiin 12: 7 + 12 = 19.</string>
+    <string name="l_vrk_hint">Kellon alla lukee ilta. Lisää tuntiin 12: 7 + 12 = 19.</string>
     <string name="doll_stars_explained">Tähdet eivät kulu. Uusia asuja avautuu, kun tähtiä on tarpeeksi.</string>
     <string name="answer_correct">Oikein</string>
     <string name="answer_incorrect">Väärin</string>

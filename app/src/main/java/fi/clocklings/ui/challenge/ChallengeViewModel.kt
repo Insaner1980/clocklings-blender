@@ -13,7 +13,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -83,11 +82,9 @@ class ChallengeViewModel(
 
     init {
         viewModelScope.launch {
-            val best =
-                services.repository.progress
-                    .first()
-                    .challengeBest
-            _state.update { it.copy(best = maxOf(it.best, best)) }
+            services.repository.progress.collect { progress ->
+                _state.update { it.copy(best = maxOf(it.best, progress.challengeBest)) }
+            }
         }
     }
 

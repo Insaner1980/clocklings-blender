@@ -2,6 +2,9 @@ package fi.clocklings
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
@@ -66,18 +69,21 @@ class PendingLessonDeviceTest : StorageDeviceTest() {
             click("The short pink hand")
             val completion = hasText("You completed Two hands.", substring = true)
             compose.onNode(completion).assertDoesNotExist()
-            compose.onNodeWithText("Done").assertDoesNotExist()
+            val done = compose.onNodeWithText("Done")
+            done.assertIsDisplayed().assertIsNotEnabled()
             val before = runBlocking { services.repository.progress.first() }
             assertEquals(emptySet<String>(), before.lessonsDone)
             writable.complete(Unit)
             val error = context.getString(R.string.settings_save_error)
             compose.waitUntil(5_000) { compose.onAllNodesWithText(error).fetchSemanticsNodes().isNotEmpty() }
+            done.assertIsNotEnabled()
             click("The short pink hand")
             compose.waitUntil(5_000) {
                 compose.onAllNodes(completion).fetchSemanticsNodes().isNotEmpty()
             }
             val saved = runBlocking { services.repository.progress.first() }
             assertEquals(setOf("viisarit"), saved.lessonsDone)
+            done.assertIsEnabled()
         } finally {
             writable.cancel()
             model.viewModelScope.cancel()

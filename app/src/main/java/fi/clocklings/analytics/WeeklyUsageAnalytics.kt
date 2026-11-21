@@ -120,7 +120,7 @@ internal class WeeklyUsageAnalytics(
     }
 
     override fun count(metric: String) {
-        if (!consent.value || !VALID_METRIC.matches(metric)) return
+        if (!consent.value || !isValidMetric(metric)) return
         val revision = consentRevision
         val current = currentWeek()
         scope.launch {
@@ -141,6 +141,8 @@ internal class WeeklyUsageAnalytics(
         }
     }
 
+    // The dispatcher confines activeUpload and consent changes to the same thread.
+    @Suppress("kotlin:S6311")
     suspend fun uploadClosedWeeks(send: suspend (WeeklyBatch) -> UploadOutcome): Boolean =
         withContext(dispatcher) {
             initialized.join()
@@ -224,14 +226,51 @@ internal class WeeklyUsageAnalytics(
         const val RETENTION_WEEKS = 4L
         const val MAX_COUNT = 1_000
         const val STORAGE_RETRY_MS = 5_000L
+        const val INDEXED_METRIC_PARTS = 3
 
-        val VALID_METRIC =
-            Regex(
-                "game\\.(0|[1-9][0-9]?)\\.(start|finish|read|set|(read|set)_(first|hint|reveal))" +
-                    "|lesson\\.(0|[1-9][0-9]?)\\.(start|finish|wrong|correct|replay)" +
-                    "|challenge\\.(start|finish|correct|wrong|timeout)" +
-                    "|screen\\.(home|lessons|levels|free_clock|play_together|wardrobe|" +
-                    "personalize|settings|parent|challenge|result)",
+        val LEVEL_INDEX = Regex("0|[1-9][0-9]?")
+        val SESSION_ACTIONS = setOf("start", "finish")
+        val GAME_ACTIONS =
+            SESSION_ACTIONS +
+                setOf(
+                    "read",
+                    "set",
+                    "read_first",
+                    "read_hint",
+                    "read_reveal",
+                    "set_first",
+                    "set_hint",
+                    "set_reveal",
+                )
+        val LESSON_ACTIONS = SESSION_ACTIONS + setOf("wrong", "correct", "replay")
+        val LEVEL_ACTIONS = mapOf("game" to GAME_ACTIONS, "lesson" to LESSON_ACTIONS)
+        val CHALLENGE_ACTIONS = SESSION_ACTIONS + setOf("correct", "wrong", "timeout")
+        val SCREENS =
+            setOf(
+                "home",
+                "lessons",
+                "levels",
+                "free_clock",
+                "play_together",
+                "wardrobe",
+                "personalize",
+                "settings",
+                "parent",
+                "challenge",
+                "result",
             )
+
+        fun isValidMetric(metric: String): Boolean {
+            val parts = metric.split('.', limit = 4)
+            val levelActions = LEVEL_ACTIONS[parts.first()]
+            if (levelActions != null) {
+                return parts.size == INDEXED_METRIC_PARTS && LEVEL_INDEX.matches(parts[1]) && parts[2] in levelActions
+            }
+            return when (parts.first()) {
+                "challenge" -> parts.size == 2 && parts[1] in CHALLENGE_ACTIONS
+                "screen" -> parts.size == 2 && parts[1] in SCREENS
+                else -> false
+            }
+        }
     }
 }

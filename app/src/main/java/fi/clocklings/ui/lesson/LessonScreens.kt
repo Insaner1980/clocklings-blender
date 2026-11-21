@@ -31,7 +31,7 @@ import fi.clocklings.ui.LocalAppViewModel
 import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.components.ActionPair
 import fi.clocklings.ui.components.ButtonKind
-import fi.clocklings.ui.components.ClockBox
+import fi.clocklings.ui.components.ClockFit
 import fi.clocklings.ui.components.ClockTaskScaffold
 import fi.clocklings.ui.components.CompanionTip
 import fi.clocklings.ui.components.Eyebrow
@@ -130,6 +130,12 @@ fun LessonScreen(
     ClockTaskScaffold(
         modifier = modifier,
         section = Section.LEARN,
+        clockFit = ClockFit.FIT,
+        clockTaskKey = state.queueIndex.takeIf { state.isQuiz },
+        tallFitMin = if (state.isQuiz) SkDimens.QuizClockMin else SkDimens.FitClockMin,
+        clockHeightShare = if (state.isQuiz) SkDimens.CLOCK_HEIGHT_SHARE else 1f,
+        stackedClockMax = if (state.isQuiz) SkDimens.ClockMax else SkDimens.LessonPageClockMax,
+        centerStacked = !state.isQuiz,
         topBar = {
             TopBar(
                 title = state.lesson.title.resolve(),
@@ -144,17 +150,16 @@ fun LessonScreen(
         },
         status = { ProgressSegments(state.pageCount, state.page, track = Section.LEARN.track) },
         visual = { size ->
-            ClockBox(size) {
-                ClockFace(
-                    command = state.clock,
-                    period = state.period,
-                    help = state.help,
-                    describeTime = !state.isQuiz || state.quizDone,
-                    highlight = state.highlight,
-                    under = state.under,
-                    over = state.over,
-                )
-            }
+            ClockFace(
+                command = state.clock,
+                period = state.period,
+                help = state.help,
+                describeTime = !state.isQuiz || state.quizDone,
+                highlight = state.highlight,
+                under = state.under,
+                over = state.over,
+                clockSize = size,
+            )
         },
     ) { compact ->
         FlatPanel(padding = if (compact) SkDimens.GapS else SkDimens.PanelPadding) {
@@ -295,33 +300,33 @@ private fun LessonNavigation(
     onNext: () -> Unit,
     focus: TaskActionFocus,
 ) {
+    val next = stringResource(if (state.isQuiz) R.string.done else nextLabel(state.nextAction))
+    val nextButton: @Composable (Modifier) -> Unit = {
+        SkButton(
+            next,
+            onNext,
+            it.taskActionFocus(focus),
+            enabled = !state.savePending && (!state.isQuiz || state.quizDone),
+            kind = ButtonKind.PRIMARY,
+            trailingIcon = SkIcons.Chevron.takeIf { !state.isQuiz && state.nextAction == NextAction.NEXT_PAGE },
+        )
+    }
+    if (state.page == 0) {
+        nextButton(Modifier.fillMaxWidth())
+        return
+    }
     val previous = stringResource(R.string.lesson_prev)
-    val next = stringResource(nextLabel(state.nextAction))
-    val showNext = !state.savePending && (!state.isQuiz || state.quizDone)
     ActionPair(
         previous,
-        next.takeIf { showNext },
+        next,
         start = {
             SkButton(
                 previous,
                 onPrevious,
                 it.taskActionFocus(focus),
-                enabled =
-                    state.page > 0 && !state.savePending,
+                enabled = !state.savePending,
             )
         },
-        end = {
-            SkButton(
-                next,
-                onNext,
-                it.taskActionFocus(focus),
-                kind = ButtonKind.PRIMARY,
-                trailingIcon =
-                    SkIcons.Chevron.takeIf {
-                        state.nextAction == NextAction.NEXT_PAGE ||
-                            state.nextAction == NextAction.NEXT_LESSON
-                    },
-            )
-        },
+        end = nextButton,
     )
 }

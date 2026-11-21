@@ -33,10 +33,9 @@ import fi.clocklings.domain.timeLanguage
 import fi.clocklings.ui.AppViewModel
 import fi.clocklings.ui.LocalAppViewModel
 import fi.clocklings.ui.clock.ClockFace
-import fi.clocklings.ui.components.AdaptiveContent
 import fi.clocklings.ui.components.ButtonKind
-import fi.clocklings.ui.components.ClockBox
 import fi.clocklings.ui.components.ClockFit
+import fi.clocklings.ui.components.ClockTaskScaffold
 import fi.clocklings.ui.components.CompanionTip
 import fi.clocklings.ui.components.ConfettiState
 import fi.clocklings.ui.components.DigitalPill
@@ -49,12 +48,12 @@ import fi.clocklings.ui.components.OptionButton
 import fi.clocklings.ui.components.OptionState
 import fi.clocklings.ui.components.ProgressSegments
 import fi.clocklings.ui.components.ReadOptions
-import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.TopBar
 import fi.clocklings.ui.components.bringFeedbackIntoView
 import fi.clocklings.ui.components.confettiAnchor
 import fi.clocklings.ui.components.rememberCelebrationAnchors
+import fi.clocklings.ui.components.taskActionFocus
 import fi.clocklings.ui.digitalLabel
 import fi.clocklings.ui.levelName
 import fi.clocklings.ui.locale.LocalAppLanguage
@@ -144,12 +143,12 @@ fun GameScreen(
     // Leftover confetti and sparkles must not carry over onto the next question.
     val confetti = LocalConfetti.current
     LaunchedEffect(state.taskIndex) { confetti?.clear() }
-    ScreenScaffold(
-        modifier.testTag("game_task_${state.taskIndex}"),
-        wideContent = true,
-        centerContent = true,
+    val currentDone = state.feedback is GameFeedback.Praise
+    ClockTaskScaffold(
+        modifier = modifier.testTag("game_task_${state.taskIndex}"),
         clockHeightShare = SkDimens.GAME_CLOCK_HEIGHT_SHARE,
         clockFit = if (state.feedback != null) ClockFit.FIT else ClockFit.NONE,
+        clockTaskKey = state.taskIndex,
         section = Section.PLAY,
         topBar = {
             TopBar(
@@ -158,22 +157,40 @@ fun GameScreen(
                 trailing = { GuidesToggle(help, onToggleHelp) },
             )
         },
-    ) { clockSize ->
-        val currentDone = state.feedback is GameFeedback.Praise
-        ProgressSegments(
-            state.taskCount,
-            state.taskIndex,
-            track = Section.PLAY.track,
-            currentDone = currentDone,
-            fillDelayMs = ConfettiState.FLIGHT_MS,
-            onSegmentCenter = { i, c -> dots[i] = c },
-            outcomes = dotOutcomes(state, currentDone),
-        )
-        AdaptiveContent(clockSize, controlsAlignment = Alignment.CenterVertically, visual = { size ->
-            GameClock(state, help, onClockChange, size)
-        }) {
-            GameAnswerPanel(state, anchors, onPick, onDone, onNext)
-        }
+        status = {
+            ProgressSegments(
+                state.taskCount,
+                state.taskIndex,
+                track = Section.PLAY.track,
+                currentDone = currentDone,
+                fillDelayMs = ConfettiState.FLIGHT_MS,
+                onSegmentCenter = { i, c -> dots[i] = c },
+                outcomes = dotOutcomes(state, currentDone),
+            )
+        },
+        visual = { GameClock(state, help, onClockChange, it) },
+        actions =
+            if (state.showDone || state.showNext) {
+                { focus, _ ->
+                    val label =
+                        when {
+                            state.showDone -> R.string.done
+                            state.feedback == GameFeedback.SaveFailed -> R.string.settings_retry
+                            else -> R.string.next
+                        }
+                    val button = Modifier.fillMaxWidth().taskActionFocus(focus)
+                    SkButton(
+                        stringResource(label),
+                        if (state.showDone) onDone else onNext,
+                        kind = ButtonKind.PRIMARY,
+                        modifier = if (state.showDone) button.confettiAnchor { anchors[DONE_ANCHOR] = it } else button,
+                    )
+                }
+            } else {
+                null
+            },
+    ) {
+        GameAnswerPanel(state, anchors, onPick)
     }
 }
 
@@ -182,8 +199,6 @@ private fun GameAnswerPanel(
     state: GameUiState,
     anchors: SnapshotStateMap<Int, Offset>,
     onPick: (Int) -> Unit,
-    onDone: () -> Unit,
-    onNext: () -> Unit,
 ) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         FlatPanel(padding = if (maxWidth < SkDimens.GridBreakpoint) SkDimens.Gutter else SkDimens.PanelPadding) {
@@ -192,31 +207,7 @@ private fun GameAnswerPanel(
             } else {
                 SetTarget(state.task.time, state.h24)
             }
-            if (state.showDone) {
-                SkButton(
-                    stringResource(R.string.done),
-                    onDone,
-                    kind = ButtonKind.PRIMARY,
-                    modifier = Modifier.fillMaxWidth().confettiAnchor { anchors[DONE_ANCHOR] = it },
-                )
-            }
             GameFeedbackMessage(state.feedback, state.h24)
-            if (state.showNext) {
-                val label =
-                    if (state.feedback ==
-                        GameFeedback.SaveFailed
-                    ) {
-                        R.string.settings_retry
-                    } else {
-                        R.string.next
-                    }
-                SkButton(
-                    stringResource(label),
-                    onNext,
-                    kind = ButtonKind.PRIMARY,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
         }
     }
 }
@@ -295,6 +286,7 @@ private fun GameFeedbackMessage(
             kind = kind,
             celebrate = feedback is GameFeedback.Praise,
             color = if (kind == FeedbackKind.HINT) SkColors.HintFill else null,
+            avatarWidth = SkDimens.FeedbackAvatar,
         )
     }
 }
@@ -343,18 +335,17 @@ private fun GameClock(
 ) {
     // Restore the latest answer on recreation without reapplying each drag update to the live clock.
     val command = remember(state.clock.id) { state.clock }
-    ClockBox(clockSize) {
-        ClockFace(
-            command = command,
-            modifier = Modifier.sharedClocklingsElement("level-clock-${state.level}"),
-            period = ClockTime.period(state.h24),
-            step = state.step,
-            interactive = state.interactive,
-            help = help,
-            describeTime =
-                state.task.type != TaskType.READ || state.feedback is GameFeedback.RevealRead ||
-                    state.feedback is GameFeedback.Praise,
-            onChange = onClockChange,
-        )
-    }
+    ClockFace(
+        command = command,
+        modifier = Modifier.sharedClocklingsElement("level-clock-${state.level}"),
+        period = ClockTime.period(state.h24),
+        step = state.step,
+        interactive = state.interactive,
+        help = help,
+        describeTime =
+            state.task.type != TaskType.READ || state.feedback is GameFeedback.RevealRead ||
+                state.feedback is GameFeedback.Praise,
+        onChange = onClockChange,
+        clockSize = clockSize,
+    )
 }

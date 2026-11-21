@@ -5,11 +5,11 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -49,21 +49,16 @@ import fi.clocklings.domain.Wardrobe
 import fi.clocklings.ui.appearance.LocalPersonalization
 import fi.clocklings.ui.companion.CompanionCelebration
 import fi.clocklings.ui.companion.CompanionView
-import fi.clocklings.ui.companion.ItemArtWindow
-import fi.clocklings.ui.companion.ItemTile
 import fi.clocklings.ui.companion.companionAspectRatio
 import fi.clocklings.ui.components.ButtonKind
-import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.LocalConfetti
 import fi.clocklings.ui.components.RoundIconButton
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.StarIcon
-import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.components.confettiAnchor
 import fi.clocklings.ui.components.excludeConfetti
-import fi.clocklings.ui.itemName
 import fi.clocklings.ui.levelName
 import fi.clocklings.ui.rememberReduceMotion
 import fi.clocklings.ui.theme.Section
@@ -116,28 +111,22 @@ fun ResultScreen(
     ScreenScaffold(
         modifier,
         section = Section.PLAY,
-        topBar = {
-            Row(
-                Modifier.fillMaxWidth().heightIn(min = SkDimens.ButtonHeightSmall),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                RoundIconButton(SkIcons.Close, stringResource(R.string.back_description), onLevels)
-            }
-        },
+        topBar = { RoundIconButton(SkIcons.Close, stringResource(R.string.back_description), onLevels) },
         bottomBar = { ResultActions(hasNext, canReplay, onNextLevel, onPlayAgain, onLevels) },
     ) {
         Column(
-            Modifier.fillMaxWidth().padding(top = SkDimens.GapS),
+            Modifier.fillMaxWidth().padding(bottom = SkDimens.ScrollFade),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
         ) {
             ResultStars(stars, onSound.takeIf { firstVisit }) { anchor.value = it }
+            Spacer(Modifier.height(SkDimens.GapM))
             CompanionView(
                 kind,
                 outfit,
                 Modifier.width(SkDimens.DollResult).aspectRatio(companionAspectRatio(kind)),
                 celebration = dollCelebration,
             )
+            Spacer(Modifier.height(SkDimens.Gap))
             Column(
                 Modifier.fillMaxWidth().excludeConfetti(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -146,7 +135,10 @@ fun ResultScreen(
                 ResultTitle(stars)
                 Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
             }
-            if (newItems.isNotEmpty()) ResultRewards(newItems, outfit, color, onDress)
+            if (newItems.isNotEmpty()) {
+                Spacer(Modifier.height(SkDimens.Gap))
+                ResultRewards(newItems, outfit, color, onDress)
+            }
         }
     }
 }
@@ -182,56 +174,6 @@ private fun ResultActions(
             !canReplay
         ) {
             SkButton(stringResource(R.string.back_description), onLevels, Modifier.fillMaxWidth())
-        }
-    }
-}
-
-@Composable
-private fun ResultRewards(
-    newItems: List<Item>,
-    outfit: Outfit,
-    color: fi.clocklings.domain.CompanionColor,
-    onDress: () -> Unit,
-) {
-    FlatPanel(padding = SkDimens.GapM) {
-        if (newItems.size == 1) {
-            val item = newItems.single()
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
-                verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
-            ) {
-                ItemArtWindow(item, outfit, color, displaySize = SkDimens.RewardArt)
-                Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
-                    WordSafeText(
-                        stringResource(itemName(item.id)),
-                        SkType.SectionTitle,
-                        textAlign = TextAlign.Start,
-                    )
-                    SkButton(
-                        stringResource(R.string.dress_doll),
-                        onDress,
-                        kind = ButtonKind.CONTAINER,
-                        small = true,
-                        icon = SkIcons.Dress,
-                    )
-                }
-            }
-        } else {
-            FlowRow(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM, Alignment.CenterHorizontally),
-                verticalArrangement = Arrangement.spacedBy(SkDimens.GapM),
-            ) {
-                newItems.forEach { ItemTile(it, outfit, color, Modifier.width(SkDimens.ItemMinWidth)) }
-            }
-            SkButton(
-                stringResource(R.string.dress_doll),
-                onDress,
-                Modifier.align(Alignment.CenterHorizontally),
-                kind = ButtonKind.CONTAINER,
-                small = true,
-                icon = SkIcons.Dress,
-            )
         }
     }
 }

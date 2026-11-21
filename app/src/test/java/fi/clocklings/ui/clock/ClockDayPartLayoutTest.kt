@@ -1,7 +1,6 @@
 package fi.clocklings.ui.clock
 
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Paint
 import androidx.annotation.FontRes
 import androidx.compose.ui.geometry.Offset
@@ -15,21 +14,16 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.content.res.ResourcesCompat
 import androidx.test.core.app.ApplicationProvider
 import fi.clocklings.R
-import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.ClockTime
-import fi.clocklings.domain.timeLanguage
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.util.Locale
 import kotlin.math.hypot
 
 /**
- * The 24 h help layout around the pin: the day-part word, its sun or moon, the "past" and "to" labels, the inner
- * 24 h numerals and the circle the hand tails sweep around the pin must stay apart for every day-part word and
- * every to/past word in every language. Text is measured as glyph ink with the real fonts, at one pixel per
- * clock unit, and placed the way ClockFace draws it.
+ * The inner 24 h numerals must clear each other, the main numerals and the hub.
+ * Measure glyph ink with the real fonts and place it the way ClockFace draws it.
  */
 @RunWith(RobolectricTestRunner::class)
 class ClockDayPartLayoutTest {
@@ -74,41 +68,11 @@ class ClockDayPartLayoutTest {
         return bounds.translate(at.x - box.width / 2f, at.y - box.height / 2f)
     }
 
-    private fun dayWord(text: String): Rect {
-        val (bounds, box) = ink(text, styles.day, R.font.fredoka_semibold)
-        return bounds.translate(ClockSpec.CENTER - box.width / 2f, ClockSpec.DAY_TEXT_Y - box.baseline)
-    }
-
-    private fun zoneLabels(language: AppLanguage): List<Pair<String, Rect>> {
-        val past = ClockSpec.zoneLabelAngle(is24 = true)
-        val radius = ClockSpec.zoneLabelRadius(is24 = true)
-        return listOf(R.string.clock_zone_yli to past, R.string.clock_zone_vaille to -past).map { (id, angle) ->
-            val text = localized(language).getString(id)
-            text to centered(text, styles.zone, R.font.fredoka_semibold, ClockSpec.point(radius, angle))
-        }
-    }
-
     private fun innerNumerals(): List<Pair<String, Rect>> =
         (1..ClockTime.HOURS_PER_HALF_DAY).map { n ->
             val text = ((n + ClockTime.HOURS_PER_HALF_DAY) % ClockTime.HOURS_PER_DAY).toString()
             val at = ClockSpec.point(ClockSpec.INNER_24_RADIUS, n * ClockSpec.DEGREES_PER_HOUR)
             text to centered(text, styles.inner24, R.font.nunito_extrabold, at)
-        }
-
-    private fun localized(language: AppLanguage): Context {
-        val config = Configuration(context.resources.configuration)
-        config.setLocale(Locale.forLanguageTag(language.tag))
-        return context.createConfigurationContext(config)
-    }
-
-    private fun dayWords(language: AppLanguage): Set<String> =
-        (0 until ClockTime.DAY).map { timeLanguage(language).dayPart(it).name }.toSet()
-
-    /** The sun with its rays; the moon fits inside the same square. */
-    private val dayIcon =
-        Offset(ClockSpec.CENTER, ClockSpec.SUN_CY).let { c ->
-            val r = ClockSpec.SUN_RAY_TO + ClockSpec.SUN_RAY_WIDTH / 2f
-            Rect(c.x - r, c.y - r, c.x + r, c.y + r)
         }
 
     private val failures = mutableListOf<String>()
@@ -126,32 +90,30 @@ class ClockDayPartLayoutTest {
     private fun clearOfHub(
         what: String,
         a: Rect,
+        radius: Float,
     ) {
         val dx = maxOf(a.left - ClockSpec.CENTER, 0f, ClockSpec.CENTER - a.right)
         val dy = maxOf(a.top - ClockSpec.CENTER, 0f, ClockSpec.CENTER - a.bottom)
-        if (hypot(dx, dy) < HUB + GAP) failures += "$what: $a reaches the hub"
+        if (hypot(dx, dy) < radius + GAP) failures += "$what: $a reaches the hub"
     }
 
     @Test
-    fun `day part word and to past labels keep apart from each other and from the numerals and hub`() {
+    fun `inner numerals clear each other the outer numerals and the hub`() {
         val numerals = innerNumerals()
-        // Every language's to/past words, so labelling the halves in Finnish or Swedish later still fits.
-        val labels = AppLanguage.entries.flatMap { zoneLabels(it) }
-        for (language in AppLanguage.entries) {
-            val (past, to) = zoneLabels(language)
-            apart("labels ${past.first} and ${to.first}", past.second, to.second)
-            for (word in dayWords(language)) {
-                val rect = dayWord(word)
-                clearOfHub("day word $word", rect)
-                apart("day word $word and its icon", rect, dayIcon)
-                labels.forEach { (label, box) -> apart("day word $word and label $label", rect, box) }
-                numerals.forEach { (n, box) -> apart("day word $word and numeral $n", rect, box) }
+        val plain = ClockTextStyles(density, plainNumbers = true)
+        for ((index, numeral) in numerals.withIndex()) {
+            val (n, box) = numeral
+            numerals.drop(index + 1).forEach { (other, otherBox) ->
+                apart("inner numerals $n and $other", box, otherBox)
             }
-        }
-        for ((label, box) in labels) {
-            clearOfHub("label $label", box)
-            apart("label $label and the day icon", box, dayIcon)
-            numerals.forEach { (n, numeral) -> apart("label $label and numeral $n", box, numeral) }
+            clearOfHub("inner numeral $n", box, HUB)
+            for (outer in 1..ClockTime.HOURS_PER_HALF_DAY) {
+                val at = ClockSpec.point(ClockSpec.NUMBER_RADIUS, outer * ClockSpec.DEGREES_PER_HOUR)
+                val decorated = centered("$outer", styles.number, R.font.fredoka_semibold, at)
+                val simple = centered("$outer", plain.number, R.font.nunito_semibold, at)
+                apart("inner numeral $n and decorated outer numeral $outer", box, decorated)
+                apart("inner numeral $n and plain outer numeral $outer", box, simple)
+            }
         }
         assertTrue(failures.joinToString("\n"), failures.isEmpty())
     }

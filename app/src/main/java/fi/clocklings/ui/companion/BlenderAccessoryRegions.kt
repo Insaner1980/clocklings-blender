@@ -14,8 +14,8 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(0, 0),
-                    IntOffset(87, 169),
-                    IntSize(66, 54),
+                    IntOffset(87, 153),
+                    IntSize(66, 61),
                 ),
             ),
         "bunny-extra-carrot" to
@@ -24,8 +24,8 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.HAND,
                     ItemLayer.FRONT,
                     IntOffset(204, 0),
-                    IntOffset(103, 185),
-                    IntSize(37, 84),
+                    IntOffset(104, 187),
+                    IntSize(32, 78),
                 ),
             ),
         "bunny-head-ear-bow" to
@@ -33,8 +33,8 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(321, 0),
-                    IntOffset(53, 36),
+                    IntOffset(306, 0),
+                    IntOffset(41, 39),
                     IntSize(56, 39),
                 ),
             ),
@@ -43,19 +43,19 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(495, 0),
-                    IntOffset(81, 167),
-                    IntSize(78, 35),
+                    IntOffset(480, 0),
+                    IntOffset(85, 152),
+                    IntSize(70, 45),
                 ),
             ),
         "bunny-extra-basket" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.GROUND,
                     ItemLayer.FRONT,
-                    IntOffset(735, 0),
-                    IntOffset(160, 211),
-                    IntSize(57, 71),
+                    IntOffset(696, 0),
+                    IntOffset(177, 214),
+                    IntSize(56, 73),
                 ),
             ),
         "bunny-head-sun-hat" to
@@ -63,9 +63,9 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(912, 0),
-                    IntOffset(42, -1),
-                    IntSize(156, 69),
+                    IntOffset(870, 0),
+                    IntOffset(44, 3),
+                    IntSize(152, 60),
                 ),
             ),
         "bunny-neck-locket" to
@@ -73,19 +73,19 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 258),
-                    IntOffset(79, 167),
-                    IntSize(79, 65),
+                    IntOffset(1332, 0),
+                    IntOffset(86, 153),
+                    IntSize(68, 65),
                 ),
             ),
         "bunny-extra-watering-can" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(243, 258),
-                    IntOffset(138, 228),
-                    IntSize(81, 45),
+                    IntOffset(0, 240),
+                    IntOffset(132, 220),
+                    IntSize(77, 47),
                 ),
             ),
         "bunny-head-top-hat" to
@@ -93,9 +93,9 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(492, 258),
-                    IntOffset(53, -31),
-                    IntSize(137, 90),
+                    IntOffset(237, 240),
+                    IntOffset(54, -26),
+                    IntSize(133, 80),
                 ),
             ),
         "bunny-neck-bow-tie" to
@@ -103,19 +103,19 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(909, 258),
-                    IntOffset(87, 173),
-                    IntSize(66, 29),
+                    IntOffset(642, 240),
+                    IntOffset(87, 154),
+                    IntSize(66, 38),
                 ),
             ),
         "bunny-extra-bubbles" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(1113, 258),
-                    IntOffset(140, 193),
-                    IntSize(98, 78),
+                    IntOffset(846, 240),
+                    IntOffset(125, 190),
+                    IntSize(116, 58),
                 ),
             ),
         "bunny-head-flower-crown" to
@@ -123,9 +123,9 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(0, 534),
-                    IntOffset(55, 27),
-                    IntSize(130, 49),
+                    IntOffset(0, 486),
+                    IntOffset(51, 26),
+                    IntSize(136, 51),
                 ),
             ),
         "bunny-extra-bouquet" to
@@ -133,9 +133,9 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(396, 534),
-                    IntOffset(107, 176),
-                    IntSize(44, 101),
+                    IntOffset(414, 486),
+                    IntOffset(122, 193),
+                    IntSize(73, 61),
                 ),
             ),
         "bunny-neck-cape" to
@@ -143,16 +143,16 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(534, 534),
-                    IntOffset(29, 170),
-                    IntSize(185, 120),
+                    IntOffset(639, 486),
+                    IntOffset(24, 164),
+                    IntSize(192, 124),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(1095, 534),
-                    IntOffset(80, 165),
-                    IntSize(80, 34),
+                    IntOffset(1221, 486),
+                    IntOffset(82, 154),
+                    IntSize(76, 34),
                 ),
             ),
         "bunny-head-tiara" to
@@ -160,9 +160,9 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(0, 900),
-                    IntOffset(80, 10),
-                    IntSize(80, 52),
+                    IntOffset(0, 864),
+                    IntOffset(79, 11),
+                    IntSize(82, 48),
                 ),
             ),
         "bunny-extra-wings" to
@@ -170,9 +170,9 @@ internal val BunnyAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(246, 900),
-                    IntOffset(21, 164),
-                    IntSize(198, 111),
+                    IntOffset(252, 864),
+                    IntOffset(-14, 122),
+                    IntSize(268, 135),
                 ),
             ),
     )
@@ -184,9 +184,9 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 0),
-                    IntOffset(74, 166),
-                    IntSize(63, 32),
+                    IntOffset(852, 141),
+                    IntOffset(72, 164),
+                    IntSize(54, 35),
                 ),
             ),
         "unicorn-head-horn-rings" to
@@ -202,11 +202,11 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
         "unicorn-extra-cloud" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
-                    ItemLayer.FRONT,
-                    IntOffset(279, 0),
-                    IntOffset(49, 261),
-                    IntSize(146, 36),
+                    ArtPart.GROUND,
+                    ItemLayer.BEHIND,
+                    IntOffset(0, 776),
+                    IntOffset(50, 264),
+                    IntSize(145, 30),
                 ),
             ),
         "unicorn-neck-stars" to
@@ -232,11 +232,11 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
         "unicorn-extra-balloon" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(1293, 0),
-                    IntOffset(5, 165),
-                    IntSize(80, 106),
+                    IntOffset(1290, 0),
+                    IntOffset(3, 150),
+                    IntSize(70, 42),
                 ),
             ),
         "unicorn-neck-scarf" to
@@ -254,9 +254,9 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(192, 324),
-                    IntOffset(41, 62),
-                    IntSize(109, 104),
+                    IntOffset(852, 480),
+                    IntOffset(37, 63),
+                    IntSize(124, 80),
                 ),
             ),
         "unicorn-extra-boots" to
@@ -264,9 +264,9 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(525, 324),
-                    IntOffset(66, 243),
-                    IntSize(119, 46),
+                    IntOffset(792, 723),
+                    IntOffset(62, 239),
+                    IntSize(122, 44),
                 ),
             ),
         "unicorn-neck-rainbow-scarf" to
@@ -274,9 +274,9 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(888, 324),
-                    IntOffset(77, 169),
-                    IntSize(52, 86),
+                    IntOffset(419, 0),
+                    IntOffset(75, 164),
+                    IntSize(50, 64),
                 ),
             ),
         "unicorn-head-butterfly" to
@@ -292,11 +292,11 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
         "unicorn-extra-rainbow" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.GROUND,
                     ItemLayer.BEHIND,
-                    IntOffset(0, 642),
-                    IntOffset(18, 173),
-                    IntSize(212, 109),
+                    IntOffset(189, 230),
+                    IntOffset(14, 173),
+                    IntSize(220, 114),
                 ),
             ),
         "unicorn-neck-moon" to
@@ -314,9 +314,9 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(795, 642),
-                    IntOffset(37, 37),
-                    IntSize(85, 48),
+                    IntOffset(321, 575),
+                    IntOffset(38, 45),
+                    IntSize(86, 34),
                 ),
             ),
         "unicorn-neck-cape" to
@@ -324,16 +324,16 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(1056, 642),
-                    IntOffset(107, 158),
-                    IntSize(96, 116),
+                    IntOffset(1227, 480),
+                    IntOffset(86, 160),
+                    IntSize(96, 63),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(1350, 642),
-                    IntOffset(83, 176),
-                    IntSize(36, 17),
+                    IntOffset(0, 575),
+                    IntOffset(75, 164),
+                    IntSize(106, 66),
                 ),
             ),
         "unicorn-extra-wings" to
@@ -344,6 +344,13 @@ internal val UnicornAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> 
                     IntOffset(0, 996),
                     IntOffset(128, 116),
                     IntSize(83, 82),
+                ),
+                BlenderAccessoryRegion(
+                    ArtPart.BODY,
+                    ItemLayer.BEHIND,
+                    IntOffset(1173, 141),
+                    IntOffset(116, 94),
+                    IntSize(92, 112),
                 ),
             ),
     )
@@ -356,8 +363,8 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(0, 0),
-                    IntOffset(135, 255),
-                    IntSize(68, 26),
+                    IntOffset(137, 252),
+                    IntSize(66, 22),
                 ),
             ),
         "car-wheels-sport" to
@@ -365,9 +372,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.WHEELS,
                     ItemLayer.FRONT,
-                    IntOffset(210, 0),
-                    IntOffset(9, 203),
-                    IntSize(84, 68),
+                    IntOffset(204, 0),
+                    IntOffset(10, 207),
+                    IntSize(81, 65),
                 ),
             ),
         "car-roof-suitcase" to
@@ -375,9 +382,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(468, 0),
-                    IntOffset(56, 102),
-                    IntSize(84, 65),
+                    IntOffset(453, 0),
+                    IntOffset(60, 112),
+                    IntSize(75, 56),
                 ),
             ),
         "car-front-sunglasses" to
@@ -385,9 +392,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(726, 0),
-                    IntOffset(87, 210),
-                    IntSize(143, 41),
+                    IntOffset(684, 0),
+                    IntOffset(90, 213),
+                    IntSize(137, 31),
                 ),
             ),
         "car-wheels-offroad" to
@@ -395,9 +402,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.WHEELS,
                     ItemLayer.FRONT,
-                    IntOffset(1161, 0),
-                    IntOffset(1, 194),
-                    IntSize(104, 86),
+                    IntOffset(1101, 0),
+                    IntOffset(5, 198),
+                    IntSize(92, 85),
                 ),
             ),
         "car-model-race" to
@@ -405,9 +412,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 264),
-                    IntOffset(88, 152),
-                    IntSize(101, 113),
+                    IntOffset(0, 261),
+                    IntOffset(44, 153),
+                    IntSize(135, 84),
                 ),
             ),
         "car-roof-surfboard" to
@@ -415,9 +422,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(309, 264),
-                    IntOffset(10, 136),
-                    IntSize(188, 34),
+                    IntOffset(411, 261),
+                    IntOffset(22, 131),
+                    IntSize(147, 39),
                 ),
             ),
         "car-front-bull-bar" to
@@ -425,9 +432,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(879, 264),
-                    IntOffset(105, 247),
-                    IntSize(125, 29),
+                    IntOffset(858, 261),
+                    IntOffset(108, 246),
+                    IntSize(119, 23),
                 ),
             ),
         "car-wheels-flames" to
@@ -435,9 +442,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.WHEELS,
                     ItemLayer.FRONT,
-                    IntOffset(1260, 264),
-                    IntOffset(9, 203),
-                    IntSize(84, 69),
+                    IntOffset(1221, 261),
+                    IntOffset(10, 207),
+                    IntSize(81, 65),
                 ),
             ),
         "car-roof-flag" to
@@ -445,9 +452,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 609),
-                    IntOffset(98, 80),
-                    IntSize(56, 82),
+                    IntOffset(0, 519),
+                    IntOffset(92, 93),
+                    IntSize(62, 70),
                 ),
             ),
         "car-model-fire-engine" to
@@ -455,9 +462,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(174, 609),
-                    IntOffset(27, 124),
-                    IntSize(85, 112),
+                    IntOffset(192, 519),
+                    IntOffset(14, 137),
+                    IntSize(126, 39),
                 ),
             ),
         "car-front-plow" to
@@ -465,9 +472,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(435, 609),
-                    IntOffset(108, 257),
-                    IntSize(125, 42),
+                    IntOffset(576, 519),
+                    IntOffset(108, 255),
+                    IntSize(121, 36),
                 ),
             ),
         "car-roof-taxi" to
@@ -475,9 +482,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(816, 609),
-                    IntOffset(67, 135),
-                    IntSize(64, 31),
+                    IntOffset(945, 519),
+                    IntOffset(71, 134),
+                    IntSize(62, 31),
                 ),
             ),
         "car-wheels-gold" to
@@ -485,9 +492,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.WHEELS,
                     ItemLayer.FRONT,
-                    IntOffset(1014, 609),
-                    IntOffset(9, 203),
-                    IntSize(84, 69),
+                    IntOffset(1137, 519),
+                    IntOffset(10, 207),
+                    IntSize(81, 65),
                 ),
             ),
         "car-roof-rally-lights" to
@@ -495,9 +502,9 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(1272, 609),
-                    IntOffset(56, 132),
-                    IntSize(78, 28),
+                    IntOffset(0, 735),
+                    IntOffset(59, 133),
+                    IntSize(75, 35),
                 ),
             ),
         "car-model-rocket" to
@@ -505,16 +512,16 @@ internal val CarAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(0, 951),
-                    IntOffset(2, 117),
-                    IntSize(90, 88),
+                    IntOffset(231, 735),
+                    IntOffset(4, 142),
+                    IntSize(75, 52),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(276, 951),
-                    IntOffset(-22, 205),
-                    IntSize(91, 38),
+                    IntOffset(462, 735),
+                    IntOffset(-21, 179),
+                    IntSize(83, 50),
                 ),
             ),
     )
@@ -545,10 +552,17 @@ internal val DollAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
             listOf(
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
+                    ItemLayer.BEHIND,
+                    IntOffset(284, 170),
+                    IntOffset(48, 132),
+                    IntSize(87, 112),
+                ),
+                BlenderAccessoryRegion(
+                    ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(555, 0),
-                    IntOffset(45, 143),
-                    IntSize(96, 106),
+                    IntOffset(45, 132),
+                    IntSize(96, 117),
                 ),
             ),
         "head-kruunu" to
@@ -566,9 +580,9 @@ internal val DollAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(1038, 0),
-                    IntOffset(20, 143),
-                    IntSize(160, 89),
+                    IntOffset(855, 166),
+                    IntOffset(2, 119),
+                    IntSize(196, 109),
                 ),
             ),
         "shoes-roller-skates" to
@@ -590,9 +604,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 0),
-                    IntOffset(75, 160),
-                    IntSize(90, 91),
+                    IntOffset(321, 882),
+                    IntOffset(74, 142),
+                    IntSize(103, 101),
                 ),
             ),
         "cat-head-bow" to
@@ -600,19 +614,19 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(276, 0),
-                    IntOffset(108, 27),
-                    IntSize(72, 37),
+                    IntOffset(876, 1152),
+                    IntOffset(113, 30),
+                    IntSize(66, 39),
                 ),
             ),
         "cat-extra-yarn" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.GROUND,
                     ItemLayer.FRONT,
-                    IntOffset(498, 0),
-                    IntOffset(69, 220),
-                    IntSize(125, 71),
+                    IntOffset(885, 312),
+                    IntOffset(40, 235),
+                    IntSize(96, 55),
                 ),
             ),
         "cat-neck-bell-collar" to
@@ -620,9 +634,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(879, 0),
-                    IntOffset(70, 157),
-                    IntSize(100, 54),
+                    IntOffset(0, 1107),
+                    IntOffset(80, 152),
+                    IntSize(80, 48),
                 ),
             ),
         "cat-head-bobble-hat" to
@@ -630,9 +644,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(0, 279),
-                    IntOffset(42, -14),
-                    IntSize(155, 104),
+                    IntOffset(735, 489),
+                    IntOffset(58, -9),
+                    IntSize(123, 90),
                 ),
             ),
         "cat-extra-glasses" to
@@ -640,9 +654,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(471, 279),
-                    IntOffset(37, 75),
-                    IntSize(166, 72),
+                    IntOffset(447, 312),
+                    IntOffset(48, 82),
+                    IntSize(145, 58),
                 ),
             ),
         "cat-neck-bow-tie" to
@@ -650,9 +664,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(975, 279),
-                    IntOffset(91, 166),
-                    IntSize(58, 26),
+                    IntOffset(633, 1131),
+                    IntOffset(80, 152),
+                    IntSize(80, 32),
                 ),
             ),
         "cat-head-sailor-hat" to
@@ -660,19 +674,26 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(0, 597),
-                    IntOffset(41, 12),
-                    IntSize(158, 72),
+                    IntOffset(735, 762),
+                    IntOffset(64, 17),
+                    IntSize(111, 57),
                 ),
             ),
         "cat-extra-fish-backpack" to
             listOf(
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
+                    ItemLayer.BEHIND,
+                    IntOffset(942, 936),
+                    IntOffset(22, 154),
+                    IntSize(74, 71),
+                ),
+                BlenderAccessoryRegion(
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(480, 597),
-                    IntOffset(7, 176),
-                    IntSize(72, 113),
+                    IntOffset(0, 633),
+                    IntOffset(50, 151),
+                    IntSize(123, 64),
                 ),
             ),
         "cat-neck-ruffle" to
@@ -680,9 +701,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(702, 597),
-                    IntOffset(53, 148),
-                    IntSize(134, 62),
+                    IntOffset(0, 828),
+                    IntOffset(67, 142),
+                    IntSize(106, 51),
                 ),
             ),
         "cat-head-flower-crown" to
@@ -690,9 +711,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(0, 942),
-                    IntOffset(39, 28),
-                    IntSize(161, 46),
+                    IntOffset(0, 312),
+                    IntOffset(46, 35),
+                    IntSize(148, 42),
                 ),
             ),
         "cat-neck-pearls" to
@@ -700,36 +721,36 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(489, 942),
-                    IntOffset(65, 158),
-                    IntSize(110, 47),
+                    IntOffset(0, 984),
+                    IntOffset(77, 148),
+                    IntSize(86, 40),
                 ),
             ),
         "cat-extra-wand" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(825, 942),
-                    IntOffset(0, 162),
-                    IntSize(71, 112),
+                    IntOffset(423, 489),
+                    IntOffset(4, 160),
+                    IntSize(103, 130),
                 ),
             ),
         "cat-neck-cape" to
             listOf(
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
-                    ItemLayer.FRONT,
-                    IntOffset(0, 1284),
-                    IntOffset(34, 159),
-                    IntSize(172, 135),
+                    ItemLayer.BEHIND,
+                    IntOffset(699, 0),
+                    IntOffset(40, 140),
+                    IntSize(150, 103),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
-                    ItemLayer.BEHIND,
-                    IntOffset(522, 1284),
-                    IntOffset(33, 163),
-                    IntSize(174, 132),
+                    ItemLayer.FRONT,
+                    IntOffset(0, 441),
+                    IntOffset(49, 153),
+                    IntSize(140, 63),
                 ),
             ),
         "cat-head-crown" to
@@ -737,9 +758,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(1050, 1284),
-                    IntOffset(67, -6),
-                    IntSize(106, 68),
+                    IntOffset(633, 936),
+                    IntOffset(69, 2),
+                    IntSize(102, 64),
                 ),
             ),
         "cat-extra-wings" to
@@ -747,9 +768,9 @@ internal val CatAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(0, 1695),
-                    IntOffset(-1, 147),
-                    IntSize(241, 110),
+                    IntOffset(0, 0),
+                    IntOffset(4, 138),
+                    IntSize(232, 103),
                 ),
             ),
     )
@@ -792,8 +813,8 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(942, 0),
-                    IntOffset(73, 160),
-                    IntSize(94, 52),
+                    IntOffset(76, 145),
+                    IntSize(88, 67),
                 ),
             ),
         "dog-head-sun-hat" to
@@ -812,8 +833,8 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
                     IntOffset(552, 234),
-                    IntOffset(74, 139),
-                    IntSize(92, 43),
+                    IntOffset(76, 129),
+                    IntSize(89, 52),
                 ),
             ),
         "dog-neck-bow-tie" to
@@ -821,9 +842,9 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(834, 234),
-                    IntOffset(90, 172),
-                    IntSize(60, 27),
+                    IntOffset(825, 234),
+                    IntOffset(76, 145),
+                    IntSize(88, 50),
                 ),
             ),
         "dog-head-party-hat" to
@@ -831,7 +852,7 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(1020, 234),
+                    IntOffset(1209, 3),
                     IntOffset(96, -31),
                     IntSize(61, 91),
                 ),
@@ -841,7 +862,7 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(1209, 234),
+                    IntOffset(0, 513),
                     IntOffset(75, 229),
                     IntSize(96, 60),
                 ),
@@ -851,7 +872,7 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 513),
+                    IntOffset(294, 513),
                     IntOffset(57, 162),
                     IntSize(126, 50),
                 ),
@@ -861,7 +882,7 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(384, 513),
+                    IntOffset(678, 513),
                     IntOffset(32, -1),
                     IntSize(176, 76),
                 ),
@@ -871,16 +892,16 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(918, 513),
-                    IntOffset(20, 164),
-                    IntSize(74, 116),
+                    IntOffset(1212, 513),
+                    IntOffset(22, 147),
+                    IntSize(85, 114),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(1146, 513),
-                    IntOffset(63, 165),
-                    IntSize(114, 77),
+                    IntOffset(0, 861),
+                    IntOffset(78, 144),
+                    IntSize(84, 65),
                 ),
             ),
         "dog-neck-medal" to
@@ -888,7 +909,7 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 867),
+                    IntOffset(258, 861),
                     IntOffset(84, 146),
                     IntSize(71, 81),
                 ),
@@ -898,7 +919,7 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(219, 867),
+                    IntOffset(477, 861),
                     IntOffset(27, -14),
                     IntSize(186, 87),
                 ),
@@ -908,9 +929,16 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(783, 867),
-                    IntOffset(51, 160),
-                    IntSize(138, 111),
+                    IntOffset(1038, 858),
+                    IntOffset(50, 146),
+                    IntSize(140, 88),
+                ),
+                BlenderAccessoryRegion(
+                    ArtPart.BODY,
+                    ItemLayer.BEHIND,
+                    IntOffset(1092, 279),
+                    IntOffset(49, 145),
+                    IntSize(141, 77),
                 ),
             ),
         "dog-neck-cape" to
@@ -918,16 +946,16 @@ internal val DogAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 1206),
-                    IntOffset(34, 164),
-                    IntSize(172, 135),
+                    IntOffset(888, 1167),
+                    IntOffset(30, 151),
+                    IntSize(180, 101),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(522, 1206),
-                    IntOffset(33, 168),
-                    IntSize(174, 132),
+                    IntOffset(339, 1125),
+                    IntOffset(29, 148),
+                    IntSize(182, 111),
                 ),
             ),
     )
@@ -970,7 +998,7 @@ internal val DragonAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(1095, 0),
-                    IntOffset(81, 158),
+                    IntOffset(81, 146),
                     IntSize(78, 60),
                 ),
             ),
@@ -990,7 +1018,7 @@ internal val DragonAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(492, 228),
-                    IntOffset(63, 232),
+                    IntOffset(63, 178),
                     IntSize(116, 60),
                 ),
             ),
@@ -1000,7 +1028,7 @@ internal val DragonAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(846, 228),
-                    IntOffset(76, 150),
+                    IntOffset(76, 139),
                     IntSize(88, 89),
                 ),
             ),
@@ -1020,7 +1048,7 @@ internal val DragonAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(0, 576),
-                    IntOffset(23, 178),
+                    IntOffset(33, 173),
                     IntSize(75, 86),
                 ),
             ),
@@ -1047,10 +1075,10 @@ internal val DragonAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
         "dragon-extra-star-cloud" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
                     IntOffset(924, 576),
-                    IntOffset(21, 237),
+                    IntOffset(21, 244),
                     IntSize(193, 57),
                 ),
             ),
@@ -1070,7 +1098,7 @@ internal val DragonAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(300, 942),
-                    IntOffset(34, 148),
+                    IntOffset(34, 142),
                     IntSize(172, 136),
                 ),
                 BlenderAccessoryRegion(
@@ -1109,10 +1137,17 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
             listOf(
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
+                    ItemLayer.BEHIND,
+                    IntOffset(0, 858),
+                    IntOffset(31, 124),
+                    IntSize(149, 100),
+                ),
+                BlenderAccessoryRegion(
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(0, 0),
-                    IntOffset(25, 138),
-                    IntSize(70, 101),
+                    IntOffset(0, 1161),
+                    IntOffset(59, 125),
+                    IntSize(121, 86),
                 ),
             ),
         "dinosaur-head-flower" to
@@ -1120,7 +1155,7 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(216, 0),
+                    IntOffset(150, 1422),
                     IntOffset(56, 27),
                     IntSize(62, 68),
                 ),
@@ -1128,9 +1163,9 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
         "dinosaur-extra-bucket" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.GROUND,
                     ItemLayer.FRONT,
-                    IntOffset(408, 0),
+                    IntOffset(366, 1407),
                     IntOffset(185, 198),
                     IntSize(52, 86),
                 ),
@@ -1138,11 +1173,11 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
         "dinosaur-neck-scarf" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(570, 0),
-                    IntOffset(97, 145),
-                    IntSize(84, 85),
+                    IntOffset(450, 858),
+                    IntOffset(96, 124),
+                    IntSize(76, 93),
                 ),
             ),
         "dinosaur-head-cap" to
@@ -1150,19 +1185,19 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(828, 0),
-                    IntOffset(63, -4),
-                    IntSize(155, 76),
+                    IntOffset(864, 1494),
+                    IntOffset(79, 2),
+                    IntSize(120, 66),
                 ),
             ),
         "dinosaur-extra-balloon" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(1299, 0),
-                    IntOffset(172, 9),
-                    IntSize(76, 198),
+                    IntOffset(765, 639),
+                    IntOffset(174, 3),
+                    IntSize(76, 186),
                 ),
             ),
         "dinosaur-neck-bow-tie" to
@@ -1170,7 +1205,7 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(0, 600),
+                    IntOffset(585, 1857),
                     IntOffset(110, 148),
                     IntSize(63, 30),
                 ),
@@ -1180,7 +1215,7 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(195, 600),
+                    IntOffset(996, 954),
                     IntOffset(110, -37),
                     IntSize(62, 91),
                 ),
@@ -1188,18 +1223,11 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
         "dinosaur-extra-umbrella" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.BEHIND,
-                    IntOffset(387, 600),
-                    IntOffset(120, -16),
-                    IntSize(40, 190),
-                ),
-                BlenderAccessoryRegion(
-                    ArtPart.BODY,
-                    ItemLayer.FRONT,
-                    IntOffset(513, 600),
-                    IntOffset(25, -54),
-                    IntSize(202, 243),
+                    IntOffset(0, 0),
+                    IntOffset(111, -67),
+                    IntSize(254, 285),
                 ),
             ),
         "dinosaur-extra-swim-ring" to
@@ -1207,16 +1235,16 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(0, 1335),
-                    IntOffset(62, 185),
-                    IntSize(150, 55),
+                    IntOffset(0, 1713),
+                    IntOffset(35, 167),
+                    IntSize(194, 59),
                 ),
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.FRONT,
-                    IntOffset(456, 1335),
-                    IntOffset(62, 161),
-                    IntSize(173, 94),
+                    IntOffset(651, 1230),
+                    IntOffset(35, 160),
+                    IntSize(200, 87),
                 ),
             ),
         "dinosaur-head-hard-hat" to
@@ -1224,39 +1252,46 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.HEAD,
                     ItemLayer.FRONT,
-                    IntOffset(981, 1335),
-                    IntOffset(60, -13),
-                    IntSize(150, 78),
+                    IntOffset(525, 1494),
+                    IntOffset(75, -5),
+                    IntSize(112, 72),
                 ),
             ),
         "dinosaur-extra-kite" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
+                    ItemLayer.BEHIND,
+                    IntOffset(1182, 1695),
+                    IntOffset(124, 140),
+                    IntSize(20, 16),
+                ),
+                BlenderAccessoryRegion(
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(0, 1623),
+                    IntOffset(765, 0),
                     IntOffset(22, -22),
-                    IntSize(153, 217),
+                    IntSize(157, 212),
                 ),
             ),
         "dinosaur-neck-binoculars" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(465, 1623),
-                    IntOffset(93, 144),
-                    IntSize(82, 77),
+                    IntOffset(450, 1140),
+                    IntOffset(104, 125),
+                    IntSize(66, 88),
                 ),
             ),
         "dinosaur-neck-medal" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(717, 1623),
-                    IntOffset(89, 147),
-                    IntSize(82, 92),
+                    IntOffset(996, 639),
+                    IntOffset(102, 124),
+                    IntSize(65, 104),
                 ),
             ),
         "dinosaur-extra-ice-cream" to
@@ -1264,17 +1299,17 @@ internal val DinosaurAccessoryRegions: Map<String, List<BlenderAccessoryRegion>>
                 BlenderAccessoryRegion(
                     ArtPart.HAND,
                     ItemLayer.FRONT,
-                    IntOffset(969, 1623),
-                    IntOffset(167, 120),
-                    IntSize(58, 102),
+                    IntOffset(0, 1422),
+                    IntOffset(172, 130),
+                    IntSize(49, 79),
                 ),
             ),
         "dinosaur-extra-skateboard" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
-                    ItemLayer.FRONT,
-                    IntOffset(0, 2280),
+                    ArtPart.GROUND,
+                    ItemLayer.BEHIND,
+                    IntOffset(585, 1713),
                     IntOffset(25, 261),
                     IntSize(198, 47),
                 ),
@@ -1366,8 +1401,8 @@ internal val RobotAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(798, 1002),
-                    IntOffset(78, 140),
-                    IntSize(84, 29),
+                    IntOffset(77, 128),
+                    IntSize(86, 40),
                 ),
             ),
         "robot-neck-medal" to
@@ -1376,8 +1411,8 @@ internal val RobotAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                     ArtPart.BODY,
                     ItemLayer.FRONT,
                     IntOffset(1056, 1002),
-                    IntOffset(82, 140),
-                    IntSize(76, 97),
+                    IntOffset(82, 134),
+                    IntSize(76, 103),
                 ),
             ),
         "robot-extra-heart-eyes" to
@@ -1415,32 +1450,25 @@ internal val RobotAccessoryRegions: Map<String, List<BlenderAccessoryRegion>> =
                 BlenderAccessoryRegion(
                     ArtPart.BODY,
                     ItemLayer.BEHIND,
-                    IntOffset(441, 1395),
-                    IntOffset(31, 145),
-                    IntSize(60, 78),
-                ),
-                BlenderAccessoryRegion(
-                    ArtPart.BODY,
-                    ItemLayer.FRONT,
-                    IntOffset(627, 1395),
-                    IntOffset(-3, 26),
-                    IntSize(68, 177),
+                    IntOffset(1200, 1395),
+                    IntOffset(0, 49),
+                    IntSize(89, 165),
                 ),
             ),
         "robot-extra-wind-up-key" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.HAND,
-                    ItemLayer.FRONT,
-                    IntOffset(837, 1395),
-                    IntOffset(156, 153),
-                    IntSize(62, 74),
+                    ArtPart.BODY,
+                    ItemLayer.BEHIND,
+                    IntOffset(633, 1395),
+                    IntOffset(150, 138),
+                    IntSize(74, 77),
                 ),
             ),
         "robot-extra-pet" to
             listOf(
                 BlenderAccessoryRegion(
-                    ArtPart.BODY,
+                    ArtPart.GROUND,
                     ItemLayer.FRONT,
                     IntOffset(1029, 1395),
                     IntOffset(178, 213),

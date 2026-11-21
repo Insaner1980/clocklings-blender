@@ -94,7 +94,9 @@ internal class BlenderRobotRig(
     ) {
         accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
         part(Legs)
-        rotate(pose.armDeg, LeftShoulder) { part(LeftArm) }
+        // The painted swivel sits at the torso edge. A full wave clears the lower corner of the head.
+        val waveTravel = if (outfit[Slot.HEAD] == "robot-head-astronaut") HELMET_WAVE_TRAVEL else WAVE_TRAVEL
+        rotate(pose.armDeg * waveTravel, LeftShoulder) { part(LeftArm) }
         accessories.draw(this, outfit, ArtPart.HAND, ItemLayer.FRONT)
         part(RightArm)
         // The torso occludes the inner shoulder joints in the original 3D model.
@@ -125,11 +127,13 @@ internal class BlenderRobotRig(
 private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(30, 42), IntSize(180, 106))
 private val Body = BlenderBodyRegion(IntOffset(544, 0), IntOffset(68, 136), IntSize(104, 96))
 private val Legs = BlenderBodyRegion(IntOffset(244, 322), IntOffset(70, 202), IntSize(100, 82))
-private val LeftArm = BlenderBodyRegion(IntOffset(548, 322), IntOffset(32, 144), IntSize(56, 89))
+private val LeftArm = BlenderBodyRegion(IntOffset(548, 322), IntOffset(40, 144), IntSize(57, 89))
 private val RightArm = BlenderBodyRegion(IntOffset(720, 322), IntOffset(152, 144), IntSize(56, 89))
 private val Eyes = BlenderBodyRegion(IntOffset(0, 322), IntOffset(80, 75), IntSize(80, 35))
 private val Neck = Offset(120f, 143f)
-private val LeftShoulder = Offset(74f, 162f)
+private val LeftShoulder = Offset(83f, 162f)
+private const val WAVE_TRAVEL = 0.80f
+private const val HELMET_WAVE_TRAVEL = 0.54f
 private val AntennaBase = Offset(120f, 46f)
 private val EyeCenter = Offset(120f, 91f)
 private val Ground = ovalRect(120f, 283f, 76f, 9f)

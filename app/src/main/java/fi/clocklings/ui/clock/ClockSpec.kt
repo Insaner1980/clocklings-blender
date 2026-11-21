@@ -29,7 +29,7 @@ internal object ClockSpec {
     const val FACE_RADIUS = 170f
     const val HALF_RADIUS = 168f
     const val MINUTE_LABEL_RADIUS = 207f
-    const val INNER_24_RADIUS = 88f
+    const val INNER_24_RADIUS = 70f
     const val TICK_OUTER = 162f
     const val TICK_BIG_INNER = 145f
     const val TICK_SMALL_INNER = 153f
@@ -83,31 +83,12 @@ internal object ClockSpec {
     const val PIN_RADIUS = 14f
     const val PIN_DOT = 5f
 
-    /**
-     * 24 h day part below the pin: the sun (or the moon, centred on [SUN_CY]) between the pin and the word,
-     * the word high enough that the widest one ("eftermiddag") clears the inner 17 and 19.
-     */
-    const val SUN_CY = 229f
-    const val SUN_RADIUS = 8f
-    const val SUN_RAY_FROM = 11.5f
-    const val SUN_RAY_TO = 14.5f
-    const val SUN_RAY_WIDTH = 3f
-    const val DAY_TEXT_Y = 260f
-
     /** 12 h: "past" sits at 5 o'clock and "to" at 7 o'clock, below the pin, where hands cover them less often. */
     const val ZONE_LABEL_ANGLE = 148f
     const val ZONE_RADIUS = 70f
 
-    /**
-     * With 24 h numbering the day part fills the space below the pin, so the labels sit above it instead,
-     * either side of the inner 0, between the hand tails and the inner 13 and 23.
-     */
-    const val ZONE_LABEL_ANGLE_24 = 32f
-    const val ZONE_RADIUS_24 = 60f
-
-    fun zoneLabelAngle(is24: Boolean): Float = if (is24) ZONE_LABEL_ANGLE_24 else ZONE_LABEL_ANGLE
-
-    fun zoneLabelRadius(is24: Boolean): Float = if (is24) ZONE_RADIUS_24 else ZONE_RADIUS
+    const val INNER_24_HOUR_COVER_ANGLE = 14f
+    const val INNER_24_MINUTE_COVER_ANGLE = 12f
 
     /** A label is hidden when a hand is within [ZONE_HIDE_ANGLE] and fully shown beyond [ZONE_FADE_ANGLE]. */
     const val ZONE_HIDE_ANGLE = 10f
@@ -124,8 +105,7 @@ internal object ClockSpec {
     const val NUMBER_FONT = 39f
     const val MINUTE_FONT = 17f
     const val ZONE_FONT = 19f
-    const val INNER_24_FONT = 15.6f
-    const val DAY_FONT = 17f
+    const val INNER_24_FONT = 17f
     const val BUBBLE_FONT = 16f
 
     /** Dragging: kosketuksen täytyy olla vähintään tämän verran keskeltä liikkeen aikana. */

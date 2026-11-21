@@ -13,9 +13,15 @@ import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Slot
 
+// The car's model is part of its bodywork, underneath its roof and bumper fittings.
+private val AccessoryDrawOrder = listOf(Slot.MODEL) + (Slot.entries - Slot.MODEL)
+
+// The puppy wears the raincoat beneath its cape or collar.
+private val DogRaincoatDrawOrder = listOf(Slot.EXTRA, Slot.NECK, Slot.HEAD)
+
 /** The accessories follow the same part transforms as the rendered character. */
 internal class BlenderAccessories(
-    private val atlas: ImageBitmap?,
+    internal val atlas: ImageBitmap?,
     private val regions: Map<String, List<BlenderAccessoryRegion>>,
 ) {
     fun draw(
@@ -23,11 +29,14 @@ internal class BlenderAccessories(
         outfit: Outfit,
         part: ArtPart,
         layer: ItemLayer,
+        excludingItem: String? = null,
     ) {
         val image = atlas ?: return
-        for (slot in Slot.entries) {
-            val pieces = regions[outfit[slot]] ?: continue
-            for (piece in pieces) {
+        val slots = if (outfit[Slot.EXTRA] == "dog-extra-raincoat") DogRaincoatDrawOrder else AccessoryDrawOrder
+        for (slot in slots) {
+            val item = outfit[slot]
+            if (item == null || item == excludingItem) continue
+            for (piece in regions[item].orEmpty()) {
                 if (piece.part != part || piece.layer != layer) continue
                 scope.drawImage(
                     image = image,

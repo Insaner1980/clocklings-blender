@@ -31,7 +31,12 @@ fun analyticsEndpointField(defaultOrigin: String = ""): String {
 
 android {
     namespace = "fi.clocklings"
-    compileSdk = 37
+    compileSdk {
+        version =
+            release(37) {
+                minorApiLevel = 1
+            }
+    }
 
     defaultConfig {
         applicationId = "fi.clocklings.blender"
