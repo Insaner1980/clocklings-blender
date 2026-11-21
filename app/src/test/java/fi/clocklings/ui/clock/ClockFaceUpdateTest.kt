@@ -18,15 +18,18 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.timeLanguage
+import fi.clocklings.ui.locale.LocalAppLanguage
 import fi.clocklings.ui.theme.ClocklingsTheme
 import fi.clocklings.ui.theme.SkColors
 import org.junit.Assert.assertEquals
@@ -59,6 +62,7 @@ class ClockFaceUpdateTest {
                             ClockCommand(time.intValue),
                             Modifier.size(viewport.value.first.dp).testTag("clock"),
                             period = period.intValue,
+                            clockSize = viewport.value.first.dp,
                         )
                     }
                 }
@@ -72,15 +76,22 @@ class ClockFaceUpdateTest {
                     period.intValue = ClockTime.HALF_DAY
                 }
                 val bounds = compose.onNodeWithTag("clock").fetchSemanticsNode().boundsInRoot
+                val dayPart = timeLanguage(AppLanguage.ENGLISH).dayPart(halfPast).name
+                compose.onNodeWithText(dayPart).assertDoesNotExist()
                 val baseline = captureClock(view, bounds)
                 compose.runOnIdle { period.intValue = ClockTime.DAY }
+                val chip = compose.onNodeWithText(dayPart).assertIsDisplayed().fetchSemanticsNode()
+                assertTrue(
+                    "$cell at $halfPast: the chip must be below the dial",
+                    chip.boundsInRoot.top >= bounds.bottom,
+                )
                 val pixels = captureClock(view, bounds)
                 val scale = pixels.width / ClockSpec.VIEW_SIZE
                 val x = ((ClockSpec.CENTER - ClockSpec.VIEW_ORIGIN) * scale).roundToInt()
                 var maxBlueContrast = 0f
-                // Both the sun and moon sit on the downward minute shaft at half past.
+                // Sample the blue minute shaft below the centre cap at half past.
                 for (offset in -5..5) {
-                    val y = ((ClockSpec.SUN_CY + offset - ClockSpec.VIEW_ORIGIN) * scale).roundToInt()
+                    val y = ((ClockSpec.CENTER + 30 + offset - ClockSpec.VIEW_ORIGIN) * scale).roundToInt()
                     val color = pixels[x, y]
                     val expected = baseline[x, y]
                     maxBlueContrast = maxOf(maxBlueContrast, expected.blue - expected.red)
@@ -94,6 +105,36 @@ class ClockFaceUpdateTest {
                 assertTrue("$cell at $halfPast: baseline must contain the blue minute hand", maxBlueContrast > 0.1f)
             }
         }
+    }
+
+    @Test
+    fun guided24HourDialHasNoZoneWords() {
+        val language = mutableStateOf(AppLanguage.ENGLISH)
+        lateinit var view: View
+        compose.setContent {
+            view = LocalView.current
+            CompositionLocalProvider(LocalDensity provides Density(1f), LocalAppLanguage provides language.value) {
+                ClocklingsTheme {
+                    ClockFace(
+                        ClockCommand(390),
+                        Modifier.testTag("clock"),
+                        period = ClockTime.DAY,
+                        help = true,
+                        clockSize = 240.dp,
+                    )
+                }
+            }
+        }
+        val bounds = compose.onNodeWithTag("clock").fetchSemanticsNode().boundsInRoot
+        val english = captureClock(view, bounds)
+        // The original Finnish dial never painted the zone words, while the English one did.
+        compose.runOnIdle { language.value = AppLanguage.FINNISH }
+        val finnish = captureClock(view, bounds)
+        val differences =
+            (0 until english.width).sumOf { x ->
+                (0 until english.height).count { y -> english[x, y] != finnish[x, y] }
+            }
+        assertEquals("The language must not affect pixels inside the guided 24-hour dial", 0, differences)
     }
 
     @Test

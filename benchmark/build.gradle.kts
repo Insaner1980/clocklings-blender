@@ -6,7 +6,12 @@ plugins {
 
 android {
     namespace = "fi.clocklings.benchmark"
-    compileSdk = 37
+    compileSdk {
+        version =
+            release(37) {
+                minorApiLevel = 1
+            }
+    }
     targetProjectPath = ":app"
 
     defaultConfig {

@@ -78,6 +78,35 @@ internal class BlenderRigRendering(
         return RenderedPixels(image.width, image.height, width, height, values)
     }
 
+    fun captureBlinkFrames(
+        outfit: Outfit,
+        vararg blinkFractions: Float,
+    ): List<RenderedPixels> {
+        val pose = mutableStateOf(CompanionPose())
+        setContent(outfit = { outfit }, pose = { pose.value })
+        return buildList {
+            add(capture())
+            for (blink in blinkFractions) {
+                compose.runOnIdle { pose.value = CompanionPose(blink = blink) }
+                add(capture())
+            }
+        }
+    }
+
+    fun captureGroundedItemHop(
+        original: Outfit,
+        itemId: String,
+    ): Triple<RenderedPixels, RenderedPixels, RenderedPixels> {
+        val outfit = mutableStateOf(original)
+        val pose = mutableStateOf(CompanionPose())
+        setContent(outfit = { outfit.value }, pose = { pose.value })
+        val bare = capture()
+        compose.runOnIdle { outfit.value = original.with(Slot.EXTRA, itemId) }
+        val rest = capture()
+        compose.runOnIdle { pose.value = CompanionPose(lift = CompanionMotion.HOP_HEIGHT) }
+        return Triple(bare, rest, capture())
+    }
+
     fun assertAnimatedFrames(
         outfit: Outfit,
         frames: List<CompanionPose> = AnimalAnimationFrames,

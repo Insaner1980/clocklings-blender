@@ -24,6 +24,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.ui.appearance.LocalCompanionOutfit
 import fi.clocklings.ui.appearance.LocalPersonalization
@@ -42,6 +43,7 @@ fun CompanionTip(
     kind: FeedbackKind = FeedbackKind.HINT,
     celebrate: Boolean = false,
     color: Color? = null,
+    avatarWidth: Dp = SkDimens.TipCompanion,
 ) {
     CompanionTip(
         modifier,
@@ -49,6 +51,7 @@ fun CompanionTip(
         celebrate = celebrate,
         color = color ?: SkColors.Bubble,
         fallback = { FeedbackBox(text, kind, color = color) },
+        avatarWidth = avatarWidth,
     ) {
         Text(text, style = SkType.Body)
     }
@@ -65,6 +68,7 @@ fun CompanionTip(
     celebrate: Boolean = false,
     color: Color = SkColors.Bubble,
     fallback: @Composable () -> Unit = {},
+    avatarWidth: Dp = SkDimens.TipCompanion,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val companion = LocalPersonalization.current.companion
@@ -83,7 +87,7 @@ fun CompanionTip(
             CompanionView(
                 companion,
                 LocalCompanionOutfit.current,
-                Modifier.size(if (compact) SkDimens.TipCompanionCompact else SkDimens.TipCompanion),
+                Modifier.size(if (compact) SkDimens.TipCompanionCompact else avatarWidth),
                 celebration = celebration,
             )
         }

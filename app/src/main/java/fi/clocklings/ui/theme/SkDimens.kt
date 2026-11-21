@@ -21,7 +21,8 @@ object SkDimens {
     val RowBadgeCurrent = 56.dp
     val RowStateIcon = 32.dp
     val IconBadge = 40.dp
-    val TileIconBadge = 52.dp
+    val TileIconBadge = 48.dp
+    val TileIconBadgeCompact = 52.dp
     val ProgressSegmentHeight = 8.dp
     val ProgressSegmentGap = 4.dp
     val ProgressSegmentGapWide = 6.dp
@@ -37,6 +38,8 @@ object SkDimens {
     val GapHalf = 6.dp
     val GapLabel = 14.dp
     val RewardArt = 88.dp
+    val ResultRewardArt = 72.dp
+    val RewardItemWidth = 104.dp
     val OptionCompactWidth = 300.dp
     val PillPadX = 10.dp
     val PillPadY = 3.dp
@@ -44,6 +47,7 @@ object SkDimens {
 
     val Gutter = 16.dp
     val ReadingWidth = 640.dp
+    val LocaleErrorMascot = 160.dp
     val WideContentWidth = 1120.dp
     val SideBySideWidth = 720.dp
     val VisualPaneWidth = 400.dp
@@ -62,6 +66,9 @@ object SkDimens {
 
     val PanelPadding = 20.dp
     val BorderThin = 2.dp
+    val BorderQuiet = 1.5.dp
+    val LockPillHeight = 28.dp
+    val LockPillTilePadding = 7.dp
     val Border = 3.dp
 
     /** Padding inside the time pill beside an answer's words. */
@@ -80,11 +87,14 @@ object SkDimens {
     val LegendSwatchLong = 34.dp
     val LegendSwatchHeight = 8.dp
     val StageMinHeight = 200.dp
+    val TallHomeStageViewport = 800.dp
+    val HomeStageSkyTrim = 32.dp
     val ShortHomeStageHeight = 144.dp
     val LogoMinSize = 14.dp
     val PillIconLarge = 20.dp
     val CompanionThumbnail = 64.dp
-    val MenuTileHeight = 132.dp
+    val MenuTileHeight = 160.dp
+    val MenuTileCompactHeight = 132.dp
     val Divider = 1.dp
     val SettingsGroupPadding = 16.dp
     val SettingsLineGap = 2.dp
@@ -102,7 +112,7 @@ object SkDimens {
     val ZoomWindowHeight = 60.5.dp
     val ZoomClock = 240.dp
     val ZoomClockShift = (-21.5).dp
-    val ThumbnailMin = 44.dp
+    val ThumbnailMin = 48.dp
     const val CLOCK_HEIGHT_SHARE = 0.42f
     const val PLAY_CLOCK_HEIGHT_SHARE = 0.52f
 
@@ -111,6 +121,16 @@ object SkDimens {
      * the clock readable while the first answer stays within reach at large text.
      */
     val FitClockMin = 160.dp
+    val FeedbackClockMin = 220.dp
+    val QuizClockMin = 200.dp
+    val LessonPageClockMax = 340.dp
+    val FeedbackAvatar = 40.dp
+    val ChallengeCompanionHeight = 190.dp
+    val ChallengeBadgeHeight = 36.dp
+    val ChallengeBadgeStar = 18.dp
+    val DayPartHeight = 40.dp
+    val DayPartIcon = 22.dp
+    val TallTaskHeight = 760.dp
 
     /** Clock share on the read and set game screen only; Ask and Challenge keep [PLAY_CLOCK_HEIGHT_SHARE]. */
     const val GAME_CLOCK_HEIGHT_SHARE = 0.58f
@@ -148,7 +168,6 @@ object SkDimens {
     val DollResult = 128.dp
     val DollBigMax = 220.dp
     val CompanionPreview = 245.dp
-    val ItemMinWidth = 104.dp
     val NameFieldMaxWidth = 280.dp
     val FieldPaddingHorizontal = 14.dp
     val FieldPaddingVertical = 10.dp

@@ -4,11 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -42,13 +42,14 @@ class AdaptiveContentTest {
         val width = mutableIntStateOf(320)
         val font = mutableFloatStateOf(1f)
         compose.setContent {
+            val name = rememberTextFieldState("Clockling")
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, font.floatValue)) {
                 ClocklingsTheme {
                     Box(Modifier.requiredSize(width.intValue.dp, 800.dp)) {
                         ScreenScaffold(wideContent = true) { size ->
                             AdaptiveContent(size, visual = { ClockBox(it) {} }) {
-                                NameField("Clockling", {})
+                                NameField(name)
                             }
                         }
                     }
@@ -165,8 +166,8 @@ class AdaptiveContentTest {
     fun nameSelectionSurvivesSavedStateRestoration() {
         val restoration = StateRestorationTester(compose)
         restoration.setContent {
-            val text = rememberSaveable { mutableStateOf("Clockling") }
-            ClocklingsTheme { NameField(text.value, { text.value = it }) }
+            val text = rememberTextFieldState("Clockling")
+            ClocklingsTheme { NameField(text) }
         }
         val field = compose.onNodeWithContentDescription("Companion name")
         field.performTextInputSelection(TextRange(1, 4))

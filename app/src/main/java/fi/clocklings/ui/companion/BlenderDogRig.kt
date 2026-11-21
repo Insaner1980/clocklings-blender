@@ -3,14 +3,19 @@
 
 package fi.clocklings.ui.companion
 
+import android.graphics.Bitmap
+import android.graphics.Paint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import fi.clocklings.R
@@ -61,11 +66,17 @@ internal class BlenderDogRig(
                 "dog-extra-raincoat" to Rect(40f, 128f, 200f, 288f),
             ),
     ) {
+    private val earFlex = PuppyFlex(atlas, RightEar, 79f, 157f, 0.54f)
+    private val tailFlex = PuppyFlex(atlas, Tail, 222f, 177f, 0.82f)
+
     override fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        drawTailedBody(outfit, pose.partDeg, TailPivot, Tail, Body)
+        drawBodyWithAccessories(outfit) {
+            if (pose.partDeg == 0f) part(Tail) else tailFlex.draw(this, pose.partDeg)
+            part(Body)
+        }
         rotate(pose.headTiltDeg, Neck) { head(outfit, pose) }
     }
 
@@ -76,19 +87,62 @@ internal class BlenderDogRig(
         part(Head)
         scale(1f, 1f - pose.blink * 0.94f, EyeCenter) { part(Eyes) }
         part(LeftEar)
-        rotate(-pose.partDeg, RightEarPivot) { part(RightEar) }
+        if (pose.partDeg == 0f) part(RightEar) else earFlex.draw(this, pose.partDeg)
         accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
     }
 }
 
 private val Head = BlenderBodyRegion(IntOffset(0, 0), IntOffset(48, 28), IntSize(144, 147))
-private val Body = BlenderBodyRegion(IntOffset(436, 0), IntOffset(38, 148), IntSize(164, 138))
-private val Tail = BlenderBodyRegion(IntOffset(932, 0), IntOffset(169, 186), IntSize(59, 90))
+private val Body = BlenderBodyRegion(IntOffset(436, 0), IntOffset(38, 148), IntSize(171, 138))
+private val Tail = BlenderBodyRegion(IntOffset(956, 0), IntOffset(169, 170), IntSize(59, 106))
 private val LeftEar = BlenderBodyRegion(IntOffset(0, 448), IntOffset(18, 26), IntSize(77, 143))
 private val RightEar = BlenderBodyRegion(IntOffset(236, 448), IntOffset(145, 26), IntSize(77, 143))
 private val Eyes = BlenderBodyRegion(IntOffset(472, 448), IntOffset(68, 83), IntSize(104, 49))
-private val TailPivot = Offset(189f, 251f)
-private val RightEarPivot = Offset(162f, 52f)
+
+/** Bends the free end while the rows at the base remain attached to the body. */
+private class PuppyFlex(
+    atlas: ImageBitmap,
+    region: BlenderBodyRegion,
+    fixedY: Float,
+    tipY: Float,
+    amplitude: Float,
+) {
+    private val bitmap by lazy(LazyThreadSafetyMode.NONE) {
+        Bitmap.createBitmap(
+            atlas.asAndroidBitmap(),
+            region.source.x,
+            region.source.y,
+            region.sourceSize.width,
+            region.sourceSize.height,
+        )
+    }
+    private val left = region.destination.x.toFloat()
+    private val right = left + region.size.width
+    private val vertices = FloatArray((FLEX_ROWS + 1) * 4)
+    private val weights =
+        FloatArray(FLEX_ROWS + 1) { row ->
+            val y = region.destination.y + region.size.height * row.toFloat() / FLEX_ROWS
+            vertices[row * 4 + 1] = y
+            vertices[row * 4 + 3] = y
+            val length = ((y - fixedY) / (tipY - fixedY)).coerceIn(0f, 1f)
+            amplitude * length * length
+        }
+
+    fun draw(
+        scope: DrawScope,
+        swing: Float,
+    ) {
+        for (row in weights.indices) {
+            val dx = swing * weights[row]
+            vertices[row * 4] = left + dx
+            vertices[row * 4 + 2] = right + dx
+        }
+        scope.drawIntoCanvas { it.nativeCanvas.drawBitmapMesh(bitmap, 1, FLEX_ROWS, vertices, 0, null, 0, furPaint) }
+    }
+}
+
+private const val FLEX_ROWS = 14
+private val furPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
 private val Neck = Offset(120f, 160f)
 private val EyeCenter = Offset(120f, 108f)
 private val Ground = ovalRect(120f, 285f, 92f, 11f)

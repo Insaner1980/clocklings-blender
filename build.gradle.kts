@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 // AGP 9:n sisäänrakennettu Kotlin tuo oletuksena KGP 2.2.10:n. Uudempi KGP nostetaan classpathiin,
 // ja Compose-kääntäjäliitännäisen versio on sama kuin KGP:n.
 buildscript {
@@ -56,6 +58,12 @@ sonar {
 project(":app") {
     sonar {
         properties {
+            // The scanner discovers javac's outputs, but AGP's built-in Kotlin compiles into separate directories.
+            property("sonar.java.binaries", listOf(kotlinClasses("Debug"), javaClasses("Debug")))
+            property(
+                "sonar.java.test.binaries",
+                listOf(kotlinClasses("DebugUnitTest"), kotlinClasses("DebugAndroidTest"), javaClasses("DebugAndroidTest")),
+            )
             property(
                 "sonar.coverage.jacoco.xmlReportPaths",
                 layout.buildDirectory.file("reports/coverage/test/debug/report.xml").get().asFile.absolutePath,
@@ -64,6 +72,25 @@ project(":app") {
     }
 }
 
+project(":benchmark") {
+    sonar {
+        properties {
+            property("sonar.java.binaries", kotlinClasses("BenchmarkRelease"))
+        }
+    }
+}
+
+fun Project.kotlinClasses(variant: String): File =
+    tasks.named<KotlinCompile>("compile${variant}Kotlin").get().destinationDirectory.get().asFile
+
+fun Project.javaClasses(variant: String): File =
+    tasks.named<JavaCompile>("compile${variant}JavaWithJavac").get().destinationDirectory.get().asFile
+
 tasks.named("sonar") {
-    dependsOn(":app:assembleDebug", ":app:createDebugUnitTestCoverageReport")
+    dependsOn(
+        ":app:assembleDebug",
+        ":app:createDebugUnitTestCoverageReport",
+        ":app:compileDebugAndroidTestJavaWithJavac",
+        ":benchmark:compileBenchmarkReleaseKotlin",
+    )
 }

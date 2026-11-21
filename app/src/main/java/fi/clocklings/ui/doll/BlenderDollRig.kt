@@ -7,9 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
@@ -49,7 +52,7 @@ internal class BlenderDollRig(
     override val height = DOLL_GRID_HEIGHT
     override val groundCenter = Ground.center
 
-    override fun full(): Rect = Rect(-4f, -8f, 204f, 344f)
+    override fun full(outfit: Outfit): Rect = Rect(-4f, -8f, 204f, 344f)
 
     override fun crop(slot: Slot): Rect =
         when (slot) {
@@ -85,8 +88,9 @@ internal class BlenderDollRig(
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(Ground)
-        posedDoll(pose) { drawOutfit(outfit, pose) }
+        val ground = if (outfit[Slot.SHOES] == "shoes-roller-skates") SkateGround else Ground
+        groundShadow(ground)
+        posedDoll(pose, ground.center) { drawOutfit(outfit, pose) }
     }
 
     private fun DrawScope.drawOutfit(
@@ -117,8 +121,7 @@ internal class BlenderDollRig(
             },
         )
         part(Head)
-        scale(1f, 1f - pose.blink * 0.94f, EyeLeftCenter) { part(EyeLeft) }
-        scale(1f, 1f - pose.blink * 0.94f, EyeRightCenter) { part(EyeRight) }
+        eyes(pose.blink)
         part(hair.front)
         accessories.draw(this, outfit, ArtPart.HEAD, ItemLayer.FRONT)
         accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
@@ -138,6 +141,44 @@ internal class BlenderDollRig(
         }
     }
 
+    private val eyeOpenings = Path()
+    private val upperLashes = Path()
+
+    private fun DrawScope.eyes(blink: Float) {
+        if (blink <= 0f) {
+            part(EyeLeft)
+            part(EyeRight)
+            return
+        }
+        val closure = (blink / 0.90f).coerceAtMost(1f)
+        if (closure >= 1f) {
+            part(ClosedEyes)
+            return
+        }
+        val corner = 89f + 5f * closure
+        val middle = 76f + 20.8f * closure
+        val control = 2f * middle - corner
+        val bottom = 110f - 13f * closure
+        eyeOpenings.reset()
+        upperLashes.reset()
+        for (center in EyeCenters) {
+            eyeOpenings.moveTo(center - 12f, corner)
+            eyeOpenings.quadraticTo(center, control, center + 12f, corner)
+            eyeOpenings.lineTo(center + 12f, bottom)
+            eyeOpenings.quadraticTo(center, bottom + 3f * closure, center - 12f, bottom)
+            eyeOpenings.close()
+            upperLashes.moveTo(center - 12f, corner)
+            upperLashes.quadraticTo(center, control, center + 12f, corner)
+            upperLashes.quadraticTo(center, control + 2.6f, center - 12f, corner)
+            upperLashes.close()
+        }
+        clipPath(eyeOpenings) {
+            part(EyeLeft)
+            part(EyeRight)
+        }
+        drawPath(upperLashes, LashColor, alpha = (closure * 3f).coerceAtMost(1f))
+    }
+
     private fun DrawScope.part(region: DollRegion) {
         drawImage(
             image = atlas,
@@ -152,12 +193,13 @@ internal class BlenderDollRig(
 
 private inline fun DrawScope.posedDoll(
     pose: CompanionPose,
+    feet: Offset,
     crossinline block: DrawScope.() -> Unit,
 ) {
     translate(0f, -pose.lift) {
-        rotate(pose.swayDeg, Feet) {
+        rotate(pose.swayDeg, feet) {
             scale(pose.turn, 1f, Middle) {
-                scale(1f, 1f + pose.breathe * CompanionMotion.BREATHE_SQUASH, Feet) { block() }
+                scale(1f, 1f + pose.breathe * CompanionMotion.BREATHE_SQUASH, feet) { block() }
             }
         }
     }
@@ -198,6 +240,7 @@ private val ShoesWhite = DollRegion(IntOffset(1163, 1392), IntOffset(54, 280), I
 private val ShoesRed = DollRegion(IntOffset(1437, 1392), IntOffset(54, 280), IntSize(90, 35))
 private val EyeLeft = DollRegion(IntOffset(1711, 1392), IntOffset(63, 77), IntSize(28, 32))
 private val EyeRight = DollRegion(IntOffset(1799, 1392), IntOffset(109, 77), IntSize(28, 32))
+private val ClosedEyes = DollRegion(IntOffset(1710, 1500), IntOffset(62, 89), IntSize(76, 13))
 private val Neck = DollRegion(IntOffset(1887, 1392), IntOffset(87, 124), IntSize(26, 25))
 
 private val BraidsHair = DollHair(HairBraidsBack, HairBraidsFront)
@@ -205,11 +248,11 @@ private val GoldHair = DollHair(HairGoldBack, HairGoldFront)
 private val CurlyHair = DollHair(HairCurlyBack, HairCurlyFront)
 private val RainbowHair = DollHair(HairRainbowBack, HairRainbowFront)
 private val ShoulderLeft = Offset(62f, 166f)
-private val Feet = Offset(100f, 312f)
 private val Middle = Offset(100f, 170f)
-private val EyeLeftCenter = Offset(77f, 92.4f)
-private val EyeRightCenter = Offset(123.1f, 92.4f)
+private val EyeCenters = floatArrayOf(77f, 123f)
+private val LashColor = Color(0xFF513444)
 private val Ground = ovalRect(100f, 311f, 52f, 8f)
+private val SkateGround = ovalRect(100f, 331f, 52f, 8f)
 
 internal const val DOLL_GRID_WIDTH = 200f
 internal const val DOLL_GRID_HEIGHT = 340f

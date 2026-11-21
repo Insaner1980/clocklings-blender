@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasClickAction
@@ -500,13 +501,19 @@ class ScreenshotReviewUiTest {
     fun lessonNavigationRemainsVisibleWithoutScrollingAtNarrowWidthAndLargeText() {
         var next = 0
         val viewport = mutableStateOf(320 to 1f)
+        val lesson = LessonCatalog.lesson("minuutit")
+        val showQuiz = mutableStateOf(false)
         compose.setContent {
             val density = LocalDensity.current
             CompositionLocalProvider(LocalDensity provides Density(density.density, viewport.value.second)) {
                 ClocklingsTheme {
                     Box(Modifier.requiredSize(viewport.value.first.dp, 640.dp)) {
                         LessonScreen(
-                            LessonUiState(LessonCatalog.lesson("minuutit")),
+                            LessonUiState(
+                                lesson,
+                                page = if (showQuiz.value) lesson.pages.size else 0,
+                                choices = if (showQuiz.value) lesson.quiz.choices else emptyList(),
+                            ),
                             false,
                             true,
                             {},
@@ -521,9 +528,15 @@ class ScreenshotReviewUiTest {
             }
         }
         for (cell in listOf(320 to 1f, 411 to 2f, 320 to 2f)) {
-            compose.runOnIdle { viewport.value = cell }
-            compose.onNodeWithText("Previous").assertIsDisplayed()
+            compose.runOnIdle {
+                viewport.value = cell
+                showQuiz.value = false
+            }
+            compose.onNodeWithText("Previous").assertDoesNotExist()
             compose.onNodeWithText("Next").assertIsDisplayed().performClick()
+            compose.runOnIdle { showQuiz.value = true }
+            compose.onNodeWithText("Previous").assertIsDisplayed()
+            compose.onNodeWithText("Done").assertIsDisplayed().assertIsNotEnabled()
         }
         assertEquals(3, next)
     }

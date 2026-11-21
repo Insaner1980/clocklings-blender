@@ -41,12 +41,11 @@ import fi.clocklings.R
 import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.Progress
 import fi.clocklings.domain.Settings
-import fi.clocklings.domain.Wardrobe
 import fi.clocklings.ui.components.MenuTile
-import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.RoundIconButton
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkIcons
+import fi.clocklings.ui.components.StarTotalPill
 import fi.clocklings.ui.components.adaptiveGridColumns
 import fi.clocklings.ui.components.hasSideBySideRoom
 import fi.clocklings.ui.theme.Section
@@ -73,14 +72,15 @@ fun HomeScreen(
     ScreenScaffold(modifier, section = Section.HOME, scroll = false, wideContent = true) {
         BoxWithConstraints(Modifier.fillMaxWidth().weight(1f)) {
             val viewport = maxHeight
+            val tallStage = viewport >= SkDimens.TallHomeStageViewport
             val compact = adaptiveGridColumns(maxWidth, LocalDensity.current.fontScale) == 1
             Box(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
                 FillHeightLayout(
                     viewport = viewport,
                     compact = compact,
                     header = { HomeHeader(progress, onOpen) },
-                    stage = { HomeStage(progress, settings, time, compact, onOpen) },
-                    footer = { Menu(onOpen) },
+                    stage = { HomeStage(progress, settings, time, compact, onOpen, trimSky = tallStage) },
+                    footer = { Menu(onOpen, compactHeight = !tallStage) },
                 )
             }
         }
@@ -191,11 +191,7 @@ private fun HomeHeader(
                 ),
             modifier = Modifier.weight(1f).semantics { heading() },
         )
-        Pill(
-            stringResource(R.string.home_star_total, progress.totalStars, Wardrobe.MAX_STARS),
-            icon = SkIcons.StarOn,
-            large = true,
-        )
+        StarTotalPill(progress.totalStars)
         RoundIconButton(
             SkIcons.Settings,
             stringResource(R.string.settings_title),
@@ -206,7 +202,10 @@ private fun HomeHeader(
 }
 
 @Composable
-private fun Menu(onOpen: (HomeDestination) -> Unit) {
+private fun Menu(
+    onOpen: (HomeDestination) -> Unit,
+    compactHeight: Boolean,
+) {
     val titles = listOf(R.string.menu_koulu, R.string.menu_vapaa, R.string.menu_pelaa, R.string.menu_kysy)
     val descriptions =
         listOf(R.string.menu_koulu_sub, R.string.menu_vapaa_sub, R.string.menu_pelaa_sub, R.string.menu_kysy_sub)
@@ -226,6 +225,7 @@ private fun Menu(onOpen: (HomeDestination) -> Unit) {
                             fills[i],
                             { onOpen(destinations[i]) },
                             Modifier.weight(1f).fillMaxHeight(),
+                            compactHeight = compactHeight,
                         )
                     }
                 }

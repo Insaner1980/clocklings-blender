@@ -331,7 +331,6 @@ def render_layers(scene):
 
 
 if __name__ == "__main__":
-    SCRATCH.mkdir(parents=True, exist_ok=True)
     if "--rebuild" in sys.argv:
         scene = build()
         if bpy.app.background:
@@ -346,12 +345,17 @@ if __name__ == "__main__":
             bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE))
     else:
         bpy.ops.wm.open_mainfile(filepath=str(SOURCE))
-        scene = bpy.data.scenes["Clocklings dragon"]
-        bpy.context.window.scene = scene
-        configure(scene)
+        scene = bpy.context.scene
+        if "--preview" in sys.argv or "wardrobe_export" not in scene:
+            configure(scene)
     print(f"SCENE_READY {scene.name}: {len(scene.objects)} objects, {len(bpy.data.scenes)} scene(s)", flush=True)
     if "--preview" in sys.argv:
+        SCRATCH.mkdir(parents=True, exist_ok=True)
         scene.render.filepath = str(SCRATCH / "preview.png")
         bpy.ops.render.render(write_still=True)
+    elif "wardrobe_export" in scene:
+        from export_wardrobe import export
+        export(scene, OUTPUT)
     else:
+        SCRATCH.mkdir(parents=True, exist_ok=True)
         render_layers(scene)

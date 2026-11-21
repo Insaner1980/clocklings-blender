@@ -20,13 +20,12 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -63,6 +62,7 @@ import fi.clocklings.ui.appearance.companionColorName
 import fi.clocklings.ui.appearance.companionName
 import fi.clocklings.ui.components.AdaptiveContent
 import fi.clocklings.ui.components.FlatPanel
+import fi.clocklings.ui.components.LockPill
 import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.PillKind
 import fi.clocklings.ui.components.PinnedPreview
@@ -100,8 +100,9 @@ fun WardrobeScreen(
 ) {
     val app = LocalAppViewModel.current
     val access = app.observeAccessPolicy()
-    var name by rememberSaveable(kind) { mutableStateOf(progress.nameFor(kind)) }
-    val (saveName, nameRetry) = rememberNameSave(kind, name)
+    val nameEditor = key(kind) { rememberTextFieldState(progress.nameFor(kind)) }
+    val name = nameEditor.text.toString()
+    val nameRetry = rememberNameSave(kind, nameEditor)
     val colorSave = remember(app, kind) { RetryableSave() }
     val itemSaves = remember(app, kind) { kind.slots.associateWith { RetryableSave() } }
     val retry = nameRetry ?: colorSave.retry ?: itemSaves.values.firstNotNullOfOrNull { it.retry }
@@ -133,12 +134,8 @@ fun WardrobeScreen(
                 kind,
                 outfit,
                 color,
-                name,
+                nameEditor,
                 nameError = if (nameRetry != null) stringResource(R.string.settings_save_error) else null,
-                onNameChange = {
-                    name = it
-                    saveName(it)
-                },
                 onPreviewPosition = preview::positionPreview,
             )
         }) {
@@ -194,9 +191,8 @@ private fun WardrobeStage(
     kind: CompanionKind,
     outfit: Outfit,
     color: CompanionColor,
-    name: String,
+    nameEditor: TextFieldState,
     nameError: String?,
-    onNameChange: (String) -> Unit,
     onPreviewPosition: (LayoutCoordinates) -> Unit,
 ) {
     Box(
@@ -220,8 +216,7 @@ private fun WardrobeStage(
                 color = color,
             )
             NameField(
-                name,
-                onNameChange,
+                nameEditor,
                 Modifier.semantics { if (nameError != null) error(nameError) },
             )
         }
@@ -379,7 +374,7 @@ private fun LockedTile(
         // The name takes the spare height, so the progress pills of one row stay level when a
         // neighbouring name takes two lines.
         Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
-            WordSafeText(stringResource(itemName(item.id)), nameStyle.copy(color = SkColors.UiInkSoft), minScale = 1f)
+            WordSafeText(stringResource(itemName(item.id)), nameStyle, minScale = 1f)
         }
         if (needsStars) {
             Pill(
@@ -389,7 +384,7 @@ private fun LockedTile(
                 icon = SkIcons.StarOn,
             )
         }
-        if (requiresFullVersion) Text(stringResource(R.string.full_version_label), style = SkType.Small)
+        if (requiresFullVersion) LockPill(compact = true)
     }
 }
 

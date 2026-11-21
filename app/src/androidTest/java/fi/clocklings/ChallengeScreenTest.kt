@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -62,7 +63,11 @@ class ChallengeScreenTest {
         compose.runOnIdle {
             state.value = state.value.copy(phase = ChallengePhase.END, score = 2, best = 5)
         }
-        compose.onNodeWithText("You answered 2 correctly. Your best is 5.").scrollToIfScrollable().assertIsDisplayed()
+        compose
+            .onNodeWithContentDescription(
+                "You answered 2 correctly. Your best is 5.",
+            ).scrollToIfScrollable()
+            .assertIsDisplayed()
         compose.onNodeWithText("Play again").scrollToIfScrollable().performClick()
         compose.onNodeWithText("Back").scrollToIfScrollable().performClick()
         compose.runOnIdle {

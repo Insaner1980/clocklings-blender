@@ -80,8 +80,6 @@ object BrazilianPortugueseTime : TimeLanguage {
             }
         }
     }
-
-    override fun greeting(total: Int): Greeting = EnglishTime.greeting(total)
 }
 
 private val small =

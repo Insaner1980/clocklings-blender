@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fi.clocklings.R
 import fi.clocklings.domain.AppLanguage
@@ -69,14 +70,19 @@ fun SettingsScreen(
         }
         ClockDisplayGroup(settings, enabled = !action.pending)
         SettingsGroup(stringResource(R.string.settings_sound_group)) {
-            SettingsSwitch(
-                stringResource(R.string.settings_sound_title),
-                stringResource(R.string.settings_sound_description),
-                settings.sound,
-                !action.pending,
-                app::setSound,
-            )
-            SpeechAvailabilityInfo(speechAvailable, Modifier.padding(horizontal = SkDimens.Gap))
+            SettingsCard(horizontalPadding = 0.dp) {
+                SettingsSwitch(
+                    stringResource(R.string.settings_sound_title),
+                    stringResource(R.string.settings_sound_description),
+                    settings.sound,
+                    !action.pending,
+                    app::setSound,
+                )
+                SpeechAvailabilityInfo(
+                    speechAvailable,
+                    Modifier.padding(start = SkDimens.Gap, end = SkDimens.Gap, bottom = SkDimens.GapM),
+                )
+            }
         }
         SettingsGroup(stringResource(R.string.settings_progress_title)) {
             ResetProgressRow(!action.pending) {

@@ -14,9 +14,12 @@ import androidx.compose.ui.unit.dp
 import fi.clocklings.domain.CompanionColor
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.Outfit
+import fi.clocklings.domain.Slot
 import fi.clocklings.domain.Wardrobe
 import org.junit.Assert.assertArrayEquals
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,6 +28,17 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class BlenderAtlasRenderingTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun roofAndFrontFittingsCoverTheCarModelPaint() {
+        val rendering = BlenderRigRendering(compose, "car") { rememberBlenderCarRig(it) }
+        val outfit = Outfit(mapOf(Slot.ROOF to "car-roof-suitcase", Slot.FRONT to "car-front-sunglasses"))
+        val (plain, striped) = rendering.captureOutfitChange(outfit, Slot.MODEL, "car-model-race")
+
+        assertTrue("Hood stripes are missing", plain.countDifferencesIn(striped, 125..190, 190..237) > 50)
+        assertEquals("Paint crosses the luggage rack", plain.at(104, 156), striped.at(104, 156))
+        assertEquals("Paint crosses the glasses bridge", plain.at(166, 223), striped.at(166, 223))
+    }
 
     @Test
     fun omittingUnusedAccessoryAtlasesPreservesEveryDefaultCharacterPixel() {

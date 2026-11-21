@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clocklings visual follow-up boards (17 November 2026)</title>
+<!--
+  Target mockups for docs/superpowers/plans/2026-11-17-visual-follow-up.md.
+  One CSS pixel equals one dp. A font size in px equals the same number of sp.
+  Open boards.html to see every board, or boards.html?b=b01 to see a single board (used for the PNG export).
+  The clock is drawn from the ClockSpec numbers (viewBox units). It is a schematic of the real ClockFace, not new artwork.
+-->
+<style>
+@font-face { font-family: Fredoka; font-weight: 500; src: url(../../../../../app/src/main/res/font/fredoka_medium.ttf); }
+@font-face { font-family: Fredoka; font-weight: 600; src: url(../../../../../app/src/main/res/font/fredoka_semibold.ttf); }
+@font-face { font-family: Fredoka; font-weight: 700; src: url(../../../../../app/src/main/res/font/fredoka_bold.ttf); }
+@font-face { font-family: Nunito; font-weight: 600; src: url(../../../../../app/src/main/res/font/nunito_semibold.ttf); }
+@font-face { font-family: Nunito; font-weight: 700; src: url(../../../../../app/src/main/res/font/nunito_bold.ttf); }
+@font-face { font-family: Nunito; font-weight: 800; src: url(../../../../../app/src/main/res/font/nunito_extrabold.ttf); }
+:root {
+  --ink: #3A2453; --ink-soft: #655279; --primary: #6741D9; --primary-soft: #B197FC; --tonal: #F1E9FA;
+  --bubble: #F4EEFB; --hint: #FFF5CC; --pill-muted: #F1EAF5; --good: #2B8A3E; --good-fill: #D3F9D8;
+  --gold: #FCC419; --gold-deep: #E67700; --star-off: #E9DFF0;
+  --play: #FFEAF2; --play-track: #F5C2D6; --learn: #FFF6D6; --learn-track: #F0DB94; --explore: #E6F3FF;
+  --companion: #F2ECFF; --home: #FFF5FA; --locked: #F7F2FA;
+}
+* { box-sizing: border-box; }
+body { margin: 24px; background: #2b2730; font-family: Nunito, sans-serif; font-weight: 600; color: var(--ink); }
+body.single { margin: 0; background: none; }
+.gallery { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.gallery figure { margin: 0; }
+.gallery figcaption { color: #fff; font: 600 14px Nunito, sans-serif; margin-bottom: 8px; }
+body.single figcaption { display: none; }
+body.single figure:not(.show) { display: none; }
+
+.board { width: 412px; height: 915px; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.play { background: var(--play); } .learn { background: var(--learn); } .explore { background: var(--explore); }
+.companion { background: var(--companion); } .home { background: var(--home); }
+.status { height: 40px; flex: none; padding: 14px 20px 0; font: 600 13px Nunito, sans-serif; color: var(--ink-soft); }
+.topbar { height: 64px; flex: none; display: flex; align-items: center; gap: 12px; padding: 0 16px; }
+.round { width: 48px; height: 48px; flex: none; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+.round.on { background: #FFE066; } .round.tonal { background: var(--tonal); }
+.round svg, .btn svg, .opt svg, .pill svg, .daypart svg { width: 24px; height: 24px; }
+.title { flex: 1; font: 600 22px/28px Fredoka, sans-serif; }
+.progress { height: 28px; flex: none; display: flex; align-items: center; gap: 4px; padding: 0 16px; }
+.progress i { flex: 1; height: 8px; border-radius: 4px; background: var(--play-track); }
+.learn .progress i { background: var(--learn-track); }
+.progress i.cur { background: var(--primary-soft); } .progress i.done { background: var(--primary); }
+.progress b { margin-left: 8px; font: 800 14px Nunito, sans-serif; }
+.grow { flex: 1; min-height: 0; display: grid; place-items: center; }
+.panel { flex: none; margin: 0 16px; padding: 20px; border-radius: 28px; background: #fff; display: flex; flex-direction: column; gap: 12px; }
+.panel h2 { margin: 0; font: 600 24px/32px Fredoka, sans-serif; }
+.eyebrow { font: 800 14px/20px Nunito, sans-serif; color: var(--ink-soft); margin-bottom: -6px; }
+.opts { display: flex; flex-direction: column; gap: 10px; }
+.opt { height: 64px; border-radius: 20px; background: var(--tonal); display: flex; align-items: center; gap: 10px; padding: 0 12px 0 20px; font: 600 18px Fredoka, sans-serif; }
+.opt .lbl { flex: 1; }
+.opt .time { background: #fff; border-radius: 12px; padding: 6px 12px; font: 800 16px Nunito, sans-serif; color: var(--ink-soft); }
+.opt.ok { background: var(--good-fill); box-shadow: inset 0 0 0 2px var(--good); color: var(--ink); }
+.opt.ok svg { color: var(--good); }
+/* Target wrong state: quiet, no border, icon carries the meaning. */
+.opt.no { background: none; box-shadow: inset 0 0 0 1.5px #D9C8EA; color: var(--ink-soft); }
+.opt.no .time { background: var(--pill-muted); }
+.opt.no svg { color: var(--ink-soft); }
+.say { display: flex; gap: 12px; align-items: flex-start; }
+.say img { width: 40px; height: 61px; flex: none; }
+.bubble { flex: 1; border-radius: 20px; padding: 12px 16px; background: var(--bubble); font: 600 16px/24px Nunito, sans-serif; }
+.bubble.hint { background: var(--hint); }
+.bar { flex: none; display: flex; gap: 12px; padding: 12px 16px 32px; }
+.btn { flex: 1; height: 64px; border-radius: 32px; display: flex; align-items: center; justify-content: center; gap: 8px; font: 600 18px Fredoka, sans-serif; background: #fff; color: var(--ink); }
+.btn.pri { background: var(--primary); color: #fff; }
+.btn.off { background: var(--primary); color: #fff; opacity: .45; }
+.nav { position: absolute; left: 152px; bottom: 10px; width: 108px; height: 4px; border-radius: 2px; background: #5d4c70; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 14px; background: var(--pill-muted); font: 700 13px Nunito, sans-serif; color: var(--ink-soft); }
+.pill svg { width: 14px; height: 14px; }
+.daypart { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px 0 14px; border-radius: 20px; background: #fff; font: 600 18px Fredoka, sans-serif; }
+.daypart svg { width: 22px; height: 22px; }
+.pill { white-space: nowrap; }
+.stack { flex-direction: column; }
+</style>
+</head>
+<body>
+<div class="gallery">
+
+<!-- b01. Practice, READ reveal: all three options stay, the child sees its own wrong picks. Next is pinned, clock box 264 dp. -->
+<figure data-b="b01"><figcaption>b01 Practice, read task, answer revealed</figcaption>
+<section class="board play">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Whole hours</span><span class="round on" data-i="clock"></span></div>
+  <div class="progress"><i class="cur"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>1 / 10</b></div>
+  <div class="grow"><div class="clk" data-h="3" data-m="0" data-guides="1" data-labels="1" data-size="264"></div></div>
+  <div class="panel">
+    <h2>What time is it?</h2>
+    <div class="opts">
+      <div class="opt no"><span data-i="close"></span><span class="lbl">Two o'clock</span><span class="time">2:00</span></div>
+      <div class="opt ok"><span data-i="check"></span><span class="lbl">Three o'clock</span><span class="time">3:00</span></div>
+      <div class="opt no"><span data-i="close"></span><span class="lbl">Four o'clock</span><span class="time">4:00</span></div>
+    </div>
+    <div class="say"><img src="assets/doll-avatar.png" alt=""><div class="bubble hint">The answer is three o'clock. Look at where each hand points.</div></div>
+  </div>
+  <div class="bar"><span class="btn pri">Next</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b02. Practice, READ hint after one wrong pick: wrong option is muted, clock is 336 dp. -->
+<figure data-b="b02"><figcaption>b02 Practice, read task, hint after a wrong pick</figcaption>
+<section class="board play">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Whole hours</span><span class="round on" data-i="clock"></span></div>
+  <div class="progress"><i class="cur"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>1 / 10</b></div>
+  <div class="grow"><div class="clk" data-h="3" data-m="0" data-guides="1" data-labels="1" data-size="336"></div></div>
+  <div class="panel" style="margin-bottom:40px">
+    <h2>What time is it?</h2>
+    <div class="opts">
+      <div class="opt no"><span data-i="close"></span><span class="lbl">Two o'clock</span><span class="time">2:00</span></div>
+      <div class="opt"><span class="lbl">Three o'clock</span><span class="time">3:00</span></div>
+      <div class="opt"><span class="lbl">Four o'clock</span><span class="time">4:00</span></div>
+    </div>
+    <div class="say"><img src="assets/doll-avatar.png" alt=""><div class="bubble hint">Look at the short pink hand. It points straight at 3.</div></div>
+  </div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b03. Practice at 200 % font: the clock is pinned at 160 dp and fully visible, only the panel scrolls. -->
+<figure data-b="b03"><figcaption>b03 Practice at 200 % font scale, answer revealed</figcaption>
+<section class="board play">
+  <div class="status" style="font-size:20px;padding-top:8px">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title"></span><span class="round on" data-i="clock"></span></div>
+  <div style="flex:none;padding:0 16px;font:600 36px/52px Fredoka,sans-serif">Whole hours</div>
+  <div style="flex:none;height:208px;display:grid;place-items:center"><div class="clk" data-h="3" data-m="0" data-guides="1" data-labels="1" data-size="200"></div></div>
+  <div style="flex:1;min-height:0;overflow:hidden;position:relative">
+    <div class="panel" style="gap:12px">
+      <h2 style="font-size:40px;line-height:48px">What time is it?</h2>
+      <div class="opt ok" style="height:auto;padding:12px 12px 12px 16px;flex-wrap:wrap;font-size:34px;line-height:44px"><span data-i="check"></span><span class="lbl">Three o'clock</span><span class="time" style="font-size:30px;margin-left:auto">3:00</span></div>
+      <img src="assets/doll-avatar.png" alt="" style="width:40px;height:61px;margin-bottom:-6px">
+      <div class="bubble hint" style="flex:none;font-size:30px;line-height:42px">The answer is three o'clock. Look at where each hand points.</div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:28px;background:linear-gradient(rgba(255,234,242,0),var(--play))"></div>
+  </div>
+  <div class="bar" style="padding-top:8px"><span class="btn pri" style="font-size:32px">Next</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b04. Explore in 24-hour mode: day-part chip under the dial, tidy 13 to 23 ring, zone labels near the hub. -->
+<figure data-b="b04"><figcaption>b04 Explore, 24-hour clock with guides</figcaption>
+<section class="board explore">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Explore</span><span class="round on" data-i="clock"></span></div>
+  <div class="grow"><div class="clk" data-h="18" data-m="15" data-guides="1" data-labels="1" data-h24="1" data-size="336"></div></div>
+  <div style="flex:none;display:grid;place-items:center;margin:-4px 0 12px"><span class="daypart"><span data-i="moon" style="color:#5C7CFA;display:grid"></span>evening</span></div>
+  <div class="panel">
+    <div style="display:flex;align-items:center;gap:12px"><h2 style="flex:1;font-size:26px">Quarter past six in the evening</h2><span class="round tonal" style="width:56px;height:56px" data-i="speaker"></span></div>
+    <div><span class="opt" style="display:inline-flex;height:40px;border-radius:14px;padding:0 14px;font:800 20px Nunito,sans-serif">18:15</span></div>
+    <div class="say"><img src="assets/doll-avatar.png" alt=""><div class="bubble">Drag either hand to change the time.</div></div>
+  </div>
+  <div class="bar"><span class="btn pri"><span data-i="shuffle" style="display:grid"></span>Random time</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b12 (round 2, task R3). 24-hour clock with guides: no zone words in the dial. "to" and "past" become pills on the
+     same row as the day-part chip, blue "to" on the left under the blue half, yellow "past" on the right under the yellow half. -->
+<figure data-b="b12"><figcaption>b12 Explore, 24-hour clock, zone pills (round 2)</figcaption>
+<section class="board explore">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Explore</span><span class="round on" data-i="clock"></span></div>
+  <div class="grow"><div class="clk" data-h="18" data-m="15" data-guides="1" data-labels="1" data-h24="1" data-nozones="1" data-size="336"></div></div>
+  <div style="flex:none;display:flex;justify-content:center;align-items:center;gap:8px;margin:-4px 16px 12px">
+    <span class="daypart zone" style="background:#DCEEFF;box-shadow:inset 0 0 0 2px #A5D8FF">to</span>
+    <span class="daypart"><span data-i="moon" style="color:#5C7CFA;display:grid"></span>evening</span>
+    <span class="daypart zone" style="background:#FFF3BF;box-shadow:inset 0 0 0 2px #FFE066">past</span>
+  </div>
+  <div class="panel">
+    <div style="display:flex;align-items:center;gap:12px"><h2 style="flex:1;font-size:26px">Quarter past six in the evening</h2><span class="round tonal" style="width:56px;height:56px" data-i="speaker"></span></div>
+    <div><span class="opt" style="display:inline-flex;height:40px;border-radius:14px;padding:0 14px;font:800 20px Nunito,sans-serif">18:15</span></div>
+    <div class="say"><img src="assets/doll-avatar.png" alt=""><div class="bubble">Drag either hand to change the time.</div></div>
+  </div>
+  <div class="bar"><span class="btn pri"><span data-i="shuffle" style="display:grid"></span>Random time</span></div>
+  <div class="nav"></div>
+</section></figure>
+<style>.daypart.zone { padding: 0 16px; color: var(--ink); }</style>
+
+<!-- b05. Lesson page: clock 340 dp, group centred, a single action spans the bar. -->
+<figure data-b="b05"><figcaption>b05 Lesson page 1</figcaption>
+<section class="board learn">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Two hands</span></div>
+  <div class="progress"><i class="cur"></i><i></i><i></i><i></i><b>1 / 4</b></div>
+  <div class="grow"><div class="clk" data-h="4" data-m="0" data-size="340"></div></div>
+  <div class="panel" style="gap:10px;font:600 17px/26px Nunito,sans-serif">
+    <div>This clock has two hands.</div>
+    <div>The short pink hand is the hour hand. It shows which hour we are in.</div>
+    <div style="display:flex;justify-content:flex-end;gap:10px"><span class="round tonal" data-i="speaker"></span><span class="round tonal" data-i="replay"></span></div>
+  </div>
+  <div class="bar" style="padding-top:28px"><span class="btn pri">Next<span data-i="chevron" style="display:grid"></span></span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b06. Lesson quiz with a three-line question: the clock gives way (255 dp) so all options show. -->
+<figure data-b="b06"><figcaption>b06 Lesson quiz, three-line question</figcaption>
+<section class="board learn">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">One trip around</span></div>
+  <div class="progress"><i class="done"></i><i class="done"></i><i class="done"></i><i class="cur"></i><b>4 / 4</b></div>
+  <div class="grow"><div class="clk" data-h="3" data-m="0" data-size="255"></div></div>
+  <div class="panel">
+    <div class="eyebrow">Try it</div>
+    <h2>How much time passes when the long hand goes all the way around?</h2>
+    <div class="opts">
+      <div class="opt"><span class="lbl">One day</span></div>
+      <div class="opt"><span class="lbl">One hour</span></div>
+      <div class="opt"><span class="lbl">One minute</span></div>
+    </div>
+  </div>
+  <div class="bar"><span class="btn">Previous</span><span class="btn off">Done</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b07. Level result: reward card wraps its content and is shown whole. The companion keeps its size. -->
+<figure data-b="b07"><figcaption>b07 Level result, three stars</figcaption>
+<section class="board play">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="close"></span></div>
+  <div style="flex:none;height:80px;display:flex;justify-content:center;align-items:center;gap:20px">
+    <span data-i="star" data-s="56"></span><span data-i="star" data-s="72" style="margin-top:-8px"></span><span data-i="star" data-s="56"></span>
+  </div>
+  <div class="grow"><img src="assets/doll-big.png" alt="" style="height:200px"></div>
+  <div style="flex:none;text-align:center;padding:8px 24px 16px">
+    <div style="font:700 32px/40px Fredoka,sans-serif">Wonderful!</div>
+    <div style="font:700 17px/26px Nunito,sans-serif;margin-top:8px">Whole hours complete! You earned 3 stars. You unlocked outfit items:</div>
+  </div>
+  <div class="panel" style="padding:16px;flex-direction:row;justify-content:space-around;gap:8px">
+    <div style="width:104px;text-align:center;font:700 14px/18px Nunito,sans-serif"><img src="assets/item-dress.png" alt="" style="height:72px;display:block;margin:0 auto 6px">Polka-dot dress</div>
+    <div style="width:104px;text-align:center;font:700 14px/18px Nunito,sans-serif"><img src="assets/item-bow.png" alt="" style="height:72px;display:block;margin:0 auto 6px">Bow</div>
+    <div style="width:104px;text-align:center;font:700 14px/18px Nunito,sans-serif"><img src="assets/item-shoes.png" alt="" style="height:72px;display:block;margin:0 auto 6px">Red shoes</div>
+  </div>
+  <div class="bar stack" style="padding-top:16px"><span class="btn pri" style="flex:none">Next level<span data-i="chevron" style="display:grid"></span></span><span class="btn" style="flex:none"><span data-i="replay" style="display:grid"></span>Play again</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b08. Minute Challenge result, new record: no idle clock, companion, gold pill, one big number. -->
+<figure data-b="b08"><figcaption>b08 Minute Challenge result, new best</figcaption>
+<section class="board play">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Minute Challenge</span></div>
+  <div class="grow" style="position:relative"><div id="confetti" style="position:absolute;inset:0"></div><img src="assets/doll-big.png" alt="" style="height:190px;position:relative"></div>
+  <div class="panel" style="padding:24px;align-items:center;gap:6px">
+    <span class="pill" style="height:36px;border-radius:18px;padding:0 16px 0 12px;background:#FFE066;color:var(--ink);font:600 16px Fredoka,sans-serif"><span data-i="star" data-s="18"></span>New best!</span>
+    <div style="font:700 96px/100px Fredoka,sans-serif;color:var(--primary)">12</div>
+    <div style="font:600 20px/28px Fredoka,sans-serif">correct answers</div>
+  </div>
+  <div class="bar" style="padding-top:24px"><span class="btn">Back</span><span class="btn pri">Play again</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b09. Home: tiles with 16 dp padding on every side (160 dp tall), stage 31 dp shorter. -->
+<figure data-b="b09"><figcaption>b09 Home</figcaption>
+<section class="board home">
+  <img src="assets/home-top.png" alt="" style="width:412px;height:108px;flex:none">
+  <div style="flex:none;margin:0 16px;height:430px;border-radius:32px;overflow:hidden"><img src="assets/home-stage.png" alt="" style="width:380px;margin-top:-31px;display:block"></div>
+  <div style="flex:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 16px 0">
+    <div class="tile" style="background:#FFE8A3"><span class="round" data-i="book"></span><b>Learn</b><span>Discover how the hands tell time</span></div>
+    <div class="tile" style="background:#BFE3FF"><span class="round" data-i="clock"></span><b>Explore</b><span>Move the hands and explore the time</span></div>
+    <div class="tile" style="background:#FFD1E3"><span class="round" data-i="star" data-s="26"></span><b>Play</b><span>Practise reading and setting the clock</span></div>
+    <div class="tile" style="background:#C3F2CB"><span class="round" data-i="people"></span><b>Play Together</b><span>Set a time, take a guess, and swap turns</span></div>
+  </div>
+  <div class="nav"></div>
+</section></figure>
+<style>
+.tile { height: 160px; border-radius: 32px; padding: 16px; display: flex; flex-direction: column; }
+.tile b { font: 600 22px/28px Fredoka, sans-serif; margin-top: 10px; }
+.tile > span:last-child { font: 600 14px/20px Nunito, sans-serif; color: var(--ink-soft); margin-top: 2px; }
+</style>
+
+<!-- b10. Companion picker: all ten choices visible, 64 dp targets, no sideways scroll. -->
+<figure data-b="b10"><figcaption>b10 Companion picker</figcaption>
+<section class="board companion">
+  <div class="status">9:41</div>
+  <div class="topbar"><span class="round" data-i="back"></span><span class="title">Make it yours</span></div>
+  <div style="flex:none;margin:0 16px 12px;height:56px;border-radius:28px;background:#fff;display:flex;padding:4px;font:600 16px Fredoka,sans-serif">
+    <span style="flex:1;border-radius:24px;background:var(--primary);color:#fff;display:grid;place-items:center">Companions</span><span style="flex:1;display:grid;place-items:center">Clock styles</span>
+  </div>
+  <img src="assets/picker-card.png" alt="" style="flex:none;width:380px;height:430px;margin:0 16px">
+  <div id="thumbs" style="flex:none;display:grid;grid-template-columns:repeat(5,64px);justify-content:space-between;row-gap:15px;margin:12px 16px 16px"></div>
+  <div class="bar" style="padding-top:0"><span class="btn pri"><span data-i="shirt" style="display:grid"></span>Choose an outfit</span></div>
+  <div class="nav"></div>
+</section></figure>
+
+<!-- b11. Locked states: the name stays readable, a lock pill says why, art is dimmed instead of the text. -->
+<figure data-b="b11"><figcaption>b11 Locked level row and locked outfit tile</figcaption>
+<section class="board" style="height:450px">
+  <div class="play" style="padding:24px 16px;display:flex;flex-direction:column;gap:12px">
+    <div class="row"><img src="assets/level-thumb-1.png" alt=""><div><b>Whole hours</b><div class="stars"><span data-i="star" data-s="18"></span><span data-i="star" data-s="18"></span><span data-i="star" data-s="18"></span></div></div><span class="round tonal" data-i="book"></span></div>
+    <div class="row"><img src="assets/level-thumb-2.png" alt="" style="opacity:.5"><div><b>Half past</b><div><span class="pill"><span data-i="lock" style="display:grid"></span>Full version</span></div></div><span class="round tonal" data-i="lock" style="color:#9C8AAE"></span></div>
+  </div>
+  <div class="companion" style="flex:1;padding:24px 16px;display:flex;gap:12px">
+    <div class="item" style="background:#fff;box-shadow:inset 0 0 0 2px var(--primary)"><img src="assets/unlocked-art.png" alt="" style="height:78px"><b>Brown braids</b></div>
+    <div class="item" style="background:var(--locked)"><img src="assets/locked-art.png" alt="" style="height:78px"><b>Golden hair</b><span class="pill" style="padding:0 7px;gap:4px;font-size:12px"><span data-i="lock" style="display:grid"></span>Full version</span></div>
+  </div>
+</section></figure>
+<style>
+.row { height: 88px; border-radius: 24px; background: #fff; padding: 12px; display: flex; align-items: center; gap: 14px; }
+.row img { width: 64px; height: 64px; border-radius: 16px; }
+.row > div { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.row b { font: 600 20px/26px Fredoka, sans-serif; }
+.stars { display: flex; gap: 4px; }
+.item { width: 118px; height: 166px; border-radius: 24px; padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.item b { font: 700 14px/18px Nunito, sans-serif; text-align: center; }
+</style>
+</div>
+
+<script>
+// Icons on a 24 unit grid. "star" is filled gold, everything else is a 2 unit stroke in currentColor.
+const ICONS = {
+  back: '<path d="M19 12H5M11 6l-6 6 6 6"/>', close: '<path d="M6 6l12 12M18 6L6 18"/>', check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  chevron: '<path d="M9 6l6 6-6 6"/>', speaker: '<path d="M4 10v4h3l5 4V6L7 10H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/>',
+  replay: '<path d="M5 12a7 7 0 1 0 2.2-5.1M5 4.5v4.2h4.2"/>', clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  shuffle: '<path d="M4 7h3l10 10h3M4 17h3l3-3M14 10l3-3h3M18.5 5l2 2-2 2M18.5 15l2 2-2 2"/>',
+  lock: '<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/>',
+  shirt: '<path d="M8 3l-5 3 2 4 3-1v12h8V9l3 1 2-4-5-3a4 4 0 0 1-8 0z"/>',
+  book: '<path d="M4 5.5c2.500-1 5.500-1 8 .5 2.500-1.500 5.500-1.500 8-.5v13c-2.500-1-5.500-1-8 .5-2.500-1.500-5.500-1.500-8-.5zM12 6v13"/>',
+  people: '<circle cx="8.500" cy="8" r="3"/><circle cx="16" cy="8.500" r="2.500"/><path d="M3 19c0-3.500 2.500-5.500 5.500-5.500s5.500 2 5.500 5.500M15 13.500c3 0 5.500 1.800 5.500 5"/>',
+  moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.500 6.500 0 0 0 10.500 10.500z" fill="currentColor"/>',
+};
+const STAR = '<path d="M12 2.500l2.900 6 6.600.900-4.800 4.600 1.200 6.500L12 17.400 6.100 20.500l1.200-6.500L2.500 9.400l6.600-.900z" fill="#FCC419" stroke="#E67700" stroke-width="1.200" stroke-linejoin="round"/>';
+document.querySelectorAll('[data-i]').forEach(el => {
+  const n = el.dataset.i, s = el.dataset.s;
+  const size = s ? ` style="width:${s}px;height:${s}px"` : '';
+  el.innerHTML = n === 'star'
+    ? `<svg viewBox="0 0 24 24"${size}>${STAR}</svg>`
+    : `<svg viewBox="0 0 24 24"${size} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
+});
+
+// Clock drawn from ui/clock/ClockSpec.kt numbers. Centre 200, units are the 468 unit viewBox.
+const RAINBOW = ['#FF6B6B','#FF922B','#FCC419','#94D82D','#51CF66','#20C997','#22B8CF','#339AF0','#5C7CFA','#845EF7','#CC5DE8','#F06595'];
+const C = 200, pt = (r, a) => [C + r * Math.sin(a * Math.PI / 180), C - r * Math.cos(a * Math.PI / 180)];
+const xy = (r, a) => pt(r, a).map(v => v.toFixed(1)).join(' ');
+function clock(o) {
+  const view = o.labels ? [-34, 468] : [12, 376];
+  let s = '';
+  RAINBOW.forEach((c, i) => { s += `<path d="M${xy(178, i * 30 - 15)}A178 178 0 0 1 ${xy(178, i * 30 + 15)}" stroke="${c}" stroke-width="17" fill="none"/>`; });
+  s += `<circle cx="200" cy="200" r="170" fill="#fff"/>`;
+  if (o.guides) s += `<path d="M200 32A168 168 0 0 1 200 368Z" fill="#FFF3BF"/><path d="M200 32A168 168 0 0 0 200 368Z" fill="#DCEEFF"/>`;
+  for (let m = 0; m < 60; m++) {
+    const big = m % 5 === 0;
+    s += `<path d="M${xy(big ? 145 : 153, m * 6)}L${xy(162, m * 6)}" stroke="${big ? '#3A2453' : '#D3C6DE'}" stroke-width="${big ? 4 : 2}" stroke-linecap="round"/>`;
+  }
+  const text = (t, r, a, font, fill, halo) => { const [x, y] = pt(r, a); return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="middle" dominant-baseline="central" style="font:${font}${halo ? ';paint-order:stroke;stroke:#fff;stroke-width:6px;stroke-linejoin:round' : ''}" fill="${fill}">${t}</text>`; };
+  const minuteA = o.m * 6, hourA = ((o.h % 12) + o.m / 60) * 30;
+  const near = (a, b, limit) => Math.abs(((a - b + 540) % 360) - 180) < limit;
+  // A numeral under a hand is redrawn above it with a face-coloured halo, as drawCoveredNumerals does.
+  let above = '';
+  for (let h = 1; h <= 12; h++) {
+    const covered = near(h * 30, minuteA, 16);
+    const t = text(h, 110, h * 30, '700 42px Fredoka', '#3A2453', covered);
+    if (covered) above += t; else s += t;
+  }
+  // Target 24 hour ring: radius 72 with a 17 unit font keeps every number clear of the 1 to 12 numerals.
+  if (o.h24) for (let h = 1; h <= 12; h++) {
+    const covered = near(h * 30, minuteA, 12) || near(h * 30, hourA, 14);
+    const t = text(h === 12 ? 0 : h + 12, 72, h * 30, '800 17px Nunito', '#5B36C4', covered);
+    if (covered) above += t; else s += t;
+  }
+  if (o.guides && !o.noZones) {
+    // Target: in 24 hour mode the zone labels stay at the top (angle 32) but move inside the ring (radius 44).
+    const zr = o.h24 ? 44 : 70, za = o.h24 ? 32 : 148;
+    s += text('to', zr, -za, '600 17px Fredoka', '#655279') + text('past', zr, za, '600 17px Fredoka', '#655279');
+  }
+  if (o.labels) for (let m = 0; m < 60; m += 5) s += text(m, 207, m * 6, '800 15px Nunito', '#655279');
+  const hand = (a, tail, len, w, col) => `<path d="M${xy(-tail, a)}L${xy(len, a)}" stroke="#fff" stroke-width="${w + 6}" stroke-linecap="round"/><path d="M${xy(-tail, a)}L${xy(len, a)}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>`;
+  s += hand(minuteA, 22, 150, 10, '#228BE6') + hand(hourA, 16, 86, 16, '#E64980') + above;
+  s += `<circle cx="200" cy="200" r="12" fill="#3A2453"/><circle cx="200" cy="200" r="5" fill="#fff"/>`;
+  return `<svg viewBox="${view[0]} ${view[0]} ${view[1]} ${view[1]}" width="${o.size}" height="${o.size}" style="display:block">${s}</svg>`;
+}
+document.querySelectorAll('.clk').forEach(el => {
+  const d = el.dataset;
+  el.innerHTML = clock({ h: +d.h, m: +d.m, guides: !!d.guides, labels: !!d.labels, h24: !!d.h24, noZones: !!d.nozones, size: +d.size });
+});
+
+// Companion picker thumbnails: nine crops from the app plus the "Just the clock" choice.
+const thumbs = document.getElementById('thumbs');
+for (let i = 1; i <= 9; i++) thumbs.innerHTML += `<img src="assets/thumb-${i}.png" alt="" style="width:64px;height:64px;border-radius:50%">`;
+thumbs.innerHTML += `<span style="width:64px;height:64px;border-radius:50%;background:#fff;display:grid;place-items:center">${clock({ h: 10, m: 10, size: 44 })}</span>`;
+
+// A few static confetti pieces around the companion on the record board. They never overlap the card.
+const conf = document.getElementById('confetti'), R7 = ['#FF6B6B','#FFA94D','#FCC419','#51CF66','#339AF0','#845EF7','#DA77F2'];
+[[40,30,20],[84,96,-30],[58,170,45],[120,20,10],[300,34,-20],[352,90,35],[326,168,-45],[270,8,60],[150,150,25],[262,140,-15],[24,110,70],[380,24,15]].forEach(([x, y, r], i) => {
+  conf.innerHTML += `<i style="position:absolute;left:${x}px;top:${y}px;width:${i % 3 ? 10 : 14}px;height:${i % 3 ? 10 : 6}px;border-radius:${i % 2 ? '50%' : '2px'};background:${R7[i % 7]};transform:rotate(${r}deg)"></i>`;
+});
+
+// boards.html?b=b01 shows only that board at the page origin, for the PNG export.
+const only = new URLSearchParams(location.search).get('b');
+if (only) { document.body.classList.add('single'); document.querySelector(`[data-b="${only}"]`).classList.add('show'); }
+</script>
+</body>
+</html>

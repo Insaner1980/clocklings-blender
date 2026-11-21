@@ -174,7 +174,7 @@ def bunny():
         for k in range(10-row):
             t=k/(9-row)
             oval('Ivory necklace pearl',88+64*t,174+row*9+12*math.sin(t*math.pi),4.8,4.4,WHITE,-65,4.3)
-    item('bunny-extra-basket')
+    item('bunny-extra-basket','GROUND')
     pillow('Wicker basket',[(166,244),(210,244),(208,271),(198,278),(177,277),(168,268)],'DFAD39',-65,10)
     for y in range(248,275,6): tube('Woven horizontal wicker',[(168,y),(189,y+3),(209,y)],1.4,'F5CA64',-76)
     for x in range(171,208,6): tube('Woven vertical wicker',[(x,246),(x+1,260),(x,274)],1,'B98A28',-76)
@@ -305,111 +305,8 @@ def unicorn():
 
 
 def car():
-    item('car-front-plate')
-    box('Yellow number plate',169,268,62,20,GOLD,-88,2.5,3)
-    data=bpy.data.curves.new('Raised plate digits','FONT')
-    data.body='012'; data.align_x='CENTER'; data.size=.30; data.extrude=.003
-    obj=bpy.data.objects.new('012 plate lettering',data); SCENE.collection.objects.link(obj)
-    obj.location=HELP.point(169,274,-92); obj.rotation_euler=(math.pi/2,0,0)
-    obj.data.materials.append(mat('35302E')); tag(obj)
-    for x in (142,196): oval('Plate screw',x,268,1.2,1.2,'8E772C',-93,1)
-    hubs=[(21.7,228.4,8.7,23),(75.2,246.1,14,23.1)]
-    item('car-wheels-sport','WHEELS')
-    for x,y,rx,ry in hubs:
-        oval('Blue sport wheel',x,y,rx*1.2,ry*1.03,'399ED1',-90,4)
-        ring('Sport rim rounded edge',x,y,rx*1.05,ry*.9,1.3,BLUE,-95)
-        oval('Sport hub center',x,y,rx*.5,ry*.52,'55BCE9',-96,2)
-    item('car-roof-suitcase')
-    box('Red rounded roof suitcase',99,137,70,34,RED,-26,15,5)
-    box('Suitcase lid seam',99,137,71,2,'C52B3C',-42,1,1)
-    for x in (77,120): box('Ivory luggage strap',x,136,6,35,CREAM,-43,1.8,1)
-    tube('Suitcase handle',[(90,119),(90,111),(108,111),(108,119)],2.8,CREAM,-27)
-    tube('Roof rack',[(59,157),(97,162),(137,153)],2.4,'637580',-27)
-    item('car-front-sunglasses')
-    for x,y,w,h,a in [(128,232,48,28,-4),(205,228,39,25,5)]:
-        lens=oval('Black rounded sunglasses lens',x,y,w/2,h/2,'272734',-95,4,a)
-        ring('Thick sunglasses frame',x,y,w/2,h/2,2.7,'382D32',-98)
-        tube('Lens soft glint',[(x-8,y-6),(x+3,y-8)],1,'566072',-100)
-    tube('Sunglasses bridge',[(150,230),(170,225),(185,228)],3.2,'302A2C',-97)
-    tube('Left glasses arm',[(103,229),(91,222)],2.5,'302A2C',-91)
-    item('car-wheels-offroad','WHEELS')
-    for x,y,rx,ry in hubs:
-        oval('Chunky purple tire',x,y,rx*1.9,ry*1.37,'674187',-78,8)
-        for k in range(12):
-            a=k*math.tau/12
-            oval('Raised tire tread block',x+rx*1.7*math.cos(a),y+ry*1.2*math.sin(a),3,4.2,'8358A5',-87,3,math.degrees(a))
-        oval('Offroad cream hub',x,y,rx*.78,ry*.73,CREAM,-90,3)
-        for k in range(5):
-            a=k*math.tau/5
-            oval('Hub recess',x+rx*.45*math.cos(a),y+ry*.46*math.sin(a),rx*.16,ry*.14,'54414E',-94,1)
-    item('car-model-race')
-    # Thin painted bands follow the hood; they are not raised ornaments.
-    body=next(o for o in SCENE.objects if o.name.startswith('Rounded sports body'))
-    for x in (141,158):
-        tag(HELP.patch('White painted racing stripe',body,[(x,201),(x+9,201),(x+25,262),(x+16,262)],mat(WHITE),'accessory',.2))
-    smile=next(o for o in SCENE.objects if o.name.startswith('Friendly curved smile')).copy()
-    smile.data=smile.data.copy(); SCENE.collection.objects.link(smile)
-    del smile['fitting_reference']; tag(smile)
-    smile.hide_set(False)
-    for x in (98,114): plate('White roof racing stripe',[(x-8,155),(x+2,156),(x+12,161),(x+1,161)],WHITE,-20,.7,.5)
-    for x in (110,126): plate('White windscreen racing stripe',[(x,164),(x+7,165),(x+29,200),(x+20,199)],WHITE,-65,.2,.2)
-    item('car-roof-surfboard')
-    oval('Yellow surfboard rail',104,151,91,12,GOLD,-19,9)
-    oval('Green surfboard deck',104,148,87,9,'71C97B',-27,3)
-    tube('Surfboard center stripe',[(36,148),(104,144),(171,147)],2.4,'AFE5A1',-31)
-    for x in (73,131): tube('Surfboard roof support',[(x,158),(x,167)],2,'56717E',5)
-    item('car-front-bull-bar')
-    tube('Steel bull bar',[(112,270),(113,258),(168,261),(222,254),(222,267)],3.5,'C2CDD0',-87)
-    for x,y in [(120,263),(215,260)]: oval('Yellow front rally lamp',x,y,7,8,GOLD,-92,4)
-    item('car-wheels-flames','WHEELS')
-    for x,y,rx,ry in hubs:
-        oval('Fiery hub outer red',x,y,rx*1.1,ry*.99,RED,-93,4)
-        oval('Fiery hub orange',x,y,rx*.75,ry*.8,'FF9F29',-98,3)
-        oval('Fiery hub yellow core',x,y,rx*.42,ry*.55,'FFE651',-102,2.8)
-    item('car-roof-flag')
-    tube('Checkered flag pole',[(102,159),(108,87)],1.7,'505058',-12)
-    plate('White waving flag',[(109,86),(127,83),(151,87),(149,112),(128,108),(107,111)],WHITE,-17,1,.5)
-    for row in range(4):
-        for col in range(6):
-            if (row+col)%2==0:
-                x=109+col*6.5; y=87+row*5.7+math.sin(col)*1.7
-                box('Black flag check',x+3,y+2.5,6.3,5.5,'302D32',-19,0.4,.1)
-    item('car-model-fire-engine')
-    tube('Ladder left rail',[(32,228),(57,127)],3,'98A9B7',-72)
-    tube('Ladder right rail',[(48,233),(73,132)],3,'B6C4CC',-72)
-    for i in range(7):
-        y=139+i*13
-        x=54-(y-139)*.25
-        tube('Steel ladder rung',[(x,y),(x+16,y+5)],2.2,'D4DDE0',-75)
-    oval('Fire engine red beacon',99,155,10,8,RED,-35,7)
-    item('car-front-plow')
-    plate('Yellow snowplow blade',[(116,264),(222,260),(230,288),(110,293)],GOLD,-97,4,2)
-    for x in (122,148,174,200): plate('Black diagonal hazard stripe',[(x,264),(x+12,263),(x+1,289),(x-12,290)],'292C31',-102,.5,.3)
-    tube('Steel plow lower lip',[(111,294),(230,289)],2.2,'9AA8AE',-102)
-    item('car-roof-taxi')
-    pillow('Golden taxi roof sign',[(70,159),(75,139),(83,132),(116,134),(127,158)],GOLD,-24,8)
-    for row in range(2):
-        for col in range(6):
-            if (row+col)%2==0: box('Taxi black check',82+col*6,141+row*6,5,5,'323034',-34,0.4,.3)
-    item('car-wheels-gold','WHEELS')
-    for x,y,rx,ry in hubs:
-        oval('Gold disc rim',x,y,rx*1.1,ry,GOLD,-93,5)
-        ring('Gold raised rim edge',x,y,rx*.93,ry*.85,1.3,'FFE778',-99)
-        oval('Gold wheel hub',x,y,rx*.45,ry*.5,'E7AA25',-100,2)
-    item('car-roof-rally-lights')
-    tube('Roof rally light rail',[(62,154),(128,154)],3,'7F8E9C',-26)
-    for x in (68,86,104,122):
-        oval('Rally lamp housing',x,145,9,10,'858894',-28,6)
-        oval('Golden rally lamp lens',x,145,7.3,8.2,GOLD,-35,2.7)
-        oval('Lamp glass glint',x-2,142,2,2,'FFF4C7',-38,1)
-    item('car-model-rocket',layer='back')
-    for outline in [[(35,202),(5,148),(9,140),(45,174)],[(69,173),(52,125),(59,120),(89,161)]]:
-        pillow('Red rocket tail fin',outline,RED,23,5)
-    item('car-model-rocket')
-    oval('Steel rocket nozzle',13,224,12,16,'748899',-63,12)
-    pillow('Rocket orange flame',[(-1,211),(-15,218),(-7,224),(-19,229),(-1,237),(8,226)],'FF9133',-63,5)
-    pillow('Rocket yellow core',[(0,218),(-9,224),(1,231),(7,225)],GOLD,-69,3)
-    plate('Door lightning bolt',[(58,209),(48,222),(55,222),(51,234),(67,217),(59,217),(64,208)],GOLD,-77,1,.7)
+    from car_equipment import build
+    build(sys.modules[__name__])
 
 
 def doll():
@@ -667,8 +564,9 @@ def gallery(kind,directory=None):
             over(acc[ay:ay+hh*3,ax:ax+ww*3],l,t)
         accessory('back')
         if kind=='bunny':
-            part('body');part('arms');accessory('front','HAND');part('arms',224)
+            part('body');accessory('front','HAND');part('arms')
             accessory('front','BODY');part('head');part('ear_left');part('ear_right');part('eyes');accessory('front','HEAD')
+            accessory('front','GROUND')
         elif kind=='unicorn':
             part('tail');part('body');accessory('front','BODY');part('head');part('eyes');accessory('front','HEAD')
         elif kind=='car':

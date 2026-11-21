@@ -181,18 +181,26 @@ private fun PurchaseContent(
         Text(stringResource(R.string.full_unlock_name), style = SkType.Title)
         Text(stringResource(R.string.full_unlock_description), style = SkType.Body)
         Text(stringResource(R.string.full_unlock_rewards), style = SkType.Body)
-        val unavailable = state.status == PurchaseStatus.UNAVAILABLE
+        val retry =
+            state.status in
+                setOf(
+                    PurchaseStatus.UNAVAILABLE,
+                    PurchaseStatus.FAILED,
+                    PurchaseStatus.ACKNOWLEDGEMENT_PENDING,
+                )
+        val pending = state.status == PurchaseStatus.PENDING
         val status = stringResource(state.status.message())
         val statusSemantics = Modifier.semantics { liveRegion = LiveRegionMode.Polite }
-        if (unavailable) {
-            FlatPanel(color = SkColors.DangerContainer) {
+        if (retry || pending) {
+            FlatPanel(color = if (pending) SkColors.SurfaceContainer else SkColors.DangerContainer) {
                 Text(status, style = SkType.Body, modifier = statusSemantics)
             }
         } else {
             Text(status, style = SkType.Body, modifier = statusSemantics)
         }
         val price = state.localizedPrice
-        if (!unavailable && !state.fullAccess && price != null) {
+        val showPurchase = !retry && !pending && !state.fullAccess && (state.canPurchase || state.busy)
+        if (showPurchase && price != null) {
             SkButton(
                 stringResource(R.string.purchase_buy, price),
                 onPurchase,
@@ -201,18 +209,22 @@ private fun PurchaseContent(
                 enabled = state.canPurchase && !state.busy,
             )
         }
-        if (state.status in
-            setOf(PurchaseStatus.UNAVAILABLE, PurchaseStatus.FAILED, PurchaseStatus.ACKNOWLEDGEMENT_PENDING)
-        ) {
+        if (retry) {
             SkButton(
                 stringResource(R.string.purchase_retry),
                 onRetry,
                 Modifier.fillMaxWidth(),
-                kind = if (unavailable) ButtonKind.PRIMARY else ButtonKind.SECONDARY,
+                kind = ButtonKind.PRIMARY,
                 enabled = !state.busy,
             )
         }
-        SkButton(stringResource(R.string.purchase_restore), onRestore, Modifier.fillMaxWidth(), enabled = !state.busy)
+        SkButton(
+            stringResource(R.string.purchase_restore),
+            onRestore,
+            Modifier.fillMaxWidth(),
+            kind = if (pending) ButtonKind.PRIMARY else ButtonKind.SECONDARY,
+            enabled = !state.busy,
+        )
         Text(stringResource(R.string.purchase_restore_explanation), style = SkType.SmallSoft)
     }
 }

@@ -140,8 +140,6 @@ object SpanishTime : TimeLanguage {
         val words = fullWords(total, h24)
         return "${if (words.startsWith("las ")) "Son" else "Es"} $words"
     }
-
-    override fun greeting(total: Int): Greeting = EnglishTime.greeting(total)
 }
 
 private const val DECIMAL_BASE = 10

@@ -69,21 +69,20 @@ class CompanionRenderingTest {
         val unzoomed = mutableListOf<String>()
         val outside = mutableListOf<String>()
         val small = mutableListOf<String>()
-        // These Blender sprites already extend beyond the full-character frame. Keep their
-        // established thumbnail padding rather than clipping them to the old vector design grid.
+        // Preserve the fitted thumbnail padding around artwork that reaches the original grid edges.
         val extendedCrops =
             mapOf(
-                "bunny-extra-bubbles" to Rect(110f, 163f, 244f, 293f),
-                "dinosaur-extra-balloon" to Rect(24f, 0f, 254f, 216f),
+                "bunny-extra-bubbles" to Rect(110f, 163f, 247f, 293f),
+                "dinosaur-extra-balloon" to Rect(24f, -3f, 256f, 216f),
                 "dinosaur-extra-skateboard" to Rect(10f, 80f, 230f, 314f),
-                "unicorn-extra-balloon" to Rect(-1f, 157f, 120f, 277f),
-                "unicorn-extra-cloud" to Rect(43f, 142f, 204f, 303f),
+                "unicorn-extra-balloon" to Rect(-3f, 112f, 120f, 232f),
+                "unicorn-extra-cloud" to Rect(44f, 142f, 204f, 300f),
             )
         for (item in accessories) {
             compose.runOnIdle { kind.value = item.companion }
             val rig = compose.runOnIdle { checkNotNull(selectedRig) }
             val crop = rig.crop(item)
-            val full = rig.full()
+            val full = rig.full(Outfit.default(item.companion).with(item.slot, item.id))
             if (crop == full) unzoomed += item.id
             val outsideHorizontally = crop.left < full.left || crop.right > full.right
             val outsideVertically = crop.top < full.top || crop.bottom > full.bottom

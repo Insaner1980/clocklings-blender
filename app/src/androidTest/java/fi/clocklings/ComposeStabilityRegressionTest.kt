@@ -50,7 +50,7 @@ class ComposeStabilityRegressionTest {
     }
 
     @Test
-    fun recordConfettiUsesScoreAnchorAndDoesNotRepeatOnLayout() {
+    fun recordConfettiUsesActionBarAnchorAndDoesNotRepeatOnLayout() {
         val restoration = StateRestorationTester(compose)
         val state = mutableStateOf(ChallengeUiState(phase = ChallengePhase.END, score = 12, best = 10))
         val confetti = ConfettiState(density = 1f, enabled = true)
@@ -61,8 +61,10 @@ class ComposeStabilityRegressionTest {
                 }
             }
         }
-        val score = compose.onNodeWithText("12").scrollToIfScrollable().assertIsDisplayed()
-        val bounds = score.getUnclippedBoundsInRoot()
+        val back = compose.onNodeWithText("Back").assertIsDisplayed().getUnclippedBoundsInRoot()
+        val again = compose.onNodeWithText("Play again").assertIsDisplayed().getUnclippedBoundsInRoot()
+        val centerX = (minOf(back.left.value, again.left.value) + maxOf(back.right.value, again.right.value)) / 2f
+        val centerY = (minOf(back.top.value, again.top.value) + maxOf(back.bottom.value, again.bottom.value)) / 2f
         val density =
             InstrumentationRegistry
                 .getInstrumentation()
@@ -71,8 +73,8 @@ class ComposeStabilityRegressionTest {
         compose.runOnIdle {
             assertEquals(120, confetti.particles.size)
             confetti.particles.forEach { particle ->
-                assertEquals((bounds.left.value + bounds.right.value) / 2f * density, particle.x, 1f)
-                assertEquals((bounds.top.value + bounds.bottom.value) / 2f * density, particle.y, 1f)
+                assertEquals(centerX * density, particle.x, 1f)
+                assertEquals(centerY * density, particle.y, 1f)
             }
         }
         compose.onNodeWithText("Back").scrollToIfScrollable().assertIsDisplayed()

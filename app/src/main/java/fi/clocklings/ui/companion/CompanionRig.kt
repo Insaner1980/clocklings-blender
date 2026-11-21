@@ -22,8 +22,8 @@ import fi.clocklings.ui.doll.DOLL_GRID_WIDTH
 /** An accessory is behind its part, in front of it, or replaces the robot's screen eyes. */
 internal enum class ItemLayer { BEHIND, FRONT, SCREEN }
 
-/** The companion part whose transform a Blender accessory follows. */
-internal enum class ArtPart { BODY, HEAD, WINGS, HAND, ANTENNA, WHEELS }
+/** The design-grid anchor whose transform a Blender accessory follows. */
+internal enum class ArtPart { BODY, HEAD, WINGS, HAND, ANTENNA, WHEELS, GROUND }
 
 /**
  * Draws one companion in its own [width] x [height] design grid. [CompanionView] fits the grid (or a
@@ -41,8 +41,8 @@ internal interface CompanionRig {
     /** The design-grid area that shows [item] in a wardrobe thumbnail: its own crop, else its slot's. */
     fun crop(item: Item): Rect = crop(item.slot)
 
-    /** The whole design grid. */
-    fun full(): Rect
+    /** The full portrait including any item held outside the usual frame. */
+    fun full(outfit: Outfit): Rect
 
     fun DrawScope.draw(
         color: CompanionColor,
@@ -82,21 +82,25 @@ internal abstract class AnimalRig(
 
     final override fun crop(item: Item): Rect = accessories.crop(item.id, itemCrops[item.id] ?: crop(item.slot))
 
-    final override fun full(): Rect = fullFrame
+    override fun full(outfit: Outfit): Rect = fullFrame
 
     final override fun DrawScope.draw(
         color: CompanionColor,
         outfit: Outfit,
         pose: CompanionPose,
     ) {
-        groundShadow(ground)
+        groundShadow(groundFor(outfit))
+        accessories.draw(this, outfit, ArtPart.GROUND, ItemLayer.BEHIND)
         posedBody(pose) { drawBody(outfit, pose) }
+        accessories.draw(this, outfit, ArtPart.GROUND, ItemLayer.FRONT)
     }
 
     protected abstract fun DrawScope.drawBody(
         outfit: Outfit,
         pose: CompanionPose,
     )
+
+    protected open fun groundFor(outfit: Outfit): Rect = ground
 
     protected fun DrawScope.part(region: BlenderBodyRegion) {
         drawImage(

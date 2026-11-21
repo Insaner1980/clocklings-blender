@@ -4,5 +4,6 @@
     <application
         android:name=".BlenderPreviewApplication"
         android:allowBackup="false"
+        android:usesCleartextTraffic="false"
         tools:replace="android:name" />
 </manifest>

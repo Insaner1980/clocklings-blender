@@ -236,27 +236,8 @@ def doll():
 
 
 def car():
-    hubs=[(21.7,228.4,8.7,23),(75.2,246.1,14,23.1)]
-    item('car-wheels-sport','WHEELS')
-    for x,y,rx,ry in hubs:
-        oval('Sport alloy dark recess',x,y,rx*1.08,ry*.97,'255D7E',-91,3)
-        ring('Blue sport rim',x,y,rx*.98,ry*.89,1.8,'58BDEC',-96)
-        for k in range(5):
-            a=k*math.tau/5
-            tube('Sculpted sport wheel spoke',[(x,y),(x+rx*.8*math.cos(a),y+ry*.77*math.sin(a))],1.7,'76CEF2',-96)
-        oval('Sport central hub',x,y,rx*.28,ry*.23,'B2E5F7',-99,2)
-    item('car-roof-taxi')
-    plate('Rounded trapezoid taxi sign',[(71,158),(77,138),(119,138),(126,158)],GOLD,-24,7,3)
-    box('Taxi sign dark foot',99,161,59,5,'52616D',-24,6,2)
-    for row in range(2):
-        for col in range(7):
-            if (row+col)%2==0:box('Taxi checker marking',81+col*5.7,144+row*5.5,5.5,5.4,'34323A',-32,.35,.3)
-    item('car-front-bull-bar')
-    tube('Continuous steel bumper bar',[(111,270),(113,257),(166,257),(221,253),(224,267)],3.2,'C9D7DC',-87,angular=True)
-    for x,y in [(121,263),(214,260)]:
-        oval('Steel front lamp housing',x,y,9,10,'7D8B97',-91,5)
-        oval('Warm front lamp lens',x,y,7,8,GOLD,-97,2.5)
-        oval('Front lamp gleam',x-2,y-3,2,2,CREAM,-100,.8)
+    from car_equipment import build
+    build(art, CHANGED['car'])
 
 
 def robot():

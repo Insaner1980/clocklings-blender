@@ -1,7 +1,6 @@
 package fi.clocklings.ui.appearance
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -23,13 +22,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -76,7 +75,6 @@ import fi.clocklings.ui.components.SwatchTile
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.components.adaptiveGridColumns
 import fi.clocklings.ui.observeAccessPolicy
-import fi.clocklings.ui.rememberReduceMotion
 import fi.clocklings.ui.sharedClocklingsElement
 import fi.clocklings.ui.theme.PersonalizationColors
 import fi.clocklings.ui.theme.Section
@@ -84,7 +82,6 @@ import fi.clocklings.ui.theme.SkColors
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkShapes
 import fi.clocklings.ui.theme.SkType
-import kotlinx.coroutines.launch
 
 @Composable
 fun AppearanceScreen(
@@ -160,8 +157,15 @@ private fun CompanionChoices(
 ) {
     val kind = appearance.companion
     val preview = CompanionKind.entries[pager.settledPage]
-    AdaptiveContent(previewHeight, visual = { size -> CompanionPager(pager, progress, access, size) }) {
-        CompanionThumbnails(pager, kind, progress, access)
+    val windowHeight =
+        with(LocalDensity.current) {
+            LocalWindowInfo.current.containerSize.height
+                .toDp()
+        }
+    val short = windowHeight < SkDimens.CompactTaskHeight
+    val visual: @Composable (Dp) -> Unit = { CompanionPager(pager, progress, access, it) }
+    val thumbs: @Composable () -> Unit = { CompanionThumbnails(pager, kind, progress, access, short, PREVIEW_TIME) }
+    val actions: @Composable () -> Unit = {
         if (!access.companion(preview, progress.totalStars)) {
             Text(stringResource(R.string.companion_access_requirement), style = SkType.BodySoft)
             if (!access.fullAccess) SkButton(stringResource(R.string.parent_title), onParent)
@@ -176,6 +180,20 @@ private fun CompanionChoices(
                 icon = SkIcons.Outfit,
                 enabled = preview == kind,
             )
+        }
+    }
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        if (!short && maxWidth >= companionThumbnailRowWidth()) {
+            Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen)) {
+                visual(previewHeight)
+                thumbs()
+                actions()
+            }
+        } else {
+            AdaptiveContent(previewHeight, visual) {
+                thumbs()
+                actions()
+            }
         }
     }
 }
@@ -399,72 +417,6 @@ private fun CompanionPager(
     }
 }
 
-@Composable
-private fun CompanionThumbnails(
-    pager: PagerState,
-    kind: CompanionKind,
-    progress: Progress,
-    access: AccessPolicy,
-) {
-    val scope = rememberCoroutineScope()
-    val reduced = rememberReduceMotion()
-    val goTo: suspend (Int) -> Unit = { if (reduced) pager.scrollToPage(it) else pager.animateScrollToPage(it) }
-    BoxWithConstraints(Modifier.fillMaxWidth()) {
-        val count = CompanionKind.entries.size
-        // All choices fit on one row when there is room; only very narrow screens scroll.
-        val thumb =
-            ((maxWidth - SkDimens.GapS * (count - 1)) / count).coerceIn(
-                SkDimens.ThumbnailMin,
-                SkDimens.CompanionThumbnail,
-            )
-        Row(
-            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(bottom = SkDimens.GapS),
-            horizontalArrangement = Arrangement.spacedBy(SkDimens.GapS),
-        ) {
-            CompanionKind.entries.forEach { option ->
-                val label = stringResource(companionName(option))
-                PressSurface(
-                    { scope.launch { goTo(option.ordinal) } },
-                    SkColors.Surface,
-                    SkShapes.Pill,
-                    Modifier
-                        .size(thumb)
-                        .testTag("choose_companion_${option.name}")
-                        .semantics {
-                            contentDescription = label
-                            selected = kind == option
-                        },
-                    border =
-                        if (pager.currentPage == option.ordinal) {
-                            BorderStroke(SkDimens.SelectionBorder, SkColors.Primary)
-                        } else {
-                            null
-                        },
-                    role = Role.RadioButton,
-                    enabled = access.companion(option, progress.totalStars),
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Box(Modifier.size(thumb * THUMB_ART).clearAndSetSemantics { }) {
-                            if (option == CompanionKind.NONE) {
-                                ClockFace(ClockCommand(PREVIEW_TIME), mini = true)
-                            } else {
-                                CompanionView(
-                                    option,
-                                    progress.outfitFor(option),
-                                    Modifier.matchParentSize(),
-                                    animated = false,
-                                )
-                            }
-                        }
-                        if (kind == option) SelectionBadge(Modifier.align(Alignment.BottomCenter))
-                    }
-                }
-            }
-        }
-    }
-}
-
-private const val THUMB_ART = 0.78f
 private const val PREVIEW_GROWTH = 1.15f
 
 @Composable

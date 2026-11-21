@@ -14,7 +14,7 @@
     <string name="companion_car">Car</string>
     <string name="companion_none">Just the clock</string>
     <string name="no_companion_hint">Practise telling the time without a companion.</string>
-    <string name="companion_color">Color</string>
+    <string name="companion_color">Colour</string>
     <string name="color_original">Original</string>
     <string name="color_blue">Blue</string>
     <string name="color_green">Green</string>
@@ -29,8 +29,8 @@
     <string name="theme_garden">Garden</string>
     <string name="theme_workshop">Workshop</string>
     <string name="theme_custom">My own clock</string>
-    <string name="custom_clock_hint">Mix your favorite colors and shapes. The short pink hand tells the hour and the long blue hand tells the minutes.</string>
-    <string name="clock_color">Frame color</string>
+    <string name="custom_clock_hint">Mix your favourite colours and shapes. The short pink hand tells the hour and the long blue hand tells the minutes.</string>
+    <string name="clock_color">Frame colour</string>
     <string name="clock_frame">Frame pattern</string>
     <string name="frame_round">Smooth</string>
     <string name="frame_scalloped">Pearls</string>

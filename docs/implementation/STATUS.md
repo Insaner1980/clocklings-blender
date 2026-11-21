@@ -1,5 +1,36 @@
 # Clocklings implementation
 
+## Visual follow-up fixes F1–F4 — 17 November 2026
+
+- F1. The result card calculates equal reward cells in whole pixels after reserving space for the gaps. A single word that exceeds its cell triggers the two-per-row layout. The companion size is unchanged.
+- F2. The lesson 9 hint points to the day-part label under the clock in all seven languages. The existing arithmetic is unchanged.
+- F3. The English wardrobe and custom-clock controls use “Colour”, “Frame colour” and “favourite colours”.
+- F4. The shared home and wardrobe star pill uses the gold completion fill at 15 / 15. Ink on the gold fill has an sRGB contrast ratio of 8.38:1. The label, icon and accessibility descriptions are unchanged.
+
+All 534 JVM tests passed with zero failures, errors or skips. Debug app and instrumentation APK assembly and seven-language resource parity passed. The Compose stability baseline was regenerated for all four variants, and each variant passed the separate stability check.
+
+On the dedicated API 36 `ClocklingsReview20261030` emulator, the focused checks passed at 411.4 dp and 320 dp with 100% and 200% font scale. At 320 dp and 100% the three reward labels share a row, and at 200% they fit in two rows with whole words. The outfit action remains in the scrollable card and can sit in the bottom fade before scrolling. The 15 / 15 and 7 / 15 states were photographed in Home and Outfits at default size and at 320 dp with 200% font scale. The English and Finnish hint, the English colour controls and the reward cards are in the [verification captures](../../reports/clocklings-emulator-screenshots-2026-11-17-round2/fixes/). The emulator settings were restored and the test processes stopped.
+
+## Visual follow-up, round 2 — 17 November 2026
+
+Applied the presentation and capture-fixture changes from the [round 2 plan](../superpowers/plans/2026-11-17-visual-follow-up-round-2.md) on `codex/visual-follow-up-2026-11-17`. The 24-hour guide words now appear as blue and yellow pills below the dial. Practice, the Minute Challenge, Home, Play, purchase states and startup locale error use the revised layouts. The existing strings, companion artwork, billing and navigation were reused.
+
+The five production JVM gates passed after correcting two regressions found at gate 4. The final executed suite had 534 tests and zero failures or skips. The fixture-only gate was up to date. Debug and instrumentation APK assembly, seven-language resource parity, and the Compose stability dump and all four variant checks passed.
+
+The API 36 `ClocklingsReview20261030` emulator produced 273 screenshots at 411.4 dp and 320 dp, both at 100% and 200% font scale. The corrected Finnish [gallery](../../reports/clocklings-kuvagalleria-2026-11-17/round2/index.html) contains 62 new captures and references 163 prior images. The dedicated emulator's settings were restored and its processes exited.
+
+The doll reward card still reached the bottom fade at default size with two or three rewards during round 2. The third reward wrapping at 320 dp with normal text was addressed by F1 above. The READ and SET dial sizes never increased across the three measured states, but at default width and 200% text the next READ task restarted at 350.1 dp instead of the initial 379.4 dp. Home title pairs aligned within 0 dp at the default size in English and Finnish. The existing 320 dp Home layout has one column. The follow-up above applies decisions T8 and T30. The owner runs `lc` and `sc`. See the [Finnish report and measurements](../../reports/clocklings-emulator-screenshots-2026-11-17-round2/REPORT.md).
+
+## Visual follow-up — 17 November 2026
+
+Implemented V1–V11 from the [17 November visual plan](../superpowers/plans/2026-11-17-visual-follow-up.md) in the presentation layer on `codex/visual-follow-up-2026-11-17`. Practice keeps all three choices, with the dial and action outside the answer scroll. Full-size 24-hour clocks show the day part below the dial. Lessons fit the quiz panel and expose a disabled Done action until the answer is correct. Results, Home, companion selection, locked rows and Sound settings use the new layouts. Both day-part strings and the new score plural cover all seven languages.
+
+All five JVM gates passed. The final suite ran 532 tests with zero failures, errors or skips. The 31 focused clock tests, debug and device-test APK builds, resource parity, and stability dump and check for all four variants passed. A separate source review reported no confirmed major findings.
+
+The `ClocklingsReview20261030` API 36 emulator rendered 220 PNGs across default width, 320 dp, 200% font scale and their combination. The companion picker was also checked at 800 dp. A device test verified the record confetti anchor and state restoration. The final 24-hour geometry is `INNER_24_RADIUS = 70`, `INNER_24_FONT = 17`, and `ZONE_RADIUS_24 = 48`.
+
+The default READ reveal dial box measured 220.2 dp against the 250 dp threshold. The painted Home stage shortened by about 59 dp against the 32 dp target, and the existing compact tile dimensions were retained in short windows after a JVM layout regression. All reward item names were readable, with the existing outfit action partly faded at default size until scrolling. See the [Finnish report and evidence](../../reports/clocklings-emulator-screenshots-2026-11-17-after/REPORT.md). TalkBack speech remains unverified. The owner retains the T8 and T30 decisions and the `lc` and `sc` checks.
+
 ## PostHog usage reporting — 15 November 2026
 
 Optional parent-area usage reporting is implemented on `codex/clocklings-analytics`. Android sends allowlisted weekly counters to a deployed Cloudflare Worker and EU D1 database; finalized aggregate cells go to the separate Clocklings PostHog EU project. See [POSTHOG.md](POSTHOG.md) for the event contract, dashboard, four-week reporting delay, suppression, privacy limitations, publishing information and verification. This supersedes earlier offline-only analytics statements for this Blender app; release signing remains unconfigured.

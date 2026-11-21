@@ -1,11 +1,15 @@
 package fi.clocklings.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
@@ -39,6 +43,8 @@ import fi.clocklings.domain.Progress
 import fi.clocklings.domain.Settings
 import fi.clocklings.ui.appearance.LocalPersonalization
 import fi.clocklings.ui.companion.companionAspectRatio
+import fi.clocklings.ui.components.ClockFit
+import fi.clocklings.ui.components.ClockTaskScaffold
 import fi.clocklings.ui.game.ResultScreen
 import fi.clocklings.ui.home.HomeDestination
 import fi.clocklings.ui.home.HomeScreen
@@ -47,6 +53,7 @@ import fi.clocklings.ui.home.companionStageLayout
 import fi.clocklings.ui.lesson.LessonListScreen
 import fi.clocklings.ui.levels.LevelsScreen
 import fi.clocklings.ui.theme.ClocklingsTheme
+import fi.clocklings.ui.theme.Section
 import fi.clocklings.ui.theme.SkDimens
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -58,6 +65,40 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ScreenInteractionTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun taskClockKeepsTheSmallerSizeWhenFeedbackGetsShorter() {
+        val controlsHeight = mutableStateOf(100.dp)
+        val taskIndex = mutableIntStateOf(0)
+        compose.setContent {
+            ClocklingsTheme {
+                Box(Modifier.requiredSize(411.dp, 914.dp)) {
+                    ClockTaskScaffold(
+                        section = Section.PLAY,
+                        topBar = {},
+                        visual = { Box(Modifier.size(it).testTag("measured_clock")) },
+                        clockFit = ClockFit.FIT,
+                        clockTaskKey = taskIndex.intValue,
+                    ) { Box(Modifier.height(controlsHeight.value)) }
+                }
+            }
+        }
+
+        fun clockWidth() =
+            compose
+                .onNodeWithTag("measured_clock")
+                .fetchSemanticsNode()
+                .size.width
+
+        val before = clockWidth()
+        compose.runOnIdle { controlsHeight.value = 700.dp }
+        val hint = clockWidth()
+        assertTrue("The tall feedback must shrink the clock", hint < before)
+        compose.runOnIdle { controlsHeight.value = 150.dp }
+        assertEquals("Shorter feedback must keep the smaller clock", hint, clockWidth())
+        compose.runOnIdle { taskIndex.intValue++ }
+        assertEquals("The next task must start at full size", before, clockWidth())
+    }
 
     @Test
     fun allHomeDestinationsRemainReachableAtNarrowWidthAndLargeFont() {
@@ -220,7 +261,7 @@ class ScreenInteractionTest {
     }
 
     @Test
-    fun homeTapTargetIsOnlyTheCentredContentBoxOnATallPhone() {
+    fun homeTapTargetFollowsTheContentBoxBelowTheTrimmedSky() {
         val companion = mutableStateOf(CompanionKind.CAT)
         compose.setContent {
             val personalization = Personalization(companion = companion.value)
@@ -245,10 +286,15 @@ class ScreenInteractionTest {
                     if (kind == CompanionKind.NONE) {
                         centredContentTop(slotHeight, contentHeight)
                     } else {
-                        companionStageLayout(slot.width.toDp(), slotHeight, contentHeight, companionAspectRatio(kind))
-                            .contentTop
+                        companionStageLayout(
+                            slot.width.toDp(),
+                            slotHeight,
+                            contentHeight,
+                            companionAspectRatio(kind),
+                            skyTrim = SkDimens.HomeStageSkyTrim,
+                        ).contentTop
                     }
-                assertTrue("$kind: the slot is taller than the content", slotHeight > contentHeight + 100.dp)
+                assertTrue("$kind: the slot is taller than the content", slotHeight > contentHeight)
                 assertTrue("$kind: target height", contentHeight <= SkDimens.HomeStageMaxHeight)
                 assertEquals("$kind: target height", contentHeight.value, target.height.toDp().value, 1f)
                 assertEquals("$kind: target top", contentTop.value, (target.top - slot.top).toDp().value, 1f)

@@ -113,11 +113,11 @@ class ClockSurfaceStateTest {
                     .getOrNull(state.page)
                     ?.text
                     ?.forEach { assertTextFits(it.resolve(res)) }
-                assertActionFits(res.getString(R.string.lesson_prev))
+                if (state.page > 0) assertActionFits(res.getString(R.string.lesson_prev))
                 val next =
-                    when (state.nextAction) {
-                        NextAction.TRY_IT -> R.string.lesson_try
-                        NextAction.NEXT_LESSON -> R.string.lesson_next_lesson
+                    when {
+                        state.isQuiz -> R.string.done
+                        state.nextAction == NextAction.TRY_IT -> R.string.lesson_try
                         else -> R.string.next
                     }
                 assertActionFits(res.getString(next))

@@ -20,7 +20,7 @@ import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -60,7 +60,8 @@ class ChallengeInteractionTest {
                 ChallengeScreen(state.value, false, false, {}, {}, {})
             }
         }
-        val timer = compose.onNode(SemanticsMatcher.keyIsDefined(SemanticsProperties.ProgressBarRangeInfo))
+        val timerMatcher = SemanticsMatcher.keyIsDefined(SemanticsProperties.ProgressBarRangeInfo)
+        val timer = compose.onNode(timerMatcher)
         for (language in AppLanguage.entries) {
             for ((width, fontScale) in listOf(360 to 1f, 320 to 1f, 360 to 2f, 320 to 2f)) {
                 compose.runOnIdle {
@@ -94,9 +95,9 @@ class ChallengeInteractionTest {
                 compose.runOnIdle { state.value = state.value.copy(phase = ChallengePhase.END) }
                 compose.waitUntil(10_000) {
                     compose.mainClock.advanceTimeByFrame()
-                    timer.fetchSemanticsNode().config[SemanticsProperties.ProgressBarRangeInfo].current == 0f
+                    compose.onAllNodes(timerMatcher).fetchSemanticsNodes().isEmpty()
                 }
-                assertEquals(0f, timer.fetchSemanticsNode().config[SemanticsProperties.ProgressBarRangeInfo].current)
+                timer.assertDoesNotExist()
             }
         }
     }
@@ -161,7 +162,7 @@ class ChallengeInteractionTest {
     }
 
     @Test
-    fun withReducedMotionTheFittedClockGoesStraightToItsRunSizeAndKeepsItThroughTheResult() {
+    fun withReducedMotionTheFittedClockGoesStraightToItsRunSizeAndIsRemovedForTheResult() {
         val resolver = ApplicationProvider.getApplicationContext<Application>().contentResolver
         SystemSettings.Global.putFloat(resolver, SystemSettings.Global.ANIMATOR_DURATION_SCALE, 0f)
         try {
@@ -207,10 +208,10 @@ class ChallengeInteractionTest {
                 assertTrue("$next: the run fits a different size, $start and $fitted", fitted != start)
                 val onlyTwo = atStart.all { it == start || it == fitted }
                 assertTrue("$next: only the START or the RUN size, $atStart", onlyTwo)
-                val atEnd = widthsWhile { state.value = run.copy(phase = ChallengePhase.END) }
-                assertTrue("$next: the result keeps the run size, $atEnd", atEnd.all { it == fitted })
-                val again = widthsWhile { state.value = run.copy(runId = run.runId + 1) }
-                assertTrue("$next: Play again keeps the run size, $again", again.all { it == fitted })
+                compose.runOnIdle { state.value = run.copy(phase = ChallengePhase.END) }
+                compose.onNodeWithTag("challenge_clock", useUnmergedTree = true).assertDoesNotExist()
+                compose.runOnIdle { state.value = run.copy(runId = run.runId + 1) }
+                assertEquals("$next: Play again reaches the fitted run size", fitted, clockWidth())
             }
         } finally {
             SystemSettings.Global.putFloat(resolver, SystemSettings.Global.ANIMATOR_DURATION_SCALE, 1f)
@@ -297,7 +298,7 @@ class ChallengeInteractionTest {
     }
 
     @Test
-    fun challengeResultKeepsItsActionsInTheBottomBarAndTheScoreInViewWithoutScrolling() {
+    fun challengeResultKeepsItsActionsPinnedAndExposesOneSentenceForTheScore() {
         val cell = mutableStateOf(Triple(360, 1f, AppLanguage.ENGLISH))
         val state = mutableStateOf(ChallengeUiState())
         var played = 0
@@ -326,11 +327,18 @@ class ChallengeInteractionTest {
                     state.value = run
                 }
                 compose.waitForIdle()
-                compose.mainClock.autoAdvance = false
                 compose.runOnIdle {
                     state.value = run.copy(phase = ChallengePhase.END, score = SCORE, best = BEST, newRecord = record)
                 }
-                assertScoreStaysPut(label)
+                compose.onNodeWithTag("challenge_clock", useUnmergedTree = true).assertDoesNotExist()
+                val sentence =
+                    context.getString(
+                        if (record) R.string.challenge_new_record else R.string.challenge_result,
+                        SCORE,
+                        BEST,
+                    )
+                compose.onNodeWithContentDescription(sentence).scrollIfNeeded().assertIsDisplayed()
+                compose.onNodeWithText(sentence).assertDoesNotExist()
                 assertResultVisible(label, language, fontScale, record, height)
                 compose.onNodeWithText(again).performClick()
                 compose.onNodeWithText(back).performClick()
@@ -341,7 +349,7 @@ class ChallengeInteractionTest {
     }
 
     @Test
-    fun recordConfettiUsesTheScoreOrTheVisibleBarWhenTheScoreIsFullyClipped() {
+    fun recordConfettiStartsBelowTheCardAtTheActionBar() {
         val cell = mutableStateOf(Triple(360, RESULT_HEIGHT, 1f))
         val state = mutableStateOf(ChallengeUiState())
         val confetti = ConfettiState(1f, enabled = true)
@@ -371,19 +379,13 @@ class ChallengeInteractionTest {
             compose.runOnIdle {
                 state.value = state.value.copy(phase = ChallengePhase.END, score = SCORE, newRecord = true)
             }
-            val score = compose.onNodeWithText(SCORE.toString()).fetchSemanticsNode().boundsInRoot
             val back = compose.onNodeWithText("Back").fetchSemanticsNode().boundsInRoot
             val again = compose.onNodeWithText("Play again").fetchSemanticsNode().boundsInRoot
-            assertEquals("$c: short cell must exercise a fully clipped score", c.third == 2f, score.isEmpty)
             val expected =
-                if (score.isEmpty) {
-                    Offset(
-                        (back.left + back.right) / 2,
-                        (minOf(back.top, again.top) + maxOf(back.bottom, again.bottom)) / 2,
-                    )
-                } else {
-                    score.center
-                }
+                Offset(
+                    (minOf(back.left, again.left) + maxOf(back.right, again.right)) / 2,
+                    (minOf(back.top, again.top) + maxOf(back.bottom, again.bottom)) / 2,
+                )
             compose.runOnIdle {
                 assertTrue("$c: record celebration fired", confetti.particles.isNotEmpty())
                 assertTrue("$c: origin $expected", confetti.particles.all { it.x == expected.x && it.y == expected.y })
@@ -423,24 +425,6 @@ class ChallengeInteractionTest {
         }
     }
 
-    private fun assertScoreStaysPut(label: String) {
-        // From its first frame the score does not move while the bar appears, so the record confetti starts
-        // on it.
-        val scoreTops =
-            List(FRAMES_AFTER_CHANGE) {
-                compose.mainClock.advanceTimeByFrame()
-                compose.waitForIdle()
-                compose
-                    .onAllNodesWithText(SCORE.toString())
-                    .fetchSemanticsNodes()
-                    .firstOrNull()
-                    ?.boundsInRoot
-            }.mapNotNull { it?.top }
-        compose.mainClock.autoAdvance = true
-        val still = scoreTops.size > FRAMES_AFTER_CHANGE / 2 && scoreTops.all { it == scoreTops.first() }
-        assertTrue("$label: the score stays put, $scoreTops", still)
-    }
-
     private fun assertResultVisible(
         label: String,
         language: AppLanguage,
@@ -458,7 +442,7 @@ class ChallengeInteractionTest {
                 .fetchSemanticsNode()
                 .boundsInRoot.top
 
-        fun score() = compose.onNodeWithText(SCORE.toString()).fetchSemanticsNode().boundsInRoot
+        val score = compose.onNodeWithText(SCORE.toString(), useUnmergedTree = true)
         // Both actions are fully on screen without scrolling, in the bar below the scrolling result.
         for (action in listOf(again, back)) {
             val bounds =
@@ -473,19 +457,19 @@ class ChallengeInteractionTest {
         if (fontScale == 1f) {
             // The bar starts a small gap above its buttons; the score's line box ends above it.
             val barEdge = barTop - with(compose.density) { SkDimens.GapS.toPx() }
-            val bottom = score().bottom
+            val bottom = score.fetchSemanticsNode().boundsInRoot.bottom
             assertTrue("$label: score ends at $bottom, bar at $barEdge", bottom <= barEdge)
             val headline =
                 context.getString(if (record) R.string.challenge_new_best else R.string.challenge_over)
             val title =
                 compose
-                    .onNodeWithText(headline, ignoreCase = true)
+                    .onNodeWithText(headline, ignoreCase = true, useUnmergedTree = true)
                     .assertIsDisplayed()
                     .fetchSemanticsNode()
                     .boundsInRoot
             assertTrue("$label: headline above the bar", title.bottom <= barEdge)
         } else {
-            compose.onNodeWithText(SCORE.toString()).scrollIfNeeded().assertIsDisplayed()
+            score.scrollIfNeeded().assertIsDisplayed()
         }
     }
 }

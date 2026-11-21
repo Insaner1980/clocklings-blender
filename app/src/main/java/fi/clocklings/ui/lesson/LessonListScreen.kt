@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -115,7 +114,6 @@ private fun LessonListRow(
         locked = !access.lesson(id),
         isHeading = isHeading,
         enabled = access.lesson(id),
-        supporting = { if (locked.isNotEmpty()) Text(locked, style = SkType.Small) },
         leading = {
             Text(
                 number.toString(),
@@ -149,16 +147,16 @@ private fun LessonPracticeNode(
         )
     PathRow(
         chapterTitle,
-        "$chapterTitle. $action. $starDescription",
+        if (enabled) "$chapterTitle. $action. $starDescription" else "$chapterTitle. $action",
         onPlay,
         style = PathRowStyle.PRACTICE,
+        locked = !enabled,
         enabled = enabled,
         supporting = { WordSafeText(action, SkType.SmallSoft, textAlign = TextAlign.Start) },
         trailing = {
             StarRow(
                 stars,
                 starDescription,
-                Modifier.alpha(if (enabled) 1f else SkColors.DISABLED_CONTROL_ALPHA),
                 size = SkDimens.StarSmall,
             )
         },

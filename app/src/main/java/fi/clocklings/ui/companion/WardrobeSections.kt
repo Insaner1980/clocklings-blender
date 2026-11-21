@@ -27,13 +27,11 @@ import androidx.compose.ui.text.style.TextAlign
 import fi.clocklings.R
 import fi.clocklings.domain.AccessPolicy
 import fi.clocklings.domain.CompanionKind
-import fi.clocklings.domain.Wardrobe
 import fi.clocklings.domain.slots
 import fi.clocklings.ui.components.ButtonKind
-import fi.clocklings.ui.components.Pill
 import fi.clocklings.ui.components.SectionChips
 import fi.clocklings.ui.components.SkButton
-import fi.clocklings.ui.components.SkIcons
+import fi.clocklings.ui.components.StarTotalPill
 import fi.clocklings.ui.components.TopBar
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.rememberReduceMotion
@@ -97,11 +95,9 @@ internal fun WardrobeHeader(
     Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
         TopBar(stringResource(R.string.doll_title), onBack, trailing = {
             val starInfo = wardrobeStarInfo(kind, total, access)
-            Pill(
-                stringResource(R.string.home_star_total, total, Wardrobe.MAX_STARS),
+            StarTotalPill(
+                total,
                 Modifier.testTag("wardrobe_star_balance").semantics { contentDescription = starInfo },
-                icon = SkIcons.StarOn,
-                large = true,
             )
         })
         SectionChips(labels, navigation.selected(labels.size), { navigation.select(it, reduced) })

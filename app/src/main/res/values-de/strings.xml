@@ -64,7 +64,7 @@
     <string name="reveal_read">Die Antwort ist %1$s. Schau, wohin die Zeiger zeigen.</string>
     <string name="reveal_set">So zeigen die Zeiger %1$s an.</string>
 
-    <string name="hint_hands_right">Die Zeiger stimmen! Schau auf das Symbol (%1$s) und die Beschriftung in der Mitte: %2$s.</string>
+    <string name="hint_hands_right">Die Zeiger stimmen! Schau auf das Symbol (%1$s) und die Beschriftung unter der Uhr: %2$s.</string>
     <string name="hint_sun">Sonne</string>
     <string name="hint_moon">Mond</string>
     <string name="hint_read_hour">Schau auf den kurzen rosa Zeiger. Er %1$s.</string>
@@ -109,6 +109,10 @@
     <string name="challenge_no_best">Noch kein Ergebnis</string>
     <string name="challenge_go">Los!</string>
     <string name="challenge_over">Die Zeit ist um!</string>
+    <plurals name="challenge_correct_label">
+        <item quantity="one">richtige Antwort</item>
+        <item quantity="other">richtige Antworten</item>
+    </plurals>
     <string name="challenge_new_best">Neuer Rekord!</string>
     <string name="challenge_new_record" tools:ignore="PluralsCandidate">Neuer Rekord! Du hast %1$d richtig beantwortet.</string>
     <string name="challenge_result" tools:ignore="PluralsCandidate">Du hast %1$d richtig beantwortet. Dein bestes Ergebnis ist %2$d.</string>
@@ -306,13 +310,13 @@
     <string name="l_vrk_say_night">Drei Uhr nachts: 03:00</string>
     <string name="l_vrk_say_sum">3 + 12 = 15: Es ist 15:00 Uhr.</string>
     <string name="l_vrk_p3a">Die Zeiger stehen um drei Uhr nachts und um drei Uhr nachmittags gleich.</string>
-    <string name="l_vrk_p3b">Die Beschriftung in der Mitte verrät dir die Tageszeit. Die Zeiger allein können das nicht zeigen.</string>
+    <string name="l_vrk_p3b">Die Beschriftung unter der Uhr verrät dir die Tageszeit. Die Zeiger allein können das nicht zeigen.</string>
     <string name="l_vrk_say_afternoon">Drei Uhr nachmittags: 15:00</string>
     <string name="l_vrk_q">Wie spät ist es?</string>
     <string name="l_vrk_c1">Sieben Uhr abends: 19:00</string>
     <string name="l_vrk_c2">Sieben Uhr morgens: 07:00</string>
     <string name="l_vrk_c3">Fünf Uhr nachmittags: 17:00</string>
-    <string name="l_vrk_hint">In der Mitte steht Abend. Rechne 12 zur Stunde dazu: 7 + 12 = 19.</string>
+    <string name="l_vrk_hint">Unter der Uhr steht Abend. Rechne 12 zur Stunde dazu: 7 + 12 = 19.</string>
     <string name="doll_stars_explained">Sterne werden nie verbraucht. Mit genügend Sternen schaltest du neue Kleidung frei.</string>
     <string name="answer_correct">Richtig</string>
     <string name="answer_incorrect">Falsch</string>

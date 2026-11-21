@@ -16,15 +16,19 @@ import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.delete
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +43,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import fi.clocklings.R
 import fi.clocklings.domain.CompanionKind
@@ -55,24 +58,15 @@ import fi.clocklings.ui.theme.SkType
 /** Name field: saved while typing, at most 16 characters. Each companion keeps its own name. */
 @Composable
 internal fun NameField(
-    text: String,
-    onChange: (String) -> Unit,
+    state: TextFieldState,
     modifier: Modifier = Modifier,
 ) {
     val label = stringResource(R.string.doll_name_label)
     val view = LocalView.current
-    // Keep selection with the draft across Activity recreation; an IME composition itself is transient.
-    var editor by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue(text)) }
-    val value = editor.copy(text = text)
-    SideEffect { if (editor != value) editor = value }
     BasicTextField(
-        value = value,
-        onValueChange = {
-            val next = boundedName(it)
-            editor = next
-            if (next.text != text) onChange(next.text)
-        },
-        singleLine = true,
+        state = state,
+        inputTransformation = NameLengthLimit,
+        lineLimits = TextFieldLineLimits.SingleLine,
         textStyle = SkType.NameField.copy(textAlign = TextAlign.Center),
         cursorBrush = SolidColor(SkColors.Primary),
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words, imeAction = ImeAction.Done),
@@ -94,13 +88,13 @@ internal fun NameField(
                 }.widthIn(max = SkDimens.NameFieldMaxWidth)
                 .fillMaxWidth()
                 .semantics { contentDescription = label },
-        decorationBox = { inner -> NameEditorContent(text, inner) },
+        decorator = { inner -> NameEditorContent(state.text.isEmpty(), inner) },
     )
 }
 
 @Composable
 private fun NameEditorContent(
-    text: String,
+    empty: Boolean,
     inner: @Composable () -> Unit,
 ) {
     Row(
@@ -118,7 +112,7 @@ private fun NameEditorContent(
         horizontalArrangement = Arrangement.spacedBy(SkDimens.GapS),
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            if (text.isEmpty()) {
+            if (empty) {
                 Text(
                     stringResource(R.string.doll_name_placeholder),
                     style = SkType.NameFieldPlaceholder.copy(textAlign = TextAlign.Center),
@@ -147,24 +141,22 @@ private fun Modifier.keepEditorVisible(): Modifier {
     return bringIntoViewRequester(requester).onFocusChanged { focused = it.isFocused }
 }
 
-private fun boundedName(value: TextFieldValue): TextFieldValue {
-    val text = value.text
-    val end =
-        if (text.length > MAX_NAME && text[MAX_NAME - 1].isHighSurrogate() && text[MAX_NAME].isLowSurrogate()) {
-            MAX_NAME - 1
-        } else {
-            MAX_NAME
-        }
-    return value.copy(text = text.take(end))
-}
-
 private const val MAX_NAME = 16
+
+private val NameLengthLimit =
+    InputTransformation {
+        if (length > MAX_NAME) {
+            val text = asCharSequence()
+            val splitsSurrogate = text[MAX_NAME - 1].isHighSurrogate() && text[MAX_NAME].isLowSurrogate()
+            delete(if (splitsSurrogate) MAX_NAME - 1 else MAX_NAME, length)
+        }
+    }
 
 @Composable
 internal fun rememberNameSave(
     kind: CompanionKind,
-    name: String,
-): Pair<(String) -> Unit, (() -> Unit)?> {
+    editor: TextFieldState,
+): (() -> Unit)? {
     val app = LocalAppViewModel.current
     var failed by rememberSaveable(kind) { mutableStateOf(false) }
     val request = remember(app, kind) { RetryableSave() }
@@ -177,5 +169,15 @@ internal fun rememberNameSave(
             }
         }
     }
-    return save to if (failed) ({ save(name) }) else null
+    val initialDraft = remember(editor) { editor.text.toString() }
+    LaunchedEffect(editor, request) {
+        var previous = initialDraft
+        snapshotFlow { editor.text.toString() }.collect { draft ->
+            if (draft != previous) {
+                previous = draft
+                save(draft)
+            }
+        }
+    }
+    return if (failed) ({ save(editor.text.toString()) }) else null
 }

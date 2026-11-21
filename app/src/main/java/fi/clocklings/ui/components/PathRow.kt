@@ -1,6 +1,5 @@
 package fi.clocklings.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +16,11 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.HorizontalAlignmentLine
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -54,34 +57,33 @@ fun PathRow(
     val practice = style == PathRowStyle.PRACTICE
     val shape = if (current) SkShapes.Card else SkShapes.Row
     val currentState = stringResource(R.string.path_current)
-    val stackShortcut = LocalDensity.current.fontScale > SkDimens.MAX_ROW_FONT_SCALE
-    FlowRow(
+    val rowTrailing: (@Composable () -> Unit)? =
+        if (locked) {
+            { LockedPathBadge() }
+        } else {
+            trailing
+        }
+    val inlineShortcut = rowTrailing.takeIf { current && startLabel != null }
+    val selectionBorder =
+        if (current) Modifier.border(SkDimens.SelectionBorder, SkColors.Primary, shape) else Modifier
+    val card =
         modifier
             .fillMaxWidth()
             .padding(start = if (practice) SkDimens.PracticeIndent else 0.dp)
             .background(if (practice) SkColors.KouluFill else SkColors.Surface, shape)
-            .then(
-                if (current) {
-                    Modifier.border(
-                        BorderStroke(SkDimens.SelectionBorder, SkColors.Primary),
-                        shape,
-                    )
-                } else {
-                    Modifier
-                },
-            ),
-        maxItemsInEachRow = if (stackShortcut) 1 else 2,
-    ) {
+            .then(selectionBorder)
+    val button: @Composable (Modifier) -> Unit = { hitArea ->
         PressSurface(
             onClick,
             Color.Transparent,
             shape,
-            Modifier.weight(1f).align(Alignment.CenterVertically).semantics {
+            hitArea.semantics {
                 contentDescription = description
                 if (isHeading) heading()
                 if (current) stateDescription = currentState
             },
             enabled = enabled,
+            dimWhenDisabled = !locked,
             decorativeContent = true,
         ) {
             PathRowContent(
@@ -92,10 +94,64 @@ fun PathRow(
                 locked,
                 startLabel,
                 supporting,
-                trailing == null,
+                rowTrailing == null,
                 leading,
+                inlineShortcut != null,
             )
         }
+    }
+    if (inlineShortcut != null) {
+        PathRowWithInlineShortcut(button, inlineShortcut, card)
+    } else {
+        PathRowWithTrailing(button, rowTrailing, card)
+    }
+}
+
+@Composable
+private fun LockedPathBadge() {
+    Box(
+        Modifier.size(SkDimens.IconButton).background(SkColors.TonalFill, SkShapes.Pill),
+        contentAlignment = Alignment.Center,
+    ) {
+        SkIcon(SkIcons.Lock, SkDimens.ActionIcon, tint = SkColors.Lock)
+    }
+}
+
+@Composable
+private fun PathRowWithInlineShortcut(
+    button: @Composable (Modifier) -> Unit,
+    inlineShortcut: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    // Place the book over the reserved header space as a separate accessibility target.
+    Layout(
+        modifier = modifier,
+        content = {
+            button(Modifier.fillMaxWidth())
+            inlineShortcut()
+        },
+    ) { children, constraints ->
+        val main = children[0].measure(constraints)
+        val book = children[1].measure(constraints.copy(minWidth = 0, minHeight = 0))
+        layout(main.width, main.height) {
+            main.placeRelative(0, 0)
+            book.placeRelative(
+                main.width - SkDimens.Gap.roundToPx() - book.width,
+                main[HeaderCenter] - book.height / 2,
+            )
+        }
+    }
+}
+
+@Composable
+private fun PathRowWithTrailing(
+    button: @Composable (Modifier) -> Unit,
+    trailing: (@Composable () -> Unit)?,
+    modifier: Modifier = Modifier,
+) {
+    val stackShortcut = LocalDensity.current.fontScale > SkDimens.MAX_ROW_FONT_SCALE
+    FlowRow(modifier, maxItemsInEachRow = if (stackShortcut) 1 else 2) {
+        button(Modifier.weight(1f).align(Alignment.CenterVertically))
         if (trailing != null) {
             Box(
                 Modifier
@@ -108,11 +164,10 @@ fun PathRow(
     }
 }
 
+private val HeaderCenter = HorizontalAlignmentLine(::minOf)
+
 @Composable
-private fun PathRowState(
-    completed: Boolean,
-    locked: Boolean,
-) {
+private fun PathRowState(completed: Boolean) {
     when {
         completed -> {
             Box(
@@ -121,10 +176,6 @@ private fun PathRowState(
             ) {
                 SkIcon(SkIcons.Check, SkDimens.ActionIcon, tint = SkColors.OnPrimary)
             }
-        }
-
-        locked -> {
-            SkIcon(SkIcons.Lock, SkDimens.ActionIcon)
         }
 
         else -> {
@@ -144,6 +195,7 @@ private fun PathRowContent(
     supporting: (@Composable ColumnScope.() -> Unit)?,
     showState: Boolean,
     leading: @Composable () -> Unit,
+    hasInlineShortcut: Boolean,
 ) {
     val current = style == PathRowStyle.CURRENT
     val practice = style == PathRowStyle.PRACTICE
@@ -164,29 +216,20 @@ private fun PathRowContent(
         verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
     ) {
         Row(
+            modifier = if (hasInlineShortcut) Modifier.reserveShortcutSpace() else Modifier,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(if (practice) SkDimens.GapM else SkDimens.GapLabel),
         ) {
-            PathRowBadge(current, practice, badgeColor, leading)
+            PathRowBadge(current, practice, badgeColor, locked, leading)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(SkDimens.GapXS)) {
-                WordSafeText(
-                    title,
-                    if (current) {
-                        SkType.LessonTitleCurrent
-                    } else if (practice) {
-                        SkType.PracticeTitle
-                    } else {
-                        SkType.LessonTitle
-                    },
-                    textAlign = TextAlign.Start,
-                )
-                supporting?.invoke(this)
+                PathRowTitle(title, style)
+                if (locked) LockPill() else supporting?.invoke(this)
             }
-            if (showIndicator && !stateOnOwnLine) PathRowState(completed, locked)
+            if (showIndicator && !stateOnOwnLine) PathRowState(completed)
         }
         if (showIndicator && stateOnOwnLine) {
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                PathRowState(completed, locked)
+                PathRowState(completed)
             }
         }
         if (current && startLabel != null) {
@@ -194,6 +237,32 @@ private fun PathRowContent(
         }
     }
 }
+
+@Composable
+private fun PathRowTitle(
+    title: String,
+    style: PathRowStyle,
+) {
+    WordSafeText(
+        title,
+        if (style == PathRowStyle.CURRENT) {
+            SkType.LessonTitleCurrent
+        } else if (style == PathRowStyle.PRACTICE) {
+            SkType.PracticeTitle
+        } else {
+            SkType.LessonTitle
+        },
+        textAlign = TextAlign.Start,
+    )
+}
+
+private fun Modifier.reserveShortcutSpace(): Modifier =
+    padding(end = SkDimens.IconButton + SkDimens.GapLabel).layout { measurable, constraints ->
+        val header = measurable.measure(constraints)
+        layout(header.width, header.height, mapOf(HeaderCenter to header.height / 2)) {
+            header.placeRelative(0, 0)
+        }
+    }
 
 @Composable
 private fun PathRowStart(startLabel: String) {
@@ -221,11 +290,13 @@ private fun PathRowBadge(
     current: Boolean,
     practice: Boolean,
     badgeColor: Color,
+    locked: Boolean,
     leading: @Composable () -> Unit,
 ) {
     val badge = if (current) SkDimens.RowBadgeCurrent else SkDimens.RowBadge
     Box(
         Modifier
+            .alpha(if (locked) SkColors.LOCKED_BADGE_ALPHA else 1f)
             .sizeIn(minWidth = badge, minHeight = badge)
             .background(
                 if (practice) SkColors.Surface else badgeColor,

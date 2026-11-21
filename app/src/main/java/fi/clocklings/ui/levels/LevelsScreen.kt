@@ -86,18 +86,23 @@ private fun LevelRow(
         } else {
             ""
         }
-    val locked = if (access.level(i)) "" else stringResource(R.string.full_version_label)
+    val enabled = access.level(i)
+    val description =
+        if (enabled) {
+            "$title. $example. $stars. $completed"
+        } else {
+            "$title. $example. " + stringResource(R.string.full_version_label)
+        }
     PathRow(
         title,
-        "$title. $example. $stars. $completed $locked",
+        description,
         { onPlay(i) },
         badgeColor = SkColors.LevelCards[i],
         style = if (i == current && access.level(i)) PathRowStyle.CURRENT else PathRowStyle.STEP,
         startLabel = stringResource(R.string.lesson_start),
-        locked = !access.level(i),
-        enabled = access.level(i),
+        locked = !enabled,
+        enabled = enabled,
         supporting = {
-            if (locked.isNotEmpty()) Text(locked, style = SkType.Small)
             StarRow(progress.stars[i], stars, size = SkDimens.StarSmall)
         },
         trailing = {
@@ -137,7 +142,6 @@ private fun ChallengeNode(
         locked = !enabled,
         enabled = enabled,
         supporting = {
-            if (locked.isNotEmpty()) Text(locked, style = SkType.Small)
             if (record.isNotEmpty()) Text(record, style = SkType.Small)
         },
         leading = { SkIcon(SkIcons.Star, SkDimens.LargeActionIcon) },
