@@ -11,6 +11,7 @@ import sys
 import bpy
 import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from export_wardrobe import read_layer_pixels
 from reference_finish import polish_robot
 
 
@@ -103,7 +104,7 @@ for color, (shell, joints) in COLORS.items():
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
             rendered = bpy.data.images.load(str(path), check_existing=False)
-            pixels = np.asarray(rendered.pixels[:], dtype=np.float32).reshape(900, 720, 4)[::-1].copy()
+            pixels = read_layer_pixels(rendered, 720, 900)
             bpy.data.images.remove(rendered)
             if part in {"eyes", "key"}:
                 shared[part] = pixels

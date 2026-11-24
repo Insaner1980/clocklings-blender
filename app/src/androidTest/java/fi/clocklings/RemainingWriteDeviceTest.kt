@@ -187,7 +187,7 @@ class RemainingWriteDeviceTest : StorageDeviceTest() {
     ) {
         await(failure.entered)
         failure.release.complete(Unit)
-        waitFor(context.getString(R.string.settings_save_error))
+        waitFor(context.getString(R.string.progress_save_error))
         assertArrayEquals(committed, fixture.file.readBytes())
         click(context.getString(R.string.settings_retry))
         waitFor(result, substring = substring)
@@ -277,7 +277,7 @@ class RemainingWriteDeviceTest : StorageDeviceTest() {
                         compose.onNode(clock).performCustomAccessibilityActionWithLabel("Add 60\u00A0minutes")
                     }
                 }
-                click("Done")
+                click("Check")
             }
         }
     }

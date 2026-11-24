@@ -41,6 +41,7 @@ import fi.clocklings.R
 import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.Progress
 import fi.clocklings.domain.Settings
+import fi.clocklings.ui.LocalClockTime
 import fi.clocklings.ui.components.MenuTile
 import fi.clocklings.ui.components.RoundIconButton
 import fi.clocklings.ui.components.ScreenScaffold
@@ -67,7 +68,7 @@ fun HomeScreen(
     onOpen: (HomeDestination) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val now = rememberHomeTime()
+    val now = rememberHomeTime(LocalClockTime.current)
     val time = if (settings.h24) now else now % ClockTime.HALF_DAY
     ScreenScaffold(modifier, section = Section.HOME, scroll = false, wideContent = true) {
         BoxWithConstraints(Modifier.fillMaxWidth().weight(1f)) {

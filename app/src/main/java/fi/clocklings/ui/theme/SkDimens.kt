@@ -124,6 +124,7 @@ object SkDimens {
     val FeedbackClockMin = 220.dp
     val QuizClockMin = 200.dp
     val LessonPageClockMax = 340.dp
+    val FiveMinuteDemoClockMin = 272.dp
     val FeedbackAvatar = 40.dp
     val ChallengeCompanionHeight = 190.dp
     val ChallengeBadgeHeight = 36.dp
@@ -166,6 +167,7 @@ object SkDimens {
 
     val MiniClockLevel = 56.dp
     val DollResult = 128.dp
+    val ResultCompanionMinHeight = 96.dp
     val DollBigMax = 220.dp
     val CompanionPreview = 245.dp
     val NameFieldMaxWidth = 280.dp

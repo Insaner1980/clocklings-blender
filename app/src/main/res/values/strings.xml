@@ -41,6 +41,8 @@
     <string name="menu_vapaa">Explore</string>
     <string name="menu_vapaa_sub">Move the hands and explore the time</string>
     <string name="menu_pelaa">Play</string>
+    <string name="path_practice_title">Play: %1$s</string>
+    <string name="check_answer">Check</string>
     <string name="menu_pelaa_sub">Practise reading and setting the clock</string>
     <string name="menu_kysy">Play Together</string>
     <string name="menu_kysy_sub">Set a time, take a guess, and swap turns</string>
@@ -109,7 +111,9 @@
     <string name="dress_doll">Choose an outfit</string>
     <plurals name="result_stars_description"><item quantity="one">%1$d\u00A0star out of three</item><item quantity="other">%1$d\u00A0stars out of three</item></plurals>
     <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d correct</string>
-    <string name="challenge_intro">You have one minute. Answer as many as you can. After a wrong answer, the clock shows the time and play continues.</string>
+    <string name="progress_save_error">Your result couldn’t be saved. Try again.</string>
+    <string name="challenge_intro">Answer as many as you can. If you get one wrong, keep playing.</string>
+    <string name="ask_revealed_text">Did you guess right? Now swap turns.</string>
     <string name="challenge_best" tools:ignore="PluralsCandidate">Best score: %1$d correct</string>
     <string name="challenge_no_best">No score yet</string>
     <string name="challenge_go">Start!</string>
@@ -283,7 +287,7 @@
     <string name="l_viisi_title">Five-minute steps</string>
     <string name="l_viisi_desc">Numbers and minutes</string>
     <string name="l_viisi_p1a">For the long hand, each step from one number to the next takes five minutes.</string>
-    <string name="l_viisi_p1b">Number 1 marks 5\u00A0minutes, number 2 marks 10, and so on.</string>
+    <string name="l_viisi_p1b">Number 1 marks 5\u00A0minutes, number 2 marks 10, and so on. At number 12 the hour is full, and the minutes start again from 0.</string>
     <string name="l_viisi_p2a">Count in fives: 5, 10, 15, 20.</string>
     <string name="l_viisi_p2b">At number 4, 20\u00A0minutes have passed. We say twenty past.</string>
     <string name="l_viisi_p3a">Keep counting in fives on either side of half past.</string>

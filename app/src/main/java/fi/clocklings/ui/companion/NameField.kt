@@ -3,6 +3,8 @@ package fi.clocklings.ui.companion
 import android.view.KeyEvent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -63,8 +65,11 @@ internal fun NameField(
 ) {
     val label = stringResource(R.string.doll_name_label)
     val view = LocalView.current
+    val interaction = remember { MutableInteractionSource() }
+    val focused by interaction.collectIsFocusedAsState()
     BasicTextField(
         state = state,
+        interactionSource = interaction,
         inputTransformation = NameLengthLimit,
         lineLimits = TextFieldLineLimits.SingleLine,
         textStyle = SkType.NameField.copy(textAlign = TextAlign.Center),
@@ -88,13 +93,13 @@ internal fun NameField(
                 }.widthIn(max = SkDimens.NameFieldMaxWidth)
                 .fillMaxWidth()
                 .semantics { contentDescription = label },
-        decorator = { inner -> NameEditorContent(state.text.isEmpty(), inner) },
+        decorator = { inner -> NameEditorContent(state.text.isEmpty() && !focused, inner) },
     )
 }
 
 @Composable
 private fun NameEditorContent(
-    empty: Boolean,
+    showPlaceholder: Boolean,
     inner: @Composable () -> Unit,
 ) {
     Row(
@@ -112,7 +117,7 @@ private fun NameEditorContent(
         horizontalArrangement = Arrangement.spacedBy(SkDimens.GapS),
     ) {
         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-            if (empty) {
+            if (showPlaceholder) {
                 Text(
                     stringResource(R.string.doll_name_placeholder),
                     style = SkType.NameFieldPlaceholder.copy(textAlign = TextAlign.Center),

@@ -129,7 +129,7 @@ class DeviceInputVerificationTest : InputDeviceTest() {
                     if (clockWords() != target) key(KeyEvent.KEYCODE_DPAD_RIGHT)
                 }
                 assertEquals("Keyboard sets task $task", target, clockWords())
-                activate(action("Done"))
+                activate(action("Check"))
             }
         }
         waitFor(hasText("Whole hours complete!", substring = true))

@@ -31,7 +31,7 @@ import fi.clocklings.ui.theme.SkType
 import kotlin.math.cos
 import kotlin.math.sin
 
-private val MoonPath = PathParser().parsePathString("M3 -12A12 12 0 0 0 3 12A7 12 0 0 1 3 -12Z").toPath()
+private val MoonPath = PathParser().parsePathString("M3 -12A12 12 0 0 0 3 12A3 12 0 0 1 3 -12Z").toPath()
 
 @Composable
 internal fun DayPartLabels(

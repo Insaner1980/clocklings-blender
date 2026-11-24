@@ -146,7 +146,7 @@ private fun LessonPracticeNode(
             },
         )
     PathRow(
-        chapterTitle,
+        stringResource(R.string.path_practice_title, chapterTitle),
         if (enabled) "$chapterTitle. $action. $starDescription" else "$chapterTitle. $action",
         onPlay,
         style = PathRowStyle.PRACTICE,

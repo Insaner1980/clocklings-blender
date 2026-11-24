@@ -5,7 +5,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.unit.IntOffset
@@ -120,17 +119,6 @@ internal abstract class AnimalRig(
         accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.BEHIND)
         drawParts()
         accessories.draw(this, outfit, ArtPart.BODY, ItemLayer.FRONT)
-    }
-
-    protected fun DrawScope.drawTailedBody(
-        outfit: Outfit,
-        angle: Float,
-        pivot: Offset,
-        tail: BlenderBodyRegion,
-        body: BlenderBodyRegion,
-    ) = drawBodyWithAccessories(outfit) {
-        rotate(angle, pivot) { part(tail) }
-        part(body)
     }
 
     protected fun DrawScope.drawBlinkingEyes(

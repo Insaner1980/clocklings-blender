@@ -38,6 +38,8 @@
     <string name="menu_vapaa">Explorar</string>
     <string name="menu_vapaa_sub">Mueve las agujas y explora las horas</string>
     <string name="menu_pelaa">Jugar</string>
+    <string name="path_practice_title">Jugar: %1$s</string>
+    <string name="check_answer">Comprobar</string>
     <string name="menu_pelaa_sub">Practica cómo leer y poner la hora</string>
     <string name="menu_kysy">Jugar juntos</string>
     <string name="menu_kysy_sub">Pon una hora, adivinad y cambiad de turno</string>
@@ -102,7 +104,9 @@
     <string name="dress_doll">Elegir un conjunto</string>
     <plurals name="result_stars_description" tools:ignore="MissingQuantity"><item quantity="one">%1$d\u00A0estrella de tres</item><item quantity="other">%1$d\u00A0estrellas de tres</item></plurals>
     <string name="challenge_score" tools:ignore="PluralsCandidate">Aciertos: %1$d</string>
-    <string name="challenge_intro">Tienes un minuto. Intenta acertar todas las que puedas. Si te equivocas, el reloj muestra la hora y el juego continúa.</string>
+    <string name="progress_save_error">No se pudo guardar el resultado. Inténtalo de nuevo.</string>
+    <string name="challenge_intro">Responde a todas las preguntas que puedas. Si te equivocas, el juego sigue.</string>
+    <string name="ask_revealed_text">¿Habéis acertado? Ahora cambiad de turno.</string>
     <string name="challenge_best" tools:ignore="PluralsCandidate">Mejor resultado: %1$d</string>
     <string name="challenge_no_best">Aún no hay resultados</string>
     <string name="challenge_go">¡Empezar!</string>
@@ -262,7 +266,7 @@
     <string name="l_viisi_title">De cinco en cinco</string>
     <string name="l_viisi_desc">Números y minutos</string>
     <string name="l_viisi_p1a">La aguja larga tarda cinco minutos en pasar de un número al siguiente.</string>
-    <string name="l_viisi_p1b">El número 1 marca 5\u00A0minutos, el 2 marca 10, y así sucesivamente.</string>
+    <string name="l_viisi_p1b">El número 1 marca 5\u00A0minutos, el 2 marca 10, y así sucesivamente. En el número 12 se completa una hora y los minutos vuelven a empezar en 0.</string>
     <string name="l_viisi_p2a">Cuenta de cinco en cinco: 5, 10, 15, 20.</string>
     <string name="l_viisi_p2b">En el número 4 han pasado 20\u00A0minutos. Decimos las tres y veinte.</string>
     <string name="l_viisi_p3a">Sigue contando de cinco en cinco antes y después de la media hora.</string>

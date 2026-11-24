@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="parent_title">Für Eltern</string>
-    <string name="parent_gate_instruction">Für Erwachsene: Gib diese vier Ziffern in umgekehrter Reihenfolge ein: %1$s</string>
-    <string name="parent_gate_answer">Code rückwärts</string>
-    <string name="parent_gate_error">Prüfe die Reihenfolge und versuche es erneut.</string>
+    <string name="parent_gate_instruction">Für Erwachsene: Rechne %1$d × %2$d aus.</string>
+    <string name="parent_gate_answer">Antwort</string>
+    <string name="parent_gate_error">Versuche es mit der neuen Aufgabe.</string>
     <string name="parent_continue">Weiter</string>
     <string name="parent_cancel">Abbrechen</string>
-    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_name">Clocklings-Vollversion</string>
     <string name="full_unlock_description">Ein einmaliger Kauf schaltet alle fünf Lernstufen, ihre Lektionen sowie alle Übungen und Herausforderungen dauerhaft frei.</string>
     <string name="full_unlock_rewards">Mit der Vollversion können alle Belohnungen verdient werden. Sterne, abgeschlossene Lektionen und Belohnungen werden weiterhin durch Lernen verdient.</string>
     <string name="purchase_ready">Kein Abo. Keine Werbung.</string>
@@ -25,5 +25,6 @@
     <string name="purchase_restore_explanation">Verwende das Google Play-Konto, mit dem die Vollversion gekauft wurde. Die Wiederherstellung eines Kaufs stellt keine Lernfortschritte wieder her, die nur auf einem anderen Gerät gespeichert sind.</string>
     <string name="full_version_label">Vollversion</string>
     <string name="companion_access_requirement">Erfordert die Vollversion und 3 verdiente Sterne.</string>
+    <string name="companion_star_requirement">Verdiene 3 Sterne, um diesen Begleiter freizuschalten.</string>
     <string name="wardrobe_full_requirement">Die Vollversion enthält weitere Outfits. Die Anforderungen an verdiente Sterne gelten weiterhin.</string>
 </resources>

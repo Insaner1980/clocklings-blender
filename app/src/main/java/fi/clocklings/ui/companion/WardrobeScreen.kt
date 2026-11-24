@@ -350,7 +350,7 @@ private fun LockedTile(
     nameStyle: TextStyle = SkType.ItemName,
     requiresFullVersion: Boolean = false,
 ) {
-    val needsStars = total < item.star
+    val needsStars = !requiresFullVersion && total < item.star
     val description =
         if (needsStars) pluralStringResource(R.plurals.item_star_need_description, item.star, item.star) else ""
     Column(

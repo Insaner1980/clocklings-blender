@@ -13,6 +13,7 @@ import bmesh
 import numpy as np
 from mathutils import Vector
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from export_wardrobe import read_layer_pixels
 from reference_finish import toy_eye, studio
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -590,7 +591,7 @@ def render_layers(scene):
         scene.render.filepath=str(path)
         bpy.ops.render.render(write_still=True)
         rendered=bpy.data.images.load(str(path),check_existing=False)
-        pixels=np.asarray(rendered.pixels[:],dtype=np.float32).reshape(1020,600,4)[::-1].copy()
+        pixels=read_layer_pixels(rendered, 600, 1020)
         bpy.data.images.remove(rendered)
         x0,y0,x1,y1=[v*3 for v in rect]
         outside=pixels[:,:,3].copy()

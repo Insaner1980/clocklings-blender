@@ -36,6 +36,7 @@ import fi.clocklings.ui.clock.ClockCommand
 import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.components.ButtonKind
 import fi.clocklings.ui.components.ClockFit
+import fi.clocklings.ui.components.ClockTaskLayout
 import fi.clocklings.ui.components.ClockTaskScaffold
 import fi.clocklings.ui.components.CompanionTip
 import fi.clocklings.ui.components.FlatPanel
@@ -92,11 +93,11 @@ fun AskScreen(
         clockFit = if (phase == AskPhase.REVEALED) ClockFit.FIT else ClockFit.NONE,
         section = Section.TOGETHER,
         topBar = { HelpTopBar(stringResource(R.string.ask_title), help, onBack, app::toggleHelp) },
-        actions = { focus, compact ->
+        actions = { focus, layout ->
             AskActions(
                 phase,
                 focus,
-                compact,
+                layout == ClockTaskLayout.COMPACT,
                 onRandom,
                 onAsk = {
                     app.play(Sound.POP)
@@ -111,8 +112,8 @@ fun AskScreen(
             )
         },
         visual = { size -> AskClock(command, phase, h24, help, size) { time = it } },
-    ) { compact ->
-        AskPanel(phase, setter, compact, time, h24, speechAvailable, onRandom)
+    ) { layout ->
+        AskPanel(phase, setter, layout == ClockTaskLayout.COMPACT, time, h24, speechAvailable, onRandom)
     }
 }
 
@@ -200,7 +201,7 @@ private fun ColumnScope.AskQuestion(
     var answerSize by remember { mutableStateOf(IntSize.Zero) }
     val fadePx = with(LocalDensity.current) { SkDimens.ScrollFade.toPx() }
     Text(stringResource(R.string.question_read), style = SkType.Question)
-    CompanionTip(stringResource(R.string.ask_small_text))
+    CompanionTip(stringResource(if (revealed) R.string.ask_revealed_text else R.string.ask_small_text))
     if (revealed) {
         TimeReadout(
             time,

@@ -13,7 +13,8 @@ import bpy
 import numpy as np
 from mathutils import Vector
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from reference_finish import fuse, toy_eye, studio
+from export_wardrobe import read_layer_pixels
+from reference_finish import configure, fuse, toy_eye, studio
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -223,21 +224,6 @@ def build():
     return scene
 
 
-def configure(scene):
-    scene.render.engine = "CYCLES"
-    scene.cycles.device = "CPU"
-    scene.cycles.samples = 40
-    scene.cycles.use_denoising = True
-    scene.render.resolution_x = 720
-    scene.render.resolution_y = 900
-    scene.render.resolution_percentage = 100
-    scene.render.film_transparent = True
-    scene.render.image_settings.file_format = "PNG"
-    scene.render.image_settings.color_mode = "RGBA"
-    scene.render.threads_mode = "FIXED"
-    scene.render.threads = 8
-
-
 def render_layers(scene):
     geometry = [o for o in scene.objects if o.get("layer")]
     for color, hex_color in COLORS.items():
@@ -256,7 +242,7 @@ def render_layers(scene):
             scene.render.filepath = str(path)
             bpy.ops.render.render(write_still=True)
             rendered = bpy.data.images.load(str(path), check_existing=False)
-            pixels = np.asarray(rendered.pixels[:], dtype=np.float32).reshape(900, 720, 4)[::-1].copy()
+            pixels = read_layer_pixels(rendered, 720, 900)
             bpy.data.images.remove(rendered)
             x0, y0, x1, y1 = [v * 3 for v in rect]
             outside = pixels[:, :, 3].copy()

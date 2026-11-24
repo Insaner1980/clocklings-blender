@@ -1,17 +1,16 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readdir, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, isAbsolute, resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { test } from "node:test";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const require = createRequire(import.meta.url);
 const deepsecEntry = require.resolve("deepsec");
 const deepsecRequire = createRequire(deepsecEntry);
-const agentRequire = createRequire(
-  realpathSync(resolve(dirname(deepsecEntry), "../../@earendil-works/pi-coding-agent/package.json")),
-);
+const agentRoot = realpathSync(resolve(dirname(deepsecEntry), "../../@earendil-works/pi-coding-agent"));
+const agentRequire = createRequire(resolve(agentRoot, "package.json"));
 
 for (const [consumer, consumerRequire] of [["DeepSec", deepsecRequire], ["agent", agentRequire]]) {
   test(`${consumer} minimatch supports file exclusions and case-insensitive model patterns`, () => {
@@ -64,45 +63,30 @@ test("shipped DeepSec CLI includes Kotlin files and honors Java exclusions", () 
   }
 });
 
-test("agent glob supports its absolute package discovery options", () => {
-  const { globSync } = agentRequire("glob");
-  const files = globSync("tests/*.test.mjs", {
-    cwd: resolve(dirname(fileURLToPath(import.meta.url)), ".."),
-    absolute: true,
-    dot: false,
-    nodir: false,
-  });
-  assert.ok(files.length >= 3);
-  assert.ok(files.every(isAbsolute));
-  assert.ok(files.some((file) => file.endsWith("qs-comma.test.mjs")));
-});
+test("agent package discovery returns absolute prompt paths and honors exclusions", async (t) => {
+  const { DefaultPackageManager, SettingsManager } = await import(pathToFileURL(resolve(agentRoot, "dist/index.js")).href);
+  const scratch = realpathSync(mkdtempSync(resolve(dirname(fileURLToPath(import.meta.url)), "agent-glob-")));
+  t.after(() => rmSync(scratch, { recursive: true, force: true }));
+  const packageRoot = resolve(scratch, "package");
+  mkdirSync(resolve(packageRoot, "prompts/nested"), { recursive: true });
+  writeFileSync(resolve(packageRoot, "package.json"), JSON.stringify({
+    name: "local-prompts",
+    version: "1.0.0",
+    pi: { prompts: ["prompts/**/*.md", "prompts/.explicit.md", "!prompts/skip.md"] },
+  }));
+  for (const file of ["visible.md", "nested/visible.md", ".explicit.md", ".hidden.md", "skip.md", "other.txt"]) {
+    writeFileSync(resolve(packageRoot, "prompts", file), "# Local prompt\n");
+  }
 
-test("agent glob stops directory reads when cancelled during traversal", async () => {
-  const { glob } = agentRequire("glob");
-  const controller = new AbortController();
-  const reason = new Error("test cancellation");
-  let reads = 0;
-  const traversal = glob("**/*", {
-    cwd: resolve(dirname(fileURLToPath(import.meta.url)), ".."),
-    signal: controller.signal,
-    fs: {
-      readdir(path, options, callback) {
-        reads++;
-        if (reads > 1) {
-          // Bound a regression to the root's immediate children, never the installed dependency tree.
-          queueMicrotask(() => callback(null, []));
-          return;
-        }
-        readdir(path, options, (error, entries) => {
-          controller.abort(reason);
-          callback(error, entries);
-        });
-      },
-    },
+  const manager = new DefaultPackageManager({
+    cwd: scratch,
+    agentDir: resolve(scratch, "agent"),
+    settingsManager: SettingsManager.inMemory(),
   });
-  await assert.rejects(traversal, reason);
-  const readsAtRejection = reads;
-  await new Promise((done) => setImmediate(done));
-  assert.equal(readsAtRejection, 1, "Cancellation must prevent traversal into child directories");
-  assert.equal(reads, readsAtRejection, "Directory reads must stop after rejection");
+  const { prompts, installFailures } = await manager.resolveExtensionSources([packageRoot], { local: true });
+  assert.deepEqual(installFailures, []);
+  assert.deepEqual(
+    prompts.filter(({ enabled }) => enabled).map(({ path }) => path).sort(),
+    [".explicit.md", "nested/visible.md", "visible.md"].map((file) => resolve(packageRoot, "prompts", file)).sort(),
+  );
 });

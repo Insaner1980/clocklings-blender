@@ -247,7 +247,7 @@ class LocalizationContentTest {
                     "No 5, diga três e vinte e cinco. No 7, diga vinte e cinco para as quatro.",
             )
         for (language in AppLanguage.entries) {
-            val page = LessonCatalog.all(language).single { it.id == "viisi" }.pages[2]
+            val page = LessonCatalog.lesson("ylivaille", language).pages.last()
             assertTrue(page.text.map { it.resolve(resources(language.tag)) }.contains(expected.getValue(language)))
         }
     }

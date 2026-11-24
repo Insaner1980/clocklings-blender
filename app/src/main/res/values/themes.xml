@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <bool name="window_is_light_theme">true</bool>
+
     <!-- Ikkunan teema ennen Composea: vaalea tausta, ei toimintopalkkia. -->
-    <style name="Theme.Clocklings" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Base.Theme.Clocklings" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="Theme.Clocklings.Starting" parent="Theme.SplashScreen">
+    <style name="Theme.Clocklings" parent="Base.Theme.Clocklings" />
+
+    <style name="Base.Theme.Clocklings.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/window_background</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="postSplashScreenTheme">@style/Theme.Clocklings</item>
     </style>
+
+    <style name="Theme.Clocklings.Starting" parent="Base.Theme.Clocklings.Starting" />
 </resources>

@@ -31,6 +31,29 @@
             <trusting group="androidx.tracing" version="2.0.1"/>
             <trusting group="^androidx[.]compose($|([.].*))" regex="true"/>
             <trusting group="^com[.]android($|([.].*))" regex="true"/>
+            <trusting group="androidx.annotation" name="annotation" version="1.11.0"/>
+            <trusting group="androidx.annotation" name="annotation-jvm" version="1.11.0"/>
+            <trusting group="androidx.appcompat" name="appcompat-resources" version="1.8.0"/>
+            <trusting group="androidx.collection" name="collection" version="1.7.0"/>
+            <trusting group="androidx.collection" name="collection-jvm" version="1.7.0"/>
+            <trusting group="androidx.collection" name="collection-ktx" version="1.7.0"/>
+            <trusting group="androidx.fragment" name="fragment" version="1.9.1"/>
+            <trusting group="androidx.loader" name="loader" version="1.2.0"/>
+            <trusting group="androidx.navigationevent" name="navigationevent" version="1.2.0"/>
+            <trusting group="androidx.navigationevent" name="navigationevent-android" version="1.2.0"/>
+            <trusting group="androidx.navigationevent" name="navigationevent-compose" version="1.2.0"/>
+            <trusting group="androidx.navigationevent" name="navigationevent-compose-android" version="1.2.0"/>
+            <trusting group="androidx.tracing" name="tracing" version="2.0.5"/>
+            <trusting group="androidx.tracing" name="tracing-android" version="2.0.5"/>
+            <trusting group="com.google.android.datatransport" name="transport-api" version="5.0.0"/>
+            <trusting group="com.google.android.datatransport" name="transport-backend-cct" version="5.0.0"/>
+            <trusting group="com.google.android.datatransport" name="transport-runtime" version="5.0.0"/>
+            <trusting group="com.google.android.gms" name="play-services-base" version="18.11.1"/>
+            <trusting group="com.google.android.gms" name="play-services-basement" version="18.12.1"/>
+            <trusting group="com.google.android.gms" name="play-services-location" version="21.4.0"/>
+            <trusting group="com.google.firebase" name="firebase-encoders" version="18.0.0"/>
+            <trusting group="com.google.firebase" name="firebase-encoders-json" version="19.0.0"/>
+            <trusting group="com.google.firebase" name="firebase-encoders-proto" version="17.0.0"/>
          </trusted-key>
          <trusted-key id="0F06FF86BEEAF4E71866EE5232EE5355A6BC6E42">
             <trusting group="androidx.annotation" version="1.10.0"/>
@@ -45,6 +68,14 @@
             <trusting group="androidx.window"/>
             <trusting group="com.google.android.gms" name="play-services-basement" version="18.9.0"/>
             <trusting group="^androidx[.]test($|([.].*))" regex="true"/>
+            <trusting group="androidx.annotation" name="annotation-experimental" version="1.6.0"/>
+            <trusting group="androidx.autofill" name="autofill" version="1.3.0"/>
+            <trusting group="androidx.concurrent" version="1.3.0"/>
+            <trusting group="androidx.customview" name="customview" version="1.2.0"/>
+            <trusting group="androidx.customview" name="customview-poolingcontainer" version="1.1.0"/>
+            <trusting group="androidx.graphics" name="graphics-shapes" version="1.1.0"/>
+            <trusting group="androidx.graphics" name="graphics-shapes-android" version="1.1.0"/>
+            <trusting group="com.google.android.gms" name="play-services-tasks" version="18.4.1"/>
          </trusted-key>
          <trusted-key id="0F07D1201BDDAB67CFB84EB479752DB6C966F0B8" group="com.google.android" name="annotations" version="4.1.1.4"/>
          <trusted-key id="120D6F34E627ED3A772EBBFE55C7E5E701832382" group="org.snakeyaml" name="snakeyaml-engine" version="2.7"/>
@@ -81,7 +112,10 @@
          <trusted-key id="3051D45031E13516A6E8FAFF280D66A55F5316C5" group="org.bitbucket.b_c" name="jose4j" version="0.9.7"/>
          <trusted-key id="31BAE2E51D95E0F8AD9B7BCC40A3C4432BD7308C" group="com.googlecode.juniversalchardet" name="juniversalchardet" version="1.0.3"/>
          <trusted-key id="32118CF76C9EC5D918E54967CA80D1F0EB6CA4BA" group="org.codehaus.mojo"/>
-         <trusted-key id="33FD4BFD33554634053D73C0C2148900BCD3C2AF" group="org.jetbrains" name="annotations" version="23.0.0"/>
+         <trusted-key id="33FD4BFD33554634053D73C0C2148900BCD3C2AF">
+            <trusting group="org.jetbrains" name="annotations" version="23.0.0"/>
+            <trusting group="org.jetbrains" name="annotations" version="26.1.0"/>
+         </trusted-key>
          <trusted-key id="34441E504A937F43EB0DAEF96A65176A0FB1CD0B">
             <trusting group="org.apache.groovy"/>
             <trusting group="org.codehaus.groovy" name="groovy" version="3.0.22"/>
@@ -177,6 +211,11 @@
             <trusting group="androidx.core" name="core" version="1.15.0"/>
             <trusting group="androidx.graphics"/>
             <trusting group="androidx.profileinstaller"/>
+            <trusting group="androidx.startup" name="startup-runtime" version="1.2.0"/>
+            <trusting group="androidx.vectordrawable" name="vectordrawable" version="1.2.0"/>
+            <trusting group="androidx.vectordrawable" name="vectordrawable-animated" version="1.2.0"/>
+            <trusting group="androidx.versionedparcelable" name="versionedparcelable" version="1.2.1"/>
+            <trusting group="androidx.viewpager" name="viewpager" version="1.1.0"/>
          </trusted-key>
          <trusted-key id="AA70C7C433D501636392EC02153E7A3C2B4E5118" group="org.eclipse.ee4j" name="project"/>
          <trusted-key id="ADBC987D1A7B91DB6B0AAA81995EFBF4A3D20BEB" group="com.pinterest.ktlint"/>
@@ -3561,6 +3600,10 @@
             <pgp value="5DD80B0DDCCBE005F0A47FD66751E1A6E2001B8D"/>
             <sha256 value="d4ecee7c2e57bd3155bef0a26bd2eff49b6d7dbc108ee321b4c7be60628730d4" origin="Maven Central"/>
          </artifact>
+         <artifact name="okio-jvm-3.18.2.pom">
+            <pgp value="5DD80B0DDCCBE005F0A47FD66751E1A6E2001B8D"/>
+            <sha256 value="94ef678c6c26f04c380a902951174f216bbae4d3f1bfc421e1830f9aac556d28" origin="Maven Central"/>
+         </artifact>
       </component>
       <component group="com.squareup.wire" name="wire-runtime" version="6.4.7">
          <artifact name="wire-runtime-6.4.7.module">
@@ -6176,6 +6219,16 @@
          </artifact>
          <artifact name="cpe-parser-3.0.1.pom">
             <sha256 value="6a539026f276359cde18e53f6b7c41ff6bca1744d7e2c817bae2bcd832d8360a" origin="Generated by Gradle"/>
+         </artifact>
+      </component>
+      <component group="androidx.collection" name="collection" version="1.4.2">
+         <artifact name="collection-1.4.2.module">
+            <pgp value="A5F483CD733A4EBAEA378B2AE88979FB9B30ACF2"/>
+         </artifact>
+      </component>
+      <component group="androidx.core" name="core" version="1.19.1">
+         <artifact name="core-1.19.1.aar">
+            <sha256 value="08108ea780205bd54603088a62a6dd5378f63bd25542674be24cd4cdb8191a09" origin="Verified against Google Maven"/>
          </artifact>
       </component>
    </components>

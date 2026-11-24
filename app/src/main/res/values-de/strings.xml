@@ -37,6 +37,8 @@
     <string name="menu_vapaa">Entdecken</string>
     <string name="menu_vapaa_sub">Bewege die Zeiger und entdecke die Uhrzeit</string>
     <string name="menu_pelaa">Spielen</string>
+    <string name="path_practice_title">Spielen: %1$s</string>
+    <string name="check_answer">Prüfen</string>
     <string name="menu_pelaa_sub">Übe, die Uhr zu lesen und zu stellen</string>
     <string name="menu_kysy">Zusammen spielen</string>
     <string name="menu_kysy_sub">Stellt die Uhr, ratet und wechselt euch ab</string>
@@ -104,7 +106,9 @@
     <string name="dress_doll">Outfit wählen</string>
     <plurals name="result_stars_description"><item quantity="one">%1$d\u00A0Stern von drei</item><item quantity="other">%1$d\u00A0Sterne von drei</item></plurals>
     <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d richtig</string>
-    <string name="challenge_intro">Du hast eine Minute. Beantworte so viele Fragen wie möglich. Nach einer falschen Antwort zeigt die Uhr die Lösung und es geht weiter.</string>
+    <string name="progress_save_error">Das Ergebnis konnte nicht gespeichert werden. Versuch es noch einmal.</string>
+    <string name="challenge_intro">Beantworte so viele Fragen, wie du schaffst. Nach einer falschen Antwort geht das Spiel weiter.</string>
+    <string name="ask_revealed_text">Habt ihr richtig geraten? Wechselt jetzt die Rollen.</string>
     <string name="challenge_best" tools:ignore="PluralsCandidate">Bestes Ergebnis: %1$d richtig</string>
     <string name="challenge_no_best">Noch kein Ergebnis</string>
     <string name="challenge_go">Los!</string>
@@ -264,7 +268,7 @@
     <string name="l_ylivaille_p2b">Wir zählen die Minuten bis zur nächsten vollen Stunde.</string>
     <!-- Correct grammar: "an der" refers to "die Stunde"; the next "der" belongs to "der kurze Zeiger". -->
     <string name="l_ylivaille_p3a" tools:ignore="Typos">Bei zehn nach nennen wir die Stunde, an der der kurze Zeiger schon vorbei ist.</string>
-    <string name="l_ylivaille_p3b">Bei zehn vor nennen wir die nächste Stunde. Nahe der halben Stunde können wir auch die Minuten vor oder nach halb zählen.</string>
+    <string name="l_ylivaille_p3b">Bei zehn vor nennen wir die nächste Stunde.</string>
     <string name="l_ylivaille_q">Wie spät ist es?</string>
     <string name="l_ylivaille_c1">Zehn nach vier</string>
     <string name="l_ylivaille_c2">Zehn vor vier</string>
@@ -275,7 +279,7 @@
     <string name="l_viisi_title">Fünf-Minuten-Schritte</string>
     <string name="l_viisi_desc">Zahlen und Minuten</string>
     <string name="l_viisi_p1a">Der lange Zeiger braucht von einer Zahl zur nächsten immer fünf Minuten.</string>
-    <string name="l_viisi_p1b">Die 1 steht für 5\u00A0Minuten, die 2 für 10 und so weiter.</string>
+    <string name="l_viisi_p1b">Die 1 steht für 5\u00A0Minuten, die 2 für 10 und so weiter. Bei der 12 ist eine volle Stunde vergangen, und die Minuten beginnen wieder bei 0.</string>
     <string name="l_viisi_p2a">Zähle in Fünferschritten: 5, 10, 15, 20.</string>
     <string name="l_viisi_p2b">Bei der 4 sind 20\u00A0Minuten vergangen. Wir sagen zwanzig nach.</string>
     <string name="l_viisi_p3a">Zähle vor und nach der halben Stunde in Fünferschritten weiter.</string>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="parent_title">Pour les parents</string>
-    <string name="parent_gate_instruction">Pour les adultes : saisissez ces quatre chiffres dans l’ordre inverse : %1$s</string>
-    <string name="parent_gate_answer">Code inversé</string>
-    <string name="parent_gate_error">Vérifiez l’ordre et réessayez.</string>
+    <string name="parent_gate_instruction">Pour les adultes : calculez %1$d × %2$d.</string>
+    <string name="parent_gate_answer">Réponse</string>
+    <string name="parent_gate_error">Essayez le nouveau calcul.</string>
     <string name="parent_continue">Continuer</string>
     <string name="parent_cancel">Annuler</string>
-    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_name">Version complète de Clocklings</string>
     <string name="full_unlock_description">Un achat unique débloque définitivement les cinq niveaux, leurs leçons et toutes les activités d’entraînement et de défi.</string>
     <string name="full_unlock_rewards">La version complète permet de gagner toutes les récompenses. Les étoiles, les leçons terminées et les récompenses restent le fruit de l’apprentissage.</string>
     <string name="purchase_ready">Sans abonnement. Sans publicité.</string>
@@ -25,5 +25,6 @@
     <string name="purchase_restore_explanation">Utilisez le compte Google Play qui a acheté la version complète. Restaurer un achat ne restaure pas les progrès enregistrés uniquement sur un autre appareil.</string>
     <string name="full_version_label">Version complète</string>
     <string name="companion_access_requirement">Nécessite la version complète et 3 étoiles gagnées.</string>
+    <string name="companion_star_requirement">Gagne 3 étoiles pour débloquer ce compagnon.</string>
     <string name="wardrobe_full_requirement">La version complète comprend davantage de tenues. Il faut toujours gagner les étoiles nécessaires.</string>
 </resources>

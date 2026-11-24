@@ -1,8 +1,8 @@
 diff --git a/dist/cli.mjs b/dist/cli.mjs
-index 6245781287e188a088b157764e3b450923c4d1bf..6f499e9ebb6045f66c7a666e795646367fe6a1b3 100644
+index 7550271..7879a50 100644
 --- a/dist/cli.mjs
 +++ b/dist/cli.mjs
-@@ -69024,6 +69024,17 @@ function resolveCodexPaths() {
+@@ -69027,6 +69027,17 @@ function resolveCodexPaths() {
    }
  }
  var CODEX_ENV_ALLOWLIST = /* @__PURE__ */ new Set([
@@ -20,7 +20,7 @@ index 6245781287e188a088b157764e3b450923c4d1bf..6f499e9ebb6045f66c7a666e79564636
    // Shell + locale
    "PATH",
    "HOME",
-@@ -69064,7 +69075,7 @@ function buildCodexEnv(extras) {
+@@ -69067,7 +69078,7 @@ function buildCodexEnv(extras) {
    const env3 = {};
    for (const [k2, v2] of Object.entries(process.env)) {
      if (typeof v2 !== "string") continue;
@@ -29,7 +29,7 @@ index 6245781287e188a088b157764e3b450923c4d1bf..6f499e9ebb6045f66c7a666e79564636
        env3[k2] = v2;
      }
    }
-@@ -69106,6 +69117,7 @@ function buildCodexInvocation() {
+@@ -69112,6 +69123,7 @@ function buildCodexInvocation(requestedCyberAccessProgram) {
      if (!process.env.RUST_LOG) extras.RUST_LOG = "info";
    }
    const pluginLockdown = {

@@ -41,6 +41,7 @@ import fi.clocklings.R
 import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.Greeting
 import fi.clocklings.domain.timeLanguage
+import fi.clocklings.ui.LocalClockTime
 import fi.clocklings.ui.greetingText
 import fi.clocklings.ui.locale.LocalAppLanguage
 import fi.clocklings.ui.rememberReduceMotion
@@ -60,7 +61,8 @@ fun IntroOverlay(
     modifier: Modifier = Modifier,
 ) {
     val reduceMotion = rememberReduceMotion()
-    val target = remember { ClockTime.now() }
+    val readTime = LocalClockTime.current
+    val target = remember { readTime() }
     val elapsed = remember { mutableLongStateOf(0L) }
     val currentOnDone by rememberUpdatedState(onDone)
     IntroTimelineEffect(reduceMotion, onFrame = { elapsed.longValue = it }, onTick = onTick, onDone = onDone)

@@ -4,6 +4,7 @@ import android.content.res.Resources
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ import fi.clocklings.ui.parent.ParentScreen
 import fi.clocklings.ui.theme.ClocklingsTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -54,7 +56,7 @@ class ParentScreenTest {
                 ParentScreen(PurchaseUiState(), { error("purchase") }, { error("restore") }, {}, { back++ })
             }
         }
-        compose.onNodeWithText("Clocklings Full Unlock").assertDoesNotExist()
+        compose.onNodeWithText("Clocklings Full Version").assertDoesNotExist()
         compose.onNodeWithText("Cancel").performScrollTo().performClick()
         assertEquals(1, back)
     }
@@ -68,17 +70,18 @@ class ParentScreenTest {
         }
         compose.onNodeWithText("Share usage statistics", substring = true).assertDoesNotExist()
         compose.onNodeWithText("Continue").assertIsNotEnabled()
-        compose.onNode(hasSetTextAction()).performTextInput("0000")
+        val first = gateFactors()
+        compose.onNode(hasSetTextAction()).performTextInput("0")
         compose.onNode(hasSetTextAction()).performImeAction()
-        compose.onNodeWithText("Check the order and try again.").assertExists()
+        compose.onNodeWithText("Try the new calculation.").assertExists()
+        assertNotEquals(first, gateFactors())
         compose.onNodeWithText("Continue").assertIsNotEnabled()
-        compose.onNodeWithText("Clocklings Full Unlock").assertDoesNotExist()
-        restoration.emulateSavedInstanceStateRestore()
+        compose.onNodeWithText("Clocklings Full Version").assertDoesNotExist()
         passGate()
-        compose.onNodeWithText("Clocklings Full Unlock").assertExists()
+        compose.onNodeWithText("Clocklings Full Version").assertExists()
         compose.onNodeWithText("Share usage statistics", substring = true).assertIsOff()
         restoration.emulateSavedInstanceStateRestore()
-        compose.onNodeWithText("Clocklings Full Unlock").assertDoesNotExist()
+        compose.onNodeWithText("Clocklings Full Version").assertDoesNotExist()
         compose.onNodeWithText("Share usage statistics", substring = true).assertDoesNotExist()
     }
 
@@ -172,19 +175,11 @@ class ParentScreenTest {
                 }
                 val resources = localizedContext(entry).resources
                 passLocalizedGate(resources)
+                if (entry == AppLanguage.FINNISH) {
+                    compose.onNodeWithText("Clocklings-täysversio").performScrollTo().assertIsDisplayed()
+                }
                 verifyRecoveryActions(resources)
-                compose.runOnIdle { state.value = state.value.copy(fullAccess = true) }
-                compose
-                    .onNode(hasText(resources.getString(R.string.purchase_unavailable)) and hasClickAction())
-                    .assertDoesNotExist()
-                compose.runOnIdle { state.value = state.value.copy(status = PurchaseStatus.ACKNOWLEDGEMENT_PENDING) }
-                compose
-                    .onNodeWithText(resources.getString(R.string.purchase_acknowledgement_pending))
-                    .performScrollTo()
-                    .assertIsDisplayed()
-                compose.runOnIdle { state.value = state.value.copy(busy = true) }
-                compose.onNodeWithText(resources.getString(R.string.purchase_retry)).assertIsNotEnabled()
-                compose.onNodeWithText(resources.getString(R.string.purchase_restore)).assertIsNotEnabled()
+                verifyOwnedAndPendingStates(resources, state)
                 verifyUsageControls(resources)
             }
         }
@@ -192,11 +187,29 @@ class ParentScreenTest {
         assertEquals(28, restores)
     }
 
+    private fun verifyOwnedAndPendingStates(
+        resources: Resources,
+        state: MutableState<PurchaseUiState>,
+    ) {
+        compose.runOnIdle { state.value = state.value.copy(fullAccess = true) }
+        compose
+            .onNode(hasText(resources.getString(R.string.purchase_unavailable)) and hasClickAction())
+            .assertDoesNotExist()
+        compose.runOnIdle { state.value = state.value.copy(status = PurchaseStatus.ACKNOWLEDGEMENT_PENDING) }
+        compose
+            .onNodeWithText(resources.getString(R.string.purchase_acknowledgement_pending))
+            .performScrollTo()
+            .assertIsDisplayed()
+        compose.runOnIdle { state.value = state.value.copy(busy = true) }
+        compose.onNodeWithText(resources.getString(R.string.purchase_retry)).assertIsNotEnabled()
+        compose.onNodeWithText(resources.getString(R.string.purchase_restore)).assertIsNotEnabled()
+    }
+
     private fun passLocalizedGate(resources: Resources) {
         val prefix =
             resources
-                .getString(R.string.parent_gate_instruction, "GATE_MARKER")
-                .substringBefore("GATE_MARKER")
+                .getString(R.string.parent_gate_instruction, 12, 3)
+                .substringBefore("12")
                 .trim()
         passGate(prefix)
     }
@@ -233,15 +246,20 @@ class ParentScreenTest {
     }
 
     private fun passGate(prefix: String = "For adults:") {
+        val (first, second) = gateFactors(prefix)
+        compose.onNode(hasSetTextAction()).performTextInput((first * second).toString())
+        compose.onNode(hasSetTextAction()).performImeAction()
+    }
+
+    private fun gateFactors(prefix: String = "For adults:"): Pair<Int, Int> {
         val instruction =
             compose
                 .onNodeWithText(prefix, substring = true)
                 .fetchSemanticsNode()
                 .config[SemanticsProperties.Text]
                 .joinToString { it.text }
-        val answer = instruction.filter(Char::isDigit).reversed()
-        compose.onNode(hasSetTextAction()).performTextInput(answer)
-        compose.onNode(hasSetTextAction()).performImeAction()
+        val (first, second) = checkNotNull(Regex("([0-9]{2}) × ([0-9])").find(instruction)).destructured
+        return first.toInt() to second.toInt()
     }
 }
 

@@ -9,7 +9,7 @@ android {
     compileSdk {
         version =
             release(37) {
-                minorApiLevel = 1
+                minorApiLevel = 2
             }
     }
     targetProjectPath = ":app"
@@ -44,6 +44,9 @@ dependencies {
     implementation(libs.androidx.test.ext.junit)
     implementation(libs.androidx.test.runner)
     constraints {
+        implementation(libs.kotlinx.coroutines.android) {
+            because("Match the Coroutines version of the profiled app")
+        }
         add("ktlint", libs.logback.classic.get()) {
             because("Use the patched Logback release in ktlint")
         }

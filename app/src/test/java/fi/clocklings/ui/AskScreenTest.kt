@@ -18,6 +18,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import fi.clocklings.R
+import fi.clocklings.domain.AppLanguage
 import fi.clocklings.ui.ask.AskScreen
 import fi.clocklings.ui.theme.ClocklingsTheme
 import org.junit.Assert.assertFalse
@@ -29,6 +31,19 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class AskScreenTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun askRevealShowsFollowUpText() {
+        val context = localizedContext(AppLanguage.ENGLISH)
+        val guess = context.getString(R.string.ask_small_text)
+        val followUp = "Did you guess right? Now swap turns."
+        compose.setAskContent(AppViewModel(FakeServices(fullAccess = true)), mutableStateOf(TestViewports.first()))
+        compose.onNodeWithText("Pass to partner").performClick()
+        compose.onNodeWithText(guess).scrollIfNeeded().assertIsDisplayed()
+        compose.onNodeWithText("Show the answer").performClick()
+        compose.onNodeWithText(followUp).scrollIfNeeded().assertIsDisplayed()
+        compose.onNodeWithText(guess).assertDoesNotExist()
+    }
 
     @Test
     fun lateSetterAndRepeatedSwapActionsPreserveTheTurn() {

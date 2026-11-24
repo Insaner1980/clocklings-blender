@@ -15,6 +15,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -29,6 +30,33 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ActionPairTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun compactStartLeavesRoomWithoutAnEndAction() {
+        val endLabel = mutableStateOf<String?>(null)
+        compose.setContent {
+            CompositionLocalProvider(LocalDensity provides Density(1f, 2f)) {
+                ClocklingsTheme {
+                    Box(Modifier.requiredSize(320.dp, 640.dp)) {
+                        ActionPair(
+                            startLabel = "Return to the previous explanation",
+                            endLabel = endLabel.value,
+                            start = { SkButton("Previous", {}, modifier = it) },
+                            compactStart = { SkButton("Back", {}, modifier = it) },
+                            end = { SkButton("Next", {}, modifier = it) },
+                        )
+                    }
+                }
+            }
+        }
+
+        val back = compose.onNodeWithText("Back").assertIsDisplayed()
+        val before = back.fetchSemanticsNode().boundsInRoot
+        compose.onNodeWithText("Next").assertDoesNotExist()
+        compose.runOnIdle { endLabel.value = "Next" }
+        compose.onNodeWithText("Next").assertIsDisplayed()
+        assertEquals(before, back.fetchSemanticsNode().boundsInRoot)
+    }
 
     @Test
     fun changingArrangementPreservesBothSlotsAndUsesTheirLatestCallbacks() {

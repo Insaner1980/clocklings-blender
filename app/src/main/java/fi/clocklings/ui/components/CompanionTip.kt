@@ -44,6 +44,7 @@ fun CompanionTip(
     celebrate: Boolean = false,
     color: Color? = null,
     avatarWidth: Dp = SkDimens.TipCompanion,
+    animated: Boolean = true,
 ) {
     CompanionTip(
         modifier,
@@ -52,6 +53,7 @@ fun CompanionTip(
         color = color ?: SkColors.Bubble,
         fallback = { FeedbackBox(text, kind, color = color) },
         avatarWidth = avatarWidth,
+        animated = animated,
     ) {
         Text(text, style = SkType.Body)
     }
@@ -69,6 +71,7 @@ fun CompanionTip(
     color: Color = SkColors.Bubble,
     fallback: @Composable () -> Unit = {},
     avatarWidth: Dp = SkDimens.TipCompanion,
+    animated: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val companion = LocalPersonalization.current.companion
@@ -88,6 +91,7 @@ fun CompanionTip(
                 companion,
                 LocalCompanionOutfit.current,
                 Modifier.size(if (compact) SkDimens.TipCompanionCompact else avatarWidth),
+                animated = animated,
                 celebration = celebration,
             )
         }

@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,12 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import fi.clocklings.R
@@ -65,6 +66,7 @@ import fi.clocklings.ui.theme.Section
 import fi.clocklings.ui.theme.SkDimens
 import fi.clocklings.ui.theme.SkType
 import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
 
 /**
  * Tasotulos: tähdet, uudet vaatteet ja jatkonapit. Kaikki lasketaan avaimesta,
@@ -114,31 +116,60 @@ fun ResultScreen(
         topBar = { RoundIconButton(SkIcons.Close, stringResource(R.string.back_description), onLevels) },
         bottomBar = { ResultActions(hasNext, canReplay, onNextLevel, onPlayAgain, onLevels) },
     ) {
-        Column(
-            Modifier.fillMaxWidth().padding(bottom = SkDimens.ScrollFade),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            ResultStars(stars, onSound.takeIf { firstVisit }) { anchor.value = it }
-            Spacer(Modifier.height(SkDimens.GapM))
-            CompanionView(
-                kind,
-                outfit,
-                Modifier.width(SkDimens.DollResult).aspectRatio(companionAspectRatio(kind)),
-                celebration = dollCelebration,
-            )
-            Spacer(Modifier.height(SkDimens.Gap))
-            Column(
-                Modifier.fillMaxWidth().excludeConfetti(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
-            ) {
-                ResultTitle(stars)
-                Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
+        ResultLayout(viewportHeight, kind) {
+            Box { ResultStars(stars, onSound.takeIf { firstVisit }) { anchor.value = it } }
+            Box(Modifier.testTag("result_companion")) {
+                if (kind != CompanionKind.NONE) {
+                    CompanionView(kind, outfit, Modifier.fillMaxSize(), celebration = dollCelebration)
+                }
             }
-            if (newItems.isNotEmpty()) {
-                Spacer(Modifier.height(SkDimens.Gap))
-                ResultRewards(newItems, outfit, color, onDress)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(
+                    Modifier.fillMaxWidth().excludeConfetti(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
+                ) {
+                    ResultTitle(stars)
+                    Text(text, style = SkType.ResultText, textAlign = TextAlign.Center)
+                }
+                if (newItems.isNotEmpty()) {
+                    Spacer(Modifier.height(SkDimens.Gap))
+                    ResultRewards(newItems, outfit, color, onDress)
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun ResultLayout(
+    viewport: Dp,
+    kind: CompanionKind,
+    content: @Composable () -> Unit,
+) {
+    val hasCompanion = kind != CompanionKind.NONE
+    val ratio = companionAspectRatio(kind)
+    Layout(content = content, modifier = Modifier.fillMaxWidth()) { children, constraints ->
+        val width = constraints.maxWidth
+        val loose = Constraints(maxWidth = width)
+        val starRow = children[0].measure(loose)
+        val details = children[2].measure(loose)
+        val gapAbove = SkDimens.GapM.roundToPx()
+        val gapBelow = if (hasCompanion) SkDimens.Gap.roundToPx() else 0
+        val fade = SkDimens.ScrollFade.roundToPx()
+        val available =
+            viewport.roundToPx() - SkDimens.GapScreen.roundToPx() - fade -
+                starRow.height - details.height - gapAbove - gapBelow
+        val artMax = (minOf(SkDimens.DollResult.roundToPx(), width) / ratio).roundToInt()
+        val artMin = minOf(artMax, SkDimens.ResultCompanionMinHeight.roundToPx())
+        val artHeight = if (hasCompanion) available.coerceIn(artMin, artMax) else 0
+        val art = children[1].measure(Constraints.fixed((artHeight * ratio).roundToInt(), artHeight))
+        val artTop = starRow.height + gapAbove
+        val detailsTop = artTop + art.height + gapBelow
+        layout(width, detailsTop + details.height + fade) {
+            starRow.placeRelative((width - starRow.width) / 2, 0)
+            art.placeRelative((width - art.width) / 2, artTop)
+            details.placeRelative((width - details.width) / 2, detailsTop)
         }
     }
 }
@@ -152,15 +183,6 @@ private fun ResultActions(
     onLevels: () -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
-        if (hasNext) {
-            SkButton(
-                stringResource(R.string.next_level),
-                onNextLevel,
-                Modifier.fillMaxWidth(),
-                kind = ButtonKind.PRIMARY,
-                trailingIcon = SkIcons.Chevron,
-            )
-        }
         if (canReplay) {
             SkButton(
                 stringResource(R.string.play_again),
@@ -168,6 +190,15 @@ private fun ResultActions(
                 Modifier.fillMaxWidth(),
                 kind = if (hasNext) ButtonKind.SECONDARY else ButtonKind.PRIMARY,
                 icon = SkIcons.Replay,
+            )
+        }
+        if (hasNext) {
+            SkButton(
+                stringResource(R.string.next_level),
+                onNextLevel,
+                Modifier.fillMaxWidth(),
+                kind = ButtonKind.PRIMARY,
+                trailingIcon = SkIcons.Chevron,
             )
         }
         if (!hasNext &&

@@ -49,12 +49,13 @@ fun TopBar(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     backLabel: String = stringResource(R.string.back_description),
+    compactTaskTitle: Boolean = false,
     trailing: @Composable (() -> Unit)? = null,
 ) {
     val currentTrailing by rememberUpdatedState(trailing)
     val trailingContent = remember { movableContentOf { currentTrailing?.invoke() } }
     BoxWithConstraints(modifier.fillMaxWidth()) {
-        if (maxWidth / LocalDensity.current.fontScale < SkDimens.GridBreakpoint) {
+        if (!compactTaskTitle && maxWidth / LocalDensity.current.fontScale < SkDimens.GridBreakpoint) {
             Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapM)) {
                 FlowRow(
                     Modifier.fillMaxWidth(),
@@ -74,15 +75,16 @@ fun TopBar(
         } else {
             Row(
                 Modifier.fillMaxWidth().heightIn(min = SkDimens.ButtonHeightSmall),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = if (compactTaskTitle) Alignment.Top else Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
             ) {
                 RoundIconButton(SkIcons.Back, backLabel, onBack)
                 WordSafeText(
                     title,
-                    SkType.Title,
+                    if (compactTaskTitle) SkType.TaskTitleLarge else SkType.Title,
                     Modifier.weight(1f).semantics { heading() },
                     textAlign = TextAlign.Start,
+                    preferredMaxLines = if (compactTaskTitle) 2 else Int.MAX_VALUE,
                 )
                 trailingContent()
             }

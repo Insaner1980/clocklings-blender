@@ -69,6 +69,21 @@ def toy_eye(oval, material, name, x, y, depth, rx, ry, group, iris_color="79503D
          rx * 0.105, ry * 0.09, 0.35, glint, group)
 
 
+def configure(scene):
+    scene.render.engine = "CYCLES"
+    scene.cycles.device = "CPU"
+    scene.cycles.samples = 40
+    scene.cycles.use_denoising = True
+    scene.render.resolution_x = 720
+    scene.render.resolution_y = 900
+    scene.render.resolution_percentage = 100
+    scene.render.film_transparent = True
+    scene.render.image_settings.file_format = "PNG"
+    scene.render.image_settings.color_mode = "RGBA"
+    scene.render.threads_mode = "FIXED"
+    scene.render.threads = 8
+
+
 def studio(scene):
     """Soft broad highlights without the old white band across every forehead."""
     for obj in scene.objects:
