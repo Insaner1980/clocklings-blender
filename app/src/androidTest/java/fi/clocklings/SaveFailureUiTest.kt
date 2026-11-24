@@ -38,7 +38,6 @@ import fi.clocklings.ui.lesson.LessonCatalog
 import fi.clocklings.ui.lesson.LessonScreen
 import fi.clocklings.ui.lesson.LessonUiState
 import fi.clocklings.ui.locale.LocalAppLanguage
-import fi.clocklings.ui.resolve
 import fi.clocklings.ui.theme.ClocklingsTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -129,6 +128,7 @@ class SaveFailureUiTest {
                     onReplay = {},
                     onPick = { retries++ },
                     onSpeak = {},
+                    onRetrySave = { retries++ },
                 )
             }
 
@@ -152,7 +152,7 @@ class SaveFailureUiTest {
                     setLocale(Locale.forLanguageTag(language.value.tag))
                 },
             )
-        val error = context.getString(R.string.settings_save_error)
+        val error = context.getString(R.string.progress_save_error)
         val layouts = mutableListOf<TextLayoutResult>()
         compose
             .onNodeWithText(error)
@@ -180,21 +180,7 @@ class SaveFailureUiTest {
                 .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(navigationLayouts) }
             assertReadableText(navigationLayouts, previous)
         }
-        val label =
-            when (screen.intValue) {
-                1 -> {
-                    LessonCatalog
-                        .lesson("viisarit", language.value)
-                        .quiz.choices
-                        .first()
-                        .text
-                        .resolve(context.resources)
-                }
-
-                else -> {
-                    context.getString(R.string.settings_retry)
-                }
-            }
+        val label = context.getString(R.string.settings_retry)
         val before = retries
         compose
             .onNodeWithText(label)

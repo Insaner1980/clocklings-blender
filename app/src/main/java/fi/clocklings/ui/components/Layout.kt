@@ -81,7 +81,7 @@ fun ScreenScaffold(
     stackedStatus: (@Composable () -> Unit)? = null,
     stackedClockMax: Dp = SkDimens.ClockMax,
     clockTaskKey: Int? = null,
-    content: @Composable ColumnScope.(clockSize: Dp) -> Unit,
+    content: @Composable ScreenScaffoldScope.(clockSize: Dp) -> Unit,
 ) {
     // Zero initial Compose insets would clamp a restored offset before the system bars arrive.
     if (!restoredScrollInsetsReady(scrollState)) return
@@ -238,7 +238,7 @@ private fun ScaffoldBody(
     fitMin: Dp,
     animateClock: Boolean,
     clockTaskKey: Int?,
-    content: @Composable ColumnScope.(Dp) -> Unit,
+    content: @Composable ScreenScaffoldScope.(Dp) -> Unit,
 ) {
     var restHeight by remember { mutableStateOf<Int?>(null) }
     val density = LocalDensity.current
@@ -271,7 +271,9 @@ private fun ScaffoldBody(
             measure = fit == ClockFit.FIT,
             clockSize = clockSize,
             onRestHeight = { restHeight = it },
-        ) { content(clockSize) }
+        ) {
+            content(ScreenScaffoldScope(this, viewportHeight), clockSize)
+        }
         ScaffoldFades(section, scrollState, scrolling, hasBottomBar, bottom)
     }
 }
@@ -290,7 +292,7 @@ private fun StackedClockBody(
     status: (@Composable () -> Unit)?,
     clockMax: Dp,
     clockTaskKey: Int?,
-    content: @Composable ColumnScope.(Dp) -> Unit,
+    content: @Composable ScreenScaffoldScope.(Dp) -> Unit,
 ) {
     val density = LocalDensity.current
     val bottomInsets = WindowInsets.safeDrawing.exclude(WindowInsets.ime)
@@ -331,7 +333,7 @@ private fun StackedClockBody(
                         clockSize = 0.dp,
                         onRestHeight = { panelHeight = it },
                         topPadding = SkDimens.Gap,
-                    ) { content(size) }
+                    ) { content(ScreenScaffoldScope(this, viewport), size) }
                     ScaffoldFades(section, scrollState, true, hasBottomBar, bottom)
                 }
             }

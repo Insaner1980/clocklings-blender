@@ -42,6 +42,8 @@
     <string name="menu_vapaa">Explorer</string>
     <string name="menu_vapaa_sub">Déplace les aiguilles et explore l’heure</string>
     <string name="menu_pelaa">Jouer</string>
+    <string name="path_practice_title">Jouer\u00A0: %1$s</string>
+    <string name="check_answer">Vérifier</string>
     <string name="menu_pelaa_sub">Entraîne-toi à lire et à régler l’horloge</string>
     <string name="menu_kysy">Jouer ensemble</string>
     <string name="menu_kysy_sub">Choisissez une heure, devinez et échangez les rôles</string>
@@ -110,7 +112,9 @@
     <string name="dress_doll">Choisir une tenue</string>
     <plurals name="result_stars_description" tools:ignore="MissingQuantity"><item quantity="one">%1$d\u00A0étoile sur trois</item><item quantity="other">%1$d\u00A0étoiles sur trois</item></plurals>
     <string name="challenge_score" tools:ignore="PluralsCandidate">Bonnes réponses : %1$d</string>
-    <string name="challenge_intro">Tu as une minute. Trouve le plus de réponses possible. Après une erreur, l’horloge montre la bonne heure et le jeu continue.</string>
+    <string name="progress_save_error">Le résultat n’a pas pu être enregistré. Réessaie.</string>
+    <string name="challenge_intro">Réponds à autant de questions que tu peux. Si tu te trompes, le jeu continue.</string>
+    <string name="ask_revealed_text">Avez-vous bien deviné ? À l’autre de jouer.</string>
     <string name="challenge_best" tools:ignore="PluralsCandidate">Record de bonnes réponses : %1$d</string>
     <string name="challenge_no_best">Pas encore de score</string>
     <string name="challenge_go">C’est parti !</string>
@@ -283,7 +287,7 @@
     <string name="l_viisi_title">De cinq en cinq</string>
     <string name="l_viisi_desc">Nombres et minutes</string>
     <string name="l_viisi_p1a">La grande aiguille met cinq minutes pour passer d’un nombre au suivant.</string>
-    <string name="l_viisi_p1b">Le nombre 1 indique 5\u00A0minutes, le 2 en indique 10, et ainsi de suite.</string>
+    <string name="l_viisi_p1b">Le nombre 1 indique 5\u00A0minutes, le 2 en indique 10, et ainsi de suite. Au nombre 12, une heure entière s’est écoulée et les minutes repartent de 0.</string>
     <string name="l_viisi_p2a">Compte de cinq en cinq : 5, 10, 15, 20.</string>
     <string name="l_viisi_p2b">Au nombre 4, 20\u00A0minutes sont passées. On lit l’heure suivie de vingt.</string>
     <string name="l_viisi_p3a">Continue à compter de cinq en cinq, avant et après la demi-heure.</string>

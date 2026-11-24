@@ -2,6 +2,8 @@ package fi.clocklings.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,10 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import fi.clocklings.R
 import fi.clocklings.domain.Wardrobe
 import fi.clocklings.ui.digitalLabel
@@ -143,19 +147,11 @@ fun TimeReadout(
     modifier: Modifier = Modifier,
 ) {
     val res = resources()
-    Row(
-        modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
-    ) {
-        FlowRow(
-            Modifier.weight(1f),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalArrangement = Arrangement.spacedBy(SkDimens.GapS),
-        ) {
-            Text(timeLabel(LocalAppLanguage.current, time, h24), style = SkType.Words)
-            DigitalPill(digitalLabel(res, time, h24))
-        }
+    val words: @Composable () -> Unit = {
+        WordSafeText(timeLabel(LocalAppLanguage.current, time, h24), SkType.Words, textAlign = TextAlign.Start)
+    }
+    val digits: @Composable () -> Unit = { DigitalPill(digitalLabel(res, time, h24)) }
+    val listen: @Composable () -> Unit = {
         if (speechAvailable) {
             RoundIconButton(
                 SkIcons.Listen,
@@ -164,6 +160,39 @@ fun TimeReadout(
                 large = true,
                 tonal = true,
             )
+        }
+    }
+    BoxWithConstraints(modifier) {
+        val stack =
+            speechAvailable && maxWidth <= SkDimens.GridBreakpoint &&
+                LocalDensity.current.fontScale > SkDimens.MAX_ROW_FONT_SCALE
+        if (stack) {
+            Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SkDimens.GapS)) {
+                words()
+                FlowRow(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalArrangement = Arrangement.spacedBy(SkDimens.GapS),
+                ) {
+                    digits()
+                    listen()
+                }
+            }
+        } else {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
+            ) {
+                FlowRow(
+                    Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalArrangement = Arrangement.spacedBy(SkDimens.GapS),
+                ) {
+                    words()
+                    digits()
+                }
+                listen()
+            }
         }
     }
 }

@@ -97,6 +97,7 @@ object SkIcons {
     val Globe = inkIcon("M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0ZM3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18")
     val Back = inkIcon("M15 5l-7 7 7 7M8 12h13")
     val Chevron = inkIcon("M9 5l7 7-7 7")
+    val ChevronBack = inkIcon("M15 5l-7 7 7 7")
     val Pencil = inkIcon("M4 20l4.5-1L19 8.5 15.5 5 5 15.5zM13.5 7l3.5 3.5")
 
     /** An eight-tooth gear with a soft fill, generated as an even polygon so every tooth matches. */

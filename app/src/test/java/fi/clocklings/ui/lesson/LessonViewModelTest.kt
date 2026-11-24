@@ -100,6 +100,61 @@ class LessonViewModelTest {
         }
 
     @Test
+    fun `quarter example appears after the demo only`() =
+        scope.runTest {
+            val vm = vm(listOf("vartti"))
+            vm.next()
+            val text =
+                vm.state.value.lesson.pages[1]
+                    .text
+            assertEquals(text.take(1), vm.state.value.visibleParagraphs)
+            advanceTimeBy(3_299)
+            assertEquals(195, vm.state.value.clock.time)
+            assertEquals(text.take(1), vm.state.value.visibleParagraphs)
+            advanceTimeBy(2)
+            assertEquals(text, vm.state.value.visibleParagraphs)
+        }
+
+    @Test
+    fun `replay and reduced motion show the settled example immediately`() =
+        scope.runTest {
+            val vm = vm(listOf("vartti"))
+            vm.next()
+            advanceTimeBy(1_000)
+            vm.replay()
+            assertEquals(195, vm.state.value.clock.time)
+            assertEquals(0, vm.state.value.clock.ms)
+            assertEquals(
+                vm.state.value.lesson.pages[1]
+                    .text,
+                vm.state.value.visibleParagraphs,
+            )
+
+            vm.setReduceMotion(true)
+            vm.next()
+            assertEquals(225, vm.state.value.clock.time)
+            assertEquals(0, vm.state.value.clock.ms)
+            assertEquals(
+                vm.state.value.lesson.pages[2]
+                    .text,
+                vm.state.value.visibleParagraphs,
+            )
+            advanceUntilIdle()
+            assertEquals(225, vm.state.value.clock.time)
+        }
+
+    @Test
+    fun `exact minute quiz highlights the start of the minute count`() =
+        scope.runTest {
+            val vm = vm(listOf("minuutit"))
+            while (!vm.state.value.isQuiz) vm.next()
+            assertEquals(187, vm.state.value.clock.time)
+            assertEquals(listOf(Mark.NumberGlow(1)), vm.state.value.under)
+            vm.setLanguage(AppLanguage.FINNISH)
+            assertEquals(listOf(Mark.NumberGlow(1)), vm.state.value.under)
+        }
+
+    @Test
     fun `quiz hint after a wrong choice and completion is saved`() =
         scope.runTest {
             val vm = vm(listOf("viisarit"))

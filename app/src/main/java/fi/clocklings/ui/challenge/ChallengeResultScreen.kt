@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -28,6 +29,7 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -37,6 +39,9 @@ import fi.clocklings.R
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.ui.appearance.LocalCompanionOutfit
 import fi.clocklings.ui.appearance.LocalPersonalization
+import fi.clocklings.ui.appearance.PREVIEW_TIME
+import fi.clocklings.ui.clock.ClockCommand
+import fi.clocklings.ui.clock.ClockFace
 import fi.clocklings.ui.companion.CompanionCelebration
 import fi.clocklings.ui.companion.CompanionView
 import fi.clocklings.ui.companion.companionAspectRatio
@@ -84,19 +89,25 @@ internal fun ChallengeResultScreen(
     ) {
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val viewport = maxHeight
+            val short = viewport < SkDimens.CompactTaskHeight
             Column(
                 Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).heightIn(min = viewport),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement =
-                    if (companion == CompanionKind.NONE) {
-                        Arrangement.spacedBy(SkDimens.Gap, Alignment.CenterVertically)
-                    } else {
-                        Arrangement.spacedBy(SkDimens.Gap)
-                    },
+                verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
             ) {
-                if (companion != CompanionKind.NONE) {
-                    val slot = if (viewport >= SkDimens.CompactTaskHeight) Modifier.weight(1f) else Modifier
-                    Box(slot.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                if (short) ChallengeScore(state)
+                val slot = if (short) Modifier else Modifier.weight(1f)
+                Box(slot.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    if (companion == CompanionKind.NONE) {
+                        Box(
+                            Modifier
+                                .size(SkDimens.ChallengeCompanionHeight)
+                                .testTag("challenge_result_clock")
+                                .clearAndSetSemantics { },
+                        ) {
+                            ClockFace(ClockCommand(PREVIEW_TIME), Modifier.matchParentSize(), mini = true)
+                        }
+                    } else {
                         CompanionView(
                             companion,
                             LocalCompanionOutfit.current,
@@ -108,7 +119,7 @@ internal fun ChallengeResultScreen(
                         )
                     }
                 }
-                ChallengeScore(state)
+                if (!short) ChallengeScore(state)
             }
         }
     }
@@ -162,7 +173,7 @@ private fun ChallengeScore(state: ChallengeUiState) {
         }
         if (state.saveFailed) {
             CompanionTip(
-                stringResource(R.string.settings_save_error),
+                stringResource(R.string.progress_save_error),
                 color = SkColors.HintFill,
                 avatarWidth = SkDimens.FeedbackAvatar,
             )

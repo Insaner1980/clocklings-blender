@@ -8,15 +8,20 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.isHeading
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.text.TextLayoutResult
 import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.Lessons
 import fi.clocklings.domain.Progress
@@ -25,6 +30,7 @@ import fi.clocklings.ui.levels.LevelsScreen
 import fi.clocklings.ui.locale.LocalAppLanguage
 import fi.clocklings.ui.localizedContext
 import fi.clocklings.ui.theme.ClocklingsTheme
+import fi.clocklings.ui.theme.SkColors
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -39,6 +45,23 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class SurfaceAccessibilityTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun disabledPrimaryLabelHasReadableContrast() {
+        compose.setContent { ClocklingsTheme { SkButton("Done", {}, kind = ButtonKind.PRIMARY, enabled = false) } }
+        val layouts = mutableListOf<TextLayoutResult>()
+        compose
+            .onNodeWithText("Done", useUnmergedTree = true)
+            .performSemanticsAction(SemanticsActions.GetTextLayoutResult) { it(layouts) }
+        val label =
+            layouts
+                .single()
+                .layoutInput.style.color
+                .luminance()
+        val fill = SkColors.PrimaryContainer.luminance()
+        val contrast = (maxOf(label, fill) + 0.05f) / (minOf(label, fill) + 0.05f)
+        assertTrue("Disabled primary button contrast: $contrast", contrast >= 4.5f)
+    }
 
     private lateinit var view: View
 

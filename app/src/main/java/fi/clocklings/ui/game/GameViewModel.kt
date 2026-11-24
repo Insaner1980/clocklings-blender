@@ -105,7 +105,6 @@ class GameViewModel(
 
     private val lv = Levels.all[level]
     private val tasks = Levels.makeTasks(lv, h24, random)
-    private var clockValue = 0
     private var advanceJob: Job? = null
 
     /** A hint the narrator is about to read once the wrong-answer sound has faded. */
@@ -162,7 +161,6 @@ class GameViewModel(
             base.copy(options = Levels.optionsFor(task.time, lv, h24, random))
         } else {
             val start = Levels.setTaskStart(task.time)
-            clockValue = start
             base.copy(
                 clock =
                     ClockCommand(
@@ -183,7 +181,6 @@ class GameViewModel(
 
     fun onClockChange(value: Int) {
         if (!_state.value.interactive) return
-        clockValue = value
         _state.update { it.copy(clock = it.clock.copy(time = value, ms = 0)) }
     }
 
@@ -221,9 +218,9 @@ class GameViewModel(
     fun done() {
         val s = _state.value
         if (s.busy || s.task.type != TaskType.SET) return
-        val v = clockValue
+        val submittedTime = s.clock.time
         // Viisariasento ratkaisee: 3.30 ja 15.30 näyttävät kellotaululla samalta.
-        if (ClockTime.sameHands(v, s.task.time)) {
+        if (ClockTime.sameHands(submittedTime, s.task.time)) {
             success(s)
             return
         }
@@ -242,7 +239,7 @@ class GameViewModel(
                     showNext = true,
                 )
             } else {
-                val hint = Hints.forSet(s.task.time, v)
+                val hint = Hints.forSet(s.task.time, submittedTime)
                 readHint(hint)
                 wrong.copy(feedback = GameFeedback.HintText(hint))
             }

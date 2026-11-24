@@ -123,17 +123,6 @@ object FinnishTime : TimeLanguage {
             }
         return "${numWord(h)} $minutes"
     }
-
-    /** Tervehdys vuorokaudenajan mukaan (samat rajat kuin [dayPart]). */
-    override fun greeting(total: Int): Greeting {
-        val h = ClockTime.mod(total, ClockTime.DAY) / ClockTime.MINUTES_PER_HOUR
-        return when {
-            h < MORNING_FROM || h >= NIGHT_FROM -> Greeting.NIGHT
-            h < LATE_MORNING_FROM -> Greeting.MORNING
-            h < EVENING_FROM -> Greeting.DAY
-            else -> Greeting.EVENING
-        }
-    }
 }
 
 fun String.capitalizeFirst(): String = replaceFirstChar { it.uppercaseChar() }

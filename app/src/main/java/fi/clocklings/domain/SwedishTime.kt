@@ -111,14 +111,6 @@ object SwedishTime : TimeLanguage {
             else -> "${timeWords(total)} ${dayPart(total).adverb}"
         }
     }
-
-    override fun greeting(total: Int): Greeting =
-        when (ClockTime.mod(total, ClockTime.DAY) / ClockTime.MINUTES_PER_HOUR) {
-            in MORNING_FROM..LAST_MORNING_HOUR -> Greeting.MORNING
-            in DECIMAL_BASE..LAST_SUN_HOUR -> Greeting.DAY
-            in EVENING_FROM until NIGHT_FROM -> Greeting.EVENING
-            else -> Greeting.NIGHT
-        }
 }
 
 private const val QUARTER_TO = 45
@@ -129,6 +121,5 @@ private const val EVENING_FROM = 18
 private const val LAST_SUN_HOUR = 17
 private const val QUARTER_PAST = 15
 private const val DECIMAL_BASE = 10
-private const val LAST_MORNING_HOUR = 9
 private const val SUNRISE_HOUR = 6
 private const val MORNING_FROM = 5

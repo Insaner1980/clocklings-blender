@@ -196,7 +196,9 @@ class AppFlowTest {
     fun homeAndTogetherKeepWordsReadable() {
         waitForText("Clocklings")
         assertWholeWords(clockWords().replaceFirstChar { it.uppercase() })
-        compose.onNodeWithContentDescription("My Companion").assertExists()
+        val title = compose.activity.getString(R.string.menu_nukke)
+        val action = compose.activity.getString(R.string.home_companion_choices)
+        compose.onNodeWithContentDescription("$title. $action").assertIsEnabled()
         assertWholeWords("Explore")
         assertWholeWords("Play Together")
 
@@ -248,7 +250,7 @@ class AppFlowTest {
                     compose.waitForIdle()
                 }
                 assertTrue("tehtävä $task: kello ${clockWords()} != $target", clockWords() == target)
-                click("Done")
+                click("Check")
             }
             if (task < 9) awaitTask(task + 1)
         }

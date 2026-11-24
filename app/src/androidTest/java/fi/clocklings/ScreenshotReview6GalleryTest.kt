@@ -1,5 +1,7 @@
 package fi.clocklings
 
+import android.app.KeyguardManager
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Rect
@@ -82,6 +84,7 @@ import fi.clocklings.ui.LocalAppViewModel
 import fi.clocklings.ui.appearance.AppearanceScreen
 import fi.clocklings.ui.appearance.LocalCompanionOutfit
 import fi.clocklings.ui.appearance.LocalPersonalization
+import fi.clocklings.ui.applyClocklingsSystemBars
 import fi.clocklings.ui.ask.AskScreen
 import fi.clocklings.ui.challenge.ChallengePhase
 import fi.clocklings.ui.challenge.ChallengeScreen
@@ -1306,9 +1309,12 @@ abstract class ScreenshotReview6Host {
     }
 
     protected fun shot(name: String) {
-        val bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot())
-        save(name, bitmap)
-        bitmap.recycle()
+        val bitmap = screenshot()
+        try {
+            save(name, bitmap)
+        } finally {
+            bitmap.recycle()
+        }
     }
 
     private fun challengeClockNode() =
@@ -1419,13 +1425,19 @@ abstract class ScreenshotReview6Host {
 
     protected fun onlyCells(vararg cells: String) = assumeTrue("Not for cell $cell", cell in cells)
 
-    protected fun launchHost() {
-        val factory = viewModelFactory { initializer { AppViewModel(services) } }
-        scenario = ActivityScenario.launch(ComponentActivity::class.java)
+    protected fun launchHost(hostServices: AppServices = services) {
+        val factory = viewModelFactory { initializer { AppViewModel(hostServices) } }
+        scenario =
+            if (cell.startsWith("gallery")) {
+                ActivityScenario.launch(Intent(targetContext, GalleryHostActivity::class.java))
+            } else {
+                ActivityScenario.launch(ComponentActivity::class.java)
+            }
         scenario!!.onActivity { activity ->
+            activity.applyClocklingsSystemBars()
             activity.setContent {
                 val app = viewModel<AppViewModel>(factory = factory)
-                AppLocaleProvider(services.repository) {
+                AppLocaleProvider(hostServices.repository) {
                     val context = localized.getValue(language.value)
                     val personalization = settings.value.personalization
                     CompositionLocalProvider(
@@ -1488,22 +1500,50 @@ abstract class ScreenshotReview6Host {
     ) {
         val file = File(outDir(), "${name.replace(Regex("[^A-Za-z0-9_-]"), "_")}.png")
         file.outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+        if (cell == "gallery" && android.os.Build.VERSION.SDK_INT >= 30) {
+            scenario?.onActivity { activity ->
+                val insets = checkNotNull(activity.window.decorView.rootWindowInsets)
+                val bottom = insets.getInsets(WindowInsets.Type.navigationBars() or WindowInsets.Type.ime()).bottom
+                File(file.parentFile, "app-area.tsv").appendText("${file.name}\t$bottom\n")
+            }
+        }
     }
 
-    protected fun capture(name: String) {
+    protected fun capture(
+        name: String,
+        verify: (Bitmap) -> Unit = {},
+    ) {
         compose.waitForIdle()
         Thread.sleep(SETTLE_MS)
         compose.waitForIdle()
-        var bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot()) { "Screenshot unavailable" }
+        var bitmap = screenshot()
         // The first frame after the activity starts can still be blank; take it again.
         repeat(BLANK_RETRIES) {
             if (!isBlank(bitmap)) return@repeat
             bitmap.recycle()
             Thread.sleep(SETTLE_MS)
-            bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot()) { "Screenshot unavailable" }
+            bitmap = screenshot()
         }
-        save(name, bitmap)
-        bitmap.recycle()
+        try {
+            verify(bitmap)
+            save(name, bitmap)
+        } finally {
+            bitmap.recycle()
+        }
+    }
+
+    private fun screenshot(): Bitmap {
+        val keyguard = targetContext.getSystemService(KeyguardManager::class.java)
+        val gallery = cell.startsWith("gallery")
+        check(!gallery || keyguard?.isKeyguardLocked == false) {
+            "Unlock the test device before taking a gallery screenshot"
+        }
+        val bitmap = checkNotNull(instrumentation.uiAutomation.takeScreenshot()) { "Screenshot unavailable" }
+        if (gallery && keyguard?.isKeyguardLocked != false) {
+            bitmap.recycle()
+            error("The test device locked during the gallery screenshot")
+        }
+        return bitmap
     }
 
     protected fun isBlank(bitmap: Bitmap): Boolean {

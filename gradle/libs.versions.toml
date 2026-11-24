@@ -11,6 +11,7 @@ coroutines = "1.11.0"
 billing = "9.1.0"
 junit = "4.13.2"
 robolectric = "4.18.1"
+jacoco = "0.8.16"
 androidxTestExtJunit = "1.3.0"
 androidxTestRunner = "1.7.0"
 androidxTestEspresso = "3.7.0"
@@ -52,6 +53,7 @@ androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigat
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 guava = { module = "com.google.guava:guava", version = "33.8.0-jre" }
@@ -70,6 +72,36 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxTestEspresso" }
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
+
+# Version constraints for libraries brought in by the Android runtime dependencies.
+androidx-annotation = { module = "androidx.annotation:annotation", version = "1.11.0" }
+androidx-annotation-experimental = { module = "androidx.annotation:annotation-experimental", version = "1.6.0" }
+androidx-appcompat-resources = { module = "androidx.appcompat:appcompat-resources", version = "1.8.0" }
+androidx-autofill = { module = "androidx.autofill:autofill", version = "1.3.0" }
+androidx-collection-ktx = { module = "androidx.collection:collection-ktx", version = "1.7.0" }
+androidx-concurrent-futures = { module = "androidx.concurrent:concurrent-futures", version = "1.3.0" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version = "1.19.1" }
+androidx-customview = { module = "androidx.customview:customview", version = "1.2.0" }
+androidx-customview-poolingcontainer = { module = "androidx.customview:customview-poolingcontainer", version = "1.1.0" }
+androidx-fragment = { module = "androidx.fragment:fragment", version = "1.9.1" }
+androidx-graphics-shapes = { module = "androidx.graphics:graphics-shapes", version = "1.1.0" }
+androidx-loader = { module = "androidx.loader:loader", version = "1.2.0" }
+androidx-navigationevent-compose = { module = "androidx.navigationevent:navigationevent-compose", version = "1.2.0" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version = "1.4.1" }
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version = "1.2.0" }
+androidx-tracing = { module = "androidx.tracing:tracing", version = "2.0.5" }
+androidx-vectordrawable-animated = { module = "androidx.vectordrawable:vectordrawable-animated", version = "1.2.0" }
+androidx-versionedparcelable = { module = "androidx.versionedparcelable:versionedparcelable", version = "1.2.1" }
+androidx-viewpager = { module = "androidx.viewpager:viewpager", version = "1.1.0" }
+androidx-window = { module = "androidx.window:window", version = "1.5.1" }
+google-transport-backend-cct = { module = "com.google.android.datatransport:transport-backend-cct", version = "5.0.0" }
+google-play-services-base = { module = "com.google.android.gms:play-services-base", version = "18.11.1" }
+google-play-services-basement = { module = "com.google.android.gms:play-services-basement", version = "18.12.1" }
+google-play-services-location = { module = "com.google.android.gms:play-services-location", version = "21.4.0" }
+okio = { module = "com.squareup.okio:okio", version = "3.18.2" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version = "26.1.0" }
+kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version = "0.33.0" }
+jspecify = { module = "org.jspecify:jspecify", version = "1.0.1" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

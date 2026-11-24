@@ -1,6 +1,7 @@
 package fi.clocklings.ui.appearance
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -74,6 +75,7 @@ import fi.clocklings.ui.components.SkIcons
 import fi.clocklings.ui.components.SwatchTile
 import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.components.adaptiveGridColumns
+import fi.clocklings.ui.components.bringFeedbackIntoView
 import fi.clocklings.ui.observeAccessPolicy
 import fi.clocklings.ui.sharedClocklingsElement
 import fi.clocklings.ui.theme.PersonalizationColors
@@ -140,6 +142,7 @@ fun AppearanceScreen(
                 pager,
                 access,
                 onParent,
+                scroll,
             )
         }
     }
@@ -154,6 +157,7 @@ private fun CompanionChoices(
     pager: PagerState,
     access: AccessPolicy,
     onParent: () -> Unit,
+    scroll: ScrollState,
 ) {
     val kind = appearance.companion
     val preview = CompanionKind.entries[pager.settledPage]
@@ -167,8 +171,13 @@ private fun CompanionChoices(
     val thumbs: @Composable () -> Unit = { CompanionThumbnails(pager, kind, progress, access, short, PREVIEW_TIME) }
     val actions: @Composable () -> Unit = {
         if (!access.companion(preview, progress.totalStars)) {
-            Text(stringResource(R.string.companion_access_requirement), style = SkType.BodySoft)
-            if (!access.fullAccess) SkButton(stringResource(R.string.parent_title), onParent)
+            Column(
+                Modifier.padding(bottom = SkDimens.ScrollFade).bringFeedbackIntoView(preview.name, scroll),
+                verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen),
+            ) {
+                Text(stringResource(companionRequirement(access)), style = SkType.BodySoft)
+                if (!access.fullAccess) SkButton(stringResource(R.string.parent_title), onParent)
+            }
         } else if (preview == CompanionKind.NONE) {
             Text(stringResource(R.string.no_companion_hint), style = SkType.BodySoft)
         } else {
@@ -197,6 +206,9 @@ private fun CompanionChoices(
         }
     }
 }
+
+internal fun companionRequirement(access: AccessPolicy): Int =
+    if (access.fullAccess) R.string.companion_star_requirement else R.string.companion_access_requirement
 
 @Composable
 private fun ClockChoices(
@@ -368,7 +380,7 @@ private fun ChoiceCard(
     }
 }
 
-private const val PREVIEW_TIME = 610
+internal const val PREVIEW_TIME = 610
 
 @Composable
 private fun CompanionPager(

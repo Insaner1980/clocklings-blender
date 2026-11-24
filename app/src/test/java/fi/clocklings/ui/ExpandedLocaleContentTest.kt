@@ -27,6 +27,32 @@ import java.util.Locale
 @Config(sdk = [33])
 class ExpandedLocaleContentTest {
     @Test
+    fun fiveMinuteLessonExplainsTheFullHourInEveryLanguage() {
+        val endings =
+            mapOf(
+                AppLanguage.ENGLISH to "At number 12 the hour is full, and the minutes start again from 0.",
+                AppLanguage.FINNISH to "Numerossa 12 tunti on täynnä, ja minuutit alkavat taas nollasta.",
+                AppLanguage.SWEDISH to "Vid talet 12 har det gått en hel timme, och minuterna börjar om från 0.",
+                AppLanguage.GERMAN to
+                    "Bei der 12 ist eine volle Stunde vergangen, und die Minuten beginnen wieder bei 0.",
+                AppLanguage.FRENCH to "Au nombre 12, une heure entière s’est écoulée et les minutes repartent de 0.",
+                AppLanguage.SPANISH to "En el número 12 se completa una hora y los minutos vuelven a empezar en 0.",
+                AppLanguage.PORTUGUESE_BRAZIL to
+                    "No número 12, uma hora se completa e os minutos voltam a contar a partir de 0.",
+            )
+        for ((language, ending) in endings) {
+            val text =
+                LessonCatalog
+                    .lesson("viisi", language)
+                    .pages
+                    .first()
+                    .text
+                    .last()
+            assertTrue(language.tag, text.resolve(localizedContext(language).resources).endsWith(ending))
+        }
+    }
+
+    @Test
     @Config(sdk = [26, 33, 37])
     fun boundedPluralResourcesUseOnlyAuthoredQuantities() {
         val levelStars = 0..(0..Levels.TASK_COUNT).maxOf(Levels::stars)

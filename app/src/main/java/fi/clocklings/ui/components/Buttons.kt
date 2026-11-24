@@ -113,13 +113,38 @@ fun SkButton(
 ) {
     val (fill, foreground) =
         when (kind) {
-            ButtonKind.PRIMARY -> SkColors.Primary to SkColors.OnPrimary
-            ButtonKind.SECONDARY -> SkColors.Surface to SkColors.Ink
-            ButtonKind.TONAL -> SkColors.TonalFill to SkColors.Ink
-            ButtonKind.CONTAINER -> SkColors.PrimaryContainer to SkColors.Ink
-            ButtonKind.DANGER -> SkColors.DangerContainer to SkColors.Danger
+            ButtonKind.PRIMARY -> {
+                if (enabled) {
+                    SkColors.Primary to SkColors.OnPrimary
+                } else {
+                    SkColors.PrimaryContainer to SkColors.PrimaryDisabledContent
+                }
+            }
+
+            ButtonKind.SECONDARY -> {
+                SkColors.Surface to SkColors.Ink
+            }
+
+            ButtonKind.TONAL -> {
+                SkColors.TonalFill to SkColors.Ink
+            }
+
+            ButtonKind.CONTAINER -> {
+                SkColors.PrimaryContainer to SkColors.Ink
+            }
+
+            ButtonKind.DANGER -> {
+                SkColors.DangerContainer to SkColors.Danger
+            }
         }
-    PressSurface(onClick, fill, SkShapes.Button, modifier, enabled = enabled) {
+    PressSurface(
+        onClick,
+        fill,
+        SkShapes.Button,
+        modifier,
+        enabled = enabled,
+        dimWhenDisabled = kind != ButtonKind.PRIMARY,
+    ) {
         Row(
             Modifier
                 .heightIn(min = if (small) SkDimens.ButtonHeightSmall else SkDimens.ButtonHeight)
@@ -149,6 +174,7 @@ fun ActionPair(
     endLabel: String?,
     start: @Composable (Modifier) -> Unit,
     modifier: Modifier = Modifier,
+    compactStart: (@Composable (Modifier) -> Unit)? = null,
     end: @Composable (Modifier) -> Unit,
 ) {
     val measurer = rememberTextMeasurer()
@@ -163,7 +189,15 @@ fun ActionPair(
         val labelWidth = with(density) { (halfWidth - SkDimens.ButtonPadX * 2).toPx() }
         val labels = listOfNotNull(startLabel, endLabel)
         val stack = labels.any { measurer.measure(it, SkType.Button).size.width > labelWidth }
-        if (stack) {
+        if (stack && compactStart != null && density.fontScale > SkDimens.MAX_ROW_FONT_SCALE) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(SkDimens.GapM),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                compactStart(Modifier)
+                endContent(Modifier.weight(1f))
+            }
+        } else if (stack) {
             Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapM)) {
                 startContent(Modifier.fillMaxWidth())
                 if (endLabel != null) endContent(Modifier.fillMaxWidth())

@@ -53,7 +53,7 @@ class ClockSurfaceStateTest {
         listOf(
             "puoli" to 2,
             "puoli" to 3,
-            "viisi" to 2,
+            "ylivaille" to 3,
             "puoli" to 4,
             "viisarit" to 2,
             "ylivaille" to 0,

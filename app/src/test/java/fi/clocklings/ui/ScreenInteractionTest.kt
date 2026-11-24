@@ -8,7 +8,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -17,6 +19,8 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasScrollAction
@@ -35,16 +39,22 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import fi.clocklings.Screen
 import fi.clocklings.domain.AccessPolicy
+import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.CompanionKind
 import fi.clocklings.domain.Lessons
 import fi.clocklings.domain.Outfit
 import fi.clocklings.domain.Personalization
 import fi.clocklings.domain.Progress
 import fi.clocklings.domain.Settings
+import fi.clocklings.domain.Task
+import fi.clocklings.domain.TaskType
 import fi.clocklings.ui.appearance.LocalPersonalization
+import fi.clocklings.ui.clock.ClockCommand
 import fi.clocklings.ui.companion.companionAspectRatio
 import fi.clocklings.ui.components.ClockFit
 import fi.clocklings.ui.components.ClockTaskScaffold
+import fi.clocklings.ui.game.GameScreen
+import fi.clocklings.ui.game.GameUiState
 import fi.clocklings.ui.game.ResultScreen
 import fi.clocklings.ui.home.HomeDestination
 import fi.clocklings.ui.home.HomeScreen
@@ -65,6 +75,49 @@ import org.robolectric.RobolectricTestRunner
 @RunWith(RobolectricTestRunner::class)
 class ScreenInteractionTest {
     @get:Rule val compose = createComposeRule()
+
+    @Test
+    fun pathPracticeRowNamesTheGame() {
+        val fullAccess = mutableStateOf(true)
+        val context = localizedContext(AppLanguage.FINNISH)
+        compose.setContent {
+            CompositionLocalProvider(LocalContext provides context, LocalResources provides context.resources) {
+                ClocklingsTheme {
+                    LessonListScreen(false, Progress(), AccessPolicy(fullAccess.value), {}, {}, {})
+                }
+            }
+        }
+        compose.onNodeWithText("Pelaa: Tasatunnit", useUnmergedTree = true).assertExists()
+        compose.onNodeWithText("Tasatunnit", useUnmergedTree = true).assertExists()
+        compose.runOnIdle { fullAccess.value = false }
+        compose.onNodeWithText("Pelaa: Puoli tuntia", useUnmergedTree = true).assertExists()
+        val locked = hasContentDescription("Puoli tuntia. Täysversio")
+        compose.onNode(locked).assertIsNotEnabled()
+        compose.onNode(hasText("Täysversio") and hasAnyAncestor(locked), useUnmergedTree = true).assertExists()
+    }
+
+    @Test
+    fun setTaskCheckButtonSaysCheck() {
+        val context = localizedContext(AppLanguage.FINNISH)
+        val state =
+            GameUiState(
+                level = 0,
+                h24 = false,
+                taskIndex = 0,
+                taskCount = 10,
+                task = Task(180, TaskType.SET),
+                clock = ClockCommand(0),
+                step = 60,
+                showDone = true,
+            )
+        compose.setContent {
+            CompositionLocalProvider(LocalContext provides context, LocalResources provides context.resources) {
+                ClocklingsTheme { GameScreen(state, true, {}, {}, {}, {}, {}, {}) }
+            }
+        }
+        compose.onNode(hasText("Tarkista") and hasClickAction()).assertIsDisplayed()
+        compose.onNode(hasText("Valmis") and hasClickAction()).assertDoesNotExist()
+    }
 
     @Test
     fun taskClockKeepsTheSmallerSizeWhenFeedbackGetsShorter() {
@@ -202,7 +255,7 @@ class ScreenInteractionTest {
             compose
                 .onNode(hasContentDescription("$name. $action.", substring = true) and hasClickAction())
                 .assertExists()
-            compose.onAllNodesWithText(name, useUnmergedTree = true).onFirst().assertExists()
+            compose.onNodeWithText("Play: $name", useUnmergedTree = true).assertExists()
         }
         compose.onAllNodesWithText("Play again", useUnmergedTree = true).assertCountEquals(1)
         compose.onAllNodesWithText("Start playing!", useUnmergedTree = true).assertCountEquals(levelNames.size - 1)

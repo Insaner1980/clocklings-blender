@@ -51,6 +51,7 @@ fun PathRow(
     startLabel: String? = null,
     supporting: (@Composable ColumnScope.() -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
+    leadingAboveAtLargeFont: Boolean = false,
     leading: @Composable () -> Unit,
 ) {
     val current = style == PathRowStyle.CURRENT
@@ -63,7 +64,9 @@ fun PathRow(
         } else {
             trailing
         }
-    val inlineShortcut = rowTrailing.takeIf { current && startLabel != null }
+    val leadingAbove = leadingAboveAtLargeFont && LocalDensity.current.fontScale > SkDimens.MAX_ROW_FONT_SCALE
+    val visibleStartLabel = startLabel.takeIf { current }
+    val inlineShortcut = rowTrailing.takeIf { visibleStartLabel != null && !leadingAbove }
     val selectionBorder =
         if (current) Modifier.border(SkDimens.SelectionBorder, SkColors.Primary, shape) else Modifier
     val card =
@@ -92,11 +95,12 @@ fun PathRow(
                 badgeColor,
                 completed,
                 locked,
-                startLabel,
+                visibleStartLabel,
                 supporting,
                 rowTrailing == null,
                 leading,
                 inlineShortcut != null,
+                leadingAbove,
             )
         }
     }
@@ -196,6 +200,7 @@ private fun PathRowContent(
     showState: Boolean,
     leading: @Composable () -> Unit,
     hasInlineShortcut: Boolean,
+    leadingAbove: Boolean,
 ) {
     val current = style == PathRowStyle.CURRENT
     val practice = style == PathRowStyle.PRACTICE
@@ -215,16 +220,14 @@ private fun PathRowContent(
             .padding(padding),
         verticalArrangement = Arrangement.spacedBy(SkDimens.Gap),
     ) {
+        if (leadingAbove) PathRowBadge(current, practice, badgeColor, locked, leading)
         Row(
             modifier = if (hasInlineShortcut) Modifier.reserveShortcutSpace() else Modifier,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(if (practice) SkDimens.GapM else SkDimens.GapLabel),
         ) {
-            PathRowBadge(current, practice, badgeColor, locked, leading)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(SkDimens.GapXS)) {
-                PathRowTitle(title, style)
-                if (locked) LockPill() else supporting?.invoke(this)
-            }
+            if (!leadingAbove) PathRowBadge(current, practice, badgeColor, locked, leading)
+            PathRowLabel(title, style, locked, supporting, Modifier.weight(1f))
             if (showIndicator && !stateOnOwnLine) PathRowState(completed)
         }
         if (showIndicator && stateOnOwnLine) {
@@ -232,28 +235,30 @@ private fun PathRowContent(
                 PathRowState(completed)
             }
         }
-        if (current && startLabel != null) {
+        if (startLabel != null) {
             PathRowStart(startLabel)
         }
     }
 }
 
 @Composable
-private fun PathRowTitle(
+private fun PathRowLabel(
     title: String,
     style: PathRowStyle,
+    locked: Boolean,
+    supporting: (@Composable ColumnScope.() -> Unit)?,
+    modifier: Modifier = Modifier,
 ) {
-    WordSafeText(
-        title,
-        if (style == PathRowStyle.CURRENT) {
-            SkType.LessonTitleCurrent
-        } else if (style == PathRowStyle.PRACTICE) {
-            SkType.PracticeTitle
-        } else {
-            SkType.LessonTitle
-        },
-        textAlign = TextAlign.Start,
-    )
+    val titleStyle =
+        when (style) {
+            PathRowStyle.CURRENT -> SkType.LessonTitleCurrent
+            PathRowStyle.PRACTICE -> SkType.PracticeTitle
+            PathRowStyle.STEP -> SkType.LessonTitle
+        }
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(SkDimens.GapXS)) {
+        WordSafeText(title, titleStyle, textAlign = TextAlign.Start)
+        if (locked) LockPill() else supporting?.invoke(this)
+    }
 }
 
 private fun Modifier.reserveShortcutSpace(): Modifier =

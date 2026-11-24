@@ -1,5 +1,6 @@
 package fi.clocklings.ui.lesson
 
+import fi.clocklings.R
 import fi.clocklings.domain.AppLanguage
 import fi.clocklings.domain.ClockTime
 import fi.clocklings.domain.DemoStep
@@ -11,6 +12,17 @@ import org.junit.Test
 
 class LessonCatalogTest {
     private val all = LessonCatalog.all(AppLanguage.ENGLISH)
+
+    @Test
+    fun fiveMinuteLessonExplainsFullHourInParagraph() {
+        for (language in AppLanguage.entries) {
+            val page = LessonCatalog.lesson("viisi", language).pages.first()
+            val captions = page.demo.filterIsInstance<DemoStep.Say>()
+            val texts = captions.map { it.text as Text.Res }
+            assertEquals(List(12) { R.string.say_number_minutes }, texts.map { it.id })
+            assertEquals(listOf(12, 60), texts.last().args)
+        }
+    }
 
     @Test
     fun `five minute explanation reaches each number before naming it`() {
@@ -58,8 +70,13 @@ class LessonCatalogTest {
     }
 
     @Test
-    fun `page counts match the web version`() {
-        assertEquals(listOf(3, 3, 3, 4, 3, 3, 3, 2, 3), all.map { it.pages.size })
+    fun `the half hour example ends the past and to lesson in every language`() {
+        for (language in AppLanguage.entries) {
+            val example = LessonCatalog.lesson("ylivaille", language).pages.last()
+            assertEquals(listOf(Text.Res(R.string.l_viisi_p3a), Text.Res(R.string.l_viisi_p3b)), example.text)
+            assertEquals(listOf(205, 215), example.demo.filterIsInstance<DemoStep.Move>().map { it.to })
+            assertEquals(2, LessonCatalog.lesson("viisi", language).pages.size)
+        }
     }
 
     @Test

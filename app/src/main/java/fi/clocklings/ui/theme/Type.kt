@@ -66,6 +66,7 @@ object SkType {
     val Logo = display(40, FontWeight.Bold, 1.1f)
     val Tagline = display(20).copy(color = SkColors.UiInkSoft)
     val Title = display(24, lineHeight = 1.17f)
+    val TaskTitleLarge = display(20, lineHeight = 1.2f)
     val Words = display(30, lineHeight = 1.2f)
     val Question = display(26, lineHeight = 1.23f)
     val Digital = display(24, lineHeight = 1.2f)

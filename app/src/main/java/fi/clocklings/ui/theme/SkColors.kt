@@ -30,6 +30,7 @@ object SkColors {
     val Surface = Color(0xFFFFFFFF)
     val Line = Color(0xFFF1DDEA)
     val Ink = Color(0xFF3A2453)
+    val PrimaryDisabledContent = Ink
     val InkSoft = Color(0xFF625075)
 
     /** Hairline around a colour swatch that is too close to the page background to read on its own. */

@@ -110,6 +110,7 @@ private fun LevelRow(
                 onLesson(i)
             }, enabled = access.level(i), tonal = true)
         },
+        leadingAboveAtLargeFont = true,
         leading = {
             ClockFace(
                 ClockCommand(level.sample),
@@ -144,6 +145,7 @@ private fun ChallengeNode(
         supporting = {
             if (record.isNotEmpty()) Text(record, style = SkType.Small)
         },
+        leadingAboveAtLargeFont = true,
         leading = { SkIcon(SkIcons.Star, SkDimens.LargeActionIcon) },
     )
 }

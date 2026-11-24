@@ -532,10 +532,12 @@ class ScreenshotReviewUiTest {
                 viewport.value = cell
                 showQuiz.value = false
             }
-            compose.onNodeWithText("Previous").assertDoesNotExist()
+            val previousLabel = hasText("Previous") or hasContentDescription("Previous")
+            val previous = compose.onNode(previousLabel and hasClickAction())
+            previous.assertDoesNotExist()
             compose.onNodeWithText("Next").assertIsDisplayed().performClick()
             compose.runOnIdle { showQuiz.value = true }
-            compose.onNodeWithText("Previous").assertIsDisplayed()
+            previous.assertIsDisplayed()
             compose.onNodeWithText("Done").assertIsDisplayed().assertIsNotEnabled()
         }
         assertEquals(3, next)

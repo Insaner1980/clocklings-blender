@@ -52,6 +52,8 @@
     <string name="menu_vapaa">Utforska</string>
     <string name="menu_vapaa_sub">Flytta visarna och utforska tiden</string>
     <string name="menu_pelaa">Spela</string>
+    <string name="path_practice_title">Spela: %1$s</string>
+    <string name="check_answer">Kolla</string>
     <string name="menu_pelaa_sub">Öva på att läsa av och ställa klockan</string>
     <string name="menu_kysy">Spela tillsammans</string>
     <string name="menu_kysy_sub">Ställ en tid, gissa och byt tur</string>
@@ -119,7 +121,9 @@
         <item quantity="other">%1$d\u00A0stjärnor av tre</item>
     </plurals>
     <string name="challenge_score" tools:ignore="PluralsCandidate">%1$d rätt</string>
-    <string name="challenge_intro">Du har en minut. Svara på så många du hinner. Efter ett felaktigt svar visar klockan rätt tid och spelet fortsätter.</string>
+    <string name="progress_save_error">Resultatet kunde inte sparas. Försök igen.</string>
+    <string name="challenge_intro">Svara på så många du hinner. Spelet fortsätter om du svarar fel.</string>
+    <string name="ask_revealed_text">Gissade ni rätt? Byt tur nu.</string>
     <string name="challenge_best" tools:ignore="PluralsCandidate">Bästa resultat: %1$d rätt</string>
     <string name="challenge_no_best">Inget resultat ännu</string>
     <string name="challenge_go">Starta!</string>
@@ -271,7 +275,7 @@
     <string name="l_ylivaille_p2a">På vänstra sidan kan vi till exempel säga tjugo i.</string>
     <string name="l_ylivaille_p2b">Vi räknar hur många minuter som är kvar till nästa hela timme.</string>
     <string name="l_ylivaille_p3a">När du till exempel säger tio över nämner du timmen som den korta visaren har passerat.</string>
-    <string name="l_ylivaille_p3b">När du säger tio i nämner du nästa timme. Nära halv kan du räkna minuterna i förhållande till halv.</string>
+    <string name="l_ylivaille_p3b">När du säger tio i nämner du nästa timme.</string>
     <string name="l_ylivaille_q">Vad är klockan?</string>
     <string name="l_ylivaille_c1">Tio över fyra</string>
     <string name="l_ylivaille_c2">Tio i fyra</string>
@@ -280,7 +284,7 @@
     <string name="l_viisi_title">Fem minuter i taget</string>
     <string name="l_viisi_desc">Siffror och minuter</string>
     <string name="l_viisi_p1a">Den långa visaren går från ett tal till nästa på fem minuter.</string>
-    <string name="l_viisi_p1b">Siffran 1 markerar 5\u00A0minuter, siffran 2 markerar 10 och så vidare.</string>
+    <string name="l_viisi_p1b">Siffran 1 markerar 5\u00A0minuter, siffran 2 markerar 10 och så vidare. Vid talet 12 har det gått en hel timme, och minuterna börjar om från 0.</string>
     <string name="l_viisi_p2a">Räkna fem i taget: 5, 10, 15, 20.</string>
     <string name="l_viisi_p2b">Vid 4 har det gått 20\u00A0minuter. Vi säger tjugo över.</string>
     <string name="l_viisi_p3a">Fortsätt räkna fem i taget på båda sidor om halv.</string>

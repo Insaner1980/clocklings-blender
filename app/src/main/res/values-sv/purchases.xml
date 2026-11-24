@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="parent_title">För föräldrar</string>
-    <string name="parent_gate_instruction">För vuxna: skriv dessa fyra siffror i omvänd ordning: %1$s</string>
-    <string name="parent_gate_answer">Koden i omvänd ordning</string>
-    <string name="parent_gate_error">Kontrollera ordningen och försök igen.</string>
+    <string name="parent_gate_instruction">För vuxna: räkna ut %1$d × %2$d.</string>
+    <string name="parent_gate_answer">Svar</string>
+    <string name="parent_gate_error">Försök med den nya uträkningen.</string>
     <string name="parent_continue">Fortsätt</string>
     <string name="parent_cancel">Avbryt</string>
-    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_name">Clocklings fullversion</string>
     <string name="full_unlock_description">Ett engångsköp låser upp alla fem nivåer, deras lektioner och alla övningar och utmaningar permanent.</string>
     <string name="full_unlock_rewards">Fullversionen ger möjlighet att tjäna hela utbudet av belöningar. Stjärnor, slutförda lektioner och belöningar kommer fortfarande från lärandet.</string>
     <string name="purchase_ready">Ingen prenumeration. Ingen reklam.</string>
@@ -25,5 +25,6 @@
     <string name="purchase_restore_explanation">Använd det Google Play-konto som köpte fullversionen. Att återställa ett köp återställer inte framsteg som bara sparats på en annan enhet.</string>
     <string name="full_version_label">Fullversion</string>
     <string name="companion_access_requirement">Kräver fullversionen och 3 intjänade stjärnor.</string>
+    <string name="companion_star_requirement">Tjäna 3 stjärnor för att låsa upp den här kompisen.</string>
     <string name="wardrobe_full_requirement">Fullversionen innehåller fler kläder. Stjärnkraven gäller fortfarande.</string>
 </resources>

@@ -31,10 +31,12 @@ fun analyticsEndpointField(defaultOrigin: String = ""): String {
 
 android {
     namespace = "fi.clocklings"
+    testCoverage.jacocoVersion = libs.versions.jacoco.get()
+
     compileSdk {
         version =
             release(37) {
-                minorApiLevel = 1
+                minorApiLevel = 2
             }
     }
 
@@ -257,12 +259,47 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.google.play.billing)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
     constraints {
+        // Compose, Navigation 3, Activity and Billing still request older AndroidX libraries.
+        implementation(libs.androidx.annotation)
+        implementation(libs.androidx.annotation.experimental)
+        implementation(libs.androidx.appcompat.resources)
+        implementation(libs.androidx.autofill)
+        implementation(libs.androidx.collection.ktx)
+        implementation(libs.androidx.concurrent.futures)
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.customview)
+        implementation(libs.androidx.customview.poolingcontainer)
+        implementation(libs.androidx.fragment)
+        implementation(libs.androidx.graphics.shapes)
+        implementation(libs.androidx.loader)
+        implementation(libs.androidx.navigationevent.compose)
+        implementation(libs.androidx.profileinstaller)
+        implementation(libs.androidx.startup.runtime)
+        implementation(libs.androidx.tracing)
+        implementation(libs.androidx.vectordrawable.animated)
+        implementation(libs.androidx.versionedparcelable)
+        implementation(libs.androidx.viewpager)
+        implementation(libs.androidx.window)
+
+        // Billing's transport backend selects the matching runtime, API and Firebase encoders.
+        implementation(libs.google.transport.backend.cct)
+        implementation(libs.google.play.services.base)
+        implementation(libs.google.play.services.basement)
+        implementation(libs.google.play.services.location)
+
+        // DataStore, Kotlin and AndroidX select these shared runtime and annotation libraries.
+        implementation(libs.okio)
+        implementation(libs.jetbrains.annotations)
+        implementation(libs.kotlinx.atomicfu)
+        implementation(libs.jspecify)
+
         testImplementation(libs.guava) {
             because("Fix CVE-2026-102554 in Robolectric's transitive dependency")
         }

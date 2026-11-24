@@ -81,6 +81,12 @@ def finish_silhouette(pixels, sigma):
     return pixels
 
 
+def read_layer_pixels(image, width, height):
+    values = np.empty(len(image.pixels), dtype=np.float32)
+    image.pixels.foreach_get(values)
+    return values.reshape(height, width, 4)[::-1]
+
+
 def render_tile(scene, camera, frame, rectangle, scale, temp):
     x, y, w, h = rectangle
     left, top, right, bottom, cx, cz, units = frame
@@ -94,9 +100,7 @@ def render_tile(scene, camera, frame, rectangle, scale, temp):
     bpy.ops.render.render(write_still=True, scene=scene.name)
     image = bpy.data.images.load(str(temp), check_existing=False)
     try:
-        pixels = np.empty(len(image.pixels), dtype=np.float32)
-        image.pixels.foreach_get(pixels)
-        pixels = pixels.reshape(image.size[1], image.size[0], 4)[::-1]
+        pixels = read_layer_pixels(image, *image.size)
         p = pad*scale
         cropped = pixels[p:-p, p:-p].copy()
         outside = pixels[:, :, 3].copy()

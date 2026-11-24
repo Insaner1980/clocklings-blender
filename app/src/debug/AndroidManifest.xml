@@ -5,5 +5,10 @@
         android:name=".BlenderPreviewApplication"
         android:allowBackup="false"
         android:usesCleartextTraffic="false"
-        tools:replace="android:name" />
+        tools:replace="android:name">
+        <activity
+            android:name=".GalleryHostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Clocklings" />
+    </application>
 </manifest>

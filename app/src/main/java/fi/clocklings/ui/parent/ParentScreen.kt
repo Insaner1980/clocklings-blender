@@ -22,6 +22,7 @@ import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fi.clocklings.R
 import fi.clocklings.analytics.UsageAnalytics
@@ -32,6 +33,7 @@ import fi.clocklings.ui.components.FlatPanel
 import fi.clocklings.ui.components.ScreenScaffold
 import fi.clocklings.ui.components.SkButton
 import fi.clocklings.ui.components.TopBar
+import fi.clocklings.ui.components.WordSafeText
 import fi.clocklings.ui.settings.SettingsCard
 import fi.clocklings.ui.settings.SettingsSwitch
 import fi.clocklings.ui.theme.Section
@@ -51,6 +53,7 @@ fun ParentScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
     usage: UsageAnalytics = UsageAnalytics.Disabled,
+    gateNextInt: (Int, Int) -> Int = Random.Default::nextInt,
 ) {
     var adult by remember { mutableStateOf(false) }
     ScreenScaffold(
@@ -62,7 +65,7 @@ fun ParentScreen(
             PurchaseContent(state, onPurchase, onRestore, onRetry)
             if (usage.available) UsageSharing(usage)
         } else {
-            AdultGate(onContinue = { adult = true }, onCancel = onBack)
+            AdultGate(onContinue = { adult = true }, onCancel = onBack, nextInt = gateNextInt)
         }
     }
 }
@@ -85,20 +88,26 @@ private fun UsageSharing(usage: UsageAnalytics) {
 private fun AdultGate(
     onContinue: () -> Unit,
     onCancel: () -> Unit,
+    nextInt: (Int, Int) -> Int,
 ) {
-    val code = remember { Random.nextInt(GATE_CODE_MIN, GATE_CODE_LIMIT).toString() }
+    var question by remember { mutableStateOf(newGateQuestion(nextInt)) }
     var answer by remember { mutableStateOf("") }
     var failed by remember { mutableStateOf(false) }
-    val submit = {
-        if (answer == code.reversed()) {
+    val submit = submit@{
+        val value = answer.toIntOrNull() ?: return@submit
+        if (value == question.product) {
             onContinue()
         } else {
             answer = ""
+            question = newGateQuestion(nextInt, question.product)
             failed = true
         }
     }
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen)) {
-        Text(stringResource(R.string.parent_gate_instruction, code.toList().joinToString(" ")), style = SkType.Body)
+        Text(
+            stringResource(R.string.parent_gate_instruction, question.first, question.second),
+            style = SkType.Body,
+        )
         val answerLabel = stringResource(R.string.parent_gate_answer)
         Text(answerLabel, style = SkType.Body)
         GateAnswerField(
@@ -107,7 +116,7 @@ private fun AdultGate(
             failed,
             submit,
             onValueChange = {
-                answer = it.filter(Char::isDigit).take(GATE_CODE_LENGTH)
+                answer = it.filter(Char::isDigit).take(GATE_ANSWER_LENGTH)
                 failed = false
             },
         )
@@ -116,7 +125,7 @@ private fun AdultGate(
             submit,
             Modifier.fillMaxWidth(),
             kind = ButtonKind.PRIMARY,
-            enabled = answer.length == GATE_CODE_LENGTH,
+            enabled = answer.isNotEmpty(),
         )
         SkButton(stringResource(R.string.parent_cancel), onCancel, Modifier.fillMaxWidth())
     }
@@ -178,7 +187,7 @@ private fun PurchaseContent(
     onRetry: () -> Unit,
 ) {
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(SkDimens.GapScreen)) {
-        Text(stringResource(R.string.full_unlock_name), style = SkType.Title)
+        WordSafeText(stringResource(R.string.full_unlock_name), SkType.Title, textAlign = TextAlign.Start)
         Text(stringResource(R.string.full_unlock_description), style = SkType.Body)
         Text(stringResource(R.string.full_unlock_rewards), style = SkType.Body)
         val retry =
@@ -243,6 +252,30 @@ private fun PurchaseStatus.message(): Int =
         PurchaseStatus.ACKNOWLEDGEMENT_PENDING -> R.string.purchase_acknowledgement_pending
     }
 
-private const val GATE_CODE_MIN = 1000
-private const val GATE_CODE_LIMIT = 10_000
-private const val GATE_CODE_LENGTH = 4
+private data class GateQuestion(
+    val first: Int,
+    val second: Int,
+) {
+    val product: Int get() = first * second
+}
+
+private fun newGateQuestion(
+    nextInt: (Int, Int) -> Int,
+    previousProduct: Int? = null,
+): GateQuestion {
+    var question: GateQuestion
+    do {
+        question =
+            GateQuestion(
+                nextInt(GATE_FIRST_MIN, GATE_FIRST_MAX_EXCLUSIVE),
+                nextInt(GATE_SECOND_MIN, GATE_SECOND_MAX_EXCLUSIVE),
+            )
+    } while (question.product == previousProduct)
+    return question
+}
+
+private const val GATE_ANSWER_LENGTH = 3
+private const val GATE_FIRST_MIN = 12
+private const val GATE_FIRST_MAX_EXCLUSIVE = 30
+private const val GATE_SECOND_MIN = 3
+private const val GATE_SECOND_MAX_EXCLUSIVE = 10

@@ -145,6 +145,7 @@ data class Quiz(
     val choices: List<Choice>,
     val hint: Text,
     val period: Int = ClockTime.HALF_DAY,
+    val under: List<Mark> = emptyList(),
 )
 
 data class Lesson(
@@ -168,13 +169,13 @@ object Lessons {
 
     fun levelOf(lessonId: String): Int? = levelLessons.indexOfFirst { lessonId in it }.takeIf { it >= 0 }
 
-    /** Tasojen oppitunnit (web: LEVEL_LESSONS). */
+    /** Lessons in the order they appear before each practice level. */
     val levelLessons: List<List<String>> =
         listOf(
             listOf("viisarit", "kierros", "tasan"),
             listOf("puoli"),
-            listOf("vartti", "ylivaille"),
-            listOf("viisi"),
+            listOf("vartti"),
+            listOf("viisi", "ylivaille"),
             listOf("minuutit"),
         )
 

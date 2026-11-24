@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="parent_title">For parents</string>
-    <string name="parent_gate_instruction">For adults: enter these four digits in reverse order: %1$s</string>
-    <string name="parent_gate_answer">Reversed code</string>
-    <string name="parent_gate_error">Check the order and try again.</string>
+    <string name="parent_gate_instruction">For adults: solve %1$d × %2$d.</string>
+    <string name="parent_gate_answer">Answer</string>
+    <string name="parent_gate_error">Try the new calculation.</string>
     <string name="parent_continue">Continue</string>
     <string name="parent_cancel">Cancel</string>
-    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_name">Clocklings Full Version</string>
     <string name="full_unlock_description">One purchase permanently unlocks all five learning levels, their lessons, and every practice and challenge activity.</string>
     <string name="full_unlock_rewards">Access lets you earn the full reward selection. Stars, lesson completions and rewards still come from learning.</string>
     <string name="purchase_ready">No subscription. No ads.</string>
@@ -25,5 +25,6 @@
     <string name="purchase_restore_explanation">Use the Google Play account that bought the full version. Restoring a purchase does not restore learning progress saved only on another device.</string>
     <string name="full_version_label">Full version</string>
     <string name="companion_access_requirement">Requires the full version and 3 earned stars.</string>
+    <string name="companion_star_requirement">Earn 3 stars to unlock this companion.</string>
     <string name="wardrobe_full_requirement">The full version includes more outfits. Their star requirements still apply.</string>
 </resources>

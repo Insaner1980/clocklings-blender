@@ -14,7 +14,7 @@ class LessonsTest {
                 "tasan" to 0,
                 "puoli" to 1,
                 "vartti" to 2,
-                "ylivaille" to 2,
+                "ylivaille" to 3,
                 "viisi" to 3,
                 "minuutit" to 4,
                 "vrk" to null,
@@ -24,14 +24,14 @@ class LessonsTest {
     }
 
     @Test
-    fun `level lessons match the web mapping`() {
+    fun `quarters and five minute practice follow the approved lesson order`() {
         assertEquals(
             // CPD-OFF: Keep expected lesson mapping independent of production data.
             listOf(
                 listOf("viisarit", "kierros", "tasan"),
                 listOf("puoli"),
-                listOf("vartti", "ylivaille"),
-                listOf("viisi"),
+                listOf("vartti"),
+                listOf("viisi", "ylivaille"),
                 listOf("minuutit"),
             ),
             // CPD-ON
@@ -53,6 +53,21 @@ class LessonsTest {
     }
 
     @Test
+    fun `existing lesson ids and intro flags still control the reordered lessons`() {
+        val learned = Progress(lessonsDone = setOf("vartti", "ylivaille"), introShown = setOf("2", "h24"))
+        assertEquals(IntroPlan(emptyList(), learned.introShown), Lessons.introPlan(2, true, learned))
+        assertEquals(IntroPlan(listOf("viisi"), setOf("2", "3", "h24")), Lessons.introPlan(3, true, learned))
+
+        val unfinished = Progress(lessonsDone = setOf("viisi"), introShown = setOf("2"))
+        assertEquals(listOf("ylivaille"), Lessons.introPlan(3, false, unfinished).queue)
+        val alreadyIntroduced = unfinished.copy(introShown = setOf("2", "3"))
+        assertEquals(
+            IntroPlan(emptyList(), alreadyIntroduced.introShown),
+            Lessons.introPlan(3, false, alreadyIntroduced),
+        )
+    }
+
+    @Test
     fun `lessons are shown automatically only once per level`() {
         val progress = Progress(introShown = setOf("0"))
         assertTrue(Lessons.introPlan(0, false, progress).queue.isEmpty())
@@ -64,7 +79,7 @@ class LessonsTest {
         assertEquals(listOf("puoli", "vrk"), first.queue)
         assertEquals(setOf("1", "h24"), first.introShown)
         val again = Lessons.introPlan(2, h24 = true, progress = Progress(introShown = first.introShown))
-        assertEquals(listOf("vartti", "ylivaille"), again.queue)
+        assertEquals(listOf("vartti"), again.queue)
     }
 
     @Test

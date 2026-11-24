@@ -349,6 +349,22 @@ object LessonCatalog {
                             },
                             under = listOf(sector(0, 30, MarkColor.YLI), sector(30, 60, MarkColor.VAILLE)),
                         ),
+                        LessonPage(
+                            180,
+                            listOf(r(R.string.l_viisi_p3a), r(R.string.l_viisi_p3b)),
+                            demo {
+                                pause(500)
+                                move(205, 2000)
+                                pause(2200)
+                                under(num(5))
+                                say(time(205))
+                                pause(2400)
+                                move(215, 1500, exact = true)
+                                pause(1700)
+                                under(num(7))
+                                say(time(215))
+                            },
+                        ),
                     ),
                 quiz =
                     Quiz(
@@ -398,22 +414,6 @@ object LessonCatalog {
                                     pause(500)
                                 }
                                 say(time(200))
-                            },
-                        ),
-                        LessonPage(
-                            180,
-                            listOf(r(R.string.l_viisi_p3a), r(R.string.l_viisi_p3b)),
-                            demo {
-                                pause(500)
-                                move(205, 2000)
-                                pause(2200)
-                                under(num(5))
-                                say(time(205))
-                                pause(2400)
-                                move(215, 1500, exact = true)
-                                pause(1700)
-                                under(num(7))
-                                say(time(215))
                             },
                         ),
                     ),
@@ -473,6 +473,7 @@ object LessonCatalog {
                         r(R.string.l_minuutit_q),
                         choices(R.string.l_minuutit_c1, R.string.l_minuutit_c2, R.string.l_minuutit_c3),
                         r(R.string.l_minuutit_hint),
+                        under = listOf(num(1)),
                     ),
             ),
             Lesson(

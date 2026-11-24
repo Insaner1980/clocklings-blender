@@ -5,4 +5,5 @@ max_line_length = 120
 ktlint_function_naming_ignore_when_annotated_with = Composable
 # Existing app-wide services and the shared confetti overlay are provided at the app root.
 # LocalAnswerRowCounter is a test-only observer across answer-row subcompositions; it holds no UI state.
-compose_allowed_composition_locals = LocalAppViewModel,LocalConfetti,LocalPersonalization,LocalCompanionOutfit,LocalSharedTransitionScope,LocalAppLanguage,LocalAppLocale,LocalAnswerRowCounter
+# LocalClockTime lets deterministic previews and tests share one clock across navigation.
+compose_allowed_composition_locals = LocalAppViewModel,LocalConfetti,LocalPersonalization,LocalCompanionOutfit,LocalSharedTransitionScope,LocalAppLanguage,LocalAppLocale,LocalAnswerRowCounter,LocalClockTime

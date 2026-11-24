@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="parent_title">Vanhemmille</string>
-    <string name="parent_gate_instruction">Aikuiselle: kirjoita nämä neljä numeroa käänteisessä järjestyksessä: %1$s</string>
-    <string name="parent_gate_answer">Koodi käänteisesti</string>
-    <string name="parent_gate_error">Tarkista järjestys ja yritä uudelleen.</string>
+    <string name="parent_gate_instruction">Aikuiselle: laske %1$d × %2$d.</string>
+    <string name="parent_gate_answer">Vastaus</string>
+    <string name="parent_gate_error">Kokeile uutta laskua.</string>
     <string name="parent_continue">Jatka</string>
     <string name="parent_cancel">Peruuta</string>
-    <string name="full_unlock_name">Clocklings Full Unlock</string>
+    <string name="full_unlock_name">Clocklings-täysversio</string>
     <string name="full_unlock_description">Kertaostos avaa pysyvästi kaikki viisi oppimistasoa, niiden oppitunnit sekä kaikki harjoitukset ja haasteet.</string>
     <string name="full_unlock_rewards">Täysversiossa voi ansaita koko palkintovalikoiman. Tähdet, oppituntien suoritukset ja palkinnot ansaitaan edelleen oppimalla.</string>
     <string name="purchase_ready">Ei tilausta eikä mainoksia.</string>
@@ -25,5 +25,6 @@
     <string name="purchase_restore_explanation">Käytä Google Play -tiliä, jolla täysversio ostettiin. Oston palauttaminen ei palauta vain toiselle laitteelle tallennettua oppimisen edistymistä.</string>
     <string name="full_version_label">Täysversio</string>
     <string name="companion_access_requirement">Edellyttää täysversiota ja 3 ansaittua tähteä.</string>
+    <string name="companion_star_requirement">Ansaitse 3 tähteä, niin saat tämän kaverin.</string>
     <string name="wardrobe_full_requirement">Täysversiossa on lisää asusteita. Ne ansaitaan edelleen tähdillä.</string>
 </resources>

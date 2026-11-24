@@ -2,10 +2,13 @@ package fi.clocklings
 
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertIsNotSelected
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasContentDescription
@@ -132,7 +135,7 @@ class MonetizationDeviceTest {
         compose.onNode(hasContentDescription("Whole hours.", substring = true) and hasClickAction()).assertIsEnabled()
         compose.onNode(hasContentDescription("Half past.", substring = true) and hasClickAction()).assertIsNotEnabled()
         clickText("For parents")
-        compose.onNodeWithText("Clocklings Full Unlock").assertDoesNotExist()
+        compose.onNodeWithText("Clocklings Full Version").assertDoesNotExist()
         clickText("Cancel")
         compose.onNode(hasContentDescription("Half past.", substring = true) and hasClickAction()).assertIsNotEnabled()
         clickText("For parents")
@@ -142,19 +145,32 @@ class MonetizationDeviceTest {
                 .fetchSemanticsNode()
                 .config[SemanticsProperties.Text]
                 .joinToString { it.text }
+        val (first, second) = checkNotNull(Regex("([0-9]{2}) × ([0-9])").find(instruction)).destructured
         compose
             .onNode(
                 hasSetTextAction(),
             ).scrollToIfScrollable()
-            .performTextInput(instruction.filter(Char::isDigit).reversed())
+            .performTextInput((first.toInt() * second.toInt()).toString())
         compose.onNode(hasSetTextAction()).assertIsFocused().performKeyInput { pressKey(Key.Tab) }
         // The shared button's outer keyboard target owns focus; verify activation, not its inner text node.
         compose.onRoot().performKeyInput { pressKey(Key.Enter) }
-        compose.onNodeWithText("Clocklings Full Unlock").scrollToIfScrollable().assertIsDisplayed()
+        compose.onNodeWithText("Clocklings Full Version").scrollToIfScrollable().assertIsDisplayed()
+        val unavailable = compose.activity.getString(R.string.purchase_unavailable)
         compose
-            .onNode(hasText("Purchases are unavailable. Please try again later.") and hasClickAction())
+            .onNodeWithText(unavailable)
             .scrollToIfScrollable()
-            .assertIsNotEnabled()
+            .assertIsDisplayed()
+        compose.onNode(hasText(unavailable) and hasClickAction()).assertDoesNotExist()
+        compose.onNodeWithText("Buy once", substring = true).assertDoesNotExist()
+        compose.onNodeWithText(compose.activity.getString(R.string.purchase_retry)).assertIsEnabled()
+        val price = "€4.99"
+        compose.runOnIdle {
+            application.testPurchases.state.value =
+                PurchaseUiState(localizedPrice = price, status = PurchaseStatus.READY, canPurchase = true)
+        }
+        clickText(compose.activity.getString(R.string.purchase_buy, price))
+        val pending = compose.activity.getString(R.string.purchase_pending)
+        compose.onNodeWithText(pending).scrollToIfScrollable().assertIsDisplayed()
         clickText("Restore purchases")
         compose.onNodeWithText("Full version restored.").assertDoesNotExist()
         compose.runOnIdle {
@@ -173,14 +189,33 @@ class MonetizationDeviceTest {
         compose.onNodeWithTag("companion_stage").scrollToIfScrollable().performClick()
         compose.onNodeWithTag("choose_companion_HUMAN").assertIsEnabled().assertIsSelected()
         compose.onNodeWithTag("choose_companion_CAT").assertIsEnabled()
-        compose.onNodeWithTag("choose_companion_DOG").assertIsNotEnabled()
-        compose.runOnIdle { application.testPurchases.state.value = PurchaseUiState(fullAccess = true) }
-        compose.onNodeWithTag("choose_companion_DOG").assertIsNotEnabled()
-        runBlocking { application.container.repository.updateProgress { it.withLevelResult(0, 3) } }
-        compose
-            .onNodeWithTag("choose_companion_DOG")
+        val dog = compose.onNodeWithTag("choose_companion_DOG")
+        val accessRequirement = compose.activity.getString(R.string.companion_access_requirement)
+        dog
             .scrollToIfScrollable()
             .assertIsEnabled()
+            .assertIsNotSelected()
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, accessRequirement))
+            .performClick()
+        compose.onNodeWithText(accessRequirement).scrollToIfScrollable().assertIsDisplayed()
+        dog.assertIsNotSelected()
+        assertEquals(
+            CompanionKind.HUMAN,
+            runBlocking {
+                application.container.repository.settings
+                    .first()
+                    .personalization.companion
+            },
+        )
+        compose.runOnIdle { application.testPurchases.state.value = PurchaseUiState(fullAccess = true) }
+        val starRequirement = compose.activity.getString(R.string.companion_star_requirement)
+        dog.assertIsNotSelected().assert(
+            SemanticsMatcher.expectValue(SemanticsProperties.StateDescription, starRequirement),
+        )
+        runBlocking { application.container.repository.updateProgress { it.withLevelResult(0, 3) } }
+        dog
+            .scrollToIfScrollable()
+            .assert(SemanticsMatcher.keyNotDefined(SemanticsProperties.StateDescription))
             .performClick()
         compose.waitUntil(10_000) {
             runBlocking {

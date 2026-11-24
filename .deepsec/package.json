@@ -5,7 +5,7 @@
   "description": "DeepSec scanning workspace for Clocklings",
   "type": "module",
   "workspaces": [],
-  "packageManager": "pnpm@11.20.0",
+  "packageManager": "pnpm@12.23.0",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "deepsec": "deepsec",
@@ -17,6 +17,6 @@
     "deepsec:report:custom": "pnpm run deepsec:report"
   },
   "dependencies": {
-    "deepsec": "2.3.9"
+    "deepsec": "2.3.16"
   }
 }

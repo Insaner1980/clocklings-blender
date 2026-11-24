@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Clocklings" parent="Base.Theme.Clocklings">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:isLightTheme">@bool/window_is_light_theme</item>
+    </style>
+
+    <style name="Theme.Clocklings.Starting" parent="Base.Theme.Clocklings.Starting">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:isLightTheme">@bool/window_is_light_theme</item>
+    </style>
+</resources>

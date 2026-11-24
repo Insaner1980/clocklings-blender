@@ -3,6 +3,7 @@ package fi.clocklings.ui
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import fi.clocklings.AppServices
+import fi.clocklings.analytics.UsageAnalytics
 import fi.clocklings.audio.Sound
 import fi.clocklings.data.InMemoryPreferencesStore
 import fi.clocklings.data.ProgressRepository
@@ -16,6 +17,7 @@ import fi.clocklings.ui.lesson.LessonViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
@@ -35,9 +37,16 @@ class PersistenceFailureTest {
 
     private val store = FailingWriteStore()
     private val repository = ProgressRepository(store)
+    private val metrics = mutableListOf<String>()
     private val services =
         object : AppServices by FakeServices(fullAccess = true) {
             override val repository = this@PersistenceFailureTest.repository
+            override val usage =
+                object : UsageAnalytics by UsageAnalytics.Disabled {
+                    override fun count(metric: String) {
+                        metrics += metric
+                    }
+                }
         }
 
     @Test
@@ -139,6 +148,44 @@ class PersistenceFailureTest {
         }
 
     @Test
+    fun retrySaveAfterFailureMarksLessonDone() =
+        runTest(main.dispatcher) {
+            val lesson = failedLessonQuiz()
+            lesson.retrySave()
+            advanceUntilIdle()
+            assertTrue(lesson.state.value.quizDone)
+            assertFalse(lesson.state.value.saveFailed)
+            assertEquals(setOf("viisarit"), repository.progress.first().lessonsDone)
+        }
+
+    @Test
+    fun retrySaveIgnoresRepeatedTapsWhilePending() =
+        runTest(main.dispatcher) {
+            val lesson = failedLessonQuiz()
+            val attempts = store.attempts
+            lesson.retrySave()
+            assertTrue(lesson.state.value.savePending)
+            lesson.retrySave()
+            advanceUntilIdle()
+            assertEquals(attempts + 1, store.attempts)
+            assertEquals(1, metrics.count { it == "lesson.0.correct" })
+        }
+
+    private fun TestScope.failedLessonQuiz(): LessonViewModel {
+        val lesson = LessonViewModel(listOf("viisarit"), null, services, Random(5))
+        while (!lesson.state.value.isQuiz) lesson.next()
+        store.failure = IOException("Synthetic write failure")
+        lesson.pick(
+            lesson.state.value.choices
+                .indexOfFirst { it.correct },
+        )
+        advanceUntilIdle()
+        assertTrue(lesson.state.value.saveFailed)
+        store.failure = null
+        return lesson
+    }
+
+    @Test
     fun failedChallengeSaveEndsTheTimerWithoutClaimingASavedRecord() =
         runTest(main.dispatcher) {
             val sounds = mutableListOf<Sound>()
@@ -203,8 +250,11 @@ private class FailingWriteStore : DataStore<Preferences> {
     private val delegate = InMemoryPreferencesStore()
     override val data = delegate.data
     var failure: Exception? = null
+    var attempts = 0
+        private set
 
     override suspend fun updateData(transform: suspend (Preferences) -> Preferences): Preferences {
+        attempts++
         failure?.let { throw it }
         return delegate.updateData(transform)
     }
