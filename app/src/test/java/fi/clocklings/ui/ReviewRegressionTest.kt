@@ -670,6 +670,40 @@ abstract class ReviewTaskRegressionCases {
     protected abstract val model: AppViewModel
 
     @Test
+    @Config(qualifiers = "w1000dp-h914dp")
+    fun lessonPageNavigationStartsAtTheTop() {
+        val lesson = LessonCatalog.lesson("viisi", AppLanguage.ENGLISH)
+        val pages = lesson.pages.take(2).map { it.copy(text = List(8) { _ -> it.text.first() }, demo = emptyList()) }
+        val page = mutableIntStateOf(0)
+        val height = mutableIntStateOf(718)
+        compose.setContent {
+            Viewport(height.intValue) {
+                val state = LessonUiState(lesson.copy(pages = pages), page = page.intValue, demoFinished = true)
+                LessonScreen(state, false, false, {}, {}, {}, {}, {}, {})
+            }
+        }
+        val scroll =
+            compose.onNode(
+                SemanticsMatcher.keyIsDefined(SemanticsProperties.VerticalScrollAxisRange),
+                useUnmergedTree = true,
+            )
+        for ((width, fontScale) in listOf(411 to 1f, 320 to 1f, 411 to 2f, 320 to 2f, 1000 to 2f)) {
+            compose.runOnIdle {
+                viewport.value = width to fontScale
+                height.intValue = if (width == 1000) 360 else 718
+            }
+            for (destination in listOf(1, 0)) {
+                scroll.performSemanticsAction(SemanticsActions.ScrollBy) { it(0f, 100f) }
+                val before = scroll.fetchSemanticsNode().config[SemanticsProperties.VerticalScrollAxisRange].value()
+                assertTrue("$width dp at ${fontScale}x: the source page is scrolled", before > 0f)
+                compose.runOnIdle { page.intValue = destination }
+                val after = scroll.fetchSemanticsNode().config[SemanticsProperties.VerticalScrollAxisRange].value()
+                assertEquals("$width dp at ${fontScale}x: page $destination starts at the top", 0f, after, 0f)
+            }
+        }
+    }
+
+    @Test
     @Config(qualifiers = "w411dp-h914dp")
     fun lessonClockStaysStillWhenDemoFinishes() {
         language.value = AppLanguage.FINNISH

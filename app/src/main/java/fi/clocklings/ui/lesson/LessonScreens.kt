@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -148,8 +148,8 @@ fun LessonScreen(
     val playback: @Composable (Boolean) -> Unit = { compact ->
         LessonPlayback(speechAvailable, paragraphs, caption, onSpeak, onReplay, compact)
     }
-    val scroll = rememberScrollState()
-    val compactScroll = rememberScrollState()
+    val scroll = rememberSaveable(state.lesson.id, state.page, saver = ScrollState.Saver) { ScrollState(0) }
+    val compactScroll = rememberSaveable(state.lesson.id, state.page, saver = ScrollState.Saver) { ScrollState(0) }
     val tallClockMin =
         when {
             state.isQuiz -> SkDimens.QuizClockMin

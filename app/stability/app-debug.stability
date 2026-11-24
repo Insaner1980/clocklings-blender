@@ -851,7 +851,7 @@ private fun fi.clocklings.ui.components.CompactClockTask(section: fi.clocklings.
     - content: STABLE (composable function type)
 
 @Composable
-public fun fi.clocklings.ui.components.CompanionTip(text: kotlin.String, modifier: androidx.compose.ui.Modifier, kind: fi.clocklings.ui.components.FeedbackKind, celebrate: kotlin.Boolean, color: androidx.compose.ui.graphics.Color?, avatarWidth: androidx.compose.ui.unit.Dp): kotlin.Unit
+public fun fi.clocklings.ui.components.CompanionTip(text: kotlin.String, modifier: androidx.compose.ui.Modifier, kind: fi.clocklings.ui.components.FeedbackKind, celebrate: kotlin.Boolean, color: androidx.compose.ui.graphics.Color?, avatarWidth: androidx.compose.ui.unit.Dp, animated: kotlin.Boolean): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -861,9 +861,10 @@ public fun fi.clocklings.ui.components.CompanionTip(text: kotlin.String, modifie
     - celebrate: STABLE (primitive type)
     - color: STABLE (marked @Stable or @Immutable)
     - avatarWidth: STABLE (marked @Stable or @Immutable)
+    - animated: STABLE (primitive type)
 
 @Composable
-public fun fi.clocklings.ui.components.CompanionTip(modifier: androidx.compose.ui.Modifier, celebrationKey: kotlin.String?, celebrate: kotlin.Boolean, color: androidx.compose.ui.graphics.Color, fallback: @[Composable] androidx.compose.runtime.internal.ComposableFunction0<kotlin.Unit>, avatarWidth: androidx.compose.ui.unit.Dp, content: @[Composable] @[ExtensionFunctionType] androidx.compose.runtime.internal.ComposableFunction1<androidx.compose.foundation.layout.ColumnScope, kotlin.Unit>): kotlin.Unit
+public fun fi.clocklings.ui.components.CompanionTip(modifier: androidx.compose.ui.Modifier, celebrationKey: kotlin.String?, celebrate: kotlin.Boolean, color: androidx.compose.ui.graphics.Color, fallback: @[Composable] androidx.compose.runtime.internal.ComposableFunction0<kotlin.Unit>, avatarWidth: androidx.compose.ui.unit.Dp, animated: kotlin.Boolean, content: @[Composable] @[ExtensionFunctionType] androidx.compose.runtime.internal.ComposableFunction1<androidx.compose.foundation.layout.ColumnScope, kotlin.Unit>): kotlin.Unit
   skippable: true
   restartable: true
   params:
@@ -873,6 +874,7 @@ public fun fi.clocklings.ui.components.CompanionTip(modifier: androidx.compose.u
     - color: STABLE (marked @Stable or @Immutable)
     - fallback: STABLE (composable function type)
     - avatarWidth: STABLE (marked @Stable or @Immutable)
+    - animated: STABLE (primitive type)
     - content: STABLE (composable function type)
 
 @Composable

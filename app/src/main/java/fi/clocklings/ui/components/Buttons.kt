@@ -195,7 +195,7 @@ fun ActionPair(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 compactStart(Modifier)
-                endContent(Modifier.weight(1f))
+                if (endLabel != null) endContent(Modifier.weight(1f)) else Spacer(Modifier.weight(1f))
             }
         } else if (stack) {
             Column(verticalArrangement = Arrangement.spacedBy(SkDimens.GapM)) {

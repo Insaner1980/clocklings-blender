@@ -4,6 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 /** Compares the two 411 dp cells pulled from VisualFollowUpRound2CaptureTest. */
@@ -21,6 +24,16 @@ class CheckGalleryColors {
         Path gallery = Path.of(args[0]);
         Path light = gallery.resolve("411dp-100");
         Path dark = gallery.resolve("411dp-100-dark");
+        SortedSet<String> lightNames = appScreenshots(light);
+        SortedSet<String> darkNames = appScreenshots(dark);
+        if (!lightNames.equals(darkNames)) {
+            var missingLight = new TreeSet<>(darkNames);
+            missingLight.removeAll(lightNames);
+            var missingDark = new TreeSet<>(lightNames);
+            missingDark.removeAll(darkNames);
+            throw new IllegalStateException("Unpaired app screenshots: missing in light " + missingLight
+                + ", missing in expanded dark " + missingDark);
+        }
         Map<String, Integer> lightInsets = readInsets(light);
         Map<String, Integer> darkInsets = readInsets(dark);
         int lightSplash = splashColor(light);
@@ -29,26 +42,28 @@ class CheckGalleryColors {
             throw new IllegalStateException("The light launch must have the Clocklings splash background");
         }
 
-        int compared = 0;
         int failed = 0;
-        try (var files = Files.list(light)) {
-            for (Path file : files.sorted().toList()) {
-                String name = file.getFileName().toString();
-                Path match = dark.resolve(name);
-                if (!name.endsWith(".png") || name.equals(SPLASH) || !Files.isRegularFile(match)) continue;
-                int bottom = Math.max(requireInset(lightInsets, name), requireInset(darkInsets, name));
-                compared++;
-                int different = differentPixels(readImage(file), readImage(match), bottom);
-                if (different != 0) {
-                    System.err.printf("%s: %d pixels differ beyond the RGB tolerance%n", name, different);
-                    failed++;
-                }
+        for (String name : lightNames) {
+            int bottom = Math.max(requireInset(lightInsets, name), requireInset(darkInsets, name));
+            int different = differentPixels(readImage(light.resolve(name)), readImage(dark.resolve(name)), bottom);
+            if (different != 0) {
+                System.err.printf("%s: %d pixels differ beyond the RGB tolerance%n", name, different);
+                failed++;
             }
         }
-        if (compared == 0 || failed != 0) {
-            throw new IllegalStateException("Compared " + compared + " app screenshots, " + failed + " failed");
+        if (lightNames.isEmpty() || failed != 0) {
+            throw new IllegalStateException("Compared " + lightNames.size() + " app screenshots, " + failed + " failed");
         }
-        System.out.printf("Compared %d app screenshots within RGB tolerance %d%n", compared, RGB_TOLERANCE);
+        System.out.printf("Compared %d app screenshots within RGB tolerance %d%n", lightNames.size(), RGB_TOLERANCE);
+    }
+
+    private static SortedSet<String> appScreenshots(Path cell) throws IOException {
+        try (var files = Files.list(cell)) {
+            return files.filter(Files::isRegularFile)
+                .map(file -> file.getFileName().toString())
+                .filter(name -> name.endsWith(".png") && !name.equals(SPLASH))
+                .collect(Collectors.toCollection(TreeSet::new));
+        }
     }
 
     private static Map<String, Integer> readInsets(Path cell) throws IOException {

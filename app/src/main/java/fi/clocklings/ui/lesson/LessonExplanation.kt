@@ -69,7 +69,11 @@ internal fun LessonCaption(
         Box {
             for (text in reserved) {
                 if (text != caption) {
-                    CompanionTip(text, Modifier.alpha(0f).clearAndSetSemantics { hideFromAccessibility() })
+                    CompanionTip(
+                        text,
+                        Modifier.alpha(0f).clearAndSetSemantics { hideFromAccessibility() },
+                        animated = false,
+                    )
                 }
             }
             if (caption.isNotEmpty()) CompanionTip(caption)

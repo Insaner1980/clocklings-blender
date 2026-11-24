@@ -69,6 +69,7 @@ import fi.clocklings.ui.challenge.ChallengeScreen
 import fi.clocklings.ui.challenge.ChallengeUiState
 import fi.clocklings.ui.clock.ClockCommand
 import fi.clocklings.ui.companion.WardrobeScreen
+import fi.clocklings.ui.components.DotOutcome
 import fi.clocklings.ui.components.LoadingScreen
 import fi.clocklings.ui.components.OptionState
 import fi.clocklings.ui.freeclock.FreeClockScreen
@@ -620,33 +621,56 @@ class VisualFollowUpRound2CaptureTest : VisualFollowUpCaptureHost() {
             }
         }
         for (type in TaskType.entries) {
+            val task = gameState(type)
+            val reading = type == TaskType.READ
             val state =
-                gameState(type).copy(
-                    feedback = GameFeedback.Praise(0, 180),
-                    optionStates = if (type == TaskType.READ) mapOf(180 to OptionState.CORRECT) else emptyMap(),
+                task.copy(
+                    feedback = GameFeedback.Praise(0, task.task.time.takeIf { reading }),
+                    optionStates = if (reading) mapOf(task.task.time to OptionState.CORRECT) else emptyMap(),
                     showDone = false,
-                    showNext = true,
                     interactive = false,
                     busy = true,
-                    clock = ClockCommand(180),
+                    clock = ClockCommand(task.task.time),
                 )
             show(lang, CompanionKind.HUMAN) { GameScreen(state, true, {}, {}, {}, {}, {}, {}) }
             capturePages("screens--practice-${type.name.lowercase(Locale.ROOT)}-correct")
         }
-        val read = gameState(TaskType.READ)
+        capturePracticeSaveFailure(lang)
+        captureFinalResults(lang)
+    }
+
+    private fun capturePracticeSaveFailure(lang: AppLanguage) {
+        val set = gameState(TaskType.SET)
         val failed =
-            read.copy(
+            set.copy(
+                taskIndex = set.taskCount - 1,
+                outcomes = List(set.taskCount) { DotOutcome.FIRST_TRY },
                 feedback = GameFeedback.SaveFailed,
-                optionStates = mapOf(read.task.time to OptionState.CORRECT),
+                clock = ClockCommand(set.task.time),
+                interactive = false,
+                showDone = false,
                 showNext = true,
                 busy = true,
             )
         show(lang, CompanionKind.HUMAN) { GameScreen(failed, true, {}, {}, {}, {}, {}, {}) }
         capturePages("screens--practice-save-failure")
+        // If task generation stops at the draw limit with an odd count, the last task is READ.
+        val read = gameState(TaskType.READ)
+        val readCount = failed.taskCount - 1
+        val failedRead =
+            failed.copy(
+                task = read.task,
+                clock = read.clock,
+                options = read.options,
+                optionStates = mapOf(read.task.time to OptionState.CORRECT),
+                taskIndex = readCount - 1,
+                taskCount = readCount,
+                outcomes = failed.outcomes.take(readCount),
+            )
+        show(lang, CompanionKind.HUMAN) { GameScreen(failedRead, true, {}, {}, {}, {}, {}, {}) }
         val correct = timeLabel(lang, read.task.time, read.h24)
         compose.onNode(hasText(correct) and hasClickAction()).performScrollTo().assertIsDisplayed()
         capture("screens--practice-save-failure-correct-option")
-        captureFinalResults(lang)
     }
 
     private fun captureFinalResults(lang: AppLanguage) {

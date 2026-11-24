@@ -123,6 +123,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 import kotlin.random.Random
 import fi.clocklings.domain.Text as LessonText
 
@@ -1499,13 +1501,35 @@ abstract class ScreenshotReview6Host {
         bitmap: Bitmap,
     ) {
         val file = File(outDir(), "${name.replace(Regex("[^A-Za-z0-9_-]"), "_")}.png")
-        file.outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
-        if (cell == "gallery" && android.os.Build.VERSION.SDK_INT >= 30) {
-            scenario?.onActivity { activity ->
-                val insets = checkNotNull(activity.window.decorView.rootWindowInsets)
-                val bottom = insets.getInsets(WindowInsets.Type.navigationBars() or WindowInsets.Type.ime()).bottom
-                File(file.parentFile, "app-area.tsv").appendText("${file.name}\t$bottom\n")
+        // Invalidate any earlier capture before changing its inset. Publish the image only when both writes succeed.
+        Files.deleteIfExists(file.toPath())
+        file.writeAtomically { pending ->
+            pending.outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+            if (cell == "gallery" && android.os.Build.VERSION.SDK_INT >= 30) {
+                var bottom: Int? = null
+                scenario?.onActivity { activity ->
+                    val insets = checkNotNull(activity.window.decorView.rootWindowInsets)
+                    bottom = insets.getInsets(WindowInsets.Type.navigationBars() or WindowInsets.Type.ime()).bottom
+                }
+                bottom?.let { inset ->
+                    val metadata = File(file.parentFile, "app-area.tsv")
+                    metadata.writeAtomically { updated ->
+                        val previous = if (metadata.exists()) metadata.readText() else ""
+                        updated.writeText("$previous${file.name}\t$inset\n")
+                    }
+                }
             }
+        }
+    }
+
+    private fun File.writeAtomically(write: (File) -> Unit) {
+        // Keep the ordinary external-file permissions so adb can pull the published capture.
+        val pending = File.createTempFile(name, ".tmp", parentFile)
+        try {
+            write(pending)
+            Files.move(pending.toPath(), toPath(), StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
+        } finally {
+            Files.deleteIfExists(pending.toPath())
         }
     }
 
